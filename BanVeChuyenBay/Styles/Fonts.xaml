@@ -8,21 +8,7 @@
     <FontFamily x:Key="Roboto">pack://application:,,,/Fonts/#Roboto</FontFamily>
     <FontFamily x:Key="Pacifico">pack://application:,,,/Fonts/#Pacifico</FontFamily>
     
-    <!-- Base Control Font -->
-    <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
-        <Setter Property="FontFamily" Value="{StaticResource Roboto}" />
-    </Style>
-
-    <!-- Base TextBlock Font -->
-    <Style TargetType="{x:Type TextBlock}" x:Key="BaseTextBlockStyle">
-        <Setter Property="FontFamily" Value="{StaticResource Roboto}" />
-    </Style>
-
-    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}" />
-    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseStyle}" />
-    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}" />
-    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}" />
-    <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource BaseStyle}" />
+   
     
     <!-- Font Size -->
     <system:Double x:Key="ExtraLarge">40</system:Double>

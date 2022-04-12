@@ -10,7 +10,10 @@
         xmlns:valueConverter="clr-namespace:BanVeChuyenBay.ValueConverter"
         xmlns:models="clr-namespace:BanVeChuyenBay.Models" xmlns:viewmodels="clr-namespace:BanVeChuyenBay.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="540" Width="960">
+        Title="MainWindow" Height="680" Width="1220"
+        WindowStartupLocation="CenterScreen"
+        
+        >
     
     <Window.Resources>
         <Style x:Key="NavigationContentStyle" TargetType="ContentControl">
@@ -50,23 +53,29 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    
-    <Grid>
-        <Grid.RowDefinitions>
-             <!--Navigation Bar--> 
-            <RowDefinition Height="Auto" />
-             <!--Content Presenter--> 
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
 
-        <Border>
-            <Border.Effect>
-                <DropShadowEffect ShadowDepth="1"/>
-            </Border.Effect>
-            <usercontrols:NavigationBar x:Name="CustomNavigationBar" Grid.Row="0" />
+    <Grid Background="{StaticResource LightGrayBrush}">
+        <Border CornerRadius="12" Height="160" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" >
+           
         </Border>
+        <Grid >
+            <Grid.RowDefinitions>
+                <!--Navigation Bar-->
+                <RowDefinition Height="Auto" />
+                <!--Content Presenter-->
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <ContentControl Grid.Row="1" Style="{StaticResource NavigationContentStyle}" />
-        
+            <Border>
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="1"/>
+                </Border.Effect>
+                <usercontrols:NavigationBar x:Name="CustomNavigationBar" Grid.Row="0" />
+            </Border>
+
+            <ContentControl Grid.Row="1" Style="{StaticResource NavigationContentStyle}"  />
+
+        </Grid>
     </Grid>
+    
 </Window>

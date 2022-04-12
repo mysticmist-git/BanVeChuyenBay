@@ -7,4 +7,12 @@
     <!-- Light Blue -->
     <Color x:Key="LightBlue">#06b4f4</Color>
     <SolidColorBrush x:Key="LightBlueBrush" Color="{StaticResource LightBlue}" />
+
+    <!--Light Gray-->
+    <Color x:Key="LightGray">#DDDCDB</Color>
+    <SolidColorBrush x:Key="LightGrayBrush" Color="{StaticResource LightGray}" />
+
+    <!--Red-->
+    <Color x:Key="Red">#C7282A</Color>
+    <SolidColorBrush x:Key="RedBrush" Color="{StaticResource Red}" />
 </ResourceDictionary>

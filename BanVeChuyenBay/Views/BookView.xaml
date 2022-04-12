@@ -10,7 +10,7 @@
         <vm:BookViewModel/>
     </UserControl.DataContext>
 
-    <Grid>
+    <Grid d:Background="{StaticResource LightGrayBrush}">
         <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
@@ -23,5 +23,6 @@
                        Foreground="{StaticResource BlueBrush}"
                        Text="{Binding Title}"/>
         </StackPanel>
+        
     </Grid>
 </UserControl>

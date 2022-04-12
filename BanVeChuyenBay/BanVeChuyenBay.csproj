@@ -7,9 +7,41 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Pacifico-Regular.ttf" />
+    <None Remove="Fonts\Roboto-Black.ttf" />
+    <None Remove="Fonts\Roboto-BlackItalic.ttf" />
+    <None Remove="Fonts\Roboto-Bold.ttf" />
+    <None Remove="Fonts\Roboto-BoldItalic.ttf" />
+    <None Remove="Fonts\Roboto-Italic.ttf" />
+    <None Remove="Fonts\Roboto-Light.ttf" />
+    <None Remove="Fonts\Roboto-LightItalic.ttf" />
+    <None Remove="Fonts\Roboto-Medium.ttf" />
+    <None Remove="Fonts\Roboto-MediumItalic.ttf" />
+    <None Remove="Fonts\Roboto-Regular.ttf" />
+    <None Remove="Fonts\Roboto-Thin.ttf" />
+    <None Remove="Fonts\Roboto-ThinItalic.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.4.0" />
     <PackageReference Include="Ninject" Version="3.3.4" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\Pacifico-Regular.ttf" />
+    <Resource Include="Fonts\Roboto-Black.ttf" />
+    <Resource Include="Fonts\Roboto-BlackItalic.ttf" />
+    <Resource Include="Fonts\Roboto-Bold.ttf" />
+    <Resource Include="Fonts\Roboto-BoldItalic.ttf" />
+    <Resource Include="Fonts\Roboto-Italic.ttf" />
+    <Resource Include="Fonts\Roboto-Light.ttf" />
+    <Resource Include="Fonts\Roboto-LightItalic.ttf" />
+    <Resource Include="Fonts\Roboto-Medium.ttf" />
+    <Resource Include="Fonts\Roboto-MediumItalic.ttf" />
+    <Resource Include="Fonts\Roboto-Regular.ttf" />
+    <Resource Include="Fonts\Roboto-Thin.ttf" />
+    <Resource Include="Fonts\Roboto-ThinItalic.ttf" />
   </ItemGroup>
 
 </Project>
