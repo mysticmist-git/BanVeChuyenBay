@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="BanVeChuyenBay.UserControls.NavigationBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BanVeChuyenBay.UserControls" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:vm="clr-namespace:BanVeChuyenBay.ViewModels"
+             mc:Ignorable="d">
+    <UserControl.DataContext>
+        <vm:NavigationBarViewModel />
+    </UserControl.DataContext>
+    
+    <Border Background="White">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <!-- Logo, App Name -->
+                <ColumnDefinition Width="Auto" />
+                <!-- Buttons -->
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Logo, App Name -->
+            <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="10 5">
+                <Border Width="50" Height="50" Background="{StaticResource LightBlueBrush}" CornerRadius="50">
+                    <materialDesign:PackIcon Kind="Airplane"
+                                             Foreground="White"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center"
+                                             Width="30"
+                                             Height="30"
+                                             />
+                </Border>
+                <TextBlock Text="TÊN APP"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource AppNameText}"
+                           Margin="20 0 0 0"
+                           />
+            </StackPanel>
+
+            <!-- Buttons -->
+            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                <Button Content="Tra cứu" Style="{StaticResource NavigationButton}" Command="{Binding SearchCommand}"/>
+                <Button Content="Đặt chỗ" Style="{StaticResource NavigationButton}" Command="{Binding BookCommand}"/>
+                <Button Content="Bán vé" Style="{StaticResource NavigationButton}" Command="{Binding SellCommand}"/>
+                <Button Content="Nhận lịch" Style="{StaticResource NavigationButton}" Command="{Binding ScheduleCommand}" />
+                <Button Content="Doanh thu" Style="{StaticResource NavigationButton}" Command="{Binding ReportCommand}"/>
+                <Button Content="Cài đặt" Style="{StaticResource NavigationButton}" Command="{Binding SettingCommand}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

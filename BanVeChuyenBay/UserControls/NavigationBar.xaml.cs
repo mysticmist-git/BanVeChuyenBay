@@ -11,14 +11,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BanVeChuyenBay.Views
+namespace BanVeChuyenBay.UserControls
 {
     /// <summary>
-    /// Interaction logic for FlightView.xaml
+    /// Interaction logic for NavigationBar.xaml
     /// </summary>
-    public partial class FlightView : UserControl
+    public partial class NavigationBar : UserControl
     {
-        public FlightView()
+        public NavigationBar()
         {
             InitializeComponent();
         }

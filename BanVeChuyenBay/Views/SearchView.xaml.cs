@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace BanVeChuyenBay.Views
 {
     /// <summary>
-    /// Interaction logic for Report.xaml
+    /// Interaction logic for Search.xaml
     /// </summary>
-    public partial class ReportView : UserControl
+    public partial class SearchView : UserControl
     {
-        public ReportView()
+        public SearchView()
         {
             InitializeComponent();
         }

@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace BanVeChuyenBay.Views
 {
     /// <summary>
-    /// Interaction logic for TicketTierView.xaml
+    /// Interaction logic for Sell.xaml
     /// </summary>
-    public partial class TicketTierView : UserControl
+    public partial class SellView : UserControl
     {
-        public TicketTierView()
+        public SellView()
         {
             InitializeComponent();
         }

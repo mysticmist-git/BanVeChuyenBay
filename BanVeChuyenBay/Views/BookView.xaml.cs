@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace BanVeChuyenBay.Views
 {
     /// <summary>
-    /// Interaction logic for AirportView.xaml
+    /// Interaction logic for Book.xaml
     /// </summary>
-    public partial class AirportView : UserControl
+    public partial class BookView : UserControl
     {
-        public AirportView()
+        public BookView()
         {
             InitializeComponent();
         }

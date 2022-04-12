@@ -2,6 +2,6 @@
 {
     public class ReportViewModel : BaseViewModel
     {
-        public string Title { get; } = "BÁO CÁO";
+        public string Title { get; } = "DOANH THU";
     }
 }

@@ -5,53 +5,68 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BanVeChuyenBay"
         xmlns:views="clr-namespace:BanVeChuyenBay.Views"
+        xmlns:usercontrols="clr-namespace:BanVeChuyenBay.UserControls"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:valueConverter="clr-namespace:BanVeChuyenBay.ValueConverter"
+        xmlns:models="clr-namespace:BanVeChuyenBay.Models" xmlns:viewmodels="clr-namespace:BanVeChuyenBay.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="540" Width="960">
+    
     <Window.Resources>
         <Style x:Key="NavigationContentStyle" TargetType="ContentControl">
-            <Setter Property="ContentTemplate" Value="{StaticResource HomeViewTemplate}"/>
+            <Setter Property="ContentTemplate" Value="{StaticResource SearchViewTemplate}"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ElementName=NavigationMenuListBox, Path=SelectedItem}"
-                             Value="Flight">
-                    <Setter Property="ContentTemplate" Value="{StaticResource FlightViewTemplate}"/>
+
+                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
+                             Value="{x:Static models:AppView.Search}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource SearchViewTemplate}"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ElementName=NavigationMenuListBox, Path=SelectedItem}" 
-                             Value="Airport">
-                    <Setter Property="ContentTemplate" Value="{StaticResource AirportViewTemplate}"/>
+
+                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
+                             Value="{x:Static models:AppView.Book}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource BookViewTemplate}"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ElementName=NavigationMenuListBox, Path=SelectedItem}" 
-                             Value="Report">
+
+                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
+                             Value="{x:Static models:AppView.Sell}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource SellViewTemplate}"/>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
+                             Value="{x:Static models:AppView.Schedule}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource ScheduleViewTemplate}"/>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
+                             Value="{x:Static models:AppView.Report}">
                     <Setter Property="ContentTemplate" Value="{StaticResource ReportViewTemplate}"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ElementName=NavigationMenuListBox, Path=SelectedItem}" 
-                             Value="Ticket">
-                    <Setter Property="ContentTemplate" Value="{StaticResource TicketViewTemplate}"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding ElementName=NavigationMenuListBox, Path=SelectedItem}" 
-                             Value="TicketTier">
-                    <Setter Property="ContentTemplate" Value="{StaticResource TicketTierViewTemplate}"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding ElementName=NavigationMenuListBox, Path=SelectedItem}" 
-                             Value="Setting">
+
+                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
+                             Value="{x:Static models:AppView.Setting}">
                     <Setter Property="ContentTemplate" Value="{StaticResource SettingViewTemplate}"/>
                 </DataTrigger>
+
             </Style.Triggers>
         </Style>
     </Window.Resources>
-
+    
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition/> 
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+             <!--Navigation Bar--> 
+            <RowDefinition Height="Auto" />
+             <!--Content Presenter--> 
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <ListBox x:Name="NavigationMenuListBox" 
-                 Style="{StaticResource NavigationListBoxStyle}"
-                 ItemContainerStyle="{DynamicResource NavigationListBoxItemStyle}"
-                 ItemTemplate="{DynamicResource NavigationDataTemplate}"
-                 ItemsSource="{StaticResource NavigationMenuItems}"
-                 HorizontalContentAlignment="Left"/>
+        <Border>
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="1"/>
+            </Border.Effect>
+            <usercontrols:NavigationBar x:Name="CustomNavigationBar" Grid.Row="0" />
+        </Border>
 
-        <ContentControl Grid.Column="1" Style="{StaticResource NavigationContentStyle}"/>
+        <ContentControl Grid.Row="1" Style="{StaticResource NavigationContentStyle}" />
+        
     </Grid>
 </Window>
