@@ -4,27 +4,13 @@ GO
 USE BANVECHUYENBAY
 GO
 
--- Bảng Tham số
-CREATE TABLE THAMSO
-(
-	MaThamSo INT IDENTITY(1,1) PRIMARY KEY,
-	ThoiGianBayToiThieu INT NOT NULL,
-	SanBayTrungGianToiDa INT NOT NULL,
-	ThoiGianDungToiThieu INT NOT NULL,
-	ThoiGianDungToiDa INT NOT NULL,
-	ThoiGianDatVeChamNhat INT NOT NULL,
-	ThoiGianHuyDatVe INT NOT NULL
-)
-GO
-
 -- Bảng Chuyến bay
 CREATE TABLE CHUYENBAY
 (
 	MaChuyenBay INT IDENTITY(1,1) PRIMARY KEY,
-	GiaVe MONEY NOT NULL,
-	NgayGio DATETIME NOT NULL,
 	MaDuongBay INT NOT NULL,
-	MaThamSo INT NOT NULL
+	GiaVe MONEY NOT NULL,
+	NgayGio DATETIME NOT NULL
 )
 GO
 
@@ -33,7 +19,9 @@ CREATE TABLE SANBAY
 (
 	MaSanBay INT IDENTITY(1,1) PRIMARY KEY,
 	TenSanBay NVARCHAR(200) NOT NULL,
-	TinhThanh NVARCHAR(200) NOT NULL -- Xem lai
+	VietTat VARCHAR(50) NOT NULL,
+	TinhThanh NVARCHAR(200) NOT NULL,
+	TrangThai BIT NOT NULL,
 )
 GO
 
@@ -64,7 +52,8 @@ CREATE TABLE HANGVE
 (
 	MaHangVe INT IDENTITY(1,1) PRIMARY KEY,
 	TenHangVe NVARCHAR(200) NOT NULL,
-	HeSo DECIMAL(5,2) NOT NULL
+	HeSo DECIMAL(3,2) NOT NULL,
+	TrangThai BIT NOT NULL
 )
 GO
 
@@ -85,7 +74,8 @@ CREATE TABLE VE
 	MaHangVe INT NOT NULL,
 	MaChuyenBay INT NOT NULL,
 	MaKhachHang INT NOT NULL,
-	GiaTien INT NOT NULL DEFAULT 0
+	GiaTien INT NOT NULL DEFAULT 0,
+	NgayThanhToan DATETIME NOT NULL
 )
 GO
 
@@ -107,7 +97,10 @@ CREATE TABLE DATCHO
 	MaHangVe INT NOT NULL,
 	MaChuyenBay INT NOT NULL,
 	MaNguoiDat INT NOT NULL,
-	NgayGioDat DATETIME NOT NULL
+	NgayGioDat DATETIME NOT NULL,
+	SoVeDat INT NOT NULL,
+	GiaTien MONEY NOT NULL DEFAULT 0,
+	TrangThai VARCHAR(20)
 )
 GO
 
@@ -128,7 +121,7 @@ CREATE TABLE DOANHTHUCHUYENBAY
 	MaChuyenBay INT NOT NULL,
 	SoVe INT NOT NULL,
 	DoanhThu MONEY NOT NULL,
-	TiLe DECIMAL(5,2) NOT NULL
+	TiLe DECIMAL(3,2) NOT NULL
 )
 GO
 
@@ -154,14 +147,29 @@ CREATE TABLE DOANHTHUNAM
 )
 GO
 
+-- Bảng Tham số
+CREATE TABLE THAMSO
+(
+	TenThamSo VARCHAR(100) PRIMARY KEY,
+	GiaTri INT NOT NULL
+)
+GO
+
+-- Giá trị mặc định cho bảng THAMSO
+INSERT INTO THAMSO VALUES
+	('ThoiGianBayToiThieu',30),
+	('SoSanBayTrungGianToiDa',2),
+	('ThoiGianDungToiThieu',10),
+	('ThoiGianDungToiDa',20),
+	('ThoiGianDatVeChamNhat',1),
+	('ThoiGianHuyDatVe',1)
+
 -- RÀNG BUỘC BẢNG CHUYẾN BAY
 ------ Khóa ngoại Mã đường bay
 ALTER TABLE CHUYENBAY ADD CONSTRAINT FK_CHUYENBAY_MaDuongBay FOREIGN KEY (MaDuongBay) REFERENCES DUONGBAY(MaDuongBay)
 GO
------- Khóa ngoại Mã tham số
-ALTER TABLE CHUYENBAY ADD CONSTRAINT FK_CHUYENBAY_MaThamSo FOREIGN KEY (MaThamSo) REFERENCES THAMSO(MaThamSo)
-GO
------- GiaVe: không được âm
+
+------ GiaVe: Số dương
 ALTER TABLE CHUYENBAY ADD CONSTRAINT CK_CHUYENBAY_GiaVe CHECK (GiaVe>=0)
 GO
 ------ NgayGio: lớn hơn ngày giờ tại thời điểm nhận lịch chuyến bay
@@ -188,7 +196,7 @@ BEGIN
 	-- Lấy thứ tự sân bay trung gian được thêm
 	SELECT @thuTu=ThuTu, @maDuongBay=MaDuongBay
 	FROM INSERTED
-	-- Nếu ThuTu của cùng một đường bay không trùng nhau thì rollback tran
+	-- Nếu ThuTu của cùng một đường bay trùng nhau thì rollback tran
 	IF ((
 		SELECT COUNT(ThuTu)
 		FROM SANBAYTG
@@ -197,46 +205,27 @@ BEGIN
 END
 GO
 
-ALTER TRIGGER TG_SANBAYTG_ThuTu ON SANBAYTG
-FOR INSERT, UPDATE
-AS
-BEGIN
-	-- Khai báo
-	DECLARE @thuTu INT, @maDuongBay INT
-	-- Lấy thứ tự sân bay trung gian được thêm
-	SELECT @thuTu=ThuTu, @maDuongBay=MaDuongBay
-	FROM INSERTED
-	-- Nếu ThuTu của cùng một đường bay không trùng nhau thì rollback tran
-	-- Nếu số thứ tự == @thuTu (tính cả cái vừa thêm) > 1 thì tức là có thứ tự bị trùng
-	IF ((
-		SELECT COUNT(ThuTu)
-		FROM SANBAYTG
-		WHERE MaDuongBay=@maDuongBay AND ThuTu=@thuTu)>1)
-		ROLLBACK TRAN
-END
-GO
-
------- TRIGGER ThoiGianDung: ThoiGianDung >= THAMSO.ThoiGianDungToiThieu && ThoiGianDung <= THAMSO.ThoiGianDungToiDa
+------ TRIGGER ThoiGianDung: ThoiGianDung >= ThoiGianDungToiThieu && ThoiGianDung <= ThoiGianDungToiDa
 CREATE TRIGGER TG_SANBAYTG_ThoiGianDung ON SANBAYTG
 FOR INSERT, UPDATE
 AS
 BEGIN
 	-- Khai báo
-	DECLARE @thoiGianDung INT, @maThamSo INT
+	DECLARE @thoiGianDung INT
 	-- Lấy thời gian dừng được thêm
 	SELECT @thoiGianDung=ThoiGianDung
 	FROM INSERTED
-	-- Lấy mã bảng tham số tương ứng với chuyến bay mà sân bay trung gian được thêm vào
-	SELECT @maThamSo=CHUYENBAY.MaThamSo
-	FROM CHUYENBAY, INSERTED
-	WHERE CHUYENBAY.MaDuongBay=INSERTED.MaDuongBay
 
 	-- Khai báo Thời gian dừng tối thiểu và thời gian dừng tối đa
 	DECLARE @min INT, @max INT
 	-- Lấy Thời gian dừng tối thiểu và thời gian dừng tối đa
-	SELECT @min=ThoiGianDungToiThieu, @max=ThoiGianDungToiDa
+	SELECT @min=GiaTri
 	FROM THAMSO
-	WHERE THAMSO.MaThamSo=@maThamSo
+	WHERE TenThamSo='ThoiGianDungToiThieu'
+
+	SELECT @max=GiaTri
+	FROM THAMSO
+	WHERE TenThamSo='ThoiGianDungToiDa'
 
 	-- Nếu Thời gian dừng không hợp lệ thì rollback tran
 	IF (@thoiGianDung<@min OR @thoiGianDung>@max)
@@ -244,18 +233,16 @@ BEGIN
 END
 GO
 
------- TRIGGER: So san bay TG không vượt ThamSo.SanBayTrungGianToiDa
+------ TRIGGER: So san bay TG không vượt SanBayTrungGianToiDa
 CREATE TRIGGER TG_SANBAYTG_SanBayTrungGianToiDa ON SANBAYTG
 FOR INSERT
 AS
 BEGIN
 	DECLARE @sanBayTrungGianToiDa INT, @soSanBayTrungGianHienTai INT
 	-- Lấy Sân bay trung gian tối đa
-	SELECT @sanBayTrungGianToiDa=THAMSO.SanBayTrungGianToiDa
-	FROM INSERTED, CHUYENBAY, THAMSO
-	WHERE
-		INSERTED.MaDuongBay=CHUYENBAY.MaDuongBay AND
-		CHUYENBAY.MaThamSo=THAMSO.MaThamSo
+	SELECT @sanBayTrungGianToiDa=GiaTri
+	FROM THAMSO
+	WHERE TenThamSo='SoSanBayTrungGianToiDa'
 
 	-- Lấy Số sân bay trung gian hiện tại
 	SELECT @soSanBayTrungGianHienTai=COUNT(*)
@@ -275,27 +262,23 @@ GO
 ------ Khóa ngoại Mã sân bay đến
 ALTER TABLE DUONGBAY ADD CONSTRAINT FK_DUONGBAY_MaSanBayDen FOREIGN KEY (MaSanBayDen) REFERENCES SANBAY(MaSanBay)
 GO
------- Trigger ThoiGianBay: ThoiGianBay >= THAMSO.ThoiGianBayToiThieu
+------ Trigger ThoiGianBay: ThoiGianBay >= ThoiGianBayToiThieu
 CREATE TRIGGER TG_DUONGBAY_ThoiGianBay ON DUONGBAY
 FOR INSERT, UPDATE
 AS
 BEGIN
 	-- Khai báo
-	DECLARE @thoiGianBay INT, @maThamSo INT
+	DECLARE @thoiGianBay INT
 	-- Lấy Thời gian bay được thêm
 	SELECT @thoiGianBay=ThoiGianBay
 	FROM INSERTED
-	-- Lấy mã bảng tham số tương ứng với chuyến bay mà sân bay trung gian được thêm vào
-	SELECT @maThamSo=CHUYENBAY.MaThamSo
-	FROM CHUYENBAY, INSERTED
-	WHERE CHUYENBAY.MaDuongBay=INSERTED.MaDuongBay
 
 	-- Khai báo Thời gian bay tối tối thiểu
 	DECLARE @min INT
 	-- Lấy Thời gian dừng tối thiểu và thời gian dừng tối đa
-	SELECT @min=ThoiGianBayToiThieu
+	SELECT @min=GiaTri
 	FROM THAMSO
-	WHERE THAMSO.MaThamSo=@maThamSo
+	WHERE TenThamSo='ThoiGianBayToiThieu'
 	-- Nếu Thời gian bay không hợp lệ thì rollback tran
 	IF (@thoiGianBay<@min)
 		ROLLBACK TRAN
@@ -303,8 +286,8 @@ END
 GO
 
 -- RÀNG BUỘC HẠNG VÉ
------- HeSo: 0.00 - 100.00
-ALTER TABLE HANGVE ADD CONSTRAINT CK_HANGVE_HeSo CHECK (HeSo>=0.00)
+------ HeSo: >= 0.0
+ALTER TABLE HANGVE ADD CONSTRAINT CK_HANGVE_HeSo CHECK (HeSo>=0.0)
 GO
 
 -- RÀNG BUỘC BẢNG CHI TIẾT HẠNG VÉ
@@ -331,6 +314,11 @@ GO
 ------ GiaTien: không âm
 ALTER TABLE VE ADD CONSTRAINT CK_VE_GiaTien CHECK (GiaTien>=0)
 GO
+
+------ NgayThanhToan: >= Ngày giờ hiện tại
+ALTER TABLE VE ADD CONSTRAINT CK_VE_NgayThanhToan CHECK (NgayThanhToan>=GETDATE())
+GO
+
 ------ GiaTien = CHUYENBAY.GiaVe*HANGVE.HeSo
 CREATE TRIGGER TRG_VE_TinhGiaTien ON VE
 FOR INSERT, UPDATE
@@ -351,7 +339,7 @@ BEGIN
 	WHERE HANGVE.MaHangVe=INSERTED.MaHangVe
 
 	UPDATE VE
-	SET GiaTien=(@giaVe*@heSo)/100
+	SET GiaTien=(@giaVe*@heSo)
 	WHERE VE.MaVe=@maVe
 END
 GO
@@ -366,34 +354,33 @@ GO
 ------ Khóa ngoại Mã người đặt
 ALTER TABLE DATCHO ADD CONSTRAINT FK_DATCHO_MaNguoiDat FOREIGN KEY (MaNguoiDat) REFERENCES KHACHHANG(MaKhachHang)
 GO
------- Trigger NgayGioDat: NgayGioDat <= (Hiện tại - THAMSO.ThoiGianDatVeChamNhat)
+------ Trigger NgayGioDat: NgayGioDat <= (Hiện tại - ThoiGianDatVeChamNhat)
 CREATE TRIGGER TG_DATCHO_NgayGioDat ON DATCHO
 FOR INSERT, UPDATE
 AS
 BEGIN
 	-- Khai báo
-	DECLARE @ngayGioDat DATETIME, @maThamSo INT
+	DECLARE @ngayGioDat DATETIME
 	-- Lấy ngày giờ đăt chỗ được thêm
 	SELECT @ngayGioDat=NgayGioDat
 	FROM INSERTED
 
-	-- Lấy mã bảng tham số tương ứng với chuyến bay mà sân bay trung gian được thêm vào
-	SELECT @maThamSo=CHUYENBAY.MaThamSo
-	FROM CHUYENBAY, INSERTED
-	WHERE CHUYENBAY.MaChuyenBay=INSERTED.MaChuyenBay
-
 	-- Khai báo ThoiGianDatVeChamNhat
 	DECLARE @datVeChamNhat INT
 	-- Lấy Thời gian dừng tối thiểu và thời gian dừng tối đa
-	SELECT @datVeChamNhat=ThoiGianDatVeChamNhat
+	SELECT @datVeChamNhat=GiaTri
 	FROM THAMSO
-	WHERE THAMSO.MaThamSo=@maThamSo
+	WHERE TenThamSo='ThoiGianDatVeChamNhat'
 
 	-- Nếu ngày giờ đặt chỗ không hợp lệ thì rollback tran
 	IF (@ngayGioDat<=(DATEADD(day, -@datVeChamNhat, GETDATE())))
 		ROLLBACK TRAN
 END
 GO
+
+------ TrangThai: ChuaDoi, DaDoi, DaHuy
+ALTER TABLE DATCHO ADD CONSTRAINT CK_DATCHO_TrangThai CHECK (TrangThai IN ('ChuaDoi','DaDoi','DaHuy'))
+GO	
 
 -- RÀNG BUỘC BẢNG CHI TIẾT ĐẶT CHỖ
 ------ Khóa ngoại Mã đặt chỗ
@@ -417,7 +404,7 @@ GO
 ALTER TABLE DOANHTHUCHUYENBAY ADD CONSTRAINT CK_DOANHTHUCHUYENBAY_DoanhThu CHECK (DoanhThu>=0)
 GO
 ------ TiLe từ 0 - 100 %
-ALTER TABLE DOANHTHUCHUYENBAY ADD CONSTRAINT CK_DOANHTHUCHUYENBAY_TiLe CHECK (TiLe>=0.00 AND TiLe<=100.00)
+ALTER TABLE DOANHTHUCHUYENBAY ADD CONSTRAINT CK_DOANHTHUCHUYENBAY_TiLe CHECK (TiLe>=0.0 AND TiLe<=1.0)
 GO
 
 -- RÀNG BUỘC BẢNG DOANH THU THÁNG
@@ -434,18 +421,21 @@ GO
 ALTER TABLE DOANHTHUTHANG ADD CONSTRAINT CK_DOANHTHUTHANG_DoanhThu CHECK (DoanhThu>=0)
 GO
 ------ TiLe: 0.00 - 100.00
-ALTER TABLE DOANHTHUTHANG ADD CONSTRAINT CK_DOANHTHUTHANG_TiLe CHECK (TiLe>=0.00 AND TiLe<=100.00)
+ALTER TABLE DOANHTHUTHANG ADD CONSTRAINT CK_DOANHTHUTHANG_TiLe CHECK (TiLe>=0.0 AND TiLe<=1.0)
 GO
 
 -- RÀNG BUỘC BẢNG DOANH THU NĂM
 -- TRIGGER for Nam, SoChuyenBay, DoanhThu
------- Nam: 
-ALTER TABLE DOANHTHUNAM ADD CONSTRAINT CK_DOANHTHUNAM_Nam CHECK (Nam >= 1 AND Nam<= 12)
+------ Nam: <= Năm hiện tại?
+ALTER TABLE DOANHTHUNAM ADD CONSTRAINT CK_DOANHTHUNAM_Nam CHECK (Nam <= Year(GETDATE()))
 GO
 ------ SoChuyenBay: Không âm
 ALTER TABLE DOANHTHUNAM ADD CONSTRAINT CK_DOANHTHUNAM_SoChuyenBay CHECK (SoChuyenBay>=0)
 GO
 ------ DoanhThu: Không âm
 ALTER TABLE DOANHTHUNAM ADD CONSTRAINT CK_DOANHTHUNAM_DoanhThu CHECK (DoanhThu>=0)
+GO
 
------- TRIGGER: Nam <= năm hiện tại ?? coi lại
+-- RÀNG BUỘC BẢNG THAM SỐ
+ALTER TABLE THAMSO ADD CONSTRAINT CK_THAMSO_GiaTri CHECK (GiaTri>=0)
+GO
