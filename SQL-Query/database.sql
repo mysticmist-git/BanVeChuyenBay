@@ -97,7 +97,7 @@ CREATE TABLE DATCHO
 	MaHangVe INT NOT NULL,
 	MaChuyenBay INT NOT NULL,
 	MaNguoiDat INT NOT NULL,
-	NgayGioDat DATETIME NOT NULL,
+	NgayGioDat DATETIME NOT NULL DEFAULT GETDATE(),
 	SoVeDat INT NOT NULL,
 	GiaTien MONEY NOT NULL DEFAULT 0,
 	TrangThai VARCHAR(20)
@@ -176,6 +176,10 @@ GO
 ALTER TABLE CHUYENBAY ADD CONSTRAINT CK_CHUYENBAY_NgayGio CHECK (NgayGio>GETDATE())
 GO
 
+-- RÀNG BUỘC BẢNG SÂN BAY
+------ VietTat Unique
+ALTER TABLE SANBAY ADD CONSTRAINT UNIQUE_SANBAY_VietTat UNIQUE (VietTat)
+
 -- RÀNG BUỘC BẢNG SÂN BAY TRUNG GIAN
 ------ Khóa ngoại Mã đường bay
 ALTER TABLE SANBAYTG ADD CONSTRAINT FK_SANBAYTG_MaDuongBay FOREIGN KEY (MaDuongBay) REFERENCES DUONGBAY(MaDuongBay)
@@ -201,7 +205,10 @@ BEGIN
 		SELECT COUNT(ThuTu)
 		FROM SANBAYTG
 		WHERE MaDuongBay=@maDuongBay AND ThuTu=@thuTu)>1)
-		ROLLBACK TRAN
+			BEGIN
+				ROLLBACK TRAN
+				PRINT 'ThuTu san bay trung gian trung nhau'
+			END
 END
 GO
 
@@ -229,7 +236,10 @@ BEGIN
 
 	-- Nếu Thời gian dừng không hợp lệ thì rollback tran
 	IF (@thoiGianDung<@min OR @thoiGianDung>@max)
-		ROLLBACK TRAN
+		BEGIN
+			ROLLBACK TRAN
+			PRINT 'ThoiGianBay khong hop le'
+		END
 END
 GO
 
@@ -251,7 +261,10 @@ BEGIN
 
 	-- Nếu số sân bay trung gian vượt thì rollback tran
 	IF (@soSanBayTrungGianHienTai>@sanBayTrungGianToiDa)
-		ROLLBACK TRAN
+		BEGIN
+			ROLLBACK TRAN
+			PRINT 'So san bay trung gian vuot qua So san bay trung gian toi da'
+		END
 END
 GO
 
@@ -354,7 +367,7 @@ GO
 ------ Khóa ngoại Mã người đặt
 ALTER TABLE DATCHO ADD CONSTRAINT FK_DATCHO_MaNguoiDat FOREIGN KEY (MaNguoiDat) REFERENCES KHACHHANG(MaKhachHang)
 GO
------- Trigger NgayGioDat: NgayGioDat <= (Hiện tại - ThoiGianDatVeChamNhat)
+------ Trigger NgayGioDat: NgayGioDat <= (NgayKhoiHanh - ThoiGianDatVeChamNhat)
 CREATE TRIGGER TG_DATCHO_NgayGioDat ON DATCHO
 FOR INSERT, UPDATE
 AS
@@ -365,15 +378,26 @@ BEGIN
 	SELECT @ngayGioDat=NgayGioDat
 	FROM INSERTED
 
+	-- Lấy ngày giờ máy bay cất cánh
+	DECLARE @ngayGioCatCanh DATETIME
+
+	SELECT @ngayGioCatCanh=NgayGio
+	FROM CHUYENBAY
+	WHERE MaChuyenBay = (
+		SELECT MachuyenBay
+		FROM INSERTED
+	)
+
 	-- Khai báo ThoiGianDatVeChamNhat
 	DECLARE @datVeChamNhat INT
+
 	-- Lấy Thời gian dừng tối thiểu và thời gian dừng tối đa
 	SELECT @datVeChamNhat=GiaTri
 	FROM THAMSO
 	WHERE TenThamSo='ThoiGianDatVeChamNhat'
 
 	-- Nếu ngày giờ đặt chỗ không hợp lệ thì rollback tran
-	IF (@ngayGioDat<=(DATEADD(day, -@datVeChamNhat, GETDATE())))
+	IF (@ngayGioDat>(DATEADD(day, -@datVeChamNhat, @ngayGioCatCanh)))
 		ROLLBACK TRAN
 END
 GO
