@@ -1,7 +1,7 @@
-﻿CREATE DATABASE BANVECHUYENBAY
+﻿CREATE DATABASE BANVECHUYENBAY2
 GO
 
-USE BANVECHUYENBAY
+USE BANVECHUYENBAY2
 GO
 
 -- Bảng Chuyến bay
@@ -179,6 +179,7 @@ GO
 -- RÀNG BUỘC BẢNG SÂN BAY
 ------ VietTat Unique
 ALTER TABLE SANBAY ADD CONSTRAINT UNIQUE_SANBAY_VietTat UNIQUE (VietTat)
+GO
 
 -- RÀNG BUỘC BẢNG SÂN BAY TRUNG GIAN
 ------ Khóa ngoại Mã đường bay
@@ -190,6 +191,37 @@ GO
 ------ ThuTu: >= 1
 ALTER TABLE SANBAYTG ADD CONSTRAINT CK_SANBAYTG_ThuTu CHECK (ThuTu>=1)
 GO
+
+------ MaSanBay: không trùng trên cùng một đường bay
+ALTER TABLE SANBAYTG ADD CONSTRAINT UNIQUE_SANBAYTG_MaSanBay UNIQUE(MaSanBay, MaDuongBay)
+GO
+
+------ TRIGGER MaSanBay: Không trùng với SanBayDi, SanBayDen của DUONGBAY
+CREATE TRIGGER TG_SANBAYTG_MaSanBay ON SANBAYTG
+FOR INSERT, UPDATE
+AS
+BEGIN
+	-- Khai báo
+	DECLARE @maSanBayTG INT, @maSanBayDi INT, @maSanBayDen INT, @maDuongBay INT
+	
+	-- Lấy mã sân bay trung gian vừa thêm
+	SELECT @maSanBayTG=MaSanBay, @maDuongBay=MaDuongBay
+	FROM INSERTED
+
+	-- Lấy mã sân bay đi và sân bay đến của đường bay
+	SELECT @maSanBayDi=MaSanBayDi, @maSanBayDen=MaSanBayDen
+	FROM DUONGBAY
+	WHERE MaDuongBay=@maDuongBay
+
+	-- Kiểm tra xem có trùng không
+	IF (@maSanBayTG IN (@maSanBayDi, @maSanBayDen))
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'San bay trung gian trung san bay di hoac den'
+	END
+END
+GO
+
 ------ TRIGGER ThuTu: ThuTu của cùng một đường bay không trùng nhau
 CREATE TRIGGER TG_SANBAYTG_ThuTu ON SANBAYTG
 FOR INSERT, UPDATE
@@ -314,6 +346,10 @@ GO
 ALTER TABLE CHITIETHANGVE ADD CONSTRAINT CK_CHITIETHANGVE_SoGhe CHECK (SoGhe>0)
 GO
 
+------ MaHangVe: Unique cho mỗi chuyến bay
+ALTER TABLE CHITIETHANGVE ADD CONSTRAINT UNIQUE_CHITIETHANGVE_MaHangVe UNIQUE (MaChuyenBay, MaHangVe)
+GO
+
 -- RÀNG BUỘC BẢNG VÉ
 ------ Khóa ngoại Mã hạng vé
 ALTER TABLE VE ADD CONSTRAINT FK_VE_MaHangVe FOREIGN KEY (MaHangVe) REFERENCES HANGVE(MaHangVe)
@@ -406,12 +442,46 @@ GO
 ALTER TABLE DATCHO ADD CONSTRAINT CK_DATCHO_TrangThai CHECK (TrangThai IN ('ChuaDoi','DaDoi','DaHuy'))
 GO	
 
+------ TrangThai: Mặc định là chưa đổi
+ALTER TABLE DATCHO ADD CONSTRAINT DF_DATCHO_TrangThai DEFAULT 'ChuaDoi' FOR TrangThai
+GO
+
 -- RÀNG BUỘC BẢNG CHI TIẾT ĐẶT CHỖ
 ------ Khóa ngoại Mã đặt chỗ
 ALTER TABLE CHITIETDATCHO ADD CONSTRAINT FK_CHITIETDATCHO_MaDatCho FOREIGN KEY (MaDatCho) REFERENCES DATCHO(MaDatCho)
 GO
 ------ Khóa ngoại Mã khách hàng
 ALTER TABLE CHITIETDATCHO ADD CONSTRAINT FK_CHITIETDATCHO_MaKhachHang FOREIGN KEY (MaKhachHang) REFERENCES KHACHHANG(MaKhachHang)
+GO
+
+------ TRIGGER: Số chi tiết đặt chỗ không lớn hơn số vé đã đặt
+CREATE TRIGGER TRG_CHITIETDATCHO_SoLuongVe ON CHITIETDATCHO
+FOR INSERT
+AS
+BEGIN
+	DECLARE @soVeDaDat INT, @soVeHienTai INT, @maDatCho INT
+
+	-- Lấy mã đặt chỗ
+	SELECT @maDatCho=MaDatCho
+	FROM INSERTED
+
+	-- Lấy số vé hiện tại
+	SELECT @soVeHienTai = COUNT(*)
+	FROM CHITIETDATCHO
+	WHERE MaDatCho=@maDatCho
+
+	-- Lấy số vé đã đặt
+	SELECT @soVeDaDat = SoVeDat
+	FROM DATCHO
+	WHERE MaDatCho=@maDatCho
+
+	-- Kiểm tra số lượng vé
+	IF (@soVeHienTai > @soVeDaDat)
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'Da vuot qua so luong ve da dat cua DATCHO'
+	END
+END
 GO
 
 -- RÀNG BUỘC BẢNG DOANH THU CHUYẾN BAY
