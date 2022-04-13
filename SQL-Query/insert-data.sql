@@ -1,5 +1,5 @@
 ﻿-- Nhập chuyến bay
-USE BANVECHUYENBAY2
+USE BANVECHUYENBAY
 
 INSERT INTO SANBAY (TenSanBay, VietTat, TinhThanh, TrangThai) VALUES
 	(N'Nội Bài', 'HAN', N'Hà Nội', 1),
