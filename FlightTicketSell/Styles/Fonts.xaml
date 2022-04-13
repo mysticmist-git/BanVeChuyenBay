@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+    
+    <!-- Roboto Font -->
+    <FontFamily x:Key="RobotoBlack">pack://application:,,,/Fonts/#Roboto Black</FontFamily>
+    <FontFamily x:Key="RobotoLight">pack://application:,,,/Fonts/#Roboto Light</FontFamily>
+    <FontFamily x:Key="RobotoMedium">pack://application:,,,/Fonts/#Roboto Medium</FontFamily>
+    <FontFamily x:Key="Roboto">pack://application:,,,/Fonts/#Roboto</FontFamily>
+    <FontFamily x:Key="Pacifico">pack://application:,,,/Fonts/#Pacifico</FontFamily>
+    
+   
+    
+    <!-- Font Size -->
+    <system:Double x:Key="ExtraLarge">40</system:Double>
+    <system:Double x:Key="Large">30</system:Double>
+    <system:Double x:Key="Regular">24</system:Double>
+    <system:Double x:Key="Small">16</system:Double>
+    <system:Double x:Key="RealSmall">12</system:Double>
+</ResourceDictionary>

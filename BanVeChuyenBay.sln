@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32126.315
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BanVeChuyenBay", "BanVeChuyenBay\BanVeChuyenBay.csproj", "{28EBE0AA-557A-40C4-A16E-2F3BD8CA4422}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BanVeChuyenBay", "BanVeChuyenBay\BanVeChuyenBay.csproj", "{28EBE0AA-557A-40C4-A16E-2F3BD8CA4422}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightTicketSell", "FlightTicketSell\FlightTicketSell.csproj", "{AA6DCF47-58D4-48DA-90B0-FD8BFD0205C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{28EBE0AA-557A-40C4-A16E-2F3BD8CA4422}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28EBE0AA-557A-40C4-A16E-2F3BD8CA4422}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28EBE0AA-557A-40C4-A16E-2F3BD8CA4422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA6DCF47-58D4-48DA-90B0-FD8BFD0205C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA6DCF47-58D4-48DA-90B0-FD8BFD0205C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA6DCF47-58D4-48DA-90B0-FD8BFD0205C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA6DCF47-58D4-48DA-90B0-FD8BFD0205C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
