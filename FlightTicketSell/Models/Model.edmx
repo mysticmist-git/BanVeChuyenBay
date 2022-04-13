@@ -1,0 +1,1144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FlightTicketSellModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CHITIETDATCHO">
+          <Key>
+            <PropertyRef Name="MaChiTietDatCho" />
+          </Key>
+          <Property Name="MaChiTietDatCho" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaDatCho" Type="int" Nullable="false" />
+          <Property Name="MaKhachHang" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CHITIETHANGVE">
+          <Key>
+            <PropertyRef Name="MaCTHV" />
+          </Key>
+          <Property Name="MaCTHV" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaHangVe" Type="int" Nullable="false" />
+          <Property Name="MaChuyenBay" Type="int" Nullable="false" />
+          <Property Name="SoGhe" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CHUYENBAY">
+          <Key>
+            <PropertyRef Name="MaChuyenBay" />
+          </Key>
+          <Property Name="MaChuyenBay" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaDuongBay" Type="int" Nullable="false" />
+          <Property Name="GiaVe" Type="money" Nullable="false" />
+          <Property Name="NgayGio" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DATCHO">
+          <Key>
+            <PropertyRef Name="MaDatCho" />
+          </Key>
+          <Property Name="MaDatCho" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaHangVe" Type="int" Nullable="false" />
+          <Property Name="MaChuyenBay" Type="int" Nullable="false" />
+          <Property Name="MaNguoiDat" Type="int" Nullable="false" />
+          <Property Name="NgayGioDat" Type="datetime" Nullable="false" />
+          <Property Name="SoVeDat" Type="int" Nullable="false" />
+          <Property Name="GiaTien" Type="money" Nullable="false" />
+          <Property Name="TrangThai" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="DOANHTHUCHUYENBAY">
+          <Key>
+            <PropertyRef Name="MaDoanhThuChuyenBay" />
+          </Key>
+          <Property Name="MaDoanhThuChuyenBay" Type="int" Nullable="false" />
+          <Property Name="MaDoanhThuThang" Type="int" Nullable="false" />
+          <Property Name="MaChuyenBay" Type="int" Nullable="false" />
+          <Property Name="SoVe" Type="int" Nullable="false" />
+          <Property Name="DoanhThu" Type="money" Nullable="false" />
+          <Property Name="TiLe" Type="decimal" Precision="3" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DOANHTHUNAM">
+          <Key>
+            <PropertyRef Name="MaDoanhThuNam" />
+          </Key>
+          <Property Name="MaDoanhThuNam" Type="int" Nullable="false" />
+          <Property Name="Nam" Type="int" Nullable="false" />
+          <Property Name="SoChuyenBay" Type="int" Nullable="false" />
+          <Property Name="DoanhThu" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DOANHTHUTHANG">
+          <Key>
+            <PropertyRef Name="MaDoanhThuThang" />
+          </Key>
+          <Property Name="MaDoanhThuThang" Type="int" Nullable="false" />
+          <Property Name="MaDoanhThuNam" Type="int" Nullable="false" />
+          <Property Name="Thang" Type="int" Nullable="false" />
+          <Property Name="SoChuyenBay" Type="int" Nullable="false" />
+          <Property Name="DoanhThu" Type="money" Nullable="false" />
+          <Property Name="TiLe" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DUONGBAY">
+          <Key>
+            <PropertyRef Name="MaDuongBay" />
+          </Key>
+          <Property Name="MaDuongBay" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaSanBayDi" Type="int" Nullable="false" />
+          <Property Name="MaSanBayDen" Type="int" Nullable="false" />
+          <Property Name="ThoiGianBay" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HANGVE">
+          <Key>
+            <PropertyRef Name="MaHangVe" />
+          </Key>
+          <Property Name="MaHangVe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenHangVe" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="HeSo" Type="decimal" Precision="3" Scale="2" Nullable="false" />
+          <Property Name="TrangThai" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KHACHHANG">
+          <Key>
+            <PropertyRef Name="MaKhachHang" />
+          </Key>
+          <Property Name="MaKhachHang" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HoTen" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CMND" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="SDT" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="SANBAY">
+          <Key>
+            <PropertyRef Name="MaSanBay" />
+          </Key>
+          <Property Name="MaSanBay" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenSanBay" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="VietTat" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TinhThanh" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="TrangThai" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SANBAYTG">
+          <Key>
+            <PropertyRef Name="MaSanBayTG" />
+          </Key>
+          <Property Name="MaSanBayTG" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaDuongBay" Type="int" Nullable="false" />
+          <Property Name="MaSanBay" Type="int" Nullable="false" />
+          <Property Name="ThuTu" Type="int" Nullable="false" />
+          <Property Name="ThoiGianDung" Type="int" Nullable="false" />
+          <Property Name="GhiChu" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="THAMSO">
+          <Key>
+            <PropertyRef Name="TenThamSo" />
+          </Key>
+          <Property Name="TenThamSo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="GiaTri" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VE">
+          <Key>
+            <PropertyRef Name="MaVe" />
+          </Key>
+          <Property Name="MaVe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaHangVe" Type="int" Nullable="false" />
+          <Property Name="MaChuyenBay" Type="int" Nullable="false" />
+          <Property Name="MaKhachHang" Type="int" Nullable="false" />
+          <Property Name="GiaTien" Type="int" Nullable="false" />
+          <Property Name="NgayThanhToan" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CHITIETDATCHO_MaDatCho">
+          <End Role="DATCHO" Type="Self.DATCHO" Multiplicity="1" />
+          <End Role="CHITIETDATCHO" Type="Self.CHITIETDATCHO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DATCHO">
+              <PropertyRef Name="MaDatCho" />
+            </Principal>
+            <Dependent Role="CHITIETDATCHO">
+              <PropertyRef Name="MaDatCho" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CHITIETDATCHO_MaKhachHang">
+          <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="1" />
+          <End Role="CHITIETDATCHO" Type="Self.CHITIETDATCHO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHACHHANG">
+              <PropertyRef Name="MaKhachHang" />
+            </Principal>
+            <Dependent Role="CHITIETDATCHO">
+              <PropertyRef Name="MaKhachHang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CHITIETHANGVE_MaChuyenBay">
+          <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="1" />
+          <End Role="CHITIETHANGVE" Type="Self.CHITIETHANGVE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CHUYENBAY">
+              <PropertyRef Name="MaChuyenBay" />
+            </Principal>
+            <Dependent Role="CHITIETHANGVE">
+              <PropertyRef Name="MaChuyenBay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CHITIETHANGVE_MaHangVe">
+          <End Role="HANGVE" Type="Self.HANGVE" Multiplicity="1" />
+          <End Role="CHITIETHANGVE" Type="Self.CHITIETHANGVE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HANGVE">
+              <PropertyRef Name="MaHangVe" />
+            </Principal>
+            <Dependent Role="CHITIETHANGVE">
+              <PropertyRef Name="MaHangVe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CHUYENBAY_MaDuongBay">
+          <End Role="DUONGBAY" Type="Self.DUONGBAY" Multiplicity="1" />
+          <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DUONGBAY">
+              <PropertyRef Name="MaDuongBay" />
+            </Principal>
+            <Dependent Role="CHUYENBAY">
+              <PropertyRef Name="MaDuongBay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DATCHO_MaChuyenBay">
+          <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="1" />
+          <End Role="DATCHO" Type="Self.DATCHO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CHUYENBAY">
+              <PropertyRef Name="MaChuyenBay" />
+            </Principal>
+            <Dependent Role="DATCHO">
+              <PropertyRef Name="MaChuyenBay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DATCHO_MaHangVe">
+          <End Role="HANGVE" Type="Self.HANGVE" Multiplicity="1" />
+          <End Role="DATCHO" Type="Self.DATCHO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HANGVE">
+              <PropertyRef Name="MaHangVe" />
+            </Principal>
+            <Dependent Role="DATCHO">
+              <PropertyRef Name="MaHangVe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DATCHO_MaNguoiDat">
+          <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="1" />
+          <End Role="DATCHO" Type="Self.DATCHO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHACHHANG">
+              <PropertyRef Name="MaKhachHang" />
+            </Principal>
+            <Dependent Role="DATCHO">
+              <PropertyRef Name="MaNguoiDat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOANHTHUCHUYENBAY_MaChuyenBay">
+          <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="1" />
+          <End Role="DOANHTHUCHUYENBAY" Type="Self.DOANHTHUCHUYENBAY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CHUYENBAY">
+              <PropertyRef Name="MaChuyenBay" />
+            </Principal>
+            <Dependent Role="DOANHTHUCHUYENBAY">
+              <PropertyRef Name="MaChuyenBay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOANHTHUCHUYENBAY_MaDoanhThuThang">
+          <End Role="DOANHTHUTHANG" Type="Self.DOANHTHUTHANG" Multiplicity="1" />
+          <End Role="DOANHTHUCHUYENBAY" Type="Self.DOANHTHUCHUYENBAY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DOANHTHUTHANG">
+              <PropertyRef Name="MaDoanhThuThang" />
+            </Principal>
+            <Dependent Role="DOANHTHUCHUYENBAY">
+              <PropertyRef Name="MaDoanhThuThang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOANHTHUTHANG_MaDoanhThuNam">
+          <End Role="DOANHTHUNAM" Type="Self.DOANHTHUNAM" Multiplicity="1" />
+          <End Role="DOANHTHUTHANG" Type="Self.DOANHTHUTHANG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DOANHTHUNAM">
+              <PropertyRef Name="MaDoanhThuNam" />
+            </Principal>
+            <Dependent Role="DOANHTHUTHANG">
+              <PropertyRef Name="MaDoanhThuNam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DUONGBAY_MaSanBayDen">
+          <End Role="SANBAY" Type="Self.SANBAY" Multiplicity="1" />
+          <End Role="DUONGBAY" Type="Self.DUONGBAY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SANBAY">
+              <PropertyRef Name="MaSanBay" />
+            </Principal>
+            <Dependent Role="DUONGBAY">
+              <PropertyRef Name="MaSanBayDen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DUONGBAY_MaSanBayDi">
+          <End Role="SANBAY" Type="Self.SANBAY" Multiplicity="1" />
+          <End Role="DUONGBAY" Type="Self.DUONGBAY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SANBAY">
+              <PropertyRef Name="MaSanBay" />
+            </Principal>
+            <Dependent Role="DUONGBAY">
+              <PropertyRef Name="MaSanBayDi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SANBAYTG_MaDuongBay">
+          <End Role="DUONGBAY" Type="Self.DUONGBAY" Multiplicity="1" />
+          <End Role="SANBAYTG" Type="Self.SANBAYTG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DUONGBAY">
+              <PropertyRef Name="MaDuongBay" />
+            </Principal>
+            <Dependent Role="SANBAYTG">
+              <PropertyRef Name="MaDuongBay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SANBAYTG_MaSanBay">
+          <End Role="SANBAY" Type="Self.SANBAY" Multiplicity="1" />
+          <End Role="SANBAYTG" Type="Self.SANBAYTG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SANBAY">
+              <PropertyRef Name="MaSanBay" />
+            </Principal>
+            <Dependent Role="SANBAYTG">
+              <PropertyRef Name="MaSanBay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VE_MaChuyenBay">
+          <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="1" />
+          <End Role="VE" Type="Self.VE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CHUYENBAY">
+              <PropertyRef Name="MaChuyenBay" />
+            </Principal>
+            <Dependent Role="VE">
+              <PropertyRef Name="MaChuyenBay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VE_MaHangVe">
+          <End Role="HANGVE" Type="Self.HANGVE" Multiplicity="1" />
+          <End Role="VE" Type="Self.VE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HANGVE">
+              <PropertyRef Name="MaHangVe" />
+            </Principal>
+            <Dependent Role="VE">
+              <PropertyRef Name="MaHangVe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VE_MaKhachHang">
+          <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="1" />
+          <End Role="VE" Type="Self.VE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHACHHANG">
+              <PropertyRef Name="MaKhachHang" />
+            </Principal>
+            <Dependent Role="VE">
+              <PropertyRef Name="MaKhachHang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FlightTicketSellModelStoreContainer">
+          <EntitySet Name="CHITIETDATCHO" EntityType="Self.CHITIETDATCHO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CHITIETHANGVE" EntityType="Self.CHITIETHANGVE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CHUYENBAY" EntityType="Self.CHUYENBAY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DATCHO" EntityType="Self.DATCHO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DOANHTHUCHUYENBAY" EntityType="Self.DOANHTHUCHUYENBAY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DOANHTHUNAM" EntityType="Self.DOANHTHUNAM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DOANHTHUTHANG" EntityType="Self.DOANHTHUTHANG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DUONGBAY" EntityType="Self.DUONGBAY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HANGVE" EntityType="Self.HANGVE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KHACHHANG" EntityType="Self.KHACHHANG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SANBAY" EntityType="Self.SANBAY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SANBAYTG" EntityType="Self.SANBAYTG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="THAMSO" EntityType="Self.THAMSO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VE" EntityType="Self.VE" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CHITIETDATCHO_MaDatCho" Association="Self.FK_CHITIETDATCHO_MaDatCho">
+            <End Role="DATCHO" EntitySet="DATCHO" />
+            <End Role="CHITIETDATCHO" EntitySet="CHITIETDATCHO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CHITIETDATCHO_MaKhachHang" Association="Self.FK_CHITIETDATCHO_MaKhachHang">
+            <End Role="KHACHHANG" EntitySet="KHACHHANG" />
+            <End Role="CHITIETDATCHO" EntitySet="CHITIETDATCHO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CHITIETHANGVE_MaChuyenBay" Association="Self.FK_CHITIETHANGVE_MaChuyenBay">
+            <End Role="CHUYENBAY" EntitySet="CHUYENBAY" />
+            <End Role="CHITIETHANGVE" EntitySet="CHITIETHANGVE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CHITIETHANGVE_MaHangVe" Association="Self.FK_CHITIETHANGVE_MaHangVe">
+            <End Role="HANGVE" EntitySet="HANGVE" />
+            <End Role="CHITIETHANGVE" EntitySet="CHITIETHANGVE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CHUYENBAY_MaDuongBay" Association="Self.FK_CHUYENBAY_MaDuongBay">
+            <End Role="DUONGBAY" EntitySet="DUONGBAY" />
+            <End Role="CHUYENBAY" EntitySet="CHUYENBAY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DATCHO_MaChuyenBay" Association="Self.FK_DATCHO_MaChuyenBay">
+            <End Role="CHUYENBAY" EntitySet="CHUYENBAY" />
+            <End Role="DATCHO" EntitySet="DATCHO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DATCHO_MaHangVe" Association="Self.FK_DATCHO_MaHangVe">
+            <End Role="HANGVE" EntitySet="HANGVE" />
+            <End Role="DATCHO" EntitySet="DATCHO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DATCHO_MaNguoiDat" Association="Self.FK_DATCHO_MaNguoiDat">
+            <End Role="KHACHHANG" EntitySet="KHACHHANG" />
+            <End Role="DATCHO" EntitySet="DATCHO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOANHTHUCHUYENBAY_MaChuyenBay" Association="Self.FK_DOANHTHUCHUYENBAY_MaChuyenBay">
+            <End Role="CHUYENBAY" EntitySet="CHUYENBAY" />
+            <End Role="DOANHTHUCHUYENBAY" EntitySet="DOANHTHUCHUYENBAY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOANHTHUCHUYENBAY_MaDoanhThuThang" Association="Self.FK_DOANHTHUCHUYENBAY_MaDoanhThuThang">
+            <End Role="DOANHTHUTHANG" EntitySet="DOANHTHUTHANG" />
+            <End Role="DOANHTHUCHUYENBAY" EntitySet="DOANHTHUCHUYENBAY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOANHTHUTHANG_MaDoanhThuNam" Association="Self.FK_DOANHTHUTHANG_MaDoanhThuNam">
+            <End Role="DOANHTHUNAM" EntitySet="DOANHTHUNAM" />
+            <End Role="DOANHTHUTHANG" EntitySet="DOANHTHUTHANG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DUONGBAY_MaSanBayDen" Association="Self.FK_DUONGBAY_MaSanBayDen">
+            <End Role="SANBAY" EntitySet="SANBAY" />
+            <End Role="DUONGBAY" EntitySet="DUONGBAY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DUONGBAY_MaSanBayDi" Association="Self.FK_DUONGBAY_MaSanBayDi">
+            <End Role="SANBAY" EntitySet="SANBAY" />
+            <End Role="DUONGBAY" EntitySet="DUONGBAY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SANBAYTG_MaDuongBay" Association="Self.FK_SANBAYTG_MaDuongBay">
+            <End Role="DUONGBAY" EntitySet="DUONGBAY" />
+            <End Role="SANBAYTG" EntitySet="SANBAYTG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SANBAYTG_MaSanBay" Association="Self.FK_SANBAYTG_MaSanBay">
+            <End Role="SANBAY" EntitySet="SANBAY" />
+            <End Role="SANBAYTG" EntitySet="SANBAYTG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VE_MaChuyenBay" Association="Self.FK_VE_MaChuyenBay">
+            <End Role="CHUYENBAY" EntitySet="CHUYENBAY" />
+            <End Role="VE" EntitySet="VE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VE_MaHangVe" Association="Self.FK_VE_MaHangVe">
+            <End Role="HANGVE" EntitySet="HANGVE" />
+            <End Role="VE" EntitySet="VE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VE_MaKhachHang" Association="Self.FK_VE_MaKhachHang">
+            <End Role="KHACHHANG" EntitySet="KHACHHANG" />
+            <End Role="VE" EntitySet="VE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FlightTicketSellModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CHITIETDATCHO">
+          <Key>
+            <PropertyRef Name="MaChiTietDatCho" />
+          </Key>
+          <Property Name="MaChiTietDatCho" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaDatCho" Type="Int32" Nullable="false" />
+          <Property Name="MaKhachHang" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DATCHO" Relationship="Self.FK_CHITIETDATCHO_MaDatCho" FromRole="CHITIETDATCHO" ToRole="DATCHO" />
+          <NavigationProperty Name="KHACHHANG" Relationship="Self.FK_CHITIETDATCHO_MaKhachHang" FromRole="CHITIETDATCHO" ToRole="KHACHHANG" />
+        </EntityType>
+        <EntityType Name="CHITIETHANGVE">
+          <Key>
+            <PropertyRef Name="MaCTHV" />
+          </Key>
+          <Property Name="MaCTHV" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaHangVe" Type="Int32" Nullable="false" />
+          <Property Name="MaChuyenBay" Type="Int32" Nullable="false" />
+          <Property Name="SoGhe" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CHUYENBAY" Relationship="Self.FK_CHITIETHANGVE_MaChuyenBay" FromRole="CHITIETHANGVE" ToRole="CHUYENBAY" />
+          <NavigationProperty Name="HANGVE" Relationship="Self.FK_CHITIETHANGVE_MaHangVe" FromRole="CHITIETHANGVE" ToRole="HANGVE" />
+        </EntityType>
+        <EntityType Name="CHUYENBAY">
+          <Key>
+            <PropertyRef Name="MaChuyenBay" />
+          </Key>
+          <Property Name="MaChuyenBay" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaDuongBay" Type="Int32" Nullable="false" />
+          <Property Name="GiaVe" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="NgayGio" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CHITIETHANGVEs" Relationship="Self.FK_CHITIETHANGVE_MaChuyenBay" FromRole="CHUYENBAY" ToRole="CHITIETHANGVE" />
+          <NavigationProperty Name="DUONGBAY" Relationship="Self.FK_CHUYENBAY_MaDuongBay" FromRole="CHUYENBAY" ToRole="DUONGBAY" />
+          <NavigationProperty Name="DATCHOes" Relationship="Self.FK_DATCHO_MaChuyenBay" FromRole="CHUYENBAY" ToRole="DATCHO" />
+          <NavigationProperty Name="DOANHTHUCHUYENBAYs" Relationship="Self.FK_DOANHTHUCHUYENBAY_MaChuyenBay" FromRole="CHUYENBAY" ToRole="DOANHTHUCHUYENBAY" />
+          <NavigationProperty Name="VEs" Relationship="Self.FK_VE_MaChuyenBay" FromRole="CHUYENBAY" ToRole="VE" />
+        </EntityType>
+        <EntityType Name="DATCHO">
+          <Key>
+            <PropertyRef Name="MaDatCho" />
+          </Key>
+          <Property Name="MaDatCho" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaHangVe" Type="Int32" Nullable="false" />
+          <Property Name="MaChuyenBay" Type="Int32" Nullable="false" />
+          <Property Name="MaNguoiDat" Type="Int32" Nullable="false" />
+          <Property Name="NgayGioDat" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SoVeDat" Type="Int32" Nullable="false" />
+          <Property Name="GiaTien" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="TrangThai" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CHITIETDATCHOes" Relationship="Self.FK_CHITIETDATCHO_MaDatCho" FromRole="DATCHO" ToRole="CHITIETDATCHO" />
+          <NavigationProperty Name="CHUYENBAY" Relationship="Self.FK_DATCHO_MaChuyenBay" FromRole="DATCHO" ToRole="CHUYENBAY" />
+          <NavigationProperty Name="HANGVE" Relationship="Self.FK_DATCHO_MaHangVe" FromRole="DATCHO" ToRole="HANGVE" />
+          <NavigationProperty Name="KHACHHANG" Relationship="Self.FK_DATCHO_MaNguoiDat" FromRole="DATCHO" ToRole="KHACHHANG" />
+        </EntityType>
+        <EntityType Name="DOANHTHUCHUYENBAY">
+          <Key>
+            <PropertyRef Name="MaDoanhThuChuyenBay" />
+          </Key>
+          <Property Name="MaDoanhThuChuyenBay" Type="Int32" Nullable="false" />
+          <Property Name="MaDoanhThuThang" Type="Int32" Nullable="false" />
+          <Property Name="MaChuyenBay" Type="Int32" Nullable="false" />
+          <Property Name="SoVe" Type="Int32" Nullable="false" />
+          <Property Name="DoanhThu" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="TiLe" Type="Decimal" Precision="3" Scale="2" Nullable="false" />
+          <NavigationProperty Name="CHUYENBAY" Relationship="Self.FK_DOANHTHUCHUYENBAY_MaChuyenBay" FromRole="DOANHTHUCHUYENBAY" ToRole="CHUYENBAY" />
+          <NavigationProperty Name="DOANHTHUTHANG" Relationship="Self.FK_DOANHTHUCHUYENBAY_MaDoanhThuThang" FromRole="DOANHTHUCHUYENBAY" ToRole="DOANHTHUTHANG" />
+        </EntityType>
+        <EntityType Name="DOANHTHUNAM">
+          <Key>
+            <PropertyRef Name="MaDoanhThuNam" />
+          </Key>
+          <Property Name="MaDoanhThuNam" Type="Int32" Nullable="false" />
+          <Property Name="Nam" Type="Int32" Nullable="false" />
+          <Property Name="SoChuyenBay" Type="Int32" Nullable="false" />
+          <Property Name="DoanhThu" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="DOANHTHUTHANGs" Relationship="Self.FK_DOANHTHUTHANG_MaDoanhThuNam" FromRole="DOANHTHUNAM" ToRole="DOANHTHUTHANG" />
+        </EntityType>
+        <EntityType Name="DOANHTHUTHANG">
+          <Key>
+            <PropertyRef Name="MaDoanhThuThang" />
+          </Key>
+          <Property Name="MaDoanhThuThang" Type="Int32" Nullable="false" />
+          <Property Name="MaDoanhThuNam" Type="Int32" Nullable="false" />
+          <Property Name="Thang" Type="Int32" Nullable="false" />
+          <Property Name="SoChuyenBay" Type="Int32" Nullable="false" />
+          <Property Name="DoanhThu" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="TiLe" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <NavigationProperty Name="DOANHTHUCHUYENBAYs" Relationship="Self.FK_DOANHTHUCHUYENBAY_MaDoanhThuThang" FromRole="DOANHTHUTHANG" ToRole="DOANHTHUCHUYENBAY" />
+          <NavigationProperty Name="DOANHTHUNAM" Relationship="Self.FK_DOANHTHUTHANG_MaDoanhThuNam" FromRole="DOANHTHUTHANG" ToRole="DOANHTHUNAM" />
+        </EntityType>
+        <EntityType Name="DUONGBAY">
+          <Key>
+            <PropertyRef Name="MaDuongBay" />
+          </Key>
+          <Property Name="MaDuongBay" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaSanBayDi" Type="Int32" Nullable="false" />
+          <Property Name="MaSanBayDen" Type="Int32" Nullable="false" />
+          <Property Name="ThoiGianBay" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CHUYENBAYs" Relationship="Self.FK_CHUYENBAY_MaDuongBay" FromRole="DUONGBAY" ToRole="CHUYENBAY" />
+          <NavigationProperty Name="SANBAY" Relationship="Self.FK_DUONGBAY_MaSanBayDen" FromRole="DUONGBAY" ToRole="SANBAY" />
+          <NavigationProperty Name="SANBAY1" Relationship="Self.FK_DUONGBAY_MaSanBayDi" FromRole="DUONGBAY" ToRole="SANBAY" />
+          <NavigationProperty Name="SANBAYTGs" Relationship="Self.FK_SANBAYTG_MaDuongBay" FromRole="DUONGBAY" ToRole="SANBAYTG" />
+        </EntityType>
+        <EntityType Name="HANGVE">
+          <Key>
+            <PropertyRef Name="MaHangVe" />
+          </Key>
+          <Property Name="MaHangVe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenHangVe" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HeSo" Type="Decimal" Precision="3" Scale="2" Nullable="false" />
+          <Property Name="TrangThai" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CHITIETHANGVEs" Relationship="Self.FK_CHITIETHANGVE_MaHangVe" FromRole="HANGVE" ToRole="CHITIETHANGVE" />
+          <NavigationProperty Name="DATCHOes" Relationship="Self.FK_DATCHO_MaHangVe" FromRole="HANGVE" ToRole="DATCHO" />
+          <NavigationProperty Name="VEs" Relationship="Self.FK_VE_MaHangVe" FromRole="HANGVE" ToRole="VE" />
+        </EntityType>
+        <EntityType Name="KHACHHANG">
+          <Key>
+            <PropertyRef Name="MaKhachHang" />
+          </Key>
+          <Property Name="MaKhachHang" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HoTen" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CMND" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SDT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CHITIETDATCHOes" Relationship="Self.FK_CHITIETDATCHO_MaKhachHang" FromRole="KHACHHANG" ToRole="CHITIETDATCHO" />
+          <NavigationProperty Name="DATCHOes" Relationship="Self.FK_DATCHO_MaNguoiDat" FromRole="KHACHHANG" ToRole="DATCHO" />
+          <NavigationProperty Name="VEs" Relationship="Self.FK_VE_MaKhachHang" FromRole="KHACHHANG" ToRole="VE" />
+        </EntityType>
+        <EntityType Name="SANBAY">
+          <Key>
+            <PropertyRef Name="MaSanBay" />
+          </Key>
+          <Property Name="MaSanBay" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenSanBay" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VietTat" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TinhThanh" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TrangThai" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DUONGBAYs" Relationship="Self.FK_DUONGBAY_MaSanBayDen" FromRole="SANBAY" ToRole="DUONGBAY" />
+          <NavigationProperty Name="DUONGBAYs1" Relationship="Self.FK_DUONGBAY_MaSanBayDi" FromRole="SANBAY" ToRole="DUONGBAY" />
+          <NavigationProperty Name="SANBAYTGs" Relationship="Self.FK_SANBAYTG_MaSanBay" FromRole="SANBAY" ToRole="SANBAYTG" />
+        </EntityType>
+        <EntityType Name="SANBAYTG">
+          <Key>
+            <PropertyRef Name="MaSanBayTG" />
+          </Key>
+          <Property Name="MaSanBayTG" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaDuongBay" Type="Int32" Nullable="false" />
+          <Property Name="MaSanBay" Type="Int32" Nullable="false" />
+          <Property Name="ThuTu" Type="Int32" Nullable="false" />
+          <Property Name="ThoiGianDung" Type="Int32" Nullable="false" />
+          <Property Name="GhiChu" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DUONGBAY" Relationship="Self.FK_SANBAYTG_MaDuongBay" FromRole="SANBAYTG" ToRole="DUONGBAY" />
+          <NavigationProperty Name="SANBAY" Relationship="Self.FK_SANBAYTG_MaSanBay" FromRole="SANBAYTG" ToRole="SANBAY" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="THAMSO">
+          <Key>
+            <PropertyRef Name="TenThamSo" />
+          </Key>
+          <Property Name="TenThamSo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GiaTri" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VE">
+          <Key>
+            <PropertyRef Name="MaVe" />
+          </Key>
+          <Property Name="MaVe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaHangVe" Type="Int32" Nullable="false" />
+          <Property Name="MaChuyenBay" Type="Int32" Nullable="false" />
+          <Property Name="MaKhachHang" Type="Int32" Nullable="false" />
+          <Property Name="GiaTien" Type="Int32" Nullable="false" />
+          <Property Name="NgayThanhToan" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CHUYENBAY" Relationship="Self.FK_VE_MaChuyenBay" FromRole="VE" ToRole="CHUYENBAY" />
+          <NavigationProperty Name="HANGVE" Relationship="Self.FK_VE_MaHangVe" FromRole="VE" ToRole="HANGVE" />
+          <NavigationProperty Name="KHACHHANG" Relationship="Self.FK_VE_MaKhachHang" FromRole="VE" ToRole="KHACHHANG" />
+        </EntityType>
+        <Association Name="FK_CHITIETDATCHO_MaDatCho">
+          <End Role="DATCHO" Type="Self.DATCHO" Multiplicity="1" />
+          <End Role="CHITIETDATCHO" Type="Self.CHITIETDATCHO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DATCHO">
+              <PropertyRef Name="MaDatCho" />
+            </Principal>
+            <Dependent Role="CHITIETDATCHO">
+              <PropertyRef Name="MaDatCho" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CHITIETDATCHO_MaKhachHang">
+          <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="1" />
+          <End Role="CHITIETDATCHO" Type="Self.CHITIETDATCHO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHACHHANG">
+              <PropertyRef Name="MaKhachHang" />
+            </Principal>
+            <Dependent Role="CHITIETDATCHO">
+              <PropertyRef Name="MaKhachHang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CHITIETHANGVE_MaChuyenBay">
+          <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="1" />
+          <End Role="CHITIETHANGVE" Type="Self.CHITIETHANGVE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CHUYENBAY">
+              <PropertyRef Name="MaChuyenBay" />
+            </Principal>
+            <Dependent Role="CHITIETHANGVE">
+              <PropertyRef Name="MaChuyenBay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CHITIETHANGVE_MaHangVe">
+          <End Role="HANGVE" Type="Self.HANGVE" Multiplicity="1" />
+          <End Role="CHITIETHANGVE" Type="Self.CHITIETHANGVE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HANGVE">
+              <PropertyRef Name="MaHangVe" />
+            </Principal>
+            <Dependent Role="CHITIETHANGVE">
+              <PropertyRef Name="MaHangVe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CHUYENBAY_MaDuongBay">
+          <End Role="DUONGBAY" Type="Self.DUONGBAY" Multiplicity="1" />
+          <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DUONGBAY">
+              <PropertyRef Name="MaDuongBay" />
+            </Principal>
+            <Dependent Role="CHUYENBAY">
+              <PropertyRef Name="MaDuongBay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DATCHO_MaChuyenBay">
+          <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="1" />
+          <End Role="DATCHO" Type="Self.DATCHO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CHUYENBAY">
+              <PropertyRef Name="MaChuyenBay" />
+            </Principal>
+            <Dependent Role="DATCHO">
+              <PropertyRef Name="MaChuyenBay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOANHTHUCHUYENBAY_MaChuyenBay">
+          <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="1" />
+          <End Role="DOANHTHUCHUYENBAY" Type="Self.DOANHTHUCHUYENBAY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CHUYENBAY">
+              <PropertyRef Name="MaChuyenBay" />
+            </Principal>
+            <Dependent Role="DOANHTHUCHUYENBAY">
+              <PropertyRef Name="MaChuyenBay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VE_MaChuyenBay">
+          <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="1" />
+          <End Role="VE" Type="Self.VE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CHUYENBAY">
+              <PropertyRef Name="MaChuyenBay" />
+            </Principal>
+            <Dependent Role="VE">
+              <PropertyRef Name="MaChuyenBay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DATCHO_MaHangVe">
+          <End Role="HANGVE" Type="Self.HANGVE" Multiplicity="1" />
+          <End Role="DATCHO" Type="Self.DATCHO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HANGVE">
+              <PropertyRef Name="MaHangVe" />
+            </Principal>
+            <Dependent Role="DATCHO">
+              <PropertyRef Name="MaHangVe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DATCHO_MaNguoiDat">
+          <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="1" />
+          <End Role="DATCHO" Type="Self.DATCHO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHACHHANG">
+              <PropertyRef Name="MaKhachHang" />
+            </Principal>
+            <Dependent Role="DATCHO">
+              <PropertyRef Name="MaNguoiDat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOANHTHUCHUYENBAY_MaDoanhThuThang">
+          <End Role="DOANHTHUTHANG" Type="Self.DOANHTHUTHANG" Multiplicity="1" />
+          <End Role="DOANHTHUCHUYENBAY" Type="Self.DOANHTHUCHUYENBAY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DOANHTHUTHANG">
+              <PropertyRef Name="MaDoanhThuThang" />
+            </Principal>
+            <Dependent Role="DOANHTHUCHUYENBAY">
+              <PropertyRef Name="MaDoanhThuThang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DOANHTHUTHANG_MaDoanhThuNam">
+          <End Role="DOANHTHUNAM" Type="Self.DOANHTHUNAM" Multiplicity="1" />
+          <End Role="DOANHTHUTHANG" Type="Self.DOANHTHUTHANG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DOANHTHUNAM">
+              <PropertyRef Name="MaDoanhThuNam" />
+            </Principal>
+            <Dependent Role="DOANHTHUTHANG">
+              <PropertyRef Name="MaDoanhThuNam" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DUONGBAY_MaSanBayDen">
+          <End Role="SANBAY" Type="Self.SANBAY" Multiplicity="1" />
+          <End Role="DUONGBAY" Type="Self.DUONGBAY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SANBAY">
+              <PropertyRef Name="MaSanBay" />
+            </Principal>
+            <Dependent Role="DUONGBAY">
+              <PropertyRef Name="MaSanBayDen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DUONGBAY_MaSanBayDi">
+          <End Role="SANBAY" Type="Self.SANBAY" Multiplicity="1" />
+          <End Role="DUONGBAY" Type="Self.DUONGBAY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SANBAY">
+              <PropertyRef Name="MaSanBay" />
+            </Principal>
+            <Dependent Role="DUONGBAY">
+              <PropertyRef Name="MaSanBayDi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SANBAYTG_MaDuongBay">
+          <End Role="DUONGBAY" Type="Self.DUONGBAY" Multiplicity="1" />
+          <End Role="SANBAYTG" Type="Self.SANBAYTG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DUONGBAY">
+              <PropertyRef Name="MaDuongBay" />
+            </Principal>
+            <Dependent Role="SANBAYTG">
+              <PropertyRef Name="MaDuongBay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VE_MaHangVe">
+          <End Role="HANGVE" Type="Self.HANGVE" Multiplicity="1" />
+          <End Role="VE" Type="Self.VE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HANGVE">
+              <PropertyRef Name="MaHangVe" />
+            </Principal>
+            <Dependent Role="VE">
+              <PropertyRef Name="MaHangVe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VE_MaKhachHang">
+          <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="1" />
+          <End Role="VE" Type="Self.VE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHACHHANG">
+              <PropertyRef Name="MaKhachHang" />
+            </Principal>
+            <Dependent Role="VE">
+              <PropertyRef Name="MaKhachHang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SANBAYTG_MaSanBay">
+          <End Role="SANBAY" Type="Self.SANBAY" Multiplicity="1" />
+          <End Role="SANBAYTG" Type="Self.SANBAYTG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SANBAY">
+              <PropertyRef Name="MaSanBay" />
+            </Principal>
+            <Dependent Role="SANBAYTG">
+              <PropertyRef Name="MaSanBay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FlightTicketSellEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CHITIETDATCHOes" EntityType="Self.CHITIETDATCHO" />
+          <EntitySet Name="CHITIETHANGVEs" EntityType="Self.CHITIETHANGVE" />
+          <EntitySet Name="CHUYENBAYs" EntityType="Self.CHUYENBAY" />
+          <EntitySet Name="DATCHOes" EntityType="Self.DATCHO" />
+          <EntitySet Name="DOANHTHUCHUYENBAYs" EntityType="Self.DOANHTHUCHUYENBAY" />
+          <EntitySet Name="DOANHTHUNAMs" EntityType="Self.DOANHTHUNAM" />
+          <EntitySet Name="DOANHTHUTHANGs" EntityType="Self.DOANHTHUTHANG" />
+          <EntitySet Name="DUONGBAYs" EntityType="Self.DUONGBAY" />
+          <EntitySet Name="HANGVEs" EntityType="Self.HANGVE" />
+          <EntitySet Name="KHACHHANGs" EntityType="Self.KHACHHANG" />
+          <EntitySet Name="SANBAYs" EntityType="Self.SANBAY" />
+          <EntitySet Name="SANBAYTGs" EntityType="Self.SANBAYTG" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="THAMSOes" EntityType="Self.THAMSO" />
+          <EntitySet Name="VEs" EntityType="Self.VE" />
+          <AssociationSet Name="FK_CHITIETDATCHO_MaDatCho" Association="Self.FK_CHITIETDATCHO_MaDatCho">
+            <End Role="DATCHO" EntitySet="DATCHOes" />
+            <End Role="CHITIETDATCHO" EntitySet="CHITIETDATCHOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CHITIETDATCHO_MaKhachHang" Association="Self.FK_CHITIETDATCHO_MaKhachHang">
+            <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
+            <End Role="CHITIETDATCHO" EntitySet="CHITIETDATCHOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CHITIETHANGVE_MaChuyenBay" Association="Self.FK_CHITIETHANGVE_MaChuyenBay">
+            <End Role="CHUYENBAY" EntitySet="CHUYENBAYs" />
+            <End Role="CHITIETHANGVE" EntitySet="CHITIETHANGVEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CHITIETHANGVE_MaHangVe" Association="Self.FK_CHITIETHANGVE_MaHangVe">
+            <End Role="HANGVE" EntitySet="HANGVEs" />
+            <End Role="CHITIETHANGVE" EntitySet="CHITIETHANGVEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CHUYENBAY_MaDuongBay" Association="Self.FK_CHUYENBAY_MaDuongBay">
+            <End Role="DUONGBAY" EntitySet="DUONGBAYs" />
+            <End Role="CHUYENBAY" EntitySet="CHUYENBAYs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DATCHO_MaChuyenBay" Association="Self.FK_DATCHO_MaChuyenBay">
+            <End Role="CHUYENBAY" EntitySet="CHUYENBAYs" />
+            <End Role="DATCHO" EntitySet="DATCHOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOANHTHUCHUYENBAY_MaChuyenBay" Association="Self.FK_DOANHTHUCHUYENBAY_MaChuyenBay">
+            <End Role="CHUYENBAY" EntitySet="CHUYENBAYs" />
+            <End Role="DOANHTHUCHUYENBAY" EntitySet="DOANHTHUCHUYENBAYs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VE_MaChuyenBay" Association="Self.FK_VE_MaChuyenBay">
+            <End Role="CHUYENBAY" EntitySet="CHUYENBAYs" />
+            <End Role="VE" EntitySet="VEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DATCHO_MaHangVe" Association="Self.FK_DATCHO_MaHangVe">
+            <End Role="HANGVE" EntitySet="HANGVEs" />
+            <End Role="DATCHO" EntitySet="DATCHOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DATCHO_MaNguoiDat" Association="Self.FK_DATCHO_MaNguoiDat">
+            <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
+            <End Role="DATCHO" EntitySet="DATCHOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOANHTHUCHUYENBAY_MaDoanhThuThang" Association="Self.FK_DOANHTHUCHUYENBAY_MaDoanhThuThang">
+            <End Role="DOANHTHUTHANG" EntitySet="DOANHTHUTHANGs" />
+            <End Role="DOANHTHUCHUYENBAY" EntitySet="DOANHTHUCHUYENBAYs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DOANHTHUTHANG_MaDoanhThuNam" Association="Self.FK_DOANHTHUTHANG_MaDoanhThuNam">
+            <End Role="DOANHTHUNAM" EntitySet="DOANHTHUNAMs" />
+            <End Role="DOANHTHUTHANG" EntitySet="DOANHTHUTHANGs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DUONGBAY_MaSanBayDen" Association="Self.FK_DUONGBAY_MaSanBayDen">
+            <End Role="SANBAY" EntitySet="SANBAYs" />
+            <End Role="DUONGBAY" EntitySet="DUONGBAYs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DUONGBAY_MaSanBayDi" Association="Self.FK_DUONGBAY_MaSanBayDi">
+            <End Role="SANBAY" EntitySet="SANBAYs" />
+            <End Role="DUONGBAY" EntitySet="DUONGBAYs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SANBAYTG_MaDuongBay" Association="Self.FK_SANBAYTG_MaDuongBay">
+            <End Role="DUONGBAY" EntitySet="DUONGBAYs" />
+            <End Role="SANBAYTG" EntitySet="SANBAYTGs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VE_MaHangVe" Association="Self.FK_VE_MaHangVe">
+            <End Role="HANGVE" EntitySet="HANGVEs" />
+            <End Role="VE" EntitySet="VEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VE_MaKhachHang" Association="Self.FK_VE_MaKhachHang">
+            <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
+            <End Role="VE" EntitySet="VEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SANBAYTG_MaSanBay" Association="Self.FK_SANBAYTG_MaSanBay">
+            <End Role="SANBAY" EntitySet="SANBAYs" />
+            <End Role="SANBAYTG" EntitySet="SANBAYTGs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FlightTicketSellModelStoreContainer" CdmEntityContainer="FlightTicketSellEntities">
+          <EntitySetMapping Name="CHITIETDATCHOes">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.CHITIETDATCHO">
+              <MappingFragment StoreEntitySet="CHITIETDATCHO">
+                <ScalarProperty Name="MaChiTietDatCho" ColumnName="MaChiTietDatCho" />
+                <ScalarProperty Name="MaDatCho" ColumnName="MaDatCho" />
+                <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHITIETHANGVEs">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.CHITIETHANGVE">
+              <MappingFragment StoreEntitySet="CHITIETHANGVE">
+                <ScalarProperty Name="MaCTHV" ColumnName="MaCTHV" />
+                <ScalarProperty Name="MaHangVe" ColumnName="MaHangVe" />
+                <ScalarProperty Name="MaChuyenBay" ColumnName="MaChuyenBay" />
+                <ScalarProperty Name="SoGhe" ColumnName="SoGhe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHUYENBAYs">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.CHUYENBAY">
+              <MappingFragment StoreEntitySet="CHUYENBAY">
+                <ScalarProperty Name="MaChuyenBay" ColumnName="MaChuyenBay" />
+                <ScalarProperty Name="MaDuongBay" ColumnName="MaDuongBay" />
+                <ScalarProperty Name="GiaVe" ColumnName="GiaVe" />
+                <ScalarProperty Name="NgayGio" ColumnName="NgayGio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DATCHOes">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.DATCHO">
+              <MappingFragment StoreEntitySet="DATCHO">
+                <ScalarProperty Name="MaDatCho" ColumnName="MaDatCho" />
+                <ScalarProperty Name="MaHangVe" ColumnName="MaHangVe" />
+                <ScalarProperty Name="MaChuyenBay" ColumnName="MaChuyenBay" />
+                <ScalarProperty Name="MaNguoiDat" ColumnName="MaNguoiDat" />
+                <ScalarProperty Name="NgayGioDat" ColumnName="NgayGioDat" />
+                <ScalarProperty Name="SoVeDat" ColumnName="SoVeDat" />
+                <ScalarProperty Name="GiaTien" ColumnName="GiaTien" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DOANHTHUCHUYENBAYs">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.DOANHTHUCHUYENBAY">
+              <MappingFragment StoreEntitySet="DOANHTHUCHUYENBAY">
+                <ScalarProperty Name="MaDoanhThuChuyenBay" ColumnName="MaDoanhThuChuyenBay" />
+                <ScalarProperty Name="MaDoanhThuThang" ColumnName="MaDoanhThuThang" />
+                <ScalarProperty Name="MaChuyenBay" ColumnName="MaChuyenBay" />
+                <ScalarProperty Name="SoVe" ColumnName="SoVe" />
+                <ScalarProperty Name="DoanhThu" ColumnName="DoanhThu" />
+                <ScalarProperty Name="TiLe" ColumnName="TiLe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DOANHTHUNAMs">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.DOANHTHUNAM">
+              <MappingFragment StoreEntitySet="DOANHTHUNAM">
+                <ScalarProperty Name="MaDoanhThuNam" ColumnName="MaDoanhThuNam" />
+                <ScalarProperty Name="Nam" ColumnName="Nam" />
+                <ScalarProperty Name="SoChuyenBay" ColumnName="SoChuyenBay" />
+                <ScalarProperty Name="DoanhThu" ColumnName="DoanhThu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DOANHTHUTHANGs">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.DOANHTHUTHANG">
+              <MappingFragment StoreEntitySet="DOANHTHUTHANG">
+                <ScalarProperty Name="MaDoanhThuThang" ColumnName="MaDoanhThuThang" />
+                <ScalarProperty Name="MaDoanhThuNam" ColumnName="MaDoanhThuNam" />
+                <ScalarProperty Name="Thang" ColumnName="Thang" />
+                <ScalarProperty Name="SoChuyenBay" ColumnName="SoChuyenBay" />
+                <ScalarProperty Name="DoanhThu" ColumnName="DoanhThu" />
+                <ScalarProperty Name="TiLe" ColumnName="TiLe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DUONGBAYs">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.DUONGBAY">
+              <MappingFragment StoreEntitySet="DUONGBAY">
+                <ScalarProperty Name="MaDuongBay" ColumnName="MaDuongBay" />
+                <ScalarProperty Name="MaSanBayDi" ColumnName="MaSanBayDi" />
+                <ScalarProperty Name="MaSanBayDen" ColumnName="MaSanBayDen" />
+                <ScalarProperty Name="ThoiGianBay" ColumnName="ThoiGianBay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HANGVEs">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.HANGVE">
+              <MappingFragment StoreEntitySet="HANGVE">
+                <ScalarProperty Name="MaHangVe" ColumnName="MaHangVe" />
+                <ScalarProperty Name="TenHangVe" ColumnName="TenHangVe" />
+                <ScalarProperty Name="HeSo" ColumnName="HeSo" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KHACHHANGs">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.KHACHHANG">
+              <MappingFragment StoreEntitySet="KHACHHANG">
+                <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+                <ScalarProperty Name="CMND" ColumnName="CMND" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SANBAYs">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.SANBAY">
+              <MappingFragment StoreEntitySet="SANBAY">
+                <ScalarProperty Name="MaSanBay" ColumnName="MaSanBay" />
+                <ScalarProperty Name="TenSanBay" ColumnName="TenSanBay" />
+                <ScalarProperty Name="VietTat" ColumnName="VietTat" />
+                <ScalarProperty Name="TinhThanh" ColumnName="TinhThanh" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SANBAYTGs">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.SANBAYTG">
+              <MappingFragment StoreEntitySet="SANBAYTG">
+                <ScalarProperty Name="MaSanBayTG" ColumnName="MaSanBayTG" />
+                <ScalarProperty Name="MaDuongBay" ColumnName="MaDuongBay" />
+                <ScalarProperty Name="MaSanBay" ColumnName="MaSanBay" />
+                <ScalarProperty Name="ThuTu" ColumnName="ThuTu" />
+                <ScalarProperty Name="ThoiGianDung" ColumnName="ThoiGianDung" />
+                <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="THAMSOes">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.THAMSO">
+              <MappingFragment StoreEntitySet="THAMSO">
+                <ScalarProperty Name="TenThamSo" ColumnName="TenThamSo" />
+                <ScalarProperty Name="GiaTri" ColumnName="GiaTri" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VEs">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.VE">
+              <MappingFragment StoreEntitySet="VE">
+                <ScalarProperty Name="MaVe" ColumnName="MaVe" />
+                <ScalarProperty Name="MaHangVe" ColumnName="MaHangVe" />
+                <ScalarProperty Name="MaChuyenBay" ColumnName="MaChuyenBay" />
+                <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
+                <ScalarProperty Name="GiaTien" ColumnName="GiaTien" />
+                <ScalarProperty Name="NgayThanhToan" ColumnName="NgayThanhToan" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

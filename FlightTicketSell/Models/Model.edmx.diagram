@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="89ffe23841ba4e8f93562deb7c093c3d" Name="Diagram1">
+        <EntityTypeShape EntityType="FlightTicketSellModel.CHITIETDATCHO" Width="1.5" PointX="12.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.CHITIETHANGVE" Width="1.5" PointX="7.5" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.CHUYENBAY" Width="1.5" PointX="5.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.DATCHO" Width="1.5" PointX="10.5" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.DOANHTHUCHUYENBAY" Width="1.5" PointX="7.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.DOANHTHUNAM" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.DOANHTHUTHANG" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.DUONGBAY" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.HANGVE" Width="1.5" PointX="5.25" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.KHACHHANG" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.SANBAY" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.SANBAYTG" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.sysdiagram" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.THAMSO" Width="1.5" PointX="9.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.VE" Width="1.5" PointX="7.5" PointY="12.625" IsExpanded="true" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_CHITIETDATCHO_MaDatCho" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_CHITIETDATCHO_MaKhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_CHITIETHANGVE_MaChuyenBay" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_CHITIETHANGVE_MaHangVe" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_CHUYENBAY_MaDuongBay" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_DATCHO_MaChuyenBay" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_DOANHTHUCHUYENBAY_MaChuyenBay" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_VE_MaChuyenBay" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_DATCHO_MaHangVe" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_DATCHO_MaNguoiDat" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_DOANHTHUCHUYENBAY_MaDoanhThuThang" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_DOANHTHUTHANG_MaDoanhThuNam" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_DUONGBAY_MaSanBayDen" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_DUONGBAY_MaSanBayDi" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_SANBAYTG_MaDuongBay" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_VE_MaHangVe" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_VE_MaKhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellModel.FK_SANBAYTG_MaSanBay" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
