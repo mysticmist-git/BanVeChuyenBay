@@ -10,7 +10,7 @@ namespace FlightTicketSell.ViewModels.Report
 {
     public class FlightReport 
     {
-        #region Privete Members
+        #region Private Members
 
         /// <summary>
         /// The Date, Time this flight depart

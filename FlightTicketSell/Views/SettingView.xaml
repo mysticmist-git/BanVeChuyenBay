@@ -5,12 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FlightTicketSell.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
+             xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <vm:SettingViewModel />
     </UserControl.DataContext>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
         <!--Icon lúc mà chưa làm giao diện-->
@@ -67,7 +73,8 @@
                     <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" > Quy định về chuyến bay</TextBlock>
 
                     <!--Số sân bay trung gian tối đa-->
-                    <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Số sân bay trung gian tối đa" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" />
+                    <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Số sân bay trung gian tối đa" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" 
+                              Text="{Binding Max_LayoverAirport}"/>
 
                     <!--Thời gian bay tối thiểu-->
                     <TextBox Grid.Row="1" Grid.Column="3" Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="phút">
@@ -115,7 +122,8 @@
                     </TextBox>
 
                     <!--Nút lưu-->
-                    <Button  Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="2" Height="auto" Background="{StaticResource BlueBrush}" Margin="50 0 50 0"  FontSize="{StaticResource RealSmall}" Content="Lưu" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7" />
+                    <Button  Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="2" Height="auto" Background="{StaticResource BlueBrush}" Margin="50 0 50 0"  FontSize="{StaticResource RealSmall}" Content="Lưu" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7" 
+                             Command="{Binding Save_FlightRegulations_Command}"/>
 
 
 
@@ -138,12 +146,12 @@
                     <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Sân bay</TextBlock>
 
                     <!--Danh sách sân bay-->
-                    <ListView Grid.Row="1">
+                    <ListView Grid.Row="1" ItemsSource="{Binding List_Airport}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Viết tắt" DisplayMemberBinding="{Binding Code}"/>
                                 <GridViewColumn Header="Tên sân bay" DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="Tỉnh thành" DisplayMemberBinding="{Binding Description}"/>
+                                <GridViewColumn Header="Tỉnh thành" DisplayMemberBinding="{Binding Province}"/>
                             </GridView>
                         </ListView.View>
                     </ListView>

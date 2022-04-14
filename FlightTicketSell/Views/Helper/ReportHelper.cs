@@ -353,9 +353,14 @@ namespace FlightTicketSell.Views.Helper
                 // For each flights, check year, month existence and then add a new flight report
                 foreach (var item in flights)
                 {
+
                     // Check year existence
                     if (context.DOANHTHUNAMs.Where(p => p.Nam == item.NgayGio.Year).ToList().Count == 0)
-                        context.DOANHTHUNAMs.Add(new DOANHTHUNAM { Nam = DateTime.Now.Year });
+                    {
+                        var temp = new DOANHTHUNAM { Nam = DateTime.Now.Year };
+                        context.DOANHTHUNAMs.Add(temp);
+                    }    
+                        
 
                     /// Save changes down to database
                     await context.SaveChangesAsync();
