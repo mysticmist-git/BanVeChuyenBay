@@ -117,7 +117,7 @@ GO
 -- Bảng Doanh thu chuyến bay
 CREATE TABLE DOANHTHUCHUYENBAY
 (
-	MaDoanhThuChuyenBay INT PRIMARY KEY,
+	MaDoanhThuChuyenBay INT IDENTITY(1,1) PRIMARY KEY,
 	MaDoanhThuThang INT NOT NULL,
 	MaChuyenBay INT NOT NULL,
 	SoVe INT NOT NULL,
@@ -129,7 +129,7 @@ GO
 -- Bảng Doanh thu tháng
 CREATE TABLE DOANHTHUTHANG
 (
-	MaDoanhThuThang INT PRIMARY KEY,
+	MaDoanhThuThang INT IDENTITY(1,1) PRIMARY KEY,
 	MaDoanhThuNam INT NOT NULL,
 	Thang INT NOT NULL,
 	SoChuyenBay INT NOT NULL,
@@ -141,7 +141,7 @@ GO
 -- Bảng Doanh thu năm
 CREATE TABLE DOANHTHUNAM
 (
-	MaDoanhThuNam INT PRIMARY KEY,
+	MaDoanhThuNam INT IDENTITY(1,1) PRIMARY KEY,
 	Nam INT NOT NULL,
 	SoChuyenBay INT NOT NULL,
 	DoanhThu MONEY NOT NULL
@@ -442,6 +442,35 @@ GO
 --END
 --GO
 
+------ Trigger GiaTien: = HANGVE.HeSo * CHUYENBAY.GiaVe * SoVeDat
+CREATE TRIGGER TG_DATCHO_NgayGioDat ON DATCHO
+FOR INSERT, UPDATE
+AS
+BEGIN
+	-- Khai báo
+	DECLARE @maDatCho INT, @maHangVe INT, @maChuyenBay INT, @heSo DECIMAL(3,2), @giaVe MONEY
+
+	-- Lấy mã đặt chỗ
+	SELECT @maDatCho=MaDatCho, @maHangVe=MaHangVe, @maChuyenBay = MaChuyenBay
+	FROM INSERTED
+
+	-- Lấy hệ số hạng vé
+	SELECT @heSo=HeSo
+	FROM HANGVE
+	WHERE MaHangVe=@maHangVe
+
+	-- Lấy giá vé
+	SELECT @giaVe=GiaVe
+	FROM CHUYENBAY
+	WHERE MaChuyenBay=@maChuyenBay
+
+	-- Update giá tiền
+	UPDATE DATCHO
+	SET GiaTien=SoVeDat * @giaVe * @heSo
+	WHERE MaDatCho=@maDatCho
+END
+GO
+
 ------ TrangThai: ChuaDoi, DaDoi, DaHuy
 ALTER TABLE DATCHO ADD CONSTRAINT CK_DATCHO_TrangThai CHECK (TrangThai IN ('ChuaDoi','DaDoi','DaHuy'))
 GO	
@@ -505,7 +534,20 @@ GO
 ALTER TABLE DOANHTHUCHUYENBAY ADD CONSTRAINT CK_DOANHTHUCHUYENBAY_TiLe CHECK (TiLe>=0.0 AND TiLe<=1.0)
 GO
 
-CREATE TRIGGER TRG_DOANHTHUCHUYENBAY_DoanhThuThang ON DOANHTHUCHUYENBAY
+------ DoanhThu: mặc định 0
+ALTER TABLE DOANHTHUCHUYENBAY ADD CONSTRAINT DF_DOANHTHUCHUYENBAY_DoanhThu DEFAULT 0 FOR DoanhThu
+GO
+
+------ SoVe: mặc định 0
+ALTER TABLE DOANHTHUCHUYENBAY ADD CONSTRAINT DF_DOANHTHUCHUYENBAY_SoVe DEFAULT 0 FOR SoVe
+GO
+
+------ TiLe: 0.0
+ALTER TABLE DOANHTHUCHUYENBAY ADD CONSTRAINT DF_DOANHTHUCHUYENBAY_TiLe DEFAULT 0.0 FOR TiLe
+GO
+
+------ Trigger: Cập nhật doanh thu tháng khi có thêm doanh thu chuyến bay
+CREATE TRIGGER TRG_DOANHTHUCHUYENBAY_CapNhat ON DOANHTHUCHUYENBAY
 FOR INSERT
 AS
 BEGIN
@@ -516,10 +558,39 @@ BEGIN
 	SELECT @doanhThuThem=DoanhThu, @maDoanhThuThang=MaDoanhThuThang
 	FROM INSERTED
 
-	-- Cập nhật doanh thu năm
+	-- Cập nhật doanh thu, số chuyến bay tháng
 	UPDATE DOANHTHUTHANG
-	SET DoanhThu=DoanhThu+@doanhThuThem
+	SET DoanhThu=DoanhThu+@doanhThuThem, SoChuyenBay=SoChuyenBay+1
 	WHERE MaDoanhThuThang=@maDoanhThuThang
+
+	-- Cập nhật tỉ lệ doanh thu chuyến bay
+	UPDATE DOANHTHUCHUYENBAY
+	SET TiLe=DoanhThu / (
+		SELECT DoanhThu
+		FROM DOANHTHUTHANG dtt
+		WHERE dtt.MaDoanhThuThang=@maDoanhThuThang
+	)
+
+	-- Cập nhật doanh thu, số chuyến bay năm
+	UPDATE DOANHTHUNAM
+	SET DoanhThu=DoanhThu+@doanhThuThem, SoChuyenBay=SoChuyenBay+1
+	WHERE MaDoanhThuNam= (
+		SELECT MaDoanhThuNam
+		FROM DOANHTHUTHANG
+		WHERE MaDoanhThuThang=@maDoanhThuThang
+	)
+
+	-- Cập nhật tỉ lệ doanh thu tháng
+	UPDATE DOANHTHUTHANG
+	SET TiLe=DoanhThu / (
+		SELECT DoanhThu
+		FROM DOANHTHUNAM
+		WHERE MaDoanhThuNam= (
+			SELECT MaDoanhThuNam
+			FROM DOANHTHUTHANG
+			WHERE MaDoanhThuThang=@maDoanhThuThang
+		)
+	)
 END
 GO
 
@@ -548,31 +619,21 @@ GO
 ALTER TABLE DOANHTHUTHANG ADD CONSTRAINT DF_DOANHTHUTHANG_SoChuyenBay DEFAULT 0 FOR SoChuyenBay
 GO
 
------- Trigger: Cập nhật doanh thu năm khi có thêm doanh thu tháng
-CREATE TRIGGER TRG_DOANHTHUTHANG_DoanhThuNam ON DOANHTHUTHANG
-FOR INSERT
-AS
-BEGIN
-	-- Khai báo
-	DECLARE @doanhThuThem MONEY, @maDoanhThuNam INT
-
-	-- Lấy doanh thu vừa thêm và mã doanh thu năm
-	SELECT @doanhThuThem=DoanhThu, @maDoanhThuNam=MaDoanhThuNam
-	FROM INSERTED
-
-	-- Cập nhật doanh thu năm
-	UPDATE DOANHTHUNAM
-	SET DoanhThu=DoanhThu+@doanhThuThem
-	WHERE MaDoanhThuNam=@maDoanhThuNam
-END
+------ TiLe: 0.0
+ALTER TABLE DOANHTHUTHANG ADD CONSTRAINT DF_DOANHTHUTHANG_TiLe DEFAULT 0.0 FOR TiLe
 GO
+
+------ Thang: Unique với mỗi năm
+ALTER TABLE DOANHTHUTHANG ADD CONSTRAINT UNIQUE_DOANHTHUTHANG_Thang UNIQUE(Thang,MaDoanhThuNam)
+GO
+
 
 --========================================= RÀNG BUỘC BẢNG DOANH THU NĂM =========================================
 -- TRIGGER for Nam, SoChuyenBay, DoanhThu
 ------ Nam: <= Năm hiện tại?
 ALTER TABLE DOANHTHUNAM ADD CONSTRAINT CK_DOANHTHUNAM_Nam CHECK (Nam <= Year(GETDATE()))
 GO
------- SoChuyenBay: Không âm
+------ SoChuyenBay: Không âm 
 ALTER TABLE DOANHTHUNAM ADD CONSTRAINT CK_DOANHTHUNAM_SoChuyenBay CHECK (SoChuyenBay>=0)
 GO
 ------ DoanhThu: Không âm
@@ -585,6 +646,10 @@ GO
 
 ------ SoChuyenBay: mặc định 0
 ALTER TABLE DOANHTHUNAM ADD CONSTRAINT DF_DOANHTHUNAM_SoChuyenBay DEFAULT 0 FOR SoChuyenBay
+GO
+
+------ Nam: UNIQUE
+ALTER TABLE DOANHTHUNAM ADD CONSTRAINT UNIQUE_DOANHTHUNAM_Nam UNIQUE(Nam)
 GO
 
 --========================================= RÀNG BUỘC BẢNG THAM SỐ =========================================

@@ -1,0 +1,415 @@
+﻿using FlightTicketSell.Models;
+using FlightTicketSell.Models.Enums;
+using FlightTicketSell.ViewModels.Report;
+using System;
+using System.Collections.ObjectModel;
+using System.Data.Entity;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace FlightTicketSell.Views.Helper
+{
+    public static class ReportHelper
+    {
+        #region Report Access
+
+        /// <summary>
+        /// Get report, take in month and year for different case
+        /// </summary>
+        /// <param name="month">The month of the report with 0 mean every month</param>
+        /// <param name="year">The year of the report with 0 mean every year</param>
+        /// <returns></returns>
+        public async static Task<Report<object>> GetReportAsync(int month, int year)
+        {
+            // Check month, year validation
+            if (month < 0 || month > 12)
+                return null;
+
+            if (year < 0)
+                return null;
+
+            // If query a specific month
+            if (month != 0)
+            {
+                // A specific year
+                if (year != 0)
+                {
+                    // Return a month report of that year
+                    return new Report<object> { Content = await GetFlightReport(month, year), Type = ReportType.FlightReport };
+                }
+
+                // Return a report of a month of every year
+                return new Report<object> { Content = await GetAllYearReport(month), Type = ReportType.YearReport };
+            }
+
+            // Query all month
+
+            // Query for a specific year
+            if (year != 0)
+            {
+                return new Report<object> { Content = await GetMonthReport(year), Type = ReportType.MonthReport };
+            }
+
+            // Query all year
+            return new Report<object> { Content = await GetAllYearReport(), Type = ReportType.YearReport };
+        }
+
+        /// <summary>
+        /// Get the month report with specific month and year
+        /// </summary>
+        /// <param name="month">The month of the report</param>
+        /// <param name="year">The year of the report</param>
+        /// <returns></returns>
+        public static async Task<ObservableCollection<object>> GetFlightReport(int month, int year)
+        {
+            // Declare report that'll be return later
+            var report = new ObservableCollection<object>();
+
+            // Get report
+            using (var context = new FlightTicketSellEntities())
+            {
+                // Get report from database
+                var objectList = await context.DOANHTHUCHUYENBAYs
+                    .Where(p => p.DOANHTHUTHANG.Thang == month && p.DOANHTHUTHANG.DOANHTHUNAM.Nam == year)
+                    .Join(
+                        context.CHUYENBAYs,
+                        dt => dt.MaChuyenBay,
+                        cb => cb.MaChuyenBay,
+                        (dt, cb) => new
+                        {
+                            MaChuyenBay = cb.MaChuyenBay,
+                            MaDuongBay = cb.MaDuongBay,
+                            NgayGio = cb.NgayGio,
+                            SoVe = dt.SoVe,
+                            DoanhThu = dt.DoanhThu,
+                            TiLe = dt.TiLe
+                        })
+                    .Join(
+                        context.DUONGBAYs,
+                        a => a.MaDuongBay,
+                        db => db.MaDuongBay,
+                        (a, db) => new
+                        {
+                            MaChuyenBay = a.MaChuyenBay,
+                            MaSanBayDi = db.MaSanBayDi,
+                            MaSanBayDen = db.MaSanBayDen,
+                            NgayGio = a.NgayGio,
+                            SoVe = a.SoVe,
+                            DoanhThu = a.DoanhThu,
+                            TiLe = a.TiLe
+                        }
+                    )
+                    .Join
+                    (
+                        context.SANBAYs,
+                        a => a.MaSanBayDi,
+                        sb => sb.MaSanBay,
+                        (a, sb) => new
+                        {
+                            MaChuyenBay = a.MaChuyenBay,
+                            SanBayDiVietTat = sb.VietTat,
+                            MaSanBayDen = a.MaSanBayDen,
+                            NgayGio = a.NgayGio,
+                            SoVe = a.SoVe,
+                            DoanhThu = a.DoanhThu,
+                            TiLe = a.TiLe
+                        }
+                    )
+                    .Join
+                    (
+                        context.SANBAYs,
+                        a => a.MaSanBayDen,
+                        sb => sb.MaSanBay,
+                        (a, sb) => new
+                        {
+                            MaChuyenBay = a.MaChuyenBay,
+                            SanBayDiVietTat = a.SanBayDiVietTat,
+                            SanBayDenVietTat = sb.VietTat,
+                            NgayGio = a.NgayGio,
+                            SoVe = a.SoVe,
+                            DoanhThu = a.DoanhThu,
+                            TiLe = a.TiLe
+                        }
+                    )
+                    .ToListAsync();
+
+                // Convert to apporiate model
+                foreach (var item in objectList)
+                {
+                    report.Add(
+                        new FlightReport
+                        {
+                            FlightCode = item.SanBayDiVietTat + item.SanBayDenVietTat + "-" + item.MaChuyenBay.ToString(),
+                            DepartTime = item.NgayGio.ToString(),
+                            TicketSold = item.SoVe.ToString(),
+                            Revenue = item.DoanhThu.ToString(),
+                            Ratio = item.TiLe.ToString()
+                        }
+                    );
+                }
+
+            }
+
+            return report;
+        }
+
+        /// <summary>
+        /// Get the all year report with specific month
+        /// </summary>
+        /// <param name="month">The month of the report</param>
+        /// <returns></returns>
+        private static async Task<ObservableCollection<object>> GetAllYearReport(int month)
+        {
+            // Declare report that'll be return later
+            var report = new ObservableCollection<object>();
+
+            // Get report
+            using (var context = new FlightTicketSellEntities())
+            {
+                // Get report from database
+                var objectList = await context.DOANHTHUTHANGs
+                    .Where(p => p.Thang == month)
+                    .ToListAsync();
+
+                // Convert to apporiate model
+                foreach (var item in objectList)
+                {
+                    report.Add(
+                        new YearReport
+                        {
+                            Year = item.DOANHTHUNAM.Nam,
+                            FlightCount = item.SoChuyenBay,
+                            Revenue = item.DoanhThu.ToString(),
+                            Ratio = item.TiLe.ToString()
+                        }
+                    );
+                }
+            }
+
+            return report;
+        }
+
+        /// <summary>
+        /// Get the year report with specific year
+        /// </summary>
+        /// <param name="year">The year of the report</param>
+        /// <returns></returns>
+        private static async Task<ObservableCollection<object>> GetMonthReport(int year)
+        {
+            // Declare report that'll be return later
+            var report = new ObservableCollection<object>();
+
+            // Get report
+            using (var context = new FlightTicketSellEntities())
+            {
+                // Get all month of that year
+                var objectList = await context.DOANHTHUTHANGs
+                    .Where(p => p.DOANHTHUNAM.Nam == year)
+                    .ToListAsync();
+
+                // Convert to apporiate model
+                foreach (var item in objectList)
+                {
+                    report.Add(
+                        new MonthReport
+                        {
+                            Month = item.Thang,
+                            Revenue = item.DoanhThu.ToString(),
+                            Ratio = (item.DoanhThu / item.DOANHTHUNAM.DoanhThu).ToString()
+                        }
+                    );
+                }
+            } 
+
+            return report;
+        }
+
+        /// <summary>
+        /// Get the year report of every year
+        /// </summary>
+        /// <returns></returns>
+        private static async Task<ObservableCollection<object>> GetAllYearReport()
+        {
+            // Declare report that'll be return later
+            var report = new ObservableCollection<object>();
+
+            // Get report
+            using (var context = new FlightTicketSellEntities())
+            {
+                // Get all year report from database
+                var objectList = await context.DOANHTHUNAMs.ToListAsync();
+
+                // Calculate total revenue of every year
+                var totalRevenue = objectList.Sum(p => p.DoanhThu);
+
+                // Convert to apporiate model
+                foreach (var item in objectList)
+                {
+                    report.Add(
+                        new YearReport
+                        {
+                            Year = item.Nam,
+                            FlightCount = item.SoChuyenBay,
+                            Revenue = item.DoanhThu.ToString(),
+                            Ratio = (item.DoanhThu / totalRevenue).ToString()
+                        }
+                    );
+                }
+            }
+
+            return report;
+        }
+
+        #endregion
+
+        #region Total Revenue Calculator
+
+        /// <summary>
+        /// Calculate the revenue for input report
+        /// </summary>
+        /// <param name="report"></param>
+        /// <returns></returns>
+        public static decimal CalculateTotalRevenue(Report<object> report)
+        {
+            // Return 0 if Report is null
+            if (report == null)
+                return 0;
+
+            // Initialize total revenue
+            decimal totalRevenue = 0;
+
+            // Get report type
+            var reportType = (report as Report<object>).Type;
+
+
+            // If report type is FlightReport
+            if (reportType is ReportType.FlightReport)
+            {
+                // Get report content
+                var collection = (report as Report<object>).Content;
+
+                // For each item in input report
+                foreach (var item in collection)
+                    totalRevenue += (item as FlightReport).GetRevenue();
+
+                return totalRevenue;
+            }
+
+            // If report type is MonthReport
+            if (reportType is ReportType.MonthReport)
+            {
+                // Get report content
+                var collection = (report as Report<object>).Content;
+
+                // For each item in input report
+                foreach (var item in collection)
+                    totalRevenue += (item as MonthReport).GetRevenue();
+
+                return totalRevenue;
+            }
+
+            // If report type is YearReport
+            if (reportType is ReportType.YearReport)
+            {
+                // Get report content
+                var collection = (report as Report<object>).Content;
+
+                // For each item in input report
+                foreach (var item in collection)
+                    totalRevenue += (item as YearReport).GetRevenue();
+
+                return totalRevenue;
+            }
+
+            // Return 0 for default
+            return 0;
+        }
+
+        #endregion
+
+        #region Report Check
+
+        /// <summary>
+        /// Check if the year report, month report existed
+        /// Because flight report can only be added when there's
+        /// already year, month report
+        /// 
+        /// Add one if there's none
+        /// </summary>
+        public async static Task ReportExistGuarantee()
+        {
+            using (var context = new FlightTicketSellEntities())
+            {
+                // Find flight that departed but didn't have a report
+                var flights = await context.CHUYENBAYs
+                    .Where(p => p.DaKhoiHanh == false && p.NgayGio <= DateTime.Now)
+                    .ToListAsync();
+
+                // Stop if there's none
+                if (flights.Count == 0)
+                    return;
+
+                // For each flights, check year, month existence and then add a new flight report
+                foreach (var item in flights)
+                {
+                    // Check year existence
+                    if (context.DOANHTHUNAMs.Where(p => p.Nam == item.NgayGio.Year).ToList().Count == 0)
+                        context.DOANHTHUNAMs.Add(new DOANHTHUNAM { Nam = DateTime.Now.Year });
+
+                    /// Save changes down to database
+                    await context.SaveChangesAsync();
+
+                    // Check month existence
+                    if (context.DOANHTHUTHANGs.Where(p => p.Thang == item.NgayGio.Month && p.DOANHTHUNAM.Nam == item.NgayGio.Year).ToList().Count == 0)
+                    {
+                        // Get year report ID
+                        var yearReportIDHolder = await (context.DOANHTHUNAMs
+                            .Where(p => p.Nam == item.NgayGio.Year).FirstOrDefaultAsync());
+
+                        context.DOANHTHUTHANGs.Add(new DOANHTHUTHANG { Thang = DateTime.Now.Month, MaDoanhThuNam = yearReportIDHolder.MaDoanhThuNam });
+
+                        /// Save changes down to database
+                        await context.SaveChangesAsync();
+                    
+                    }
+
+                    // Update flight's depart flag
+                    item.DaKhoiHanh = true;
+                    await context.SaveChangesAsync();
+
+                    // Add flight report
+                    var monthReportIDHolder = await context.DOANHTHUTHANGs.Where(p => p.Thang == item.NgayGio.Month && p.DOANHTHUNAM.Nam == item.NgayGio.Year).FirstOrDefaultAsync();
+
+                    var newFlightReport = new DOANHTHUCHUYENBAY
+                    {
+                        MaDoanhThuThang = monthReportIDHolder.MaDoanhThuThang,
+                        MaChuyenBay = item.MaChuyenBay,
+                        SoVe = item.VEs.Count + item.DATCHOes.Sum(p => p.SoVeDat),
+                        DoanhThu = Convert.ToInt32(
+                            item.VEs.Sum(p => p.GiaTien) +
+                            item.DATCHOes.Sum(p => p.GiaTien)
+                        )
+                    };
+                    context.DOANHTHUCHUYENBAYs.Add(newFlightReport);
+
+                    /// Save changes down to database
+                    await context.SaveChangesAsync();
+                }
+            }
+        }
+
+        #endregion
+
+        #region Formater
+
+        /// <summary>
+        /// Convert a decimal value to a vietnam currency format money
+        /// </summary>
+        /// <param name="money">The money needed to be converted</param>
+        /// <returns></returns>
+        public static string VietnamCurrencyConvert(decimal money) => string.Format(new CultureInfo("vi-VN"), "{0:#,##0.00}", money);
+
+        #endregion
+    }
+}
