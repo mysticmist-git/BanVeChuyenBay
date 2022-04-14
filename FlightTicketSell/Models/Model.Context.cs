@@ -37,7 +37,6 @@ namespace FlightTicketSell.Models
         public virtual DbSet<KHACHHANG> KHACHHANGs { get; set; }
         public virtual DbSet<SANBAY> SANBAYs { get; set; }
         public virtual DbSet<SANBAYTG> SANBAYTGs { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<THAMSO> THAMSOes { get; set; }
         public virtual DbSet<VE> VEs { get; set; }
     }

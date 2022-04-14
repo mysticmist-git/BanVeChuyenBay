@@ -24,32 +24,41 @@
             </Grid.ColumnDefinitions>
 
             <!-- Logo, App Name -->
-            <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="10 5">
-                <Border Width="50" Height="50" Background="{StaticResource LightBlueBrush}" CornerRadius="50">
-                    <materialDesign:PackIcon Kind="Airplane"
+            <Viewbox Grid.Column="0"
+                     MaxHeight="{Binding ElementName=logos, Path=ActualHeight}"
+                     MaxWidth="{Binding ElementName=logos, Path=ActualWidth}">
+                <StackPanel x:Name="logos" Orientation="Horizontal" Margin="10 5">
+                    <Border Width="50" Height="50" Background="{StaticResource LightBlueBrush}" CornerRadius="50">
+                        <materialDesign:PackIcon Kind="Airplane"
                                              Foreground="White"
                                              HorizontalAlignment="Center"
                                              VerticalAlignment="Center"
                                              Width="30"
                                              Height="30"
                                              />
-                </Border>
-                <TextBlock Text="TÊN APP"
+                    </Border>
+                    <TextBlock Text="TÊN APP"
                            VerticalAlignment="Center"
                            Style="{StaticResource AppNameText}"
                            Margin="20 0 0 0"
                            />
-            </StackPanel>
-
+                </StackPanel>
+            </Viewbox>
+            
             <!-- Buttons -->
-            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
-                <Button Content="Tra cứu" Command="{Binding SearchCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Search}}"/>
-                <Button Content="Đặt chỗ" Command="{Binding BookCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Book}}"/>
-                <Button Content="Bán vé" Command="{Binding SellCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Sell}}"/>
-                <Button Content="Nhận lịch" Command="{Binding ScheduleCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Schedule}}"/>
-                <Button Content="Doanh thu" Command="{Binding ReportCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Report}}"/>
-                <Button Content="Cài đặt" Command="{Binding SettingCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}"/>
-            </StackPanel>
+            <Viewbox Grid.Column="1"
+                     HorizontalAlignment="Right"
+                     MaxHeight="{Binding ElementName=buttons, Path=ActualHeight}"
+                     MaxWidth="{Binding ElementName=buttons, Path=ActualWidth}">
+                <StackPanel x:Name="buttons" Orientation="Horizontal">
+                    <Button Content="Tra cứu" Command="{Binding SearchCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Search}}"/>
+                    <Button Content="Đặt chỗ" Command="{Binding BookCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Book}}"/>
+                    <Button Content="Bán vé" Command="{Binding SellCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Sell}}"/>
+                    <Button Content="Nhận lịch" Command="{Binding ScheduleCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Schedule}}"/>
+                    <Button Content="Doanh thu" Command="{Binding ReportCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Report}}"/>
+                    <Button Content="Cài đặt" Command="{Binding SettingCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}"/>
+                </StackPanel>
+            </Viewbox>
         </Grid>
     </Border>
 </UserControl>

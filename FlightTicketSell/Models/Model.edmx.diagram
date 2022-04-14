@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="89ffe23841ba4e8f93562deb7c093c3d" Name="Diagram1">
+      <Diagram DiagramId="314dcfe75fad4c85b24831d37d279b87" Name="Diagram1">
         <EntityTypeShape EntityType="FlightTicketSellModel.CHITIETDATCHO" Width="1.5" PointX="12.75" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="FlightTicketSellModel.CHITIETHANGVE" Width="1.5" PointX="7.5" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="FlightTicketSellModel.CHUYENBAY" Width="1.5" PointX="5.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.CHUYENBAY" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="FlightTicketSellModel.DATCHO" Width="1.5" PointX="10.5" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="FlightTicketSellModel.DOANHTHUCHUYENBAY" Width="1.5" PointX="7.5" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FlightTicketSellModel.DOANHTHUNAM" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
@@ -17,8 +17,7 @@
         <EntityTypeShape EntityType="FlightTicketSellModel.KHACHHANG" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FlightTicketSellModel.SANBAY" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FlightTicketSellModel.SANBAYTG" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FlightTicketSellModel.sysdiagram" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="FlightTicketSellModel.THAMSO" Width="1.5" PointX="9.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellModel.THAMSO" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="FlightTicketSellModel.VE" Width="1.5" PointX="7.5" PointY="12.625" IsExpanded="true" />
         <AssociationConnector Association="FlightTicketSellModel.FK_CHITIETDATCHO_MaDatCho" ManuallyRouted="false" />
         <AssociationConnector Association="FlightTicketSellModel.FK_CHITIETDATCHO_MaKhachHang" ManuallyRouted="false" />

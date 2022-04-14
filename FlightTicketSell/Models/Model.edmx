@@ -30,6 +30,7 @@
           <Property Name="MaDuongBay" Type="int" Nullable="false" />
           <Property Name="GiaVe" Type="money" Nullable="false" />
           <Property Name="NgayGio" Type="datetime" Nullable="false" />
+          <Property Name="DaKhoiHanh" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="DATCHO">
           <Key>
@@ -48,7 +49,7 @@
           <Key>
             <PropertyRef Name="MaDoanhThuChuyenBay" />
           </Key>
-          <Property Name="MaDoanhThuChuyenBay" Type="int" Nullable="false" />
+          <Property Name="MaDoanhThuChuyenBay" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaDoanhThuThang" Type="int" Nullable="false" />
           <Property Name="MaChuyenBay" Type="int" Nullable="false" />
           <Property Name="SoVe" Type="int" Nullable="false" />
@@ -59,7 +60,7 @@
           <Key>
             <PropertyRef Name="MaDoanhThuNam" />
           </Key>
-          <Property Name="MaDoanhThuNam" Type="int" Nullable="false" />
+          <Property Name="MaDoanhThuNam" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nam" Type="int" Nullable="false" />
           <Property Name="SoChuyenBay" Type="int" Nullable="false" />
           <Property Name="DoanhThu" Type="money" Nullable="false" />
@@ -68,7 +69,7 @@
           <Key>
             <PropertyRef Name="MaDoanhThuThang" />
           </Key>
-          <Property Name="MaDoanhThuThang" Type="int" Nullable="false" />
+          <Property Name="MaDoanhThuThang" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaDoanhThuNam" Type="int" Nullable="false" />
           <Property Name="Thang" Type="int" Nullable="false" />
           <Property Name="SoChuyenBay" Type="int" Nullable="false" />
@@ -123,16 +124,6 @@
           <Property Name="ThuTu" Type="int" Nullable="false" />
           <Property Name="ThoiGianDung" Type="int" Nullable="false" />
           <Property Name="GhiChu" Type="nvarchar" MaxLength="200" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="THAMSO">
           <Key>
@@ -381,7 +372,6 @@
           <EntitySet Name="KHACHHANG" EntityType="Self.KHACHHANG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SANBAY" EntityType="Self.SANBAY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SANBAYTG" EntityType="Self.SANBAYTG" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="THAMSO" EntityType="Self.THAMSO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VE" EntityType="Self.VE" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CHITIETDATCHO_MaDatCho" Association="Self.FK_CHITIETDATCHO_MaDatCho">
@@ -491,6 +481,7 @@
           <Property Name="MaDuongBay" Type="Int32" Nullable="false" />
           <Property Name="GiaVe" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="NgayGio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DaKhoiHanh" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CHITIETHANGVEs" Relationship="Self.FK_CHITIETHANGVE_MaChuyenBay" FromRole="CHUYENBAY" ToRole="CHITIETHANGVE" />
           <NavigationProperty Name="DUONGBAY" Relationship="Self.FK_CHUYENBAY_MaDuongBay" FromRole="CHUYENBAY" ToRole="DUONGBAY" />
           <NavigationProperty Name="DATCHOes" Relationship="Self.FK_DATCHO_MaChuyenBay" FromRole="CHUYENBAY" ToRole="DATCHO" />
@@ -518,7 +509,7 @@
           <Key>
             <PropertyRef Name="MaDoanhThuChuyenBay" />
           </Key>
-          <Property Name="MaDoanhThuChuyenBay" Type="Int32" Nullable="false" />
+          <Property Name="MaDoanhThuChuyenBay" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaDoanhThuThang" Type="Int32" Nullable="false" />
           <Property Name="MaChuyenBay" Type="Int32" Nullable="false" />
           <Property Name="SoVe" Type="Int32" Nullable="false" />
@@ -531,7 +522,7 @@
           <Key>
             <PropertyRef Name="MaDoanhThuNam" />
           </Key>
-          <Property Name="MaDoanhThuNam" Type="Int32" Nullable="false" />
+          <Property Name="MaDoanhThuNam" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nam" Type="Int32" Nullable="false" />
           <Property Name="SoChuyenBay" Type="Int32" Nullable="false" />
           <Property Name="DoanhThu" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
@@ -541,7 +532,7 @@
           <Key>
             <PropertyRef Name="MaDoanhThuThang" />
           </Key>
-          <Property Name="MaDoanhThuThang" Type="Int32" Nullable="false" />
+          <Property Name="MaDoanhThuThang" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaDoanhThuNam" Type="Int32" Nullable="false" />
           <Property Name="Thang" Type="Int32" Nullable="false" />
           <Property Name="SoChuyenBay" Type="Int32" Nullable="false" />
@@ -613,16 +604,6 @@
           <Property Name="GhiChu" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DUONGBAY" Relationship="Self.FK_SANBAYTG_MaDuongBay" FromRole="SANBAYTG" ToRole="DUONGBAY" />
           <NavigationProperty Name="SANBAY" Relationship="Self.FK_SANBAYTG_MaSanBay" FromRole="SANBAYTG" ToRole="SANBAY" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="THAMSO">
           <Key>
@@ -874,7 +855,6 @@
           <EntitySet Name="KHACHHANGs" EntityType="Self.KHACHHANG" />
           <EntitySet Name="SANBAYs" EntityType="Self.SANBAY" />
           <EntitySet Name="SANBAYTGs" EntityType="Self.SANBAYTG" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="THAMSOes" EntityType="Self.THAMSO" />
           <EntitySet Name="VEs" EntityType="Self.VE" />
           <AssociationSet Name="FK_CHITIETDATCHO_MaDatCho" Association="Self.FK_CHITIETDATCHO_MaDatCho">
@@ -982,6 +962,7 @@
                 <ScalarProperty Name="MaDuongBay" ColumnName="MaDuongBay" />
                 <ScalarProperty Name="GiaVe" ColumnName="GiaVe" />
                 <ScalarProperty Name="NgayGio" ColumnName="NgayGio" />
+                <ScalarProperty Name="DaKhoiHanh" ColumnName="DaKhoiHanh" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1084,17 +1065,6 @@
                 <ScalarProperty Name="ThuTu" ColumnName="ThuTu" />
                 <ScalarProperty Name="ThoiGianDung" ColumnName="ThoiGianDung" />
                 <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
