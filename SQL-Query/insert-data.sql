@@ -1,6 +1,15 @@
-﻿-- Nhập chuyến bay
-USE BANVECHUYENBAY
+﻿USE BANVECHUYENBAY
 
+-- Nhập Tham số
+INSERT INTO THAMSO VALUES
+	('ThoiGianBayToiThieu',30),
+	('SoSanBayTrungGianToiDa',2),
+	('ThoiGianDungToiThieu',10),
+	('ThoiGianDungToiDa',20),
+	('ThoiGianDatVeChamNhat',1),
+	('ThoiGianHuyDatVe',1)
+
+-- Nhập Sân bay
 INSERT INTO SANBAY (TenSanBay, VietTat, TinhThanh, TrangThai) VALUES
 	(N'Nội Bài', 'HAN', N'Hà Nội', 1),
 	(N'Cát Bi', 'HPH', N'Hải Phòng', 1),
@@ -40,9 +49,9 @@ INSERT INTO SANBAYTG(MaDuongBay, MaSanBay, ThuTu, ThoiGianDung, GhiChu) VALUES (
 INSERT INTO SANBAYTG(MaDuongBay, MaSanBay, ThuTu, ThoiGianDung, GhiChu) VALUES (3, 11, 2, 13, N'Cho khách mua đồ lưu niệm?')
 
 -- Nhập chuyến bay
-INSERT INTO CHUYENBAY (MaDuongBay, GiaVe, NgayGio) VALUES (1, 500000, CONVERT(DATETIME,'14/4/2022',103))
-INSERT INTO CHUYENBAY (MaDuongBay, GiaVe, NgayGio) VALUES (2, 620000, CONVERT(DATETIME,'15/4/2022',103))
-INSERT INTO CHUYENBAY (MaDuongBay, GiaVe, NgayGio) VALUES (3, 770000, CONVERT(DATETIME,'16/4/2022',103))
+INSERT INTO CHUYENBAY (MaDuongBay, GiaVe, NgayGio) VALUES (1, 500000, CONVERT(DATETIME,'10/4/2022',103))
+INSERT INTO CHUYENBAY (MaDuongBay, GiaVe, NgayGio) VALUES (2, 620000, CONVERT(DATETIME,'11/4/2022',103))
+INSERT INTO CHUYENBAY (MaDuongBay, GiaVe, NgayGio) VALUES (3, 770000, CONVERT(DATETIME,'1/4/2022',103))
 
 -- Nhập hạng vé
 INSERT INTO HANGVE (TenHangVe, HeSo, TrangThai) VALUES (N'Hạng Nhất', 1.6, 1)

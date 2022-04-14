@@ -10,7 +10,8 @@ CREATE TABLE CHUYENBAY
 	MaChuyenBay INT IDENTITY(1,1) PRIMARY KEY,
 	MaDuongBay INT NOT NULL,
 	GiaVe MONEY NOT NULL,
-	NgayGio DATETIME NOT NULL
+	NgayGio DATETIME NOT NULL,
+	DaKhoiHanh BIT NOT NULL
 )
 GO
 
@@ -155,16 +156,7 @@ CREATE TABLE THAMSO
 )
 GO
 
--- Giá trị mặc định cho bảng THAMSO
-INSERT INTO THAMSO VALUES
-	('ThoiGianBayToiThieu',30),
-	('SoSanBayTrungGianToiDa',2),
-	('ThoiGianDungToiThieu',10),
-	('ThoiGianDungToiDa',20),
-	('ThoiGianDatVeChamNhat',1),
-	('ThoiGianHuyDatVe',1)
-
--- RÀNG BUỘC BẢNG CHUYẾN BAY
+--========================================= RÀNG BUỘC BẢNG CHUYẾN BAY =========================================
 ------ Khóa ngoại Mã đường bay
 ALTER TABLE CHUYENBAY ADD CONSTRAINT FK_CHUYENBAY_MaDuongBay FOREIGN KEY (MaDuongBay) REFERENCES DUONGBAY(MaDuongBay)
 GO
@@ -172,8 +164,13 @@ GO
 ------ GiaVe: Số dương
 ALTER TABLE CHUYENBAY ADD CONSTRAINT CK_CHUYENBAY_GiaVe CHECK (GiaVe>=0)
 GO
------- NgayGio: lớn hơn ngày giờ tại thời điểm nhận lịch chuyến bay
-ALTER TABLE CHUYENBAY ADD CONSTRAINT CK_CHUYENBAY_NgayGio CHECK (NgayGio>GETDATE())
+
+------ NgayGio: lớn hơn ngày giờ tại thời điểm nhận lịch chuyến bay (DISABLE ĐỂ DỄ TEST DỮ LIỆU)
+--ALTER TABLE CHUYENBAY ADD CONSTRAINT CK_CHUYENBAY_NgayGio CHECK (NgayGio>GETDATE())
+--GO
+
+------ DaKhoiHanh: mặc đinh là 0 (chưa khởi hành)
+ALTER TABLE CHUYENBAY ADD CONSTRAINT DF_CHUYENBAY_DaKhoiHanh DEFAULT 0 FOR DaKhoiHanh
 GO
 
 -- RÀNG BUỘC BẢNG SÂN BAY
@@ -181,7 +178,7 @@ GO
 ALTER TABLE SANBAY ADD CONSTRAINT UNIQUE_SANBAY_VietTat UNIQUE (VietTat)
 GO
 
--- RÀNG BUỘC BẢNG SÂN BAY TRUNG GIAN
+--========================================= RÀNG BUỘC BẢNG SÂN BAY TRUNG GIAN =========================================
 ------ Khóa ngoại Mã đường bay
 ALTER TABLE SANBAYTG ADD CONSTRAINT FK_SANBAYTG_MaDuongBay FOREIGN KEY (MaDuongBay) REFERENCES DUONGBAY(MaDuongBay)
 GO
@@ -300,7 +297,7 @@ BEGIN
 END
 GO
 
--- RÀNG BUỘC ĐƯỜNG BAY
+--========================================= RÀNG BUỘC ĐƯỜNG BAY =========================================
 ------ Khóa ngoại Mã sân bay đi
 ALTER TABLE DUONGBAY ADD CONSTRAINT FK_DUONGBAY_MaSanBayDi FOREIGN KEY (MaSanBayDi) REFERENCES SANBAY(MaSanBay)
 GO
@@ -326,16 +323,19 @@ BEGIN
 	WHERE TenThamSo='ThoiGianBayToiThieu'
 	-- Nếu Thời gian bay không hợp lệ thì rollback tran
 	IF (@thoiGianBay<@min)
+	BEGIN
 		ROLLBACK TRAN
+		PRINT 'Thoi gian bay be hon Thoi gian bay toi thieu'
+	END
 END
 GO
 
--- RÀNG BUỘC HẠNG VÉ
+----========================================= RÀNG BUỘC HẠNG VÉ --=========================================
 ------ HeSo: >= 0.0
 ALTER TABLE HANGVE ADD CONSTRAINT CK_HANGVE_HeSo CHECK (HeSo>=0.0)
 GO
 
--- RÀNG BUỘC BẢNG CHI TIẾT HẠNG VÉ
+--========================================= RÀNG BUỘC BẢNG CHI TIẾT HẠNG VÉ =========================================
 ------ Khóa ngoại Mã hạng vé
 ALTER TABLE CHITIETHANGVE ADD CONSTRAINT FK_CHITIETHANGVE_MaHangVe FOREIGN KEY (MaHangVe) REFERENCES HANGVE(MaHangVe)
 GO
@@ -350,7 +350,7 @@ GO
 ALTER TABLE CHITIETHANGVE ADD CONSTRAINT UNIQUE_CHITIETHANGVE_MaHangVe UNIQUE (MaChuyenBay, MaHangVe)
 GO
 
--- RÀNG BUỘC BẢNG VÉ
+----========================================= RÀNG BUỘC BẢNG VÉ --=========================================
 ------ Khóa ngoại Mã hạng vé
 ALTER TABLE VE ADD CONSTRAINT FK_VE_MaHangVe FOREIGN KEY (MaHangVe) REFERENCES HANGVE(MaHangVe)
 GO
@@ -364,9 +364,9 @@ GO
 ALTER TABLE VE ADD CONSTRAINT CK_VE_GiaTien CHECK (GiaTien>=0)
 GO
 
------- NgayThanhToan: >= Ngày giờ hiện tại
-ALTER TABLE VE ADD CONSTRAINT CK_VE_NgayThanhToan CHECK (NgayThanhToan>=GETDATE())
-GO
+------ NgayThanhToan: >= Ngày giờ hiện tại (DISABLE ĐỂ DỄ TEST)
+--ALTER TABLE VE ADD CONSTRAINT CK_VE_NgayThanhToan CHECK (NgayThanhToan>=GETDATE())
+--GO
 
 ------ GiaTien = CHUYENBAY.GiaVe*HANGVE.HeSo
 CREATE TRIGGER TRG_VE_TinhGiaTien ON VE
@@ -393,7 +393,7 @@ BEGIN
 END
 GO
 
--- RÀNG BUỘC ĐẶT CHỖ
+--========================================= RÀNG BUỘC ĐẶT CHỖ =========================================
 ------ Khóa ngoại Mã hạng vé
 ALTER TABLE DATCHO ADD CONSTRAINT FK_DATCHO_MaHangVe FOREIGN KEY (MaHangVe) REFERENCES HANGVE(MaHangVe)
 GO
@@ -403,40 +403,44 @@ GO
 ------ Khóa ngoại Mã người đặt
 ALTER TABLE DATCHO ADD CONSTRAINT FK_DATCHO_MaNguoiDat FOREIGN KEY (MaNguoiDat) REFERENCES KHACHHANG(MaKhachHang)
 GO
------- Trigger NgayGioDat: NgayGioDat <= (NgayKhoiHanh - ThoiGianDatVeChamNhat)
-CREATE TRIGGER TG_DATCHO_NgayGioDat ON DATCHO
-FOR INSERT, UPDATE
-AS
-BEGIN
-	-- Khai báo
-	DECLARE @ngayGioDat DATETIME
-	-- Lấy ngày giờ đăt chỗ được thêm
-	SELECT @ngayGioDat=NgayGioDat
-	FROM INSERTED
+------ Trigger NgayGioDat: NgayGioDat <= (NgayKhoiHanh - ThoiGianDatVeChamNhat) (DISABLE ĐỂ DỄ TEST)
+--CREATE TRIGGER TG_DATCHO_NgayGioDat ON DATCHO
+--FOR INSERT, UPDATE
+--AS
+--BEGIN
+--	-- Khai báo
+--	DECLARE @ngayGioDat DATETIME
+--	-- Lấy ngày giờ đăt chỗ được thêm
+--	SELECT @ngayGioDat=NgayGioDat
+--	FROM INSERTED
 
-	-- Lấy ngày giờ máy bay cất cánh
-	DECLARE @ngayGioCatCanh DATETIME
+--	-- Lấy ngày giờ máy bay cất cánh
+--	DECLARE @ngayGioCatCanh DATETIME
 
-	SELECT @ngayGioCatCanh=NgayGio
-	FROM CHUYENBAY
-	WHERE MaChuyenBay = (
-		SELECT MachuyenBay
-		FROM INSERTED
-	)
+--	SELECT @ngayGioCatCanh=NgayGio
+--	FROM CHUYENBAY
+--	WHERE MaChuyenBay = (
+--		SELECT MachuyenBay
+--		FROM INSERTED
+--	)
 
-	-- Khai báo ThoiGianDatVeChamNhat
-	DECLARE @datVeChamNhat INT
+--	-- Khai báo ThoiGianDatVeChamNhat
+--	DECLARE @datVeChamNhat INT
 
-	-- Lấy Thời gian dừng tối thiểu và thời gian dừng tối đa
-	SELECT @datVeChamNhat=GiaTri
-	FROM THAMSO
-	WHERE TenThamSo='ThoiGianDatVeChamNhat'
+--	-- Lấy Thời gian dừng tối thiểu và thời gian dừng tối đa
+--	SELECT @datVeChamNhat=GiaTri
+--	FROM THAMSO
+--	WHERE TenThamSo='ThoiGianDatVeChamNhat'
 
-	-- Nếu ngày giờ đặt chỗ không hợp lệ thì rollback tran
-	IF (@ngayGioDat>(DATEADD(day, -@datVeChamNhat, @ngayGioCatCanh)))
-		ROLLBACK TRAN
-END
-GO
+--	-- Nếu ngày giờ đặt chỗ không hợp lệ thì rollback tran
+--	IF (@ngayGioDat>(DATEADD(day, -@datVeChamNhat, @ngayGioCatCanh)))
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'Ngay gio dat tre hon Ngay gio dat tre cham nhat'
+--	END
+
+--END
+--GO
 
 ------ TrangThai: ChuaDoi, DaDoi, DaHuy
 ALTER TABLE DATCHO ADD CONSTRAINT CK_DATCHO_TrangThai CHECK (TrangThai IN ('ChuaDoi','DaDoi','DaHuy'))
@@ -446,7 +450,7 @@ GO
 ALTER TABLE DATCHO ADD CONSTRAINT DF_DATCHO_TrangThai DEFAULT 'ChuaDoi' FOR TrangThai
 GO
 
--- RÀNG BUỘC BẢNG CHI TIẾT ĐẶT CHỖ
+--========================================= RÀNG BUỘC BẢNG CHI TIẾT ĐẶT CHỖ =========================================
 ------ Khóa ngoại Mã đặt chỗ
 ALTER TABLE CHITIETDATCHO ADD CONSTRAINT FK_CHITIETDATCHO_MaDatCho FOREIGN KEY (MaDatCho) REFERENCES DATCHO(MaDatCho)
 GO
@@ -484,7 +488,7 @@ BEGIN
 END
 GO
 
--- RÀNG BUỘC BẢNG DOANH THU CHUYẾN BAY
+--========================================= RÀNG BUỘC BẢNG DOANH THU CHUYẾN BAY =========================================
 ------ Khóa ngoại Mã doanh thu tháng
 ALTER TABLE DOANHTHUCHUYENBAY ADD CONSTRAINT FK_DOANHTHUCHUYENBAY_MaDoanhThuThang FOREIGN KEY (MaDoanhThuThang) REFERENCES DOANHTHUTHANG(MaDoanhThuThang)
 GO
@@ -501,7 +505,25 @@ GO
 ALTER TABLE DOANHTHUCHUYENBAY ADD CONSTRAINT CK_DOANHTHUCHUYENBAY_TiLe CHECK (TiLe>=0.0 AND TiLe<=1.0)
 GO
 
--- RÀNG BUỘC BẢNG DOANH THU THÁNG
+CREATE TRIGGER TRG_DOANHTHUCHUYENBAY_DoanhThuThang ON DOANHTHUCHUYENBAY
+FOR INSERT
+AS
+BEGIN
+	-- Khai báo
+	DECLARE @doanhThuThem MONEY, @maDoanhThuThang INT
+
+	-- Lấy doanh thu vừa thêm và mã doanh thu năm
+	SELECT @doanhThuThem=DoanhThu, @maDoanhThuThang=MaDoanhThuThang
+	FROM INSERTED
+
+	-- Cập nhật doanh thu năm
+	UPDATE DOANHTHUTHANG
+	SET DoanhThu=DoanhThu+@doanhThuThem
+	WHERE MaDoanhThuThang=@maDoanhThuThang
+END
+GO
+
+--========================================= RÀNG BUỘC BẢNG DOANH THU THÁNG =========================================
 ------ Khóa ngoại Mã doanh thu năm
 ALTER TABLE DOANHTHUTHANG ADD CONSTRAINT FK_DOANHTHUTHANG_MaDoanhThuNam FOREIGN KEY (MaDoanhThuNam) REFERENCES DOANHTHUNAM(MaDoanhThuNam)
 GO
@@ -518,7 +540,26 @@ GO
 ALTER TABLE DOANHTHUTHANG ADD CONSTRAINT CK_DOANHTHUTHANG_TiLe CHECK (TiLe>=0.0 AND TiLe<=1.0)
 GO
 
--- RÀNG BUỘC BẢNG DOANH THU NĂM
+------ Trigger: Cập nhật doanh thu năm khi có thêm doanh thu tháng
+CREATE TRIGGER TRG_DOANHTHUTHANG_DoanhThuNam ON DOANHTHUTHANG
+FOR INSERT
+AS
+BEGIN
+	-- Khai báo
+	DECLARE @doanhThuThem MONEY, @maDoanhThuNam INT
+
+	-- Lấy doanh thu vừa thêm và mã doanh thu năm
+	SELECT @doanhThuThem=DoanhThu, @maDoanhThuNam=MaDoanhThuNam
+	FROM INSERTED
+
+	-- Cập nhật doanh thu năm
+	UPDATE DOANHTHUNAM
+	SET DoanhThu=DoanhThu+@doanhThuThem
+	WHERE MaDoanhThuNam=@maDoanhThuNam
+END
+GO
+
+--========================================= RÀNG BUỘC BẢNG DOANH THU NĂM =========================================
 -- TRIGGER for Nam, SoChuyenBay, DoanhThu
 ------ Nam: <= Năm hiện tại?
 ALTER TABLE DOANHTHUNAM ADD CONSTRAINT CK_DOANHTHUNAM_Nam CHECK (Nam <= Year(GETDATE()))
