@@ -13,6 +13,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="680" Width="1220"
         WindowStartupLocation="CenterScreen"
+        MinWidth="500"
+        MinHeight="500"
         >
 
     <Window.Resources>

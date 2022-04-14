@@ -3,25 +3,158 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FlightTicketSell.Views" xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
+             xmlns:local="clr-namespace:FlightTicketSell.Views"
+             xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <vm:ReportViewModel/>
     </UserControl.DataContext>
 
-    <Grid>
-        <StackPanel Orientation="Vertical"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-            <materialDesign:PackIcon HorizontalAlignment="Center"
-                                              Foreground="{StaticResource BlueBrush}"
-                                              Width="100" Height="100"
-                                              Kind="ChartAreaspline"/>
-            <TextBlock FontSize="40" FontWeight="Bold" 
-                       VerticalAlignment="Center" HorizontalAlignment="Center" 
-                       Foreground="{StaticResource BlueBrush}"
-                       Text="{Binding Title}"/>
-        </StackPanel>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
+    <Grid d:Background="{StaticResource LightGrayBrush}">
+        <Grid Margin="0 20 0 0">
+
+            <!-- Row definition -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"  />
+                <RowDefinition Height="*"  />
+            </Grid.RowDefinitions>
+            
+            <!-- Month, Year condition -->
+            <Border Grid.Row="0" CornerRadius="10" HorizontalAlignment="Center" Background="White" Padding="60 20" Style="{StaticResource DropShadow}">
+                <!-- Content -->
+                <StackPanel Orientation="Horizontal">
+                    
+                    <!-- Month -->
+                    <StackPanel Margin="0 0 40 0">
+                        <TextBlock Text="Tháng" Style="{StaticResource FieldLabelText}" />
+                        <ComboBox materialDesign:HintAssist.Hint="Search"
+                                  materialDesign:HintAssist.HintOpacity=".26"
+                                  IsEditable="True"
+                                  SelectedIndex="0"
+                                  Width="150"
+                                  SelectedValue="{Binding Month, Mode=OneWayToSource, Converter={valueConverters:StringMonthYearToIntConverter}}">
+
+                            <!-- Command -->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding MonthYearChangedCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                            <!-- Items -->
+                            <ComboBoxItem Content="Tất cả" />
+                            <ComboBoxItem Content="1" />
+                            <ComboBoxItem Content="2" />
+                            <ComboBoxItem Content="3" />
+                            <ComboBoxItem Content="4" />
+                            <ComboBoxItem Content="5" />
+                            <ComboBoxItem Content="6" />
+                            <ComboBoxItem Content="7" />
+                            <ComboBoxItem Content="8" />
+                            <ComboBoxItem Content="9" />
+                            <ComboBoxItem Content="10" />
+                            <ComboBoxItem Content="11" />
+                            <ComboBoxItem Content="12" />
+                        </ComboBox>
+                    </StackPanel>
+                    
+                    <!-- Year -->
+                    <StackPanel Margin="40 0 0 0">
+                        <TextBlock Text="Năm" Style="{StaticResource FieldLabelText}" />
+                        <ComboBox materialDesign:HintAssist.Hint="Search"
+                                  materialDesign:HintAssist.HintOpacity=".26"
+                                  IsEditable="True"
+                                  SelectedIndex="0"
+                                  Width="150"
+                                  SelectedValue="{Binding Year, Mode=OneWayToSource, Converter={valueConverters:StringMonthYearToIntConverter}}">
+
+                            <!-- Command -->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding MonthYearChangedCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+
+                            <!-- Items -->
+                            <ComboBoxItem Content="Tất cả" />
+                            <ComboBoxItem Content="2018" />
+                            <ComboBoxItem Content="2019" />
+                            <ComboBoxItem Content="2020" />
+                            <ComboBoxItem Content="2021" />
+                            <ComboBoxItem Content="2022" />
+                        </ComboBox>
+                    </StackPanel>
+                    
+                </StackPanel>
+            </Border>
+
+            <!-- Total Revenue -->
+            <Border CornerRadius="10" 
+                    Grid.Row="1"
+                    HorizontalAlignment="Center" 
+                    Background="{StaticResource BlueBrush}" 
+                    Padding="30 15"
+                    Style="{StaticResource DropShadow}"
+                    Margin="0 20">
+                <Grid Width="350">
+                    <Grid.ColumnDefinitions>
+                        <!-- Label -->
+                        <ColumnDefinition Width="Auto" />
+                        <!-- Revenue -->
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Label -->
+                    <TextBlock Foreground="White" 
+                               Text="Tổng doanh thu" 
+                               Grid.Column="0"
+                               HorizontalAlignment="Left" 
+                               FontSize="{StaticResource Small}"
+                               VerticalAlignment="Center" />
+
+                    <!-- Revenue -->
+                    <TextBlock Foreground="White"
+                               Text="{Binding TotalRevenue, FallbackValue=600.000.000 VNĐ}"
+                               Grid.Column="1" HorizontalAlignment="Right" 
+                               FontFamily="{StaticResource Roboto}"
+                               FontWeight="Bold"
+                               FontSize="{StaticResource Regular}"
+                               />
+
+                </Grid>
+            </Border>
+
+            <!-- Report table -->
+            <Border CornerRadius="10"
+                    Grid.Row="2"
+                    Background="White" 
+                    Padding="30 15"
+                    Style="{StaticResource DropShadow}"
+                    Margin="40 10 40 40"
+                    VerticalAlignment="Stretch">
+
+                <DataGrid ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                          CellStyle="{StaticResource DataGridCellCenter}"
+                          ItemsSource="{Binding Report, Converter={valueConverters:ReportTypeConverter}}"
+                          ColumnWidth="*">
+                    
+                </DataGrid>
+
+            </Border>
+            
+            
+
+        </Grid>
     </Grid>
 </UserControl>
