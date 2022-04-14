@@ -61,7 +61,7 @@
                     
                     <!--Ghi chú-->
                     <StackPanel Grid.Row="1" Grid.Column="3" Grid.RowSpan="3">
-                        <TextBox VerticalAlignment="Top"
+                        <TextBox VerticalAlignment="Top" BorderBrush="{StaticResource LightGrayBrush}"
                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
                             TextWrapping="Wrap"
                             Height="110"
