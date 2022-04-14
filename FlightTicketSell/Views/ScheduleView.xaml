@@ -11,7 +11,7 @@
     </UserControl.DataContext>
 
     <Grid>
-        <StackPanel Orientation="Vertical"
+        <!--<StackPanel Orientation="Vertical"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
             <materialDesign:PackIcon HorizontalAlignment="Center"
@@ -22,6 +22,245 @@
                        VerticalAlignment="Center" HorizontalAlignment="Center" 
                        Foreground="{StaticResource BlueBrush}"
                        Text="{Binding Title}"/>
-        </StackPanel>
+        </StackPanel>-->
+
+
+        <Grid Margin="50 20 50 20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="10*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="7*"/>
+            </Grid.RowDefinitions>
+
+            <!--Thông tin chuyến bay-->
+            <Border Grid.Row="0" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <!--Tựa-->
+                    <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Thông tin chuyến bay</TextBlock>
+
+                    <!--Mã chuyến bay-->
+                    <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Mã chuyến bay" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" />
+
+                    <!--Giá vé-->
+                    <TextBox Grid.Row="1" Grid.Column="5" Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="VND">
+                        <materialDesign:HintAssist.Hint>
+                            <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                                <TextBlock Text="Giá vé" />
+                            </StackPanel>
+                        </materialDesign:HintAssist.Hint>
+                    </TextBox>
+
+                    <!--Thời gian bay-->
+                    <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="phút">
+                        <materialDesign:HintAssist.Hint>
+                            <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                                <TextBlock Text="Thời gian bay" />
+                            </StackPanel>
+                        </materialDesign:HintAssist.Hint>
+                    </TextBox>
+
+                    <!--Thời gian bay, Ngày giờ bay-->
+                    <Grid Grid.Row="3" Grid.Column="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="4*"/>
+                        </Grid.ColumnDefinitions>
+
+
+
+                        <!--Ngày bay-->
+                        <DatePicker x:Name="FlightDate" Grid.Column="0" materialDesign:HintAssist.Hint="Ngày bay"  >
+                            <DatePicker.Resources>
+                                <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
+                                    <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="{StaticResource BlueBrush}"/>
+                                    <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="White" />
+                                </Style>
+                                <Style x:Key="CustomCalendarButton" TargetType="CalendarButton" BasedOn="{StaticResource MaterialDesignCalendarButton}">
+                                    <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="{StaticResource BlueBrush}" />
+                                    <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="White" />
+                                </Style>
+                                <Style x:Key="CustomCalendar" TargetType="{x:Type Calendar}" BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
+                                    <Setter Property="Background" Value="White" />
+                                    <Setter Property="Foreground" Value="{StaticResource BlueBrush}" />
+                                    <Setter Property="materialDesign:CalendarAssist.HeaderBackground" Value="{StaticResource BlueBrush}" />
+                                    <Setter Property="materialDesign:CalendarAssist.HeaderForeground" Value="White" />
+                                    <Setter Property="CalendarDayButtonStyle" Value="{StaticResource CustomCalendarDayButton}" />
+                                    <Setter Property="CalendarButtonStyle" Value="{StaticResource CustomCalendarButton}" />
+                                </Style>
+                                <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                                    <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendar}" />
+                                </Style>
+                            </DatePicker.Resources>
+                        </DatePicker>
+
+                        <!--Giờ bay-->
+                        <materialDesign:TimePicker Grid.Column="2 " Style="{StaticResource MaterialDesignFloatingHintTimePicker}" Is24Hours="True" materialDesign:HintAssist.Hint="Giờ bay" />
+                    </Grid>
+
+                    <!--Sân bay đi-->
+                    <ComboBox Grid.Row="5" Grid.Column="1" materialDesign:HintAssist.Hint="Sân bay đi" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+
+                    <!--Nút chuyển giữa sân bay đi và sân bay đến-->
+                    <Button  Grid.Row="5" Grid.Column="3" Padding="0" Width="22" Height="22" Margin="0" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                        <Button.Content>
+                            <materialDesign:PackIcon Kind="MenuSwap" Margin="0"  Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" RenderTransformOrigin="0.5,0.5" >
+                                <materialDesign:PackIcon.RenderTransform>
+                                    <RotateTransform Angle="90"/>
+                                </materialDesign:PackIcon.RenderTransform>
+                            </materialDesign:PackIcon>
+                        </Button.Content>
+                          
+                    </Button>
+
+                    <!--Sân bay đến-->
+                    <ComboBox Grid.Row="5" Grid.Column="5" materialDesign:HintAssist.Hint="Sân bay đến" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        <ComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel />
+                            </ItemsPanelTemplate>
+                        </ComboBox.ItemsPanel>
+                    </ComboBox>
+                </Grid>
+            </Border>
+
+            <!--Sân bay trung gian-->
+            <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <!--Tựa-->
+                    <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Sân bay trung gian</TextBlock>
+
+                    <!--Danh sách hạng vé-->
+                    <ListView Grid.Row="1" Grid.Column="1">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Thứ tự"  DisplayMemberBinding="{Binding Code}"/>
+                                <GridViewColumn Header="Tên sân bay"  DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Thời gian dừng"  DisplayMemberBinding="{Binding Description}"/>
+                                <GridViewColumn Header="Ghi chú"  DisplayMemberBinding="{Binding Description}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <!--Nút thêm sửa xóa-->
+                    <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+                        <!--Nút xóa-->
+                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+
+                        <!--Nút sửa-->
+                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+
+                        <!--Nút thêm-->
+                        <Button Margin="7 0 20 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                                Command="{Binding Open_Window_EnterLayoverAirport_Command}"
+                                />
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+
+            <!--Hạng vé-->
+            <Border Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <!--Tựa-->
+                    <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Hạng vé</TextBlock>
+
+                    <!--Danh sách hạng vé-->
+                    <ListView Grid.Row="1" Grid.Column="1">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Tên hạng vé" DisplayMemberBinding="{Binding Code}"/>
+                                <GridViewColumn Header="Giá tiền" DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="Số ghế" DisplayMemberBinding="{Binding Description}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <!--Nút thêm sửa xóa-->
+                    <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+                        <!--Nút xóa-->
+                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+
+                        <!--Nút sửa-->
+                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+
+                        <!--Nút thêm-->
+                        <Button Margin="7 0 20 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                                Command="{Binding Open_Window_EnterTicketClass_Command}"
+                                />
+                    </StackPanel>
+                
+                </Grid>
+            </Border>
+
+            <!--Nút nhận lịch chuyến bay/ Hủy-->
+            <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Height="50">
+                <Button Margin="0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource Regular}" Content="Hủy" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                <Button Margin="20 0 0 0" Height="auto" Background="{StaticResource GreenBrush}"  FontSize="{StaticResource Regular}" Content="Nhận lịch bay" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+            </StackPanel>
+        </Grid>
+
     </Grid>
 </UserControl>

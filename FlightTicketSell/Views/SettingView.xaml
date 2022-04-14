@@ -12,7 +12,7 @@
         <vm:SettingViewModel />
     </UserControl.DataContext>
 
-    <Grid d:Background="{StaticResource LightGrayBrush}">
+    <Grid>
         <!--Icon lúc mà chưa làm giao diện-->
         <!--<StackPanel Orientation="Vertical"
                     HorizontalAlignment="Center"
@@ -115,7 +115,7 @@
                     </TextBox>
 
                     <!--Nút lưu-->
-                    <Button Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="2" Background="{StaticResource BlueBrush}" Margin="50 0 50 0"  FontSize="{StaticResource RealSmall}" Content="Lưu" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7" />
+                    <Button  Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="2" Height="auto" Background="{StaticResource BlueBrush}" Margin="50 0 50 0"  FontSize="{StaticResource RealSmall}" Content="Lưu" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7" />
 
 
 
@@ -151,13 +151,15 @@
                     <!--Nút thêm sửa xóa-->
                     <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right">
                         <!--Nút xóa-->
-                        <Button Margin="7 0 0 0" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
 
                         <!--Nút sửa-->
-                        <Button Margin="7 0 0 0" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
 
                         <!--Nút thêm-->
-                        <Button Margin="7 0 10 0" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                        <Button Margin="7 0 10 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                                Command="{Binding Open_Window_MoreAirport_Command}"
+                                />
                     </StackPanel>
 
                 </Grid>
@@ -190,13 +192,15 @@
                     <!--Nút thêm sửa xóa-->
                     <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right">
                         <!--Nút xóa-->
-                        <Button Margin="7 0 0 0" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
 
                         <!--Nút sửa-->
-                        <Button Margin="7 0 0 0" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
 
                         <!--Nút thêm-->
-                        <Button Margin="7 0 10 0" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                        <Button Margin="7 0 10 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                                Command="{Binding Open_Window_MoreTicketClass_Command}"
+                                />
                     </StackPanel>
                 </Grid>
             </Border>

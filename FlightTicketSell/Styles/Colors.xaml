@@ -15,4 +15,9 @@
     <!--Red-->
     <Color x:Key="Red">#C7282A</Color>
     <SolidColorBrush x:Key="RedBrush" Color="{StaticResource Red}" />
+
+    <!--Green-->
+    <Color x:Key="Green">#24B44C</Color>
+    <SolidColorBrush x:Key="GreenBrush" Color="{StaticResource Green}" />
+
 </ResourceDictionary>

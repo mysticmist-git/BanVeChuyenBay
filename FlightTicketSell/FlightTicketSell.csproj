@@ -172,6 +172,18 @@
     <Compile Include="Views\BookView.xaml.cs">
       <DependentUpon>BookView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EnterLayoverAirportView.xaml.cs">
+      <DependentUpon>EnterLayoverAirportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EnterTicketClassView.xaml.cs">
+      <DependentUpon>EnterTicketClassView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MoreAirportView.xaml.cs">
+      <DependentUpon>MoreAirportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MoreTicketClassView.xaml.cs">
+      <DependentUpon>MoreTicketClassView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ReportView.xaml.cs">
       <DependentUpon>ReportView.xaml</DependentUpon>
     </Compile>
@@ -231,6 +243,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BookView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EnterLayoverAirportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EnterTicketClassView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MoreAirportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MoreTicketClassView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
