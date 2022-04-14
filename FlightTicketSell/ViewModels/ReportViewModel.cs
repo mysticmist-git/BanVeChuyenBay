@@ -29,7 +29,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Total revenue
         /// </summary>
-        public string TotalRevenue { get { return ReportHelper.VietnamCurrencyConvert(100000000000000000) + " VNĐ"; } set { } }
+        public string TotalRevenue { get { return ReportHelper.VietnamCurrencyConvert(ReportHelper.CalculateTotalRevenue(Report)) + " VNĐ"; } set { } }
 
         /// <summary>
         ///  Indicate current report type
