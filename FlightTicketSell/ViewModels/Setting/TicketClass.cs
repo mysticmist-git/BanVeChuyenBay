@@ -6,17 +6,15 @@ using System.Threading.Tasks;
 
 namespace FlightTicketSell.ViewModels.Setting
 {
-    public class Airport: BaseViewModel
+    public class TicketClass : BaseViewModel
     {
         #region Private Members
-        
+
         #endregion
 
         #region Public Properties
-        public string Code { get; set; }
-
         public string Name { get; set; }
-        public string Province { get; set; }
+        public double Coefficient { get; set; }
         #endregion
 
         #region Methods

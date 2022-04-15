@@ -25,7 +25,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid d:Background="{StaticResource LightGrayBrush}">
+    <Grid >
         <Grid Margin="0 20 0 0">
 
             <!-- Row definition -->

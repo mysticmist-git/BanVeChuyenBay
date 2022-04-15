@@ -171,9 +171,13 @@
     </Compile>
     <Compile Include="ValueConverters\AppViewToBooleanConverter.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
+    <Compile Include="ValueConverters\DatePickerUI_To_DatePickerConverter.cs" />
     <Compile Include="ValueConverters\IoCConverter.cs" />
     <Compile Include="ValueConverters\ReportTypeConverter.cs" />
+    <Compile Include="ValueConverters\StringAirfaresToIntAirfares.cs" />
+    <Compile Include="ValueConverters\StringFlightTimeToIntFlightTimeConverter.cs" />
     <Compile Include="ValueConverters\StringMonthYearToIntConverter.cs" />
+    <Compile Include="ValueConverters\TimePickerUI_To_TimePickerConverter.cs" />
     <Compile Include="ValueConverters\WidthToOrientationConverter.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
@@ -190,6 +194,7 @@
     <Compile Include="ViewModels\SellViewModel.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="ViewModels\Setting\Airport.cs" />
+    <Compile Include="ViewModels\Setting\TicketClass.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\BookView.xaml.cs">
       <DependentUpon>BookView.xaml</DependentUpon>

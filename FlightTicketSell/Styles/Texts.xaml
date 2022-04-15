@@ -31,4 +31,30 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!--Custom Textbox-->
+    <Style x:Key="CustomTextbox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}" TargetType="{x:Type TextBox}">
+        <Setter Property="FontFamily" Value="{StaticResource Roboto}" />
+        <Setter Property="FontSize" Value="{StaticResource Small}"/>
+        <Setter Property="Foreground" Value="Black"/>
+    </Style>
+
+    <!--GridViewColumn.Header-->
+    <Style x:Key="Custom_GridviewHeader" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource RobotoMedium}" />
+        <Setter Property="FontSize" Value="{StaticResource Small}" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+
+    <!--GridViewColumn.CellTemplate-->
+    <Style x:Key="Custom_GridviewCell" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource Roboto}" />
+        <Setter Property="FontSize" Value="{StaticResource RealSmall}" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="20 0 0 0"/>
+    </Style>
 </ResourceDictionary>

@@ -54,6 +54,11 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ObservableCollection<Airport> List_Airport { get; set; } = new ObservableCollection<Airport>();
 
+        /// <summary>
+        /// Danh sách hạng vé
+        /// </summary>
+        public ObservableCollection<TicketClass> List_TicketClass { get; set; } = new ObservableCollection<TicketClass>();
+
         #endregion
 
         public string Title { get; } = "CÀI ĐẶT";
@@ -68,18 +73,31 @@ namespace FlightTicketSell.ViewModels
                     {
                         // Các quy định về chuyến bay
                         Max_LayoverAirport = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri;
+                        Min_FlightTime = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianBayToiThieu").FirstOrDefault().GiaTri;
+                        Latest_BookingTime = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianDatVeChamNhat").FirstOrDefault().GiaTri;
+                        Cancel_BookingTime = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri;
+                        Min_TimeStop = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianDungToiThieu").FirstOrDefault().GiaTri;
+                        Max_TimeStop = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianDungToiDa").FirstOrDefault().GiaTri;
 
+                        // Danh sách sân bay
                         if (List_Airport != null)
                         {
                             List_Airport.Clear();
-                        }    
-                            
-                        // Danh sách sân bay
+                        }
                         foreach (var item in context.SANBAYs.ToList())
                         {
                             List_Airport.Add(new Airport() { Code = item.VietTat, Name = item.TenSanBay, Province = item.TinhThanh });
                         }
-                        
+
+                        // Danh sách hạng vé
+                        if (List_TicketClass != null)
+                        {
+                            List_TicketClass.Clear();
+                        }
+                        foreach (var item in context.HANGVEs.ToList())
+                        {
+                            List_TicketClass.Add(new TicketClass() { Name = item.TenHangVe, Coefficient = (double)item.HeSo });
+                        }
 
                     }
 
@@ -114,6 +132,7 @@ namespace FlightTicketSell.ViewModels
                    {
                        context.THAMSOes.Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri = Max_LayoverAirport;
                        context.SaveChanges();
+                       
                       
                    }
                }
