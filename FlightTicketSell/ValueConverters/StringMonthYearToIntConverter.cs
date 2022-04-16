@@ -8,17 +8,12 @@ using System.Windows.Controls;
 
 namespace FlightTicketSell.ValueConverters
 {
+    // TODO: Delete this file if you don't use it in the future
     public class StringMonthYearToIntConverter : BaseValueConverter<StringMonthYearToIntConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
-                return null;
-
-            if ((int)value == 0)
-                return new ComboBoxItem { Content = "Tất cả" };
-
-            return new ComboBoxItem { Content = ((int)value).ToString() };
+            throw new NotImplementedException();
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -26,13 +21,10 @@ namespace FlightTicketSell.ValueConverters
             if (value == null)
                 return null;
 
-            // Get combobox item value
-            string stringValue = (value as ComboBoxItem).Content.ToString();
-
-            if (stringValue == "Tất cả")
+            if (value.ToString() == "Tất cả")
                 return 0;
 
-            return int.Parse((string)stringValue);
+            return int.Parse((string)value.ToString());
         }
     }
 }

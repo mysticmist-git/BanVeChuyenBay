@@ -17,15 +17,35 @@ namespace FlightTicketSell.ViewModels
         #region Public Properties
 
         /// <summary>
-        /// Month condition, with 0 mean every month
+        /// The years that have report
         /// </summary>
-        public int Month { get; set; }
+        public ObservableCollection<string> Years { get; set; }
 
         /// <summary>
-        /// Year condition, with 0 mean every year
+        /// The months that have report of the current year
+        /// </summary>
+        public ObservableCollection<string> Months { get; set; }
+
+        /// <summary>
+        /// Current selected year
         /// </summary>
         public int Year { get; set; }
+
+        /// <summary>
+        /// The index of the year combobox
+        /// </summary>
+        public int YearIndex { get { if (Years is null) return -1; return Years.IndexOf(Year == 0 ? "Tất cả" : Year.ToString()); } }
+
+        /// <summary>
+        /// Current selected month
+        /// </summary>
+        public int Month { get; set; }
         
+        /// <summary>
+        /// The index of the month combobox
+        /// </summary>
+        public int MonthIndex { get { if (Months is null) return -1; return Months.IndexOf(Month == 0 ? "Tất cả" : Month.ToString()); } }
+
         /// <summary>
         /// Total revenue
         /// </summary>
@@ -34,7 +54,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         ///  Indicate current report type
         /// </summary>
-        public ReportType CurrentReportType { get { if (Report is null) return ReportType.None; return Report.Type; } set { } }
+        public ReportType CurrentReportType { get { if (Report is null) return ReportType.None; return Report.Type; } }
 
         /// <summary>
         /// The flight revenue report
@@ -55,6 +75,16 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand MonthYearChangedCommand { get; set; }
 
+        /// <summary>
+        /// Query new report
+        /// </summary>
+        public ICommand MonthChangedCommand { get; set; }
+
+        /// <summary>
+        /// Get new month collection, query new report
+        /// </summary>
+        public ICommand YearChangedCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -67,6 +97,30 @@ namespace FlightTicketSell.ViewModels
             // Create commands
             LoadCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
+                // Get months, years available
+                using (var context = new FlightTicketSellEntities())
+                {
+                    // Get years
+                    Years = new ObservableCollection<string>(await context.DOANHTHUNAMs.Select(x => x.Nam.ToString()).ToListAsync());
+                    Years.Insert(0, "Tất cả");
+
+                    // Get months
+                    if (Year == 0)
+                        Months = new ObservableCollection<string> { "Tất cả", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
+                    else
+                    {
+                        Months = new ObservableCollection<string>(await context.DOANHTHUNAMs
+                            .Where(x => x.Nam == Year)
+                            .Join(context.DOANHTHUTHANGs, nam => nam.MaDoanhThuNam, thang => thang.MaDoanhThuNam, (nam, thang) => thang.Thang.ToString()).ToListAsync()
+                        );
+
+                        Months.Insert(0, "Tất cả");
+                    }
+                }
+
+                OnPropertyChanged(nameof(MonthIndex));
+                OnPropertyChanged(nameof(YearIndex));
+
                 // Check if any flight departed to add a report if needed
                 await ReportHelper.ReportExistGuarantee();
 
@@ -74,8 +128,36 @@ namespace FlightTicketSell.ViewModels
                 Report = await ReportHelper.GetReportAsync(Month, Year);
             });
 
-            MonthYearChangedCommand = new RelayCommand<object>((p) => true, async (p) =>
+            MonthChangedCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
+                // Check if any flight departed to add a report if needed
+                await ReportHelper.ReportExistGuarantee();
+
+                // Update report
+                Report = await ReportHelper.GetReportAsync(Month, Year);
+            });
+
+            YearChangedCommand = new RelayCommand<object>((p) => true, async (p) =>
+            {
+                using (var context = new FlightTicketSellEntities())
+                {
+                    // Get months
+                    if (Year == 0)
+                        Months = new ObservableCollection<string> { "Tất cả", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
+                    else
+                    {
+                        Months = new ObservableCollection<string>(await context.DOANHTHUNAMs
+                            .Where(x => x.Nam == Year)
+                            .Join(context.DOANHTHUTHANGs, nam => nam.MaDoanhThuNam, thang => thang.MaDoanhThuNam, (nam, thang) => thang.Thang.ToString()).ToListAsync()
+                        );
+
+                        Months.Insert(0, "Tất cả");
+                    }
+                }
+
+                OnPropertyChanged(nameof(MonthIndex));
+                OnPropertyChanged(nameof(YearIndex));
+
                 // Check if any flight departed to add a report if needed
                 await ReportHelper.ReportExistGuarantee();
 
