@@ -79,7 +79,7 @@ namespace FlightTicketSell.Views
                     reportDataGrid.Columns[3].Header = "Tỉ lệ";
                     break;
             }
-            
+
         }
     }
 }

@@ -14,10 +14,8 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Loaded="UserControl_Loaded"
              x:Name="UC"
+             DataContext="{Binding ReportViewModel, Source={x:Static vm:ViewModelLocator.Instance}}"
              >
-    <UserControl.DataContext>
-        <vm:ReportViewModel/>
-    </UserControl.DataContext>
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -25,7 +23,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid d:Background="{StaticResource LightGrayBrush}">
+    <Grid >
         <Grid Margin="0 20 0 0">
 
             <!-- Row definition -->
@@ -54,64 +52,43 @@
                     <StackPanel Margin="40 5 40 5"
                                 HorizontalAlignment="Center">
                         <TextBlock Text="Tháng" Style="{StaticResource FieldLabelText}" />
-                        <ComboBox materialDesign:HintAssist.Hint="Search"
+                        <ComboBox materialDesign:HintAssist.Hint="Chọn tháng"
                                   materialDesign:HintAssist.HintOpacity=".26"
                                   IsEditable="True"
-                                  SelectedIndex="0"
                                   Width="150"
-                                  SelectedValue="{Binding Month, Mode=OneWayToSource, Converter={valueConverters:StringMonthYearToIntConverter}}">
+                                  ItemsSource="{Binding Months}"
+                                  SelectedIndex="{Binding MonthIndex, Mode=OneWay}"
+                                  SelectedValue="{Binding Month, Mode=OneWayToSource, Converter={valueConverters:StringMonthYearToIntConverter},FallbackValue=0}">
 
                             <!-- Command -->
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding MonthYearChangedCommand}"/>
+                                    <i:InvokeCommandAction Command="{Binding MonthChangedCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-
-                            <!-- Items -->
-                            <ComboBoxItem Content="Tất cả" />
-                            <ComboBoxItem Content="1" />
-                            <ComboBoxItem Content="2" />
-                            <ComboBoxItem Content="3" />
-                            <ComboBoxItem Content="4" />
-                            <ComboBoxItem Content="5" />
-                            <ComboBoxItem Content="6" />
-                            <ComboBoxItem Content="7" />
-                            <ComboBoxItem Content="8" />
-                            <ComboBoxItem Content="9" />
-                            <ComboBoxItem Content="10" />
-                            <ComboBoxItem Content="11" />
-                            <ComboBoxItem Content="12" />
                         </ComboBox>
                     </StackPanel>
 
                     <!-- Year -->
                     <StackPanel Margin="40 5 40 5" HorizontalAlignment="Center">
                         <TextBlock Text="Năm" Style="{StaticResource FieldLabelText}" />
-                        <ComboBox materialDesign:HintAssist.Hint="Search"
+                        <ComboBox materialDesign:HintAssist.Hint="Chọn năm"
                                   materialDesign:HintAssist.HintOpacity=".26"
                                   IsEditable="True"
-                                  SelectedIndex="0"
                                   Width="150"
-                                  SelectedValue="{Binding Year, Mode=OneWayToSource, Converter={valueConverters:StringMonthYearToIntConverter}}">
+                                  ItemsSource="{Binding Years}"
+                                  SelectedIndex="{Binding YearIndex, Mode=OneWay}"
+                                  SelectedValue="{Binding Year, Mode=OneWayToSource, Converter={valueConverters:StringMonthYearToIntConverter},FallbackValue=0}">
 
                             <!-- Command -->
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding MonthYearChangedCommand}"/>
+                                    <i:InvokeCommandAction Command="{Binding YearChangedCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
 
-                            <!-- Items -->
-                            <ComboBoxItem Content="Tất cả" />
-                            <ComboBoxItem Content="2018" />
-                            <ComboBoxItem Content="2019" />
-                            <ComboBoxItem Content="2020" />
-                            <ComboBoxItem Content="2021" />
-                            <ComboBoxItem Content="2022" />
                         </ComboBox>
                     </StackPanel>
-
                 </StackPanel>
             </Border>
 

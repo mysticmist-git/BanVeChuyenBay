@@ -14,13 +14,13 @@
     </Style>
 
     <!-- List column header text -->
-    <Style x:Key="DataGridBlackColumnHeader" TargetType="{x:Type DataGridColumnHeader}">
+    <Style x:Key="DataGridBlackColumnHeader" TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontFamily" Value="{StaticResource Roboto}" />
         <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="DataGridCellCenter" TargetType="{x:Type DataGridCell}">
+    <Style x:Key="DataGridCellCenter" TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource MaterialDesignDataGridCell}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
@@ -30,5 +30,31 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <!--Custom Textbox-->
+    <Style x:Key="CustomTextbox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}" TargetType="{x:Type TextBox}">
+        <Setter Property="FontFamily" Value="{StaticResource Roboto}" />
+        <Setter Property="FontSize" Value="{StaticResource Small}"/>
+        <Setter Property="Foreground" Value="Black"/>
+    </Style>
+
+    <!--GridViewColumn.Header-->
+    <Style x:Key="Custom_GridviewHeader" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource RobotoMedium}" />
+        <Setter Property="FontSize" Value="{StaticResource Small}" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+
+    <!--GridViewColumn.CellTemplate-->
+    <Style x:Key="Custom_GridviewCell" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource Roboto}" />
+        <Setter Property="FontSize" Value="{StaticResource RealSmall}" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="20 0 0 0"/>
     </Style>
 </ResourceDictionary>

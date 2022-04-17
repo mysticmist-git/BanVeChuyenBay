@@ -8,23 +8,20 @@ using System.Windows.Controls;
 
 namespace FlightTicketSell.ValueConverters
 {
-    // TODO: Delete this file if you don't use it in the future
-    public class StringMonthYearToIntConverter : BaseValueConverter<StringMonthYearToIntConverter>
+    public class DatePickerUI_To_DatePickerConverter : BaseValueConverter<DatePickerUI_To_DatePickerConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            if (value == null)
+                return null;
+            return (DatePicker)value;
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
                 return null;
-
-            if (value.ToString() == "Tất cả")
-                return 0;
-
-            return int.Parse((string)value.ToString());
+            return (DatePicker)value;
         }
     }
 }

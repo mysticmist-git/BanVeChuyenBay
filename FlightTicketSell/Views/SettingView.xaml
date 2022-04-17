@@ -18,26 +18,12 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid>
-        <!--Icon lúc mà chưa làm giao diện-->
-        <!--<StackPanel Orientation="Vertical"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-            <materialDesign:PackIcon HorizontalAlignment="Center"
-                                              Foreground="{StaticResource BlueBrush}"
-                                              Width="100" Height="100"
-                                              Kind="Cog"/>
-            <TextBlock FontSize="40" FontWeight="Bold" 
-                       VerticalAlignment="Center" HorizontalAlignment="Center" 
-                       Foreground="{StaticResource BlueBrush}"
-                       Text="{Binding Title}"/>
-        </StackPanel>-->
-
+    <Grid >
         <Grid Margin="100 20 100 20 ">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="8*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="8*"></ColumnDefinition>
+                <ColumnDefinition Width="7*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -73,11 +59,14 @@
                     <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" > Quy định về chuyến bay</TextBlock>
 
                     <!--Số sân bay trung gian tối đa-->
-                    <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Số sân bay trung gian tối đa" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" 
-                              Text="{Binding Max_LayoverAirport}"/>
+                    <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Số sân bay trung gian tối đa" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                              Text="{Binding Max_LayoverAirport}"
+                              />
 
                     <!--Thời gian bay tối thiểu-->
-                    <TextBox Grid.Row="1" Grid.Column="3" Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="phút">
+                    <TextBox Grid.Row="1" Grid.Column="3" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="phút"
+                             Text="{Binding Min_FlightTime}"
+                             >
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                 <TextBlock Text="Thời gian bay tối thiểu" />
@@ -86,7 +75,9 @@
                     </TextBox>
 
                     <!--Thời gian dừng tối thiểu-->
-                    <TextBox Grid.Row="1" Grid.Column="5" Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="phút">
+                    <TextBox Grid.Row="1" Grid.Column="5" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="phút"
+                             Text="{Binding Min_TimeStop}"
+                             >
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                 <TextBlock Text="Thời gian dừng tối thiểu" />
@@ -95,7 +86,9 @@
                     </TextBox>
 
                     <!--Thời gian đặt vé chậm nhất -->
-                    <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="ngày">
+                    <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="ngày"
+                             Text="{Binding Latest_BookingTime}"
+                             >
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                 <TextBlock Text="Thời gian đặt vé chậm nhất" />
@@ -104,7 +97,9 @@
                     </TextBox>
 
                     <!--Thời gian hủy đặt chỗ-->
-                    <TextBox Grid.Row="3" Grid.Column="3" Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="ngày">
+                    <TextBox Grid.Row="3" Grid.Column="3" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="ngày"
+                             Text="{Binding Cancel_BookingTime}"
+                             >
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                 <TextBlock Text="Thời gian hủy đặt chỗ" />
@@ -113,7 +108,9 @@
                     </TextBox>
 
                     <!--Thời gian dừng tối đa-->
-                    <TextBox Grid.Row="3" Grid.Column="5" Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="phút">
+                    <TextBox Grid.Row="3" Grid.Column="5" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="phút"
+                             Text="{Binding Max_TimeStop}"
+                             >
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                 <TextBlock Text="Thời gian dừng tối đa" />
@@ -122,17 +119,13 @@
                     </TextBox>
 
                     <!--Nút lưu-->
-                    <Button  Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="2" Height="auto" Background="{StaticResource BlueBrush}" Margin="50 0 50 0"  FontSize="{StaticResource RealSmall}" Content="Lưu" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7" 
+                    <Button  Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" Height="auto" Background="{StaticResource BlueBrush}" Margin="50 0 50 0"  FontSize="{StaticResource Small}" Content="Lưu" BorderThickness="0" materialDesign:ButtonAssist.CornerRadius="7" 
                              Command="{Binding Save_FlightRegulations_Command}"/>
-
-
-
-
                 </Grid>
             </Border>
 
             <!--Quy định về sân bay-->
-            <Border Grid.Row="2" Grid.Column="0" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}">
+            <Border Grid.Row="2" Margin="20 0 0 0" Grid.Column="0" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="2*" ></RowDefinition>
@@ -149,9 +142,43 @@
                     <ListView Grid.Row="1" ItemsSource="{Binding List_Airport}">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Viết tắt" DisplayMemberBinding="{Binding Code}"/>
-                                <GridViewColumn Header="Tên sân bay" DisplayMemberBinding="{Binding Name}"/>
-                                <GridViewColumn Header="Tỉnh thành" DisplayMemberBinding="{Binding Province}"/>
+                                
+                                <!--Viết tắt-->
+                                <GridViewColumn >
+                                    <GridViewColumn.Header>
+                                        <TextBlock Text="Viết tắt" Style="{StaticResource Custom_GridviewHeader}"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Code}"  Style="{StaticResource Custom_GridviewCell}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <!--Tên sân bay-->
+                                <GridViewColumn >
+                                    <GridViewColumn.Header>
+                                        <TextBlock Text="Tên sân bay" Style="{StaticResource Custom_GridviewHeader}"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" Style="{StaticResource Custom_GridviewCell}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <!--Tên sân bay-->
+                                <GridViewColumn >
+                                    <GridViewColumn.Header>
+                                        <TextBlock Text="Tỉnh thành" Style="{StaticResource Custom_GridviewHeader}"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Province}" Style="{StaticResource Custom_GridviewCell}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -174,7 +201,7 @@
             </Border>
 
             <!--Quy định về hạng vé-->
-            <Border Grid.Row="2" Grid.Column="2" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}">
+            <Border Grid.Row="2" Grid.Column="2" Margin="0 0 20 0" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="2*" ></RowDefinition>
@@ -188,11 +215,34 @@
                     <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Hạng vé</TextBlock>
 
                     <!--Danh sách hạng vé-->
-                    <ListView Grid.Row="1">
+                    <ListView Grid.Row="1" ItemsSource="{Binding List_TicketClass}">
                         <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Tên hạng vé" DisplayMemberBinding="{Binding Code}"/>
-                                <GridViewColumn Header="Hệ số" DisplayMemberBinding="{Binding Name}"/>
+                            <GridView >
+
+                                <!--Tên hạng vé-->
+                                <GridViewColumn >
+                                    <GridViewColumn.Header>
+                                        <TextBlock Text="Tên hạng vé" Style="{StaticResource Custom_GridviewHeader}"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" Style="{StaticResource Custom_GridviewCell}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <!--Hệ số-->
+                                <GridViewColumn >
+                                    <GridViewColumn.Header>
+                                        <TextBlock Text="Hệ số" Style="{StaticResource Custom_GridviewHeader}"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Coefficient}" Style="{StaticResource Custom_GridviewCell}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
                             </GridView>
                         </ListView.View>
                     </ListView>
