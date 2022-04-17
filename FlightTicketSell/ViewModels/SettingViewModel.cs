@@ -4,6 +4,8 @@ using System.Windows.Input;
 using System.Linq;
 using System.Collections.ObjectModel;
 using FlightTicketSell.ViewModels.Setting;
+using System.Data.Entity.Core;
+using System.Windows;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -71,34 +73,41 @@ namespace FlightTicketSell.ViewModels
                 {
                     using(var context = new FlightTicketSellEntities())
                     {
-                        // Các quy định về chuyến bay
-                        Max_LayoverAirport = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri;
-                        Min_FlightTime = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianBayToiThieu").FirstOrDefault().GiaTri;
-                        Latest_BookingTime = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianDatVeChamNhat").FirstOrDefault().GiaTri;
-                        Cancel_BookingTime = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri;
-                        Min_TimeStop = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianDungToiThieu").FirstOrDefault().GiaTri;
-                        Max_TimeStop = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianDungToiDa").FirstOrDefault().GiaTri;
+                        try
+                        {
+                            // Các quy định về chuyến bay
+                            Max_LayoverAirport = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri;
+                            Min_FlightTime = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianBayToiThieu").FirstOrDefault().GiaTri;
+                            Latest_BookingTime = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianDatVeChamNhat").FirstOrDefault().GiaTri;
+                            Cancel_BookingTime = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri;
+                            Min_TimeStop = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianDungToiThieu").FirstOrDefault().GiaTri;
+                            Max_TimeStop = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianDungToiDa").FirstOrDefault().GiaTri;
 
-                        // Danh sách sân bay
-                        if (List_Airport != null)
-                        {
-                            List_Airport.Clear();
-                        }
-                        foreach (var item in context.SANBAYs.ToList())
-                        {
-                            List_Airport.Add(new Airport() { Code = item.VietTat, Name = item.TenSanBay, Province = item.TinhThanh });
-                        }
+                            // Danh sách sân bay
+                            if (List_Airport != null)
+                            {
+                                List_Airport.Clear();
+                            }
+                            foreach (var item in context.SANBAYs.ToList())
+                            {
+                                List_Airport.Add(new Airport() { Code = item.VietTat, Name = item.TenSanBay, Province = item.TinhThanh });
+                            }
 
-                        // Danh sách hạng vé
-                        if (List_TicketClass != null)
-                        {
-                            List_TicketClass.Clear();
-                        }
-                        foreach (var item in context.HANGVEs.ToList())
-                        {
-                            List_TicketClass.Add(new TicketClass() { Name = item.TenHangVe, Coefficient = (double)item.HeSo });
-                        }
+                            // Danh sách hạng vé
+                            if (List_TicketClass != null)
+                            {
+                                List_TicketClass.Clear();
+                            }
+                            foreach (var item in context.HANGVEs.ToList())
+                            {
+                                List_TicketClass.Add(new TicketClass() { Name = item.TenHangVe, Coefficient = (double)item.HeSo });
+                            }
 
+                        }
+                        catch (EntityException e)
+                        {
+                            MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
 
                 }
@@ -130,10 +139,17 @@ namespace FlightTicketSell.ViewModels
                {
                    using (var context = new FlightTicketSellEntities())
                    {
-                       context.THAMSOes.Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri = Max_LayoverAirport;
-                       context.SaveChanges();
-                       
-                      
+                       try
+                       {
+                           context.THAMSOes.Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri = Max_LayoverAirport;
+                           context.SaveChanges();
+
+
+                       }
+                       catch (EntityException e)
+                       {
+                           MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                       }
                    }
                }
            );

@@ -9,6 +9,8 @@ using System;
 using FlightTicketSell.Models.Enums;
 using FlightTicketSell.Views.Helper;
 using System.ComponentModel;
+using System.Windows;
+using System.Data.Entity.Core;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -73,7 +75,7 @@ namespace FlightTicketSell.ViewModels
         #endregion
 
         #region Commands
-        
+
         /// <summary>
         /// Execute when view load
         /// </summary>
@@ -117,26 +119,33 @@ namespace FlightTicketSell.ViewModels
 
                     return;
                 }
-                    
+
 
                 // Get months, years available
                 using (var context = new FlightTicketSellEntities())
                 {
-                    // Get years
-                    Years = new ObservableCollection<string>(await context.DOANHTHUNAMs.Select(x => x.Nam.ToString()).ToListAsync());
-                    Years.Insert(0, "Tất cả");
-
-                    // Get months
-                    if (Year == 0)
-                        Months = new ObservableCollection<string> { "Tất cả", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
-                    else
+                    try
                     {
-                        Months = new ObservableCollection<string>(await context.DOANHTHUNAMs
-                            .Where(x => x.Nam == Year)
-                            .Join(context.DOANHTHUTHANGs, nam => nam.MaDoanhThuNam, thang => thang.MaDoanhThuNam, (nam, thang) => thang.Thang.ToString()).ToListAsync()
-                        );
+                        // Get years
+                        Years = new ObservableCollection<string>(await context.DOANHTHUNAMs.Select(x => x.Nam.ToString()).ToListAsync());
+                        Years.Insert(0, "Tất cả");
 
-                        Months.Insert(0, "Tất cả");
+                        // Get months
+                        if (Year == 0)
+                            Months = new ObservableCollection<string> { "Tất cả", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
+                        else
+                        {
+                            Months = new ObservableCollection<string>(await context.DOANHTHUNAMs
+                                .Where(x => x.Nam == Year)
+                                .Join(context.DOANHTHUTHANGs, nam => nam.MaDoanhThuNam, thang => thang.MaDoanhThuNam, (nam, thang) => thang.Thang.ToString()).ToListAsync()
+                            );
+
+                            Months.Insert(0, "Tất cả");
+                        }
+                    }
+                    catch (EntityException e)
+                    {
+                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
 
