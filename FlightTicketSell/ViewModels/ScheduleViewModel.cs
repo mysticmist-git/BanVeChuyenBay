@@ -88,27 +88,34 @@ namespace FlightTicketSell.ViewModels
             LoadCommand = new RelayCommand<object>((p) => { return true; },
                (p) =>
                {
-                   using (var context = new FlightTicketSellEntities())
+                   try
                    {
-                       //Danh sách sân bay đi
-                       if(DepartureAirport.Items.Count>0)
+                       using (var context = new FlightTicketSellEntities())
                        {
-                           DepartureAirport.Items.Clear();
-                       }
-                       foreach(var item in context.SANBAYs.ToList())
-                       {
-                           DepartureAirport.Items.Add(item.TenSanBay);
-                       }
+                           //Danh sách sân bay đi
+                           if (DepartureAirport.Items.Count > 0)
+                           {
+                               DepartureAirport.Items.Clear();
+                           }
+                           foreach (var item in context.SANBAYs.ToList())
+                           {
+                               DepartureAirport.Items.Add(item.TenSanBay);
+                           }
 
-                       //Danh sách sân bay đến
-                       if (LandingAirport.Items.Count > 0)
-                       {
-                           LandingAirport.Items.Clear();
+                           //Danh sách sân bay đến
+                           if (LandingAirport.Items.Count > 0)
+                           {
+                               LandingAirport.Items.Clear();
+                           }
+                           foreach (var item in context.SANBAYs.ToList())
+                           {
+                               LandingAirport.Items.Add(item.TenSanBay);
+                           }
                        }
-                       foreach (var item in context.SANBAYs.ToList())
-                       {
-                           LandingAirport.Items.Add(item.TenSanBay);
-                       }
+                   }
+                   catch (System.Data.Entity.Core.EntityException e)
+                   {
+                       MessageBox.Show($"Exception: {e.Message}");
                    }
                }
            );
