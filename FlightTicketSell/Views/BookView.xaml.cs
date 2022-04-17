@@ -23,6 +23,9 @@ namespace FlightTicketSell.Views
         public BookView()
         {
             InitializeComponent();
+
         }
+
+        
     }
 }

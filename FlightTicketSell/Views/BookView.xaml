@@ -10,8 +10,8 @@
         <vm:BookViewModel/>
     </UserControl.DataContext>
 
-    <Grid d:Background="{StaticResource LightGrayBrush}">
-        <StackPanel Orientation="Vertical"
+    <!--<Grid d:Background="{StaticResource LightGrayBrush}">
+       <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
             <materialDesign:PackIcon HorizontalAlignment="Center"
@@ -23,6 +23,230 @@
                        Foreground="{StaticResource BlueBrush}"
                        Text="{Binding Title}"/>
         </StackPanel>
+       
+    </Grid>-->
+    <Grid >
+        <Grid Margin="100 20 100 20 ">
+           
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*" ></RowDefinition>
+                <RowDefinition Height="0.5  *"></RowDefinition>
+                <RowDefinition Height="6*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="8*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
+                <Border Grid.Row="0" Grid.Column="1"  Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" ></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="6*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!--Mã chuyến bay-->
+                        <Grid Grid.Row="1" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*"></ColumnDefinition>
+                                <ColumnDefinition Width="5*"></ColumnDefinition>
+                                <ColumnDefinition Width="4*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="1"  BorderThickness="1" BorderBrush="Gray"  CornerRadius="5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox
+                                BorderThickness="0"
+                                materialDesign:HintAssist.Hint="Mã chuyến bay"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                                    <Grid Grid.Column="1" >
+                                        <Button
+                                    Style="{DynamicResource MaterialDesignToolButton}">
+                                            <materialDesign:PackIcon Kind="Magnify" Opacity=".80" Height="30" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Button>
+                                    </Grid>
+
+                                </Grid>
+                            </Border>
+
+
+                        </Grid>
+                        <Grid Grid.Row="3" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" ></RowDefinition>
+                                <RowDefinition Height="1*"></RowDefinition>
+                                <RowDefinition Height="1*"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <!--Điểm đi-->
+                            <ComboBox Grid.Row="0" Grid.Column="1"
+                                            materialDesign:HintAssist.Hint="Điểm đi"           
+                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
+                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>
+                            <!--Nút chuyển giữa điểm đi và điểm đến-->
+                            <Button Grid.Row="0" Grid.Column="2"  Padding="0" Width="22" Height="22" Margin="0" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                 Command="{Binding Change_Departure_Landing_Airport_Command}">
+                                <Button.Content>
+                                    <materialDesign:PackIcon Kind="MenuSwap" Margin="0"  Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" RenderTransformOrigin="0.5,0.5" >
+                                        <materialDesign:PackIcon.RenderTransform>
+                                            <RotateTransform Angle="90"/>
+                                        </materialDesign:PackIcon.RenderTransform>
+                                    </materialDesign:PackIcon>
+                                </Button.Content>
+                            </Button>
+                            <!--Điểm đến-->
+                            <ComboBox Grid.Row="0" Grid.Column="3"
+                                            materialDesign:HintAssist.Hint="Điểm đến"
+                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
+                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>
+
+                            <Grid Grid.Row="1" Grid.Column="3">
+                                <TextBox                               
+                                materialDesign:HintAssist.Hint="Số người"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                <materialDesign:PackIcon Kind="AccountMultiple" Opacity=".50" Height="30" Width="20" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            </Grid>
+
+                            <DatePicker Grid.Row="1" Grid.Column="1"
+                            
+                            materialDesign:HintAssist.Hint="Chọn ngày"
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+                            <!--Sân bay đi-->
+                            <ComboBox Grid.Row="2" Grid.Column="1"
+                                            materialDesign:HintAssist.Hint="Sân bay đi"
+                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
+                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>
+                            <!--Nút chuyển giữa sân bay đi và sân bay đến-->
+                            <Button Grid.Row="2" Grid.Column="2"  Padding="0" Width="22" Height="22" Margin="0" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                 Command="{Binding Change_Departure_Landing_Airport_Command}">
+                                <Button.Content>
+                                    <materialDesign:PackIcon Kind="MenuSwap" Margin="0"  Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" RenderTransformOrigin="0.5,0.5" >
+                                        <materialDesign:PackIcon.RenderTransform>
+                                            <RotateTransform Angle="90"/>
+                                        </materialDesign:PackIcon.RenderTransform>
+                                    </materialDesign:PackIcon>
+                                </Button.Content>
+                            </Button>
+                            <!--Sân bay đến-->
+                            <ComboBox Grid.Row="2" Grid.Column="3"
+                                            materialDesign:HintAssist.Hint="Sân bay đến"
+                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
+                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+            
+
+            <Border Padding="20" Grid.Row="2"  Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                    <Grid>
+                        <!--<Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"></ColumnDefinition>
+                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                            <ColumnDefinition Width="3.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="4.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>-->
+                        <DataGrid
+                            ItemsSource="{Binding Items3}"
+                            CanUserSortColumns="True"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                            materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                                <DataGrid.Columns >
+                                    <DataGridTextColumn
+                                    
+                                    Binding="{Binding MaChuyenBay}"
+                                    Header="Mã chuyến bay"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                                    <materialDesign:DataGridTextColumn
+                                    Binding="{Binding SanBayDi}"
+                                    Header="Sân bay đi"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                    <!-- set a max length to get an indicator in the editor -->
+                                    <materialDesign:DataGridTextColumn
+                                    Width="100"
+                                    Binding="{Binding SanBayDen}"
+                                    Header="Sân bay đến"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                           
+                                    <materialDesign:DataGridTextColumn
+                                    Binding="{Binding ThoiGianBay}"
+                                    Header="Khởi hành"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                            
+                                    <materialDesign:DataGridTextColumn
+                                    Binding="{Binding SoDiemDung}"
+                                    Header="Số điểm dừng"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                            
+                                    <materialDesign:DataGridTextColumn
+                                    Binding="{Binding SoHangVe}"
+                                    Header="số hạng vé"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                            
+                                    <materialDesign:DataGridTextColumn
+                                    Binding="{Binding GiaCoBan}"
+                                    Header="Giá cơ bản"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                            
+                                    <materialDesign:DataGridTextColumn
+                                    Binding="{Binding GheTrong}"
+                                    Header="Ghế trống"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                    </Grid>  
+             </Border>
+           
+        </Grid>
     </Grid>
+
+
 </UserControl>
