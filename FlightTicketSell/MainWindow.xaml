@@ -33,6 +33,11 @@
                 </DataTrigger>
 
                 <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
+                             Value="{x:Static models:AppView.BookDetail}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource BookDetailViewTemplate}"/>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
                              Value="{x:Static models:AppView.Sell}">
                     <Setter Property="ContentTemplate" Value="{StaticResource SellViewTemplate}"/>
                 </DataTrigger>

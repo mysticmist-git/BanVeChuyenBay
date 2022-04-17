@@ -14,6 +14,10 @@
         /// </summary>
         Book,
         /// <summary>
+        /// The view to enter book information
+        /// </summary>
+        BookDetail,
+        /// <summary>
         /// The ticket sell view
         /// </summary>
         Sell,

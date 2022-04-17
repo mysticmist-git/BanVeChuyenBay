@@ -197,7 +197,10 @@
     <Compile Include="ViewModels\Setting\Airport.cs" />
     <Compile Include="ViewModels\Setting\TicketClass.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
-    <Compile Include="Views\BookView.xaml.cs">
+    <Compile Include="Views\BookViewRelated\BookDetailView.xaml.cs">
+      <DependentUpon>BookDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BookViewRelated\BookView.xaml.cs">
       <DependentUpon>BookView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EnterLayoverAirportView.xaml.cs">
@@ -274,7 +277,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\BookView.xaml">
+    <Page Include="Views\BookViewRelated\BookDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BookViewRelated\BookView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

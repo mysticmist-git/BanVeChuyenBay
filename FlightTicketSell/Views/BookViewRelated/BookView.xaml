@@ -250,8 +250,9 @@
                 Grid.Row="4"
                 Background="YellowGreen"
                 Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                Command="{Binding ContinueCommand}"
                 Width="100"
-                 FontWeight="Bold"
+                FontWeight="Bold"
                 HorizontalAlignment="Right">
             </Button>
         </Grid>

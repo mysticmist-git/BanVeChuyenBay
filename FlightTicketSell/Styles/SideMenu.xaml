@@ -10,6 +10,10 @@
         <views:BookView/>
     </DataTemplate>
 
+    <DataTemplate x:Key="BookDetailViewTemplate">
+        <views:BookDetailView />
+    </DataTemplate>
+
     <DataTemplate x:Key="SellViewTemplate">
         <views:SellView/>
     </DataTemplate>
