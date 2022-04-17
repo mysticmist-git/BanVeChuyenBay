@@ -26,12 +26,13 @@
        
     </Grid>-->
     <Grid >
-        <Grid Margin="100 20 100 20 ">
+        <Grid Margin="100 20 100 10 ">
            
             <Grid.RowDefinitions>
                 <RowDefinition Height="4*" ></RowDefinition>
                 <RowDefinition Height="0.5  *"></RowDefinition>
                 <RowDefinition Height="6*"></RowDefinition>
+                <RowDefinition Height="0.2*"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid >
@@ -244,7 +245,15 @@
                             </DataGrid>
                     </Grid>  
              </Border>
-           
+            <Button 
+                Content="Tiếp tục"
+                Grid.Row="4"
+                Background="YellowGreen"
+                Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                Width="100"
+                 FontWeight="Bold"
+                HorizontalAlignment="Right">
+            </Button>
         </Grid>
     </Grid>
 
