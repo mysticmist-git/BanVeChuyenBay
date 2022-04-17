@@ -15,6 +15,7 @@
              Loaded="UserControl_Loaded"
              x:Name="UC"
              DataContext="{Binding ReportViewModel, Source={x:Static vm:ViewModelLocator.Instance}}"
+             d:Background="{StaticResource LightGrayBrush}"
              >
 
     <i:Interaction.Triggers>
@@ -31,22 +32,24 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto"  />
                 <RowDefinition Height="*"  />
+                <RowDefinition Height="Auto"  />
             </Grid.RowDefinitions>
 
             <!-- Month, Year condition -->
             <Border Grid.Row="0"
                     CornerRadius="10" 
-                    HorizontalAlignment="Center"
                     Background="White" 
                     Padding="60 20" 
                     Margin="90 0"
+                    MaxWidth="800"
                     Style="{StaticResource DropShadow}">
                 <Border.Resources>
                     <sys:Int32 x:Key="LayoutTransformWidth">600</sys:Int32>
                 </Border.Resources>
 
                 <!-- Content -->
-                <StackPanel Orientation="{Binding ElementName=UC, Path=ActualWidth,Converter={valueConverters:WidthToOrientationConverter}, ConverterParameter={StaticResource LayoutTransformWidth}}">
+                <StackPanel Orientation="{Binding ElementName=UC, Path=ActualWidth,Converter={valueConverters:WidthToOrientationConverter}, ConverterParameter={StaticResource LayoutTransformWidth}}"
+                            HorizontalAlignment="Center" >
 
                     <!-- Month -->
                     <StackPanel Margin="40 5 40 5"
@@ -55,10 +58,11 @@
                         <ComboBox materialDesign:HintAssist.Hint="Chọn tháng"
                                   materialDesign:HintAssist.HintOpacity=".26"
                                   IsEditable="True"
-                                  Width="150"
+                                  MinWidth="150"
+                                  HorizontalAlignment="Stretch"
                                   ItemsSource="{Binding Months}"
-                                  SelectedIndex="{Binding MonthIndex, Mode=OneWay}"
-                                  SelectedValue="{Binding Month, Mode=OneWayToSource, Converter={valueConverters:StringMonthYearToIntConverter},FallbackValue=0}">
+                                  SelectedIndex="{Binding MonthIndex, Mode=TwoWay}"
+>
 
                             <!-- Command -->
                             <i:Interaction.Triggers>
@@ -75,10 +79,10 @@
                         <ComboBox materialDesign:HintAssist.Hint="Chọn năm"
                                   materialDesign:HintAssist.HintOpacity=".26"
                                   IsEditable="True"
-                                  Width="150"
+                                  MinWidth="150"
+                                  HorizontalAlignment="Stretch"
                                   ItemsSource="{Binding Years}"
-                                  SelectedIndex="{Binding YearIndex, Mode=OneWay}"
-                                  SelectedValue="{Binding Year, Mode=OneWayToSource, Converter={valueConverters:StringMonthYearToIntConverter},FallbackValue=0}">
+                                  SelectedIndex="{Binding YearIndex, Mode=TwoWay}">
 
                             <!-- Command -->
                             <i:Interaction.Triggers>
@@ -99,7 +103,7 @@
                     Background="{StaticResource BlueBrush}" 
                     Padding="30 15"
                     Style="{StaticResource DropShadow}"
-                    Margin="60 20">
+                    Margin="60 20 60 0">
                 <Grid MinWidth="300">
                     <Grid.ColumnDefinitions>
                         <!-- Label -->
@@ -140,7 +144,7 @@
                     Background="White" 
                     Padding="30 15"
                     Style="{StaticResource DropShadow}"
-                    Margin="40 10 40 40"
+                    Margin="40 20 40 0"
                     VerticalAlignment="Stretch">
 
                 <DataGrid x:Name="reportDataGrid"
@@ -154,6 +158,16 @@
                 </DataGrid>
 
             </Border>
+            
+            <!-- Print button -->
+            <Button Content="In báo cáo" 
+                    Command="{Binding PrintCommand}"
+                    Grid.Row="3" 
+                    HorizontalAlignment="Right" 
+                    Width="150"
+                    Background="{StaticResource GreenBrush}" 
+                    BorderThickness="0"
+                    Margin="0 20 20 20"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -187,6 +187,7 @@
     <Compile Include="ViewModels\ReportViewModel.cs" />
     <Compile Include="ViewModels\Report\MonthReport.cs" />
     <Compile Include="ViewModels\Report\Report.cs" />
+    <Compile Include="ViewModels\Report\ReportPrintViewModel.cs" />
     <Compile Include="ViewModels\Report\YearReport.cs" />
     <Compile Include="ViewModels\Report\FlightReport.cs" />
     <Compile Include="ViewModels\ScheduleViewModel.cs" />
@@ -212,7 +213,10 @@
       <DependentUpon>MoreTicketClassView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Helper\ReportHelper.cs" />
-    <Compile Include="Views\ReportView.xaml.cs">
+    <Compile Include="Views\ReportViewRelated\ReportPrintView.xaml.cs">
+      <DependentUpon>ReportPrintView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReportViewRelated\ReportView.xaml.cs">
       <DependentUpon>ReportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ScheduleView.xaml.cs">
@@ -290,7 +294,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ReportView.xaml">
+    <Page Include="Views\ReportViewRelated\ReportPrintView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReportViewRelated\ReportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

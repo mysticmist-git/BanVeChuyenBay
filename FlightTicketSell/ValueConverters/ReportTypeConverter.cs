@@ -23,7 +23,7 @@ namespace FlightTicketSell.ValueConverters
 
 
             // If report type is FlightReport
-            if (reportType is ReportType.FlightReport)
+            if (reportType is ReportType.FlightsOfOneMonth)
             {
                 // Create an empty collection
                 var collection = new ObservableCollection<FlightReport>();
@@ -42,7 +42,7 @@ namespace FlightTicketSell.ValueConverters
             }
 
             // If report type is MonthReport
-            if (reportType is ReportType.MonthReport)
+            if (reportType is ReportType.MonthsOfOneYear)
             {
                 // Create an empty collection
                 var collection = new ObservableCollection<MonthReport>();
@@ -61,7 +61,7 @@ namespace FlightTicketSell.ValueConverters
             }
 
             // If report type is YearReport
-            if (reportType is ReportType.YearReport)
+            if (reportType is ReportType.OneMonthOfAllYears || reportType is ReportType.AllYears)
             {
                 // Create an empty collection
                 var collection = new ObservableCollection<YearReport>();

@@ -36,11 +36,11 @@ namespace FlightTicketSell.Views.Helper
                 if (year != 0)
                 {
                     // Return a month report of that year
-                    return new Report<object> { Content = await GetFlightReport(month, year), Type = ReportType.FlightReport };
+                    return new Report<object> { Content = await GetFlightReport(month, year), Type = ReportType.FlightsOfOneMonth };
                 }
 
                 // Return a report of a month of every year
-                return new Report<object> { Content = await GetAllYearReport(month), Type = ReportType.YearReport };
+                return new Report<object> { Content = await GetAllYearReport(month), Type = ReportType.OneMonthOfAllYears };
             }
 
             // Query all month
@@ -48,11 +48,11 @@ namespace FlightTicketSell.Views.Helper
             // Query for a specific year
             if (year != 0)
             {
-                return new Report<object> { Content = await GetMonthReport(year), Type = ReportType.MonthReport };
+                return new Report<object> { Content = await GetMonthReport(year), Type = ReportType.MonthsOfOneYear };
             }
 
             // Query all year
-            return new Report<object> { Content = await GetAllYearReport(), Type = ReportType.YearReport };
+            return new Report<object> { Content = await GetAllYearReport(), Type = ReportType.AllYears };
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace FlightTicketSell.Views.Helper
 
 
             // If report type is FlightReport
-            if (reportType is ReportType.FlightReport)
+            if (reportType is ReportType.FlightsOfOneMonth)
             {
                 // Get report content
                 var collection = (report as Report<object>).Content;
@@ -297,7 +297,7 @@ namespace FlightTicketSell.Views.Helper
             }
 
             // If report type is MonthReport
-            if (reportType is ReportType.MonthReport)
+            if (reportType is ReportType.MonthsOfOneYear)
             {
                 // Get report content
                 var collection = (report as Report<object>).Content;
@@ -310,8 +310,8 @@ namespace FlightTicketSell.Views.Helper
             }
 
             // If report type is YearReport
-            if (reportType is ReportType.YearReport)
-            {
+            if (reportType is ReportType.OneMonthOfAllYears || reportType is ReportType.AllYears)
+                {
                 // Get report content
                 var collection = (report as Report<object>).Content;
 

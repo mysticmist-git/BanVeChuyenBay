@@ -14,6 +14,15 @@ namespace FlightTicketSell.ViewModels
 {
     public class ReportViewModel : BaseViewModel
     {
+        #region Private Members
+
+        /// <summary>
+        /// Indicate if the view is first loaded
+        /// </summary>
+        private bool firstLoad = true;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -29,22 +38,22 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Current selected year
         /// </summary>
-        public int Year { get; set; }
+        public int Year { get { if (YearIndex <= 0) return 0; else return Convert.ToInt32(Years[YearIndex]); } }
 
         /// <summary>
         /// The index of the year combobox
         /// </summary>
-        public int YearIndex { get { if (Years is null) return -1; return Years.IndexOf(Year == 0 ? "Tất cả" : Year.ToString()); } }
+        public int YearIndex { get; set; }
 
         /// <summary>
         /// Current selected month
         /// </summary>
-        public int Month { get; set; }
-        
+        public int Month { get { if (MonthIndex <= 0) return 0; else return Convert.ToInt32(Months[MonthIndex]); } }
+
         /// <summary>
         /// The index of the month combobox
-        /// </summary>
-        public int MonthIndex { get { if (Months is null) return -1; return Months.IndexOf(Month == 0 ? "Tất cả" : Month.ToString()); } }
+        /// </summary
+        public int MonthIndex { get; set; }
 
         /// <summary>
         /// Total revenue
@@ -85,18 +94,31 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand YearChangedCommand { get; set; }
 
+        /// <summary>
+        /// Switch to the print report view
+        /// </summary>
+        public ICommand PrintCommand { get; set; }
+
         #endregion
 
         #region Constructor
 
         /// <summary>
         /// Default constructor
-        /// </summary>
+        /// </summary>%
         public ReportViewModel()
         {
             // Create commands
             LoadCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
+                if (!firstLoad)
+                {
+                    OnPropertyChanged(nameof(Report));
+
+                    return;
+                }
+                    
+
                 // Get months, years available
                 using (var context = new FlightTicketSellEntities())
                 {
@@ -118,14 +140,20 @@ namespace FlightTicketSell.ViewModels
                     }
                 }
 
-                OnPropertyChanged(nameof(MonthIndex));
+                // Notify that Year index changed
                 OnPropertyChanged(nameof(YearIndex));
+                OnPropertyChanged(nameof(MonthIndex));
 
                 // Check if any flight departed to add a report if needed
                 await ReportHelper.ReportExistGuarantee();
 
                 // Update report
                 Report = await ReportHelper.GetReportAsync(Month, Year);
+
+                YearIndex = 0;
+                MonthIndex = 0;
+
+                firstLoad = false;
             });
 
             MonthChangedCommand = new RelayCommand<object>((p) => true, async (p) =>
@@ -153,10 +181,12 @@ namespace FlightTicketSell.ViewModels
 
                         Months.Insert(0, "Tất cả");
                     }
+
+                    MonthIndex = 0;
                 }
 
+                // Notify that month index changed
                 OnPropertyChanged(nameof(MonthIndex));
-                OnPropertyChanged(nameof(YearIndex));
 
                 // Check if any flight departed to add a report if needed
                 await ReportHelper.ReportExistGuarantee();
@@ -164,6 +194,8 @@ namespace FlightTicketSell.ViewModels
                 // Update report
                 Report = await ReportHelper.GetReportAsync(Month, Year);
             });
+
+            PrintCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.ReportPrint);
         }
 
         #endregion

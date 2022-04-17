@@ -4,11 +4,21 @@
     {
         // Default
         None,
-        // Flight report
-        FlightReport,
-        // Month report
-        MonthReport,
-        // Year report
-        YearReport
+        /// <summary>
+        /// Flights of month
+        /// </summary>
+        FlightsOfOneMonth,
+        /// <summary>
+        /// Months of year
+        /// </summary>
+        MonthsOfOneYear,
+        /// <summary>
+        /// One month of all year
+        /// </summary>
+        OneMonthOfAllYears,
+        /// <summary>
+        /// All years
+        /// </summary>
+        AllYears
     }
 }

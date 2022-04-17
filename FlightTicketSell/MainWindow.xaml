@@ -48,6 +48,11 @@
                 </DataTrigger>
 
                 <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
+                             Value="{x:Static models:AppView.ReportPrint}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource ReportPrintViewTemplate}"/>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
                              Value="{x:Static models:AppView.Setting}">
                     <Setter Property="ContentTemplate" Value="{StaticResource SettingViewTemplate}"/>
                 </DataTrigger>
