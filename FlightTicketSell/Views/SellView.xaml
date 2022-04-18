@@ -24,6 +24,7 @@
                     <ColumnDefinition Width="8*"></ColumnDefinition>
                     <ColumnDefinition Width="3*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
+                <Button Grid.Column="2" Width="Auto"  HorizontalAlignment="Right" VerticalAlignment="Top" Padding="30 5 30 5" Background="{StaticResource LightBlueBrush}"  FontSize="{StaticResource RealSmall}" Content="Đổi vé" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
                 <Border Grid.Row="0" Grid.Column="1"  Background="White" CornerRadius="10" Padding="10 10 10 10 " Style="{StaticResource ResourceKey=DropShadow}" >
                     <Grid>
                         <Grid.RowDefinitions>
@@ -203,7 +204,7 @@
 
                             <materialDesign:DataGridTextColumn
                                     Binding="{Binding SoHangVe}"
-                                    Header="số hạng vé"
+                                    Header="Số hạng vé"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
                             <materialDesign:DataGridTextColumn
@@ -219,7 +220,7 @@
                     </DataGrid>
                 </Grid>
             </Border>
-            <Button Width="150" Grid.Row="2" HorizontalAlignment="Right" Margin="0 10 0 0"  Height="auto" Background="{StaticResource BlueBrush}"  FontSize="{StaticResource RealSmall}" Content="Tiếp tục" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+            <Button Width="150" Grid.Row="2" HorizontalAlignment="Right" Margin="0 10 0 0"  Height="auto" Background="{StaticResource OrangeBrush}"  FontSize="{StaticResource RealSmall}" Content="Tiếp tục" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
         </Grid>
     </Grid>
 </UserControl>
