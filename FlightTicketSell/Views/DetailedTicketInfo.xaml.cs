@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace FlightTicketSell.Views
 {
     /// <summary>
-    /// Interaction logic for BookDetailView.xaml
+    
     /// </summary>
     public partial class DetailedTicketInfo : UserControl
     {
-        public BookDetailView()
+        public TicketChangeView()
         {
             InitializeComponent();
         }
