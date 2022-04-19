@@ -166,6 +166,7 @@
                     HorizontalAlignment="Right" 
                     Width="150"
                     Background="{StaticResource GreenBrush}" 
+                    materialDesign:ButtonAssist.CornerRadius="5"
                     BorderThickness="0"
                     Margin="0 20 20 20"/>
         </Grid>

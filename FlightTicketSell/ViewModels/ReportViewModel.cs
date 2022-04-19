@@ -21,7 +21,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Indicate if the view is first loaded
         /// </summary>
-        private bool firstLoad = true;
+        private bool _firstLoad = true;
 
         #endregion
 
@@ -113,7 +113,7 @@ namespace FlightTicketSell.ViewModels
             // Create commands
             LoadCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
-                if (!firstLoad)
+                if (!_firstLoad)
                 {
                     OnPropertyChanged(nameof(Report));
 
@@ -126,6 +126,9 @@ namespace FlightTicketSell.ViewModels
                 {
                     try
                     {
+                        // Check if any flight departed to add a report if needed
+                        await ReportHelper.ReportExistGuarantee();
+
                         // Get years
                         Years = new ObservableCollection<string>(await context.DOANHTHUNAMs.Select(x => x.Nam.ToString()).ToListAsync());
                         Years.Insert(0, "Tất cả");
@@ -153,22 +156,19 @@ namespace FlightTicketSell.ViewModels
                 OnPropertyChanged(nameof(YearIndex));
                 OnPropertyChanged(nameof(MonthIndex));
 
-                // Check if any flight departed to add a report if needed
-                await ReportHelper.ReportExistGuarantee();
-
-                // Update report
-                Report = await ReportHelper.GetReportAsync(Month, Year);
-
                 YearIndex = 0;
                 MonthIndex = 0;
 
-                firstLoad = false;
+                _firstLoad = false;
             });
 
             MonthChangedCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
-                // Check if any flight departed to add a report if needed
-                await ReportHelper.ReportExistGuarantee();
+                if (!_firstLoad)
+                {
+                    // Check if any flight departed to add a report if needed
+                    await ReportHelper.ReportExistGuarantee(); 
+                }
 
                 // Update report
                 Report = await ReportHelper.GetReportAsync(Month, Year);
@@ -196,12 +196,6 @@ namespace FlightTicketSell.ViewModels
 
                 // Notify that month index changed
                 OnPropertyChanged(nameof(MonthIndex));
-
-                // Check if any flight departed to add a report if needed
-                await ReportHelper.ReportExistGuarantee();
-
-                // Update report
-                Report = await ReportHelper.GetReportAsync(Month, Year);
             });
 
             PrintCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.ReportPrint);

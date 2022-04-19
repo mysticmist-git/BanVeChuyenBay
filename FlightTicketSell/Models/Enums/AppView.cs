@@ -18,6 +18,10 @@
         /// </summary>
         BookDetail,
         /// <summary>
+        /// The reserve pay view
+        /// </summary>
+        ReservePay,
+        /// <summary>
         /// The ticket sell view
         /// </summary>
         Sell,
