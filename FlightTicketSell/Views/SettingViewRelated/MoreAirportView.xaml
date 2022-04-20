@@ -11,6 +11,9 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         >
+    <Window.DataContext>
+        <vm:MoreAirportViewModel/>
+    </Window.DataContext>
     <Grid Background="{StaticResource LightGrayBrush}">
         <Border CornerRadius="0 0 12 12" Height="100" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
 
@@ -48,24 +51,23 @@
                     <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Sân bay</TextBlock>
 
                     <!--Tên sân bay-->
-                    <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Tên sân bay" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" />
+                    <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Tên sân bay" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                              Text="{Binding Name}"/>
 
                     <!--Viết tắt-->
-                    <TextBox  Grid.Row="1" Grid.Column="3" materialDesign:HintAssist.Hint="Viết tắt" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" />
+                    <TextBox  Grid.Row="1" Grid.Column="3" materialDesign:HintAssist.Hint="Viết tắt" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                               Text="{Binding Code}"/>
 
                     <!--Tỉnh thành-->
-                    <ComboBox Grid.Row="2" Grid.Column="1" materialDesign:HintAssist.Hint="Tỉnh thành" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>
+                    <TextBox  Grid.Row="2" Grid.Column="1" materialDesign:HintAssist.Hint="Tỉnh thành" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                               Text="{Binding Province}"/>
+
                 </Grid>
             </Border>
 
             <!--Nút lưu-->
-            <Button Grid.Row="2" Grid.Column="1"  Margin="10 0 10 0" Background="{StaticResource GreenBrush}"  FontSize="{StaticResource Small}" Content="Lưu" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+            <Button Grid.Row="2" Grid.Column="1"  Margin="10 0 10 0" Background="{StaticResource GreenBrush}"  FontSize="{StaticResource Small}" Content="Lưu" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                    Command="{Binding Save_Button_Command}"/>
 
         </Grid>
     </Grid>

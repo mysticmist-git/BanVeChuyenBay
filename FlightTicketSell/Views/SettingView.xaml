@@ -139,7 +139,8 @@
                     <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Sân bay</TextBlock>
 
                     <!--Danh sách sân bay-->
-                    <ListView Grid.Row="1" ItemsSource="{Binding List_Airport}">
+                    <ListView Grid.Row="1" ItemsSource="{Binding List_Airport}"
+                              SelectedItem="{Binding Airport_selecteditem}">
                         <ListView.View>
                             <GridView>
                                 
@@ -181,15 +182,18 @@
                                 
                             </GridView>
                         </ListView.View>
+                        
                     </ListView>
 
                     <!--Nút thêm sửa xóa-->
                     <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right">
                         <!--Nút xóa-->
-                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                                Command="{Binding Airport_Delete_Button_Command}"/>
 
                         <!--Nút sửa-->
-                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                                Command="{Binding Airport_Edit_Button_Command}"/>
 
                         <!--Nút thêm-->
                         <Button Margin="7 0 10 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"

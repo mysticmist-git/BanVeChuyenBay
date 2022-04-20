@@ -199,6 +199,8 @@
     <Compile Include="ViewModels\SellViewModel.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="ViewModels\Setting\Airport.cs" />
+    <Compile Include="ViewModels\Setting\EditAirportViewModel.cs" />
+    <Compile Include="ViewModels\Setting\MoreAirportViewModel.cs" />
     <Compile Include="ViewModels\Setting\TicketClass.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\BookViewRelated\BookDetailView.xaml.cs">
@@ -213,10 +215,13 @@
     <Compile Include="Views\EnterTicketClassView.xaml.cs">
       <DependentUpon>EnterTicketClassView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MoreAirportView.xaml.cs">
+    <Compile Include="Views\SettingViewRelated\EditAirportView.xaml.cs">
+      <DependentUpon>EditAirportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingViewRelated\MoreAirportView.xaml.cs">
       <DependentUpon>MoreAirportView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MoreTicketClassView.xaml.cs">
+    <Compile Include="Views\SettingViewRelated\MoreTicketClassView.xaml.cs">
       <DependentUpon>MoreTicketClassView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Helper\ReportHelper.cs" />
@@ -303,11 +308,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MoreAirportView.xaml">
+    <Page Include="Views\SettingViewRelated\EditAirportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MoreTicketClassView.xaml">
+    <Page Include="Views\SettingViewRelated\MoreAirportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingViewRelated\MoreTicketClassView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
