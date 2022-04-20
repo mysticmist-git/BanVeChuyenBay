@@ -19,9 +19,11 @@
 
     <Window.Resources>
         <Style x:Key="NavigationContentStyle" TargetType="ContentControl">
-            <Setter Property="ContentTemplate" Value="{StaticResource SearchViewTemplate}"/>
-            <Style.Triggers>
-
+            <Setter Property="Content" Value="{Binding ApplicationViewModel.CurrentView,
+                                               Source={x:Static viewmodels:ViewModelLocator.Instance},
+                                               Converter={valueConverters:AppViewToContentTemplate}}" />
+            <!--<Style.Triggers>
+                
                 <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
                              Value="{x:Static models:AppView.Search}">
                     <Setter Property="ContentTemplate" Value="{StaticResource SearchViewTemplate}"/>
@@ -35,6 +37,11 @@
                 <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
                              Value="{x:Static models:AppView.BookDetail}">
                     <Setter Property="ContentTemplate" Value="{StaticResource BookDetailViewTemplate}"/>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
+                             Value="{x:Static models:AppView.ReservePay}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource ReservePayViewTemplate}"/>
                 </DataTrigger>
 
                 <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
@@ -62,7 +69,7 @@
                     <Setter Property="ContentTemplate" Value="{StaticResource SettingViewTemplate}"/>
                 </DataTrigger>
 
-            </Style.Triggers>
+            </Style.Triggers>-->
         </Style>
     </Window.Resources>
 

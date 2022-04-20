@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="FlightTicketSell.Views.ReportViewRelated.ReportPrintView"
+﻿<UserControl x:Class="FlightTicketSell.Views.ReportPrintView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FlightTicketSell.Views.ReportViewRelated" 
+             xmlns:local="clr-namespace:FlightTicketSell.Views" 
              xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" 
              xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -118,7 +118,8 @@
                 Width="150"                
                 Background="{StaticResource GreenBrush}"                 
                 BorderThickness="0"                
-                Margin="0 20 20 20"/>
+                Margin="0 20 20 20"
+                materialDesign:ButtonAssist.CornerRadius="5" />
     </Grid>
 
 </UserControl>

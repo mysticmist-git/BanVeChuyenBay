@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FlightTicketSell.Views.ReportViewRelated
+namespace FlightTicketSell.Views
 {
     /// <summary>
     /// Interaction logic for ReportPrintView.xaml

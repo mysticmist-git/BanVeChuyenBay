@@ -248,13 +248,18 @@
             <Button 
                 Content="Tiếp tục"
                 Grid.Row="4"
-                Background="YellowGreen"
-                Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                BorderThickness="0"
+                Background="OrangeRed"
                 Command="{Binding ContinueCommand}"
-                Width="100"
+                Width="120"
+                Height="40"
+                FontSize="20"
                 FontWeight="Bold"
-                HorizontalAlignment="Right">
+                HorizontalAlignment="Right"
+                materialDesign:ShadowAssist.Darken="True">
             </Button>
+            
+           
         </Grid>
     </Grid>
 

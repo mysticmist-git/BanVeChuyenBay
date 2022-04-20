@@ -233,6 +233,7 @@ namespace FlightTicketSell.Views.Helper
                             new MonthReport
                             {
                                 Month = item.Thang,
+                                FlightCount = item.SoChuyenBay,
                                 Revenue = item.DoanhThu.ToString(),
                                 Ratio = (item.DoanhThu / item.DOANHTHUNAM.DoanhThu).ToString()
                             }
@@ -391,11 +392,9 @@ namespace FlightTicketSell.Views.Helper
                         {
                             var temp = new DOANHTHUNAM { Nam = DateTime.Now.Year };
                             context.DOANHTHUNAMs.Add(temp);
+                            /// Save changes down to database
+                            await context.SaveChangesAsync();
                         }
-
-
-                        /// Save changes down to database
-                        await context.SaveChangesAsync();
 
                         // Check month existence
                         if (context.DOANHTHUTHANGs.Where(p => p.Thang == item.NgayGio.Month && p.DOANHTHUNAM.Nam == item.NgayGio.Year).ToList().Count == 0)

@@ -7,6 +7,6 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The current view of the application
         /// </summary>
-        public  AppView CurrentView { get; set; }
+        public AppView CurrentView { get; set; } = AppView.Search;
     }
 }

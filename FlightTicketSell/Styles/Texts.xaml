@@ -11,6 +11,7 @@
     <Style x:Key="FieldLabelText" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource Roboto}" />
         <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="FontSize" Value="{StaticResource Small}" />
     </Style>
 
     <!-- List column header text -->

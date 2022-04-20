@@ -170,6 +170,7 @@
       <DependentUpon>NavigationBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\AppViewToBooleanConverter.cs" />
+    <Compile Include="ValueConverters\AppViewToContentTemplate.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
     <Compile Include="ValueConverters\DatePickerUI_To_DatePickerConverter.cs" />
     <Compile Include="ValueConverters\IoCConverter.cs" />
@@ -178,11 +179,13 @@
     <Compile Include="ValueConverters\StringFlightTimeToIntFlightTimeConverter.cs" />
     <Compile Include="ValueConverters\StringMonthYearToIntConverter.cs" />
     <Compile Include="ValueConverters\TimePickerUI_To_TimePickerConverter.cs" />
+    <Compile Include="ValueConverters\WidthMultiplicatoinConverter.cs" />
     <Compile Include="ValueConverters\WidthToOrientationConverter.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
-    <Compile Include="ViewModels\BookViewModel.cs" />
+    <Compile Include="ViewModels\Reserve\BookDetailViewModel.cs" />
+    <Compile Include="ViewModels\Reserve\BookViewModel.cs" />
     <Compile Include="ViewModels\NavigationBarViewModel.cs" />
     <Compile Include="ViewModels\ReportViewModel.cs" />
     <Compile Include="ViewModels\Report\MonthReport.cs" />
@@ -190,6 +193,7 @@
     <Compile Include="ViewModels\Report\ReportPrintViewModel.cs" />
     <Compile Include="ViewModels\Report\YearReport.cs" />
     <Compile Include="ViewModels\Report\FlightReport.cs" />
+    <Compile Include="ViewModels\Reserve\ReservePayViewModel.cs" />
     <Compile Include="ViewModels\ScheduleViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\SellViewModel.cs" />
@@ -216,6 +220,9 @@
       <DependentUpon>MoreTicketClassView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Helper\ReportHelper.cs" />
+    <Compile Include="Views\BookViewRelated\BookPayView.xaml.cs">
+      <DependentUpon>BookPayView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ReportViewRelated\ReportPrintView.xaml.cs">
       <DependentUpon>ReportPrintView.xaml</DependentUpon>
     </Compile>
@@ -233,6 +240,9 @@
     </Compile>
     <Compile Include="Views\SettingView.xaml.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SellPayView.cs">
+      <DependentUpon>SellPayView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -301,6 +311,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\BookViewRelated\BookPayView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ReportViewRelated\ReportPrintView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -322,6 +336,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SellPayView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
