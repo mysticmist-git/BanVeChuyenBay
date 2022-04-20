@@ -198,74 +198,25 @@
                                 <TextBlock Grid.Column="0" FontWeight="Bold">Khách hàng 01</TextBlock>
                                 <TextBox Grid.Column="0" >Tên khách hàng 01</TextBox>
                              </StackPanel>
-                            <Button  
-                                    Grid.Column="1"
-                                    Content="Nhập thông tin"
-                                    Grid.Row="0"
-                                    BorderThickness="0"
-                                    Background="ForestGreen"
-                                    Command="{Binding ContinueCommand}"
-                                    Width="110"
-                                    Height="22"
-                                    FontSize="10"
-                                    HorizontalAlignment="Left"
-                                    materialDesign:ShadowAssist.Darken="True"
-                                    >
-                            </Button>
+                            
 
                             <StackPanel  Width="200" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock  Grid.Column="0" FontWeight="Bold">Khách hàng 02</TextBlock>
                                 <TextBox Grid.Column="0">Tên khách hàng 02</TextBox>
                             </StackPanel>
-                            <Button 
-                                    Grid.Column="1"
-                                    Content="Nhập thông tin"
-                                    Grid.Row="1"
-                                    BorderThickness="0"
-                                    Background="ForestGreen"
-                                    Command="{Binding ContinueCommand}"
-                                    Width="110"
-                                    Height="22"
-                                    FontSize="10"
-                                    HorizontalAlignment="Left"
-                                    materialDesign:ShadowAssist.Darken="True">
-                            </Button>
+                            
 
                             <StackPanel Width="200" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Grid.Column="0" FontWeight="Bold">Khách hàng 03</TextBlock>
                                 <TextBox Grid.Column="0">Tên khách hàng 03</TextBox>
                             </StackPanel>
-                            <Button 
-                                    Grid.Column="1"
-                                    Content="Nhập thông tin"
-                                    Grid.Row="2"
-                                    BorderThickness="0"
-                                    Background="ForestGreen"
-                                    Command="{Binding ContinueCommand}"
-                                    Width="110"
-                                    Height="22"
-                                    FontSize="10"
-                                    HorizontalAlignment="Left"
-                                    materialDesign:ShadowAssist.Darken="True">
-                            </Button>
+                            
 
                             <StackPanel Width="200" Grid.Row="3"  HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock Grid.Column="0" FontWeight="Bold">Khách hàng 04</TextBlock>
                                 <TextBox Grid.Column="0">Tên khách hàng 04</TextBox>
                             </StackPanel>
-                            <Button 
-                                    Grid.Column="1"
-                                    Content="Nhập thông tin"
-                                    Grid.Row="3"
-                                    BorderThickness="0"
-                                    Background="ForestGreen"
-                                    Command="{Binding ContinueCommand}"
-                                    Width="110"
-                                    Height="22"
-                                    FontSize="10"
-                                    HorizontalAlignment="Left"
-                                    materialDesign:ShadowAssist.Darken="True">
-                            </Button>
+                            
 
                         </Grid>
 
@@ -289,6 +240,82 @@
                 materialDesign:ShadowAssist.Darken="True">
                 </Button>
             </Grid>
+        
         </Grid>
+        <materialDesign:DialogHost  CloseOnClickAway="True">
+            <materialDesign:DialogHost.DialogContent >
+                <Border Height="250" Width="600"  Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1.1*"></RowDefinition>
+                            <RowDefinition Height="3*"></RowDefinition>
+                            <RowDefinition Height="1.2*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.ColumnSpan="2" Padding="20,5,0,0" FontSize="20" VerticalAlignment="Center" Grid.Row="0"  FontWeight="Bold">
+                            Khách hàng 01</TextBlock>
+
+                        <StackPanel Width="200" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock FontWeight="Bold">Họ Tên</TextBlock>
+                            <TextBox>Đoàn Gia Bảo</TextBox>
+                            <TextBlock FontWeight="Bold">Số điện thoại</TextBlock>
+                            <TextBox>0834002706</TextBox>
+                        </StackPanel>
+
+                        <StackPanel Width="200" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock FontWeight="Bold">CMND/CCCD</TextBlock>
+                            <TextBox>312602950</TextBox>
+                            <TextBlock FontWeight="Bold">Email</TextBlock>
+                            <TextBox>doangiabao276@gmail.com</TextBox>
+                        </StackPanel>
+
+                        <Button 
+                            Content="Lưu"
+                            Grid.Row="2"
+                            Grid.ColumnSpan="2"
+                            BorderThickness="0"
+                            Background="OrangeRed"
+                            Command="{Binding ContinueCommand}"
+                            Width="100"
+                            Height="30"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            materialDesign:ShadowAssist.Darken="True">
+                        </Button>
+                    </Grid>
+                </Border>
+            </materialDesign:DialogHost.DialogContent>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4.7*"></RowDefinition>
+                    <RowDefinition Height="1.3*"></RowDefinition>
+                    <RowDefinition Height="7*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="32*"></ColumnDefinition>
+                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                    <ColumnDefinition Width="3.5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Row="1" Grid.Column="1"   
+                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" 
+                        Content="Nhập thông tin"
+                        BorderThickness="0"
+                        Background="ForestGreen"
+                        Width="110"
+                        Height="22"
+                        FontSize="10"
+                        HorizontalAlignment="Left"
+                        materialDesign:ShadowAssist.Darken="True"
+                        VerticalAlignment="Center"/>
+            </Grid>
+        </materialDesign:DialogHost>
     </Grid>
 </UserControl>
