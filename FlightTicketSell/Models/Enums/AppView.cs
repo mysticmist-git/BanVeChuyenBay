@@ -24,6 +24,18 @@
         /// <summary>
         /// The ticket sell view
         /// </summary>
+        SellPay,
+        /// <summary>
+        /// The view to get ticket paid
+        /// </summary>
+        TicketInfo,
+        /// <summary>
+        /// The view shows detailed ticket info
+        /// </summary>
+        ChangeTicket,
+        /// <summary>
+        /// The view to change ticket
+        /// </summary>
         Sell,
         /// <summary>
         /// The flight schedule view

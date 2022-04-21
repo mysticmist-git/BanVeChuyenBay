@@ -11,138 +11,163 @@
         <vm:SellPayViewModel/>
     </UserControl.DataContext>
     <Grid>
-        
-        
+        <!-- Return button -->
+        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                Command="{Binding ReturnCommand}"
+                Grid.Column="0"
+                Grid.RowSpan="2"
+                Width="50"
+                Height="50"
+                ToolTip="Quay lại"
+                Background="{StaticResource LightBlueBrush}"
+                BorderThickness="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="20 20 10 0"
+                materialDesign:ButtonAssist.CornerRadius="5"
+                HorizontalContentAlignment="Center" 
+                VerticalContentAlignment="Center">
+            <materialDesign:PackIcon Kind="ArrowLeft"
+                                     Height="30"
+                                     Width="30"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center" />
+        </Button>
+
         <!-- Content -->
-        <Grid>
+        <Grid Margin="0 20 0 0">
             <Grid.RowDefinitions>
                 <!-- Flight detail -->
-                <RowDefinition Height="Auto" />
-                <!-- Overlay airports and bill -->
-                <!-- Customer and payment-->
-                <RowDefinition Height="*" />
+                <RowDefinition Height="3*" />
+                <!-- Spacing -->
+                <RowDefinition Height="0.5*" />
+                <!-- Ticket deadline -->
+                <RowDefinition Height="1.5*"/>
+                <!-- Spacing -->
+                <RowDefinition Height="0.5*"/>
+                <!-- Reservation detail -->
+                <RowDefinition Height="8.5*" />
             </Grid.RowDefinitions>
 
-            <!-- Flight detail -->
-            <Grid Grid.Row="0" Margin="0 20 0 0">
+            <!-- Flight detail-->
+            <Grid Grid.Row="0" Margin="120 0 120 0">
+                <Border  Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" ></RowDefinition>
+                            <RowDefinition Height="3*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Label -->
+                        <TextBlock Padding="20,5,0,0" FontSize="20" VerticalAlignment="Center" Grid.Row="0"  FontWeight="Bold"> Chi tiết chuyến bay</TextBlock>
+
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock FontWeight="Bold">Mã chuyến bay</TextBlock>
+                                <TextBox>TSNNB-8</TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock FontWeight="Bold">Sân bay đi</TextBlock>
+                                <TextBox>Tân Sơn Nhất</TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock FontWeight="Bold">Sân bay đến</TextBlock>
+                                <TextBox>Nội Bài</TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock FontWeight="Bold">Ngày giờ bay</TextBlock>
+                                <TextBox>15:00 31/2/2022</TextBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="9" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock FontWeight="Bold">Số điểm dừng</TextBlock>
+                                <TextBox>0</TextBox>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- Ticket deadline -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2.5*" />
+                    <!-- Content -->
+                    <ColumnDefinition Width="5*" />
+                    <!-- Spacing -->
+                    <ColumnDefinition Width="2.5*" />
+                </Grid.ColumnDefinitions>
+
+                <Border CornerRadius="10" 
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch" 
+                        Background="{StaticResource BlueBrush}" 
+                        Padding="30 15"
+                        Style="{StaticResource DropShadow}">
+                    <Grid MinWidth="300">
+                        <Grid.ColumnDefinitions>
+                            <!-- Label -->
+                            <ColumnDefinition Width="Auto" />
+                            <!-- Time -->
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Label -->
+                        <TextBlock Foreground="White" 
+                               Text="Hạn chót lấy vé:" 
+                               Grid.Column="0"
+                               HorizontalAlignment="Left" 
+                               FontSize="{StaticResource Small}"
+                               VerticalAlignment="Center" />
+
+                        <!-- Time -->
+                        <TextBlock Foreground="White"   
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="1"
+                                   Text="{Binding LatestTicketChange, FallbackValue=15:00 30/02/2022}"                               
+                                   FontFamily="{StaticResource Roboto}"                               
+                                   FontWeight="Bold"                               
+                                   FontSize="{StaticResource Large}"                                
+                                   Margin="30 0 0 0" />
+                    </Grid>
+                </Border>
+            </Grid>
+            <!-- Reservation detail -->
+            <Grid Grid.Row="4" Margin="0 0 0 20">
                 <Grid.ColumnDefinitions>
                     <!-- Spacing -->
                     <ColumnDefinition Width="1*" />
-                    <!-- Content -->
+                    <!-- Overlay airport -->
+                    <ColumnDefinition Width="10*" />
+                    <!-- Customer -->
+                    <ColumnDefinition Width="6*" />
+                    <!-- Bill and total price -->
                     <ColumnDefinition Width="8*" />
                     <!-- Spacing -->
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
 
-                <!-- Content -->
-                <Border Grid.Column="1"
-                    CornerRadius="10"
-                    Style="{StaticResource DropShadow}"
-                    Padding="20"
-                    Background="White"
-                    HorizontalAlignment="Stretch">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <!-- Heading -->
-                            <RowDefinition Height="Auto" />
-                            <!-- Flight detail content -->
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        <!-- Heading -->
-                        <TextBlock Text="Chi tiết chuyến bay" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" />
-
-                        <!-- Flight detail content -->
-                        <Grid HorizontalAlignment="Stretch" 
-                              Grid.Row="1" 
-                              TextBlock.FontFamily="{StaticResource Roboto}"
-                              
-                              Margin="0 10 0 0">
-                            <Grid.ColumnDefinitions>
-                                <!-- Flight code -->
-                                <ColumnDefinition Width="2*"/>
-                                <!-- Start airport -->
-                                <ColumnDefinition Width="2*"/>
-                                <!-- Destination airport -->
-                                <ColumnDefinition Width="2*"/>
-                                <!-- Depart DateTime -->
-                                <ColumnDefinition Width="3*"/>
-                                <!-- Flight time -->
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Grid.Resources>
-                                <Style TargetType="{x:Type StackPanel}">
-                                    <Setter Property="Margin" Value="20 0" />
-                                </Style>
-                            </Grid.Resources>
-
-                            <!-- Flight code -->
-                            <StackPanel Grid.Column="0">
-                                <TextBlock Text="Mã chuyến bay" Style="{StaticResource FieldLabelText}" />
-                                <TextBox Text="{Binding FlightCode}" d:Text="TSNNB-8" Style="{StaticResource CustomTextbox}" />
-                            </StackPanel>
-
-                            <!-- Start airport -->
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Text="Sân bay đi" Style="{StaticResource FieldLabelText}" />
-                                <TextBox Text="{Binding StartAirport}" d:Text="Tân Sơn Nhất" Style="{StaticResource CustomTextbox}" />
-                            </StackPanel>
-
-                            <!-- Destination airport -->
-                            <StackPanel Grid.Column="2">
-                                <TextBlock Text="Sân bay đến" Style="{StaticResource FieldLabelText}" />
-                                <TextBox Text="{Binding DestinationAirport}" d:Text="Nội Bài" FontFamily="{StaticResource RobotoLight}" Style="{StaticResource CustomTextbox}" />
-                            </StackPanel>
-
-                            <!-- Depart DateTime -->
-                            <StackPanel Grid.Column="3">
-                                <TextBlock Text="Ngày giờ bay" Style="{StaticResource FieldLabelText}" />
-                                <TextBox Text="{Binding DepartTime}" d:Text="15:00 31/02/2022}" Style="{StaticResource CustomTextbox}" />
-                            </StackPanel>
-
-                            <!-- Flight time -->
-                            <StackPanel Grid.Column="4">
-                                <TextBlock Text="Thời gian bay" Style="{StaticResource FieldLabelText}" />
-                                <TextBox Text="{Binding FlightTime}"
-                                         d:Text="180"
-                                         materialDesign:TextFieldAssist.SuffixText="phút" Style="{StaticResource CustomTextbox}" />
-                            </StackPanel>
-
-                        </Grid>
-
-                    </Grid>
-                </Border>
-            </Grid>
-
-            <!-- Ticket detail -->
-            <Grid Grid.Row="1" Margin="0 20 0 40">
-                <Grid.ColumnDefinitions>
-                    <!-- Spacing -->
-                    <ColumnDefinition Width="2*" />
-                    <!-- Overlay aiport and customers -->
-                    <ColumnDefinition Width="4.5*" />
-                    <!-- Bill and total price  -->
-                    <ColumnDefinition Width="3.5*" />
-                    <!-- Spacing -->
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <!-- Overlay airport and  bill -->
-                    <RowDefinition Height="5.5*" />
-                    <!-- Customer and total price  -->
-                    <RowDefinition Height="4.5*" />
-                </Grid.RowDefinitions>
-
                 <!-- Overlay airport -->
-                <Border Grid.Column="1"
-                        Grid.Row="0"
-                        Background="White"
-                        CornerRadius="10"
-                        Padding="20" 
-                        Margin="0 0 10 0"
-                        Style="{StaticResource DropShadow}">
+                <Border Grid.Column="1" Background="White" CornerRadius="10" Padding="20" Style="{StaticResource DropShadow}">
                     <Grid>
 
                         <Grid.RowDefinitions>
@@ -173,14 +198,8 @@
                     </Grid>
                 </Border>
 
-                <!-- Customer -->
-                <Border Grid.Column="1"
-                        Grid.Row="1"
-                        Background="White"
-                        CornerRadius="10"
-                        Padding="20"
-                        Margin="0 20 10 0"
-                        Style="{StaticResource DropShadow}">
+                <!-- Customers -->
+                <Border Grid.Column="2" Background="White" CornerRadius="10" Padding="20" Margin="20 0 20 0" Style="{StaticResource DropShadow}">
                     <Grid>
 
                         <Grid.RowDefinitions>
@@ -195,124 +214,106 @@
                         <TextBlock Text="Khách hàng" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" />
 
                         <!-- Customers table -->
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-
-                            <!-- Name -->
-                            <StackPanel Grid.Column="0" Grid.Row="0">
-                                <TextBlock Text="Họ tên" Style="{StaticResource FieldLabelText}" />
-                                <TextBox Text="{Binding CustomerName}" d:Text="Nguyễn Văn A" Style="{StaticResource CustomTextbox}" Opacity="0.8" />
-                            </StackPanel>
-
-                            <!-- ID -->
-                            <StackPanel Grid.Column="1" Grid.Row="0">
-                                <TextBlock Text="CMND" Style="{StaticResource FieldLabelText}" />
-                                <TextBox Text="{Binding CustomerID}" d:Text="333333333" Style="{StaticResource CustomTextbox}" Opacity="0.8" />
-                            </StackPanel>
-
-                            <!-- Phone number -->
-                            <StackPanel Grid.Column="0" Grid.Row="1">
-                                <TextBlock Text="Số điện thoại" Style="{StaticResource FieldLabelText}" />
-                                <TextBox Text="{Binding CustomerPhoneNumber}" d:Text="0123456789" Style="{StaticResource CustomTextbox}" Opacity="0.8" />
-                            </StackPanel>
-
-                            <!-- Email -->
-                            <StackPanel Grid.Column="1" Grid.Row="1">
-                                <TextBlock Text="Email" Style="{StaticResource FieldLabelText}" />
-                                <TextBox Text="{Binding CustomerEmail}" d:Text="nguyenvana@gmail.com" Style="{StaticResource CustomTextbox}" Opacity="0.8" />
-                            </StackPanel>
-
-                        </Grid>
+                        <DataGrid Grid.Row="1"
+                                  ItemsSource="{Binding Customers}"
+                                  Margin="0 10 0 0"
+                                  ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                                  CellStyle="{StaticResource DataGridCellCenter}"
+                                  ColumnWidth="*">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Thứ tự" Binding="{Binding Order}" />
+                                <DataGridTextColumn Header="Tên khách hàng" Binding="{Binding Name}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
 
                     </Grid>
                 </Border>
 
-                <!-- Bill -->
-                <Border Background="White" 
-                        Grid.Column="2"
-                        Grid.Row="0"
-                        CornerRadius="10"
-                        Padding="20" 
-                        Margin="10 0 0 0"
-                        Style="{StaticResource DropShadow}">
-                    <Grid>
-
-                        <Grid.RowDefinitions>
-                            <!-- Heading -->
-                            <RowDefinition Height="Auto" />
-                            <!-- Bill table -->
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-
-                        <!-- Heading -->
-                        <TextBlock Text="Hóa đơn" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" Margin="0,-2,0,2" />
-
-                        <!-- Bill table -->
-                        <Grid Grid.Row="1" Margin="10 10 10 0">
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            
-                            <!-- Ticket tier -->
-                            <Grid Grid.Row="0" VerticalAlignment="Center">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="Hạng vé" Grid.Column="0" FontSize="{StaticResource Small}" />
-                                <TextBlock Text="{Binding TicketTier}" d:Text="Phổ thông" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource FieldLabelText}"/>
-                            </Grid>
-
-                            <!-- Ticket price -->
-                            <Grid Grid.Row="1" VerticalAlignment="Center">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="Giá vé" Grid.Column="0" FontSize="{StaticResource Small}" />
-                                <TextBlock Text="{Binding TicketPrice}" d:Text="920.000 VNĐ" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource FieldLabelText}" />
-                            </Grid>
-
-                            <!-- Customer paid -->
-                            <Grid Grid.Row="2" VerticalAlignment="Center">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="Người thanh toán" Grid.Column="0" FontSize="{StaticResource Small}" />
-                                <TextBlock Text="{Binding CustomerPaid}" d:Text="Nguyễn Văn A" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource FieldLabelText}" />
-                            </Grid>
-
-                        </Grid>
-                    </Grid>
-                </Border>
-
-                <Grid Grid.Column="2" Grid.Row="1">
+                <!-- Bill and total price and pay button-->
+                <Grid Grid.Column="3">
                     <Grid.RowDefinitions>
+                        <!-- Bill -->
                         <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
+                        <!-- Total price -->
+                        <RowDefinition Height="Auto" />
+                        <!-- Pay button -->
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    
+
+                    <!-- Bill -->
+                    <Border Background="White" Grid.Row="0" CornerRadius="10" Padding="20" Style="{StaticResource DropShadow}">
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+                                <!-- Heading -->
+                                <RowDefinition Height="Auto" />
+                                <!-- Bill table -->
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+
+                            <!-- Heading -->
+                            <TextBlock Text="Hóa đơn" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" Margin="0,-2,0,2" />
+
+                            <!-- Bill table -->
+                            <Grid Grid.Row="1" Margin="10 10 10 0">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <!-- Ticket tier -->
+                                <Grid>
+                                    <Grid Grid.Row="0" VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Hạng vé" Grid.Column="0" />
+                                        <TextBlock Text="{Binding TicketTier}" d:Text="Phổ thông" Grid.Column="1" HorizontalAlignment="Right" FontWeight="Bold"/>
+                                    </Grid>
+                                </Grid>
+
+                                <!-- Ticket price -->
+                                <Grid Grid.Row="1" VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Giá vé" Grid.Column="0" />
+                                    <TextBlock Text="{Binding TicketPrice}" d:Text="920.000 VNĐ" Grid.Column="1" HorizontalAlignment="Right" />
+                                </Grid>
+
+                                <!-- Customer paid -->
+                                <Grid Grid.Row="2" VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Số lượng chỗ" Grid.Column="0" />
+                                    <TextBlock Text="{Binding PlaceReserved}" d:Text="3" Grid.Column="1" HorizontalAlignment="Right" />
+                                </Grid>
+
+                                <!-- Customer paid -->
+                                <Grid Grid.Row="3" VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Người thanh toán" Grid.Column="0" />
+                                    <TextBlock Text="{Binding CustomerPaid}" d:Text="Nguyễn Văn A" Grid.Column="1" HorizontalAlignment="Right" />
+                                </Grid>
+
+                            </Grid>
+
+                        </Grid>
+                    </Border>
+
                     <!-- Total price to pay -->
-                    <Border 
-                        Grid.Row="0"
-                        Background="White" 
-                        CornerRadius="10" 
-                        Padding="20" 
-                        VerticalAlignment="Top"
-                        Margin="10 20 0 0" Style="{StaticResource DropShadow}">
+                    <Border Background="White" Grid.Row="1" CornerRadius="10" Padding="20" Margin="0 20 0 0" Style="{StaticResource DropShadow}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <!-- Heading -->
@@ -334,9 +335,9 @@
                                        Opacity="0.8"/>
                         </Grid>
                     </Border>
-                    
+
                     <!-- Pay button -->
-                    <Grid Grid.Row="1" VerticalAlignment="Bottom" Margin="0 20 0 0">
+                    <Grid Grid.Row="3" VerticalAlignment="Bottom" Margin="0 20 0 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="4*" />
                             <ColumnDefinition Width="6*" />

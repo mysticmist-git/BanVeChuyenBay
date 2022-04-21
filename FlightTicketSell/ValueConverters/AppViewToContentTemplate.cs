@@ -28,6 +28,12 @@ namespace FlightTicketSell.ValueConverters
                 // Sell related
                 case AppView.Sell:
                     return new SellView();
+                case AppView.SellPay:
+                    return new SellPayView();
+                case AppView.TicketInfo:
+                    return new Views.SellViewRelated.TicketInfoView();
+                case AppView.ChangeTicket:
+                    return new Views.SellViewRelated.ChangeTicketView();
                 // Schedule
                 case AppView.Schedule:
                     return new ScheduleView();

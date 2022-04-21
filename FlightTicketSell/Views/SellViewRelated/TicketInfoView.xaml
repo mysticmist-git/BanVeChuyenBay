@@ -175,7 +175,8 @@
 
 
             </Grid>
-            <Button Width="150" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 10 0 0"  Height="auto" Background="{StaticResource OrangeBrush}"  FontSize="{StaticResource RealSmall}" Content="Tiếp tục" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+            <Button Width="150" Grid.Row="3" Command="{Binding ContinueCommand}" 
+                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 10 0 0"  Height="auto" Background="{StaticResource OrangeBrush}"  FontSize="{StaticResource RealSmall}" Content="Tiếp tục" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
         </Grid>
 
     </Grid>
