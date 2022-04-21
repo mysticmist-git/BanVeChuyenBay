@@ -133,6 +133,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Enums\ReportType.cs" />
+    <Compile Include="Models\GetFlightData_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\HANGVE.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

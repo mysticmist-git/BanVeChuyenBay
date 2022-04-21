@@ -77,6 +77,7 @@
                                         </ItemsPanelTemplate>
                                     </ComboBox.ItemsPanel>
                                 </ComboBox>
+                                
                                 <!--Nút chuyển giữa sân bay đi và sân bay đến-->
                                 <Button  Grid.Column="1" Grid.ColumnSpan="2" Padding="0" Width="22" Height="22" Margin="0" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
                              Command="{Binding Change_Departure_Landing_Airport_Command}">
