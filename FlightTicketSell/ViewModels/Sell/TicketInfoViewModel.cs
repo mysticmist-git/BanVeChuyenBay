@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FlightTicketSell.ViewModels.Sell
+namespace FlightTicketSell.ViewModels
 {
-    public class TicketInfo : BaseViewModel
+    public class TicketInfoViewModel : BaseViewModel
     {
 
     }

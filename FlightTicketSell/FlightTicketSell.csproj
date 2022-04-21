@@ -200,13 +200,14 @@
     <Compile Include="ViewModels\Reserve\ReservePayViewModel.cs" />
     <Compile Include="ViewModels\ScheduleViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
+    <Compile Include="ViewModels\Sell\SellPayViewModel.cs" />
     <Compile Include="ViewModels\Sell\SellViewModel.cs" />
-    <Compile Include="ViewModels\Sell\TicketInfo.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="ViewModels\Setting\Airport.cs" />
     <Compile Include="ViewModels\Setting\EditAirportViewModel.cs" />
     <Compile Include="ViewModels\Setting\MoreAirportViewModel.cs" />
     <Compile Include="ViewModels\Setting\TicketClass.cs" />
+    <Compile Include="ViewModels\Sell\TicketInfoViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\BookViewRelated\BookDetailView.xaml.cs">
       <DependentUpon>BookDetailView.xaml</DependentUpon>
@@ -222,6 +223,9 @@
     </Compile>
     <Compile Include="Views\SellViewRelated\ChangeTicketView.xaml.cs">
       <DependentUpon>ChangeTicketView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SellViewRelated\TicketInfoView.xaml.cs">
+      <DependentUpon>TicketInfoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingViewRelated\EditAirportView.xaml.cs">
       <DependentUpon>EditAirportView.xaml</DependentUpon>
@@ -254,7 +258,7 @@
     <Compile Include="Views\SettingView.xaml.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SellPayView.cs">
+    <Compile Include="Views\SellViewRelated\SellPayView.cs">
       <DependentUpon>SellPayView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
@@ -320,6 +324,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SellViewRelated\TicketInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SettingViewRelated\EditAirportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -360,7 +368,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SellPayView.xaml">
+    <Page Include="Views\SellViewRelated\SellPayView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

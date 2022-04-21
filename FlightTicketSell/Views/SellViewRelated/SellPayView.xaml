@@ -3,12 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:FlightTicketSell.Views" xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
-             d:Background="{StaticResource LightGrayBrush}"
-             xmlns:local="clr-namespace:FlightTicketSell.Views"
              mc:Ignorable="d" 
              d:DesignHeight="760" d:DesignWidth="1366">
+    <UserControl.DataContext>
+        <vm:SellPayViewModel/>
+    </UserControl.DataContext>
     <Grid>
         
         

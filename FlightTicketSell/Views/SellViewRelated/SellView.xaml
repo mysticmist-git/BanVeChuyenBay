@@ -172,6 +172,7 @@
                             CanUserSortColumns="True"
                             CanUserAddRows="False"
                             AutoGenerateColumns="False"
+                            ColumnWidth="*"
                             materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                             materialDesign:DataGridAssist.ColumnHeaderPadding="8">
                         <DataGrid.Columns >
