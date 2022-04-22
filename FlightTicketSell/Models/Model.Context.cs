@@ -12,6 +12,8 @@ namespace FlightTicketSell.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class FlightTicketSellEntities : DbContext
     {
@@ -39,5 +41,10 @@ namespace FlightTicketSell.Models
         public virtual DbSet<SANBAYTG> SANBAYTGs { get; set; }
         public virtual DbSet<THAMSO> THAMSOes { get; set; }
         public virtual DbSet<VE> VEs { get; set; }
+    
+        public virtual ObjectResult<GetFlightData_Result> GetFlightData()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFlightData_Result>("GetFlightData");
+        }
     }
 }
