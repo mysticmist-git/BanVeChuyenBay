@@ -38,6 +38,8 @@ namespace FlightTicketSell.IoC
             // Bind to a single instance of ApplicationViewModel
             Kernel.Bind<ApplicationViewModel>().ToConstant(new ApplicationViewModel());
             Kernel.Bind<ReportViewModel>().ToConstant(new ReportViewModel());
+            Kernel.Bind<BookViewModel>().ToConstant(new BookViewModel());
+            Kernel.Bind<BookDetailViewModel>().ToConstant(new BookDetailViewModel());
         }
 
         #endregion
