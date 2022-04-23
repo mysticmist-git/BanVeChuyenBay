@@ -16,7 +16,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <materialDesign:DialogHost Grid.Column="4" Grid.Row="3" CloseOnClickAway="True" >
+    <materialDesign:DialogHost Identifier="RootDialog" Grid.Column="4" Grid.Row="3" CloseOnClickAway="True" >
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -224,76 +224,25 @@
                                         <TextBlock Text="{Binding Index, Converter={valueConverters:IndexToDisplayHeading}}"
                                                    Grid.Column="0"
                                                    FontWeight="Bold" />
-                                        <TextBox Grid.Column="0" Text="{Binding HoTen, FallbackValue=Tên khách hàng 01}" />
+                                        <TextBox Grid.Column="0"
+                                                 Text="{Binding HoTen, Mode=OneWay, Converter={valueConverters:CustomerNameDisplayConverter}}"
+                                                 IsReadOnly="True" />
                                     </StackPanel>
 
                                     <!-- Input button -->
                                     <Button Content="Nhập thông tin"
                                             Grid.Column="1"
-                                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" 
+                                            Command="{Binding OpenCustomerInfoCommand}" 
                                             BorderThickness="0"
                                             Background="{StaticResource GreenBrush}"
                                             FontSize="10"
                                             FontWeight="Bold"
                                             materialDesign:ShadowAssist.Darken="True">
-                                        <Button.CommandParameter >
-                                            <Border Height="250"
-                                                    Width="600" 
-                                                    Background="White"
-                                                    CornerRadius="10" 
-                                                    Style="{StaticResource ResourceKey=DropShadow}" >
-                                                <Grid>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="1.1*"></RowDefinition>
-                                                        <RowDefinition Height="3*"></RowDefinition>
-                                                        <RowDefinition Height="1.2*"></RowDefinition>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                                                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <TextBlock Grid.ColumnSpan="2" Padding="20,5,0,0" FontSize="20" VerticalAlignment="Center" Grid.Row="0"  FontWeight="Bold">
-                            Khách hàng 01</TextBlock>
-
-                                                    <StackPanel Width="200" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                        <TextBlock FontWeight="Bold">Họ Tên</TextBlock>
-                                                        <TextBox>Đoàn Gia Bảo</TextBox>
-                                                        <TextBlock FontWeight="Bold">Số điện thoại</TextBlock>
-                                                        <TextBox>0834002706</TextBox>
-                                                    </StackPanel>
-
-                                                    <StackPanel Width="200" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                        <TextBlock FontWeight="Bold">CMND/CCCD</TextBlock>
-                                                        <TextBox>312602950</TextBox>
-                                                        <TextBlock FontWeight="Bold">Email</TextBlock>
-                                                        <TextBox>doangiabao276@gmail.com</TextBox>
-                                                    </StackPanel>
-
-                                                    <Button 
-                                Content="Lưu"
-                                Grid.Row="2"
-                                Grid.ColumnSpan="2"
-                                BorderThickness="0"
-                                Background="OrangeRed"
-                                Command="{Binding ContinueCommand}"
-                                Width="100"
-                                Height="30"
-                                FontSize="16"
-                                FontWeight="Bold"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                materialDesign:ShadowAssist.Darken="True">
-                                                    </Button>
-                                                </Grid>
-                                            </Border>
-
-                                        </Button.CommandParameter>
                                     </Button>
 
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                     </ListView>
 
 

@@ -175,6 +175,7 @@
     <Compile Include="ValueConverters\AppViewToBooleanConverter.cs" />
     <Compile Include="ValueConverters\AppViewToContentTemplate.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
+    <Compile Include="ValueConverters\CustomerNameDisplayConverter.cs" />
     <Compile Include="ValueConverters\DatePickerUI_To_DatePickerConverter.cs" />
     <Compile Include="ValueConverters\IndexToDisplayHeading.cs" />
     <Compile Include="ValueConverters\IoCConverter.cs" />
@@ -217,6 +218,9 @@
     </Compile>
     <Compile Include="Views\BookViewRelated\BookView.xaml.cs">
       <DependentUpon>BookView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BookViewRelated\CustomerInfoDialog.xaml.cs">
+      <DependentUpon>CustomerInfoDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EnterLayoverAirportView.xaml.cs">
       <DependentUpon>EnterLayoverAirportView.xaml</DependentUpon>
@@ -312,6 +316,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BookViewRelated\BookView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BookViewRelated\CustomerInfoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
