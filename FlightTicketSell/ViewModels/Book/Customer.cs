@@ -41,7 +41,12 @@ namespace FlightTicketSell.ViewModels
         /// Open customer info dialog
         /// </summary>
         public ICommand OpenCustomerInfoCommand { get; set; }
-        
+
+        /// <summary>
+        /// Command to remove customer info
+        /// </summary>
+        public ICommand RemoveCustomerInfoCommand { get; set; }
+
 
         #endregion
 
@@ -69,6 +74,24 @@ namespace FlightTicketSell.ViewModels
                 var result = await DialogHost.Show(view, "RootDialog", ClosingEventHandler);
             });
 
+            // Command to remove customer info
+            RemoveCustomerInfoCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                // Safe guarantee
+                var result = MessageBox.Show("Bạn có chắc muốn xóa khách hàng này?", "Xóa khách hàng", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                // Return if it say no
+                if (result == MessageBoxResult.No)
+                    return;
+
+                // Update index of every one after this removing customer info
+                for (int i = Index; i < IoC.IoC.Get<BookDetailViewModel>().Customers.Count; i++)
+                    IoC.IoC.Get<BookDetailViewModel>().Customers[i].Index--;
+
+                // Remove customer info from list in the book detial view model
+                IoC.IoC.Get<BookDetailViewModel>().Customers.RemoveAt(Index - 1);
+
+            });
 
             SaveCustomerCommand = new RelayCommand<object>((p) => true, (p) =>
             {

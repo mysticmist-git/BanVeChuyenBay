@@ -10,11 +10,11 @@
              d:Background="{StaticResource LightGrayBrush}"
              DataContext="{Binding BookDetailViewModel, Source={x:Static vm:ViewModelLocator.Instance}}">
 
-    <i:Interaction.Triggers>
+    <!--<i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
         </i:EventTrigger>
-    </i:Interaction.Triggers>
+    </i:Interaction.Triggers>-->
 
     <materialDesign:DialogHost Identifier="RootDialog" Grid.Column="4" Grid.Row="3" CloseOnClickAway="True" >
         <Grid>
@@ -183,22 +183,19 @@
 
 
             <!--Khach hang thu huong-->
-            <Border Padding="25" Grid.Column="3" Grid.Row="3" Grid.RowSpan="3"  Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}">
+            <Border Padding="20" Grid.Column="3" Grid.Row="3" Grid.RowSpan="3"  Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="127*"/>
-                        <ColumnDefinition Width="9*"/>
-                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"></RowDefinition>
                         <RowDefinition Height="5.5*"></RowDefinition>
+                        <RowDefinition Height="1.5*"></RowDefinition>
                     </Grid.RowDefinitions>
 
                     <!-- Heading -->
-                    <TextBlock FontSize="20" VerticalAlignment="Center" Grid.ColumnSpan="2" FontWeight="Bold">Khách hàng thụ hưởng vé</TextBlock>
+                    <TextBlock Text="Khách hàng thụ hưởng vé" Grid.Row="0" FontSize="20" VerticalAlignment="Center" FontWeight="Bold" />
 
                     <!-- Customer info list-->
-                    <ListView ItemsSource="{Binding Customers}" Grid.ColumnSpan="2" Margin="0,46,0,0" Grid.RowSpan="2" d:ItemsSource="{d:SampleData ItemCount=5}">
+                    <ListView ItemsSource="{Binding Customers}" Grid.Row="1" Margin="0,10,0,0" d:ItemsSource="{d:SampleData ItemCount=5}">
 
                         <!-- Item Container style -->
                         <ListView.ItemContainerStyle>
@@ -217,6 +214,8 @@
                                         <ColumnDefinition Width="*" />
                                         <!-- Input button -->
                                         <ColumnDefinition Width="Auto" />
+                                        <!-- Remove button -->
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
                                     <!-- Customer info -->
@@ -233,20 +232,31 @@
                                     <Button Content="Nhập thông tin"
                                             Grid.Column="1"
                                             Command="{Binding OpenCustomerInfoCommand}" 
-                                            BorderThickness="0"
                                             Background="{StaticResource GreenBrush}"
-                                            FontSize="10"
-                                            FontWeight="Bold"
-                                            materialDesign:ShadowAssist.Darken="True">
-                                    </Button>
+                                            Style="{StaticResource CustomerInfoButton}" />
 
-                                    </Grid>
+                                    <!-- Remove button -->
+                                    <Button Content="X"
+                                            Grid.Column="2"
+                                            Command="{Binding RemoveCustomerInfoCommand}" 
+                                            Background="{StaticResource OrangeBrush}"
+                                            Style="{StaticResource CustomerInfoButton}" />
+
+                                </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                     </ListView>
 
-
-
+                    <!-- Add new customer button -->
+                    <Button Content="+ Thêm"
+                            Command="{Binding AddCustomerCommand}"
+                            Grid.Row="2"
+                            Margin="0 10 0 0" 
+                            materialDesign:ButtonAssist.CornerRadius="0"
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Bottom" 
+                            Style="{StaticResource AddButton}" 
+                            FontSize="{StaticResource Small}"/>
                 </Grid>
 
 

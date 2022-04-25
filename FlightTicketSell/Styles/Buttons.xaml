@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:attachedProperties="clr-namespace:FlightTicketSell.AttachedProperties"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                     >
     <!-- Navigation Header Button -->
     <Style x:Key="NavigationButton" TargetType="Button">
@@ -74,35 +75,48 @@
                     </BeginStoryboard>
                 </Trigger.ExitActions>
             </Trigger>
+        </Style.Triggers>
+    </Style>
 
+    <!-- CustomerInfoButton -->
+    <Style x:Key="CustomerInfoButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Margin" Value="10 0 0 0" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth3" />
+    </Style>
+    
+    <!-- Add button -->
+    <Style x:Key="AddButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatAccentBgButton}">
+        <Setter Property="Background" Value="#acacac" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontFamily" Value="{StaticResource RobotoLight}" />
+        <Setter Property="FontSize" Value="{StaticResource Small}" />
 
-
-
-
-
-            <!--<Trigger Property="attachedProperties:IsButtonSelected.Value" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource LightBlueBrush}" />
-            </Trigger>
-            
+        <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
+                
                 <Trigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation Duration="0:0:0.2" To="{StaticResource LightBlue}" 
-                                                            Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+                            <ColorAnimation Duration="0:0:0.5" To="#aeaeae" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
+
                 <Trigger.ExitActions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation Duration="0:0:0.2" To="Black" 
-                                                            Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+                            <ColorAnimation Duration="0:0:0.5" To="#c4c4c4" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>
-            </Trigger>-->
+                
+            </Trigger>
         </Style.Triggers>
-        
+       
     </Style>
+    
 </ResourceDictionary>

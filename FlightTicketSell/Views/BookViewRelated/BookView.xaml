@@ -12,12 +12,6 @@
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding BookViewModel, Source={x:Static vm:ViewModelLocator.Instance}}">
 
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
-
     <Grid >
         <Grid Margin="100 20 100 10 ">
            

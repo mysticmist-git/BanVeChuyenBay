@@ -23,6 +23,11 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand LoadCommand { get; set; }
 
+        /// <summary>
+        /// Add a new customer to book list
+        /// </summary>
+        public ICommand AddCustomerCommand { get; set; }
+
         #endregion
 
         #region Public Properties
@@ -30,7 +35,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The customer list that we'll fill information
         /// </summary>
-        public ObservableCollection<Customer> Customers { get; set; } = new ObservableCollection<Customer>();
+        public ObservableCollection<Customer> Customers { get; set; } = new ObservableCollection<Customer>() { new Customer { Index = 1 } };
 
         #endregion
 
@@ -41,8 +46,11 @@ namespace FlightTicketSell.ViewModels
             // Create command
             ContinueCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.ReservePay);
             ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.Book);
-            LoadCommand = new RelayCommand<object>((p) => true, (p) => 
+
+            AddCustomerCommand = new RelayCommand<object>((p) => true, (p) => 
             {
+                // Add a new customer
+                Customers.Add(new Customer { Index = Customers.Count + 1 });
             });
         } 
         #endregion
