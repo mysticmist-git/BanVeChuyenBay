@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Hen\source\repos\BanVeChuyenBay\BanVeChuyenBay\FlightTicketSell\Models\Model.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Menu\Học\Đại học năm 2\Môn chính khóa học kì II\Nhập môn công nghệ phần mềm\Đồ án\Source code nha\BanVeChuyenBay\FlightTicketSell\Models\Model.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

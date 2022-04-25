@@ -7,6 +7,7 @@ using FlightTicketSell.ViewModels.Setting;
 using System.Data.Entity.Core;
 using System.Windows;
 using FlightTicketSell.Views.SettingViewRelated;
+using MaterialDesignThemes.Wpf;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -120,12 +121,12 @@ namespace FlightTicketSell.ViewModels
                 }
             );
 
-            Open_Window_MoreAirport_Command = new RelayCommand<object>(
-                (p) => { return true; },
-                (p) =>
+            Open_Window_MoreAirport_Command = new RelayCommand<object>((p) => true, async (p) =>
+               
                 {
                     MoreAirportView moreAirportView = new MoreAirportView();
-                    moreAirportView.ShowDialog();
+                    var result = await DialogHost.Show(moreAirportView, "RootDialog", ClosingEventHandler);
+
                     using (var context = new FlightTicketSellEntities())
                     {
                         try
@@ -171,8 +172,6 @@ namespace FlightTicketSell.ViewModels
                        {
                            context.THAMSOes.Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri = Max_LayoverAirport;
                            context.SaveChanges();
-
-
                        }
                        catch (EntityException e)
                        {
@@ -233,6 +232,39 @@ namespace FlightTicketSell.ViewModels
                  }
              }
          );
+        }
+
+        /// <summary>
+        /// What to do when dialog closing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        {
+            //if (
+            //    Convert.ToInt32(eventArgs.Parameter) == 1 ||
+            //    (
+            //        NameBuffer == HoTen &&
+            //        IDBuffer == CMND &&
+            //        PhoneNumBuffer == SDT &&
+            //        EmailBuffer == Email
+            //    )
+            //)
+            //    return;
+
+            //var result = MessageBox.Show("Bạn có muốn lưu thay đổi", "Lưu thay đổi", MessageBoxButton.YesNoCancel);
+            //switch (result)
+            //{
+            //    case MessageBoxResult.Yes:
+            //        SaveCustomerCommand.Execute(null);
+            //        break;
+            //    case MessageBoxResult.No:
+            //        break;
+            //    case MessageBoxResult.Cancel:
+            //        eventArgs.Cancel();
+            //        break;
+
+            //}
         }
     }
 }

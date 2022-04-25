@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FlightTicketSellModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BANVECHUYENBAYModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CHITIETDATCHO">
           <Key>
             <PropertyRef Name="MaChiTietDatCho" />
@@ -360,7 +360,7 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="GetFlightData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="FlightTicketSellModelStoreContainer">
+        <EntityContainer Name="BANVECHUYENBAYModelStoreContainer">
           <EntitySet Name="CHITIETDATCHO" EntityType="Self.CHITIETDATCHO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHITIETHANGVE" EntityType="Self.CHITIETHANGVE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHUYENBAY" EntityType="Self.CHUYENBAY" Schema="dbo" store:Type="Tables" />
@@ -452,7 +452,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="FlightTicketSellModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="BANVECHUYENBAYModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="CHITIETDATCHO">
           <Key>
             <PropertyRef Name="MaChiTietDatCho" />
@@ -930,7 +930,7 @@
             <End Role="SANBAY" EntitySet="SANBAYs" />
             <End Role="SANBAYTG" EntitySet="SANBAYTGs" />
           </AssociationSet>
-          <FunctionImport Name="GetFlightData" ReturnType="Collection(FlightTicketSellModel.GetFlightData_Result)" />
+          <FunctionImport Name="GetFlightData" ReturnType="Collection(BANVECHUYENBAYModel.GetFlightData_Result)" />
         </EntityContainer>
         <ComplexType Name="GetFlightData_Result">
           <Property Type="Int32" Name="MaChuyenBay" Nullable="false" />
@@ -947,9 +947,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="FlightTicketSellModelStoreContainer" CdmEntityContainer="FlightTicketSellEntities">
+        <EntityContainerMapping StorageEntityContainer="BANVECHUYENBAYModelStoreContainer" CdmEntityContainer="FlightTicketSellEntities">
           <EntitySetMapping Name="CHITIETDATCHOes">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.CHITIETDATCHO">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.CHITIETDATCHO">
               <MappingFragment StoreEntitySet="CHITIETDATCHO">
                 <ScalarProperty Name="MaChiTietDatCho" ColumnName="MaChiTietDatCho" />
                 <ScalarProperty Name="MaDatCho" ColumnName="MaDatCho" />
@@ -958,7 +958,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CHITIETHANGVEs">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.CHITIETHANGVE">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.CHITIETHANGVE">
               <MappingFragment StoreEntitySet="CHITIETHANGVE">
                 <ScalarProperty Name="MaCTHV" ColumnName="MaCTHV" />
                 <ScalarProperty Name="MaHangVe" ColumnName="MaHangVe" />
@@ -968,7 +968,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CHUYENBAYs">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.CHUYENBAY">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.CHUYENBAY">
               <MappingFragment StoreEntitySet="CHUYENBAY">
                 <ScalarProperty Name="MaChuyenBay" ColumnName="MaChuyenBay" />
                 <ScalarProperty Name="MaDuongBay" ColumnName="MaDuongBay" />
@@ -979,7 +979,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DATCHOes">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.DATCHO">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.DATCHO">
               <MappingFragment StoreEntitySet="DATCHO">
                 <ScalarProperty Name="MaDatCho" ColumnName="MaDatCho" />
                 <ScalarProperty Name="MaHangVe" ColumnName="MaHangVe" />
@@ -993,7 +993,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DOANHTHUCHUYENBAYs">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.DOANHTHUCHUYENBAY">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.DOANHTHUCHUYENBAY">
               <MappingFragment StoreEntitySet="DOANHTHUCHUYENBAY">
                 <ScalarProperty Name="MaDoanhThuChuyenBay" ColumnName="MaDoanhThuChuyenBay" />
                 <ScalarProperty Name="MaDoanhThuThang" ColumnName="MaDoanhThuThang" />
@@ -1005,7 +1005,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DOANHTHUNAMs">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.DOANHTHUNAM">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.DOANHTHUNAM">
               <MappingFragment StoreEntitySet="DOANHTHUNAM">
                 <ScalarProperty Name="MaDoanhThuNam" ColumnName="MaDoanhThuNam" />
                 <ScalarProperty Name="Nam" ColumnName="Nam" />
@@ -1015,7 +1015,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DOANHTHUTHANGs">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.DOANHTHUTHANG">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.DOANHTHUTHANG">
               <MappingFragment StoreEntitySet="DOANHTHUTHANG">
                 <ScalarProperty Name="MaDoanhThuThang" ColumnName="MaDoanhThuThang" />
                 <ScalarProperty Name="MaDoanhThuNam" ColumnName="MaDoanhThuNam" />
@@ -1027,7 +1027,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DUONGBAYs">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.DUONGBAY">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.DUONGBAY">
               <MappingFragment StoreEntitySet="DUONGBAY">
                 <ScalarProperty Name="MaDuongBay" ColumnName="MaDuongBay" />
                 <ScalarProperty Name="MaSanBayDi" ColumnName="MaSanBayDi" />
@@ -1037,7 +1037,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="HANGVEs">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.HANGVE">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.HANGVE">
               <MappingFragment StoreEntitySet="HANGVE">
                 <ScalarProperty Name="MaHangVe" ColumnName="MaHangVe" />
                 <ScalarProperty Name="TenHangVe" ColumnName="TenHangVe" />
@@ -1047,7 +1047,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="KHACHHANGs">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.KHACHHANG">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.KHACHHANG">
               <MappingFragment StoreEntitySet="KHACHHANG">
                 <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
                 <ScalarProperty Name="HoTen" ColumnName="HoTen" />
@@ -1058,7 +1058,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SANBAYs">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.SANBAY">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.SANBAY">
               <MappingFragment StoreEntitySet="SANBAY">
                 <ScalarProperty Name="MaSanBay" ColumnName="MaSanBay" />
                 <ScalarProperty Name="TenSanBay" ColumnName="TenSanBay" />
@@ -1069,7 +1069,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SANBAYTGs">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.SANBAYTG">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.SANBAYTG">
               <MappingFragment StoreEntitySet="SANBAYTG">
                 <ScalarProperty Name="MaSanBayTG" ColumnName="MaSanBayTG" />
                 <ScalarProperty Name="MaDuongBay" ColumnName="MaDuongBay" />
@@ -1081,7 +1081,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="THAMSOes">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.THAMSO">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.THAMSO">
               <MappingFragment StoreEntitySet="THAMSO">
                 <ScalarProperty Name="TenThamSo" ColumnName="TenThamSo" />
                 <ScalarProperty Name="GiaTri" ColumnName="GiaTri" />
@@ -1089,7 +1089,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VEs">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.VE">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.VE">
               <MappingFragment StoreEntitySet="VE">
                 <ScalarProperty Name="MaVe" ColumnName="MaVe" />
                 <ScalarProperty Name="MaHangVe" ColumnName="MaHangVe" />
@@ -1100,9 +1100,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetFlightData" FunctionName="FlightTicketSellModel.Store.GetFlightData">
+          <FunctionImportMapping FunctionImportName="GetFlightData" FunctionName="BANVECHUYENBAYModel.Store.GetFlightData">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="FlightTicketSellModel.GetFlightData_Result">
+              <ComplexTypeMapping TypeName="BANVECHUYENBAYModel.GetFlightData_Result">
                 <ScalarProperty Name="MaChuyenBay" ColumnName="MaChuyenBay" />
                 <ScalarProperty Name="SanBayDi" ColumnName="SanBayDi" />
                 <ScalarProperty Name="SanBayDen" ColumnName="SanBayDen" />

@@ -1,23 +1,26 @@
-﻿<Window x:Class="FlightTicketSell.Views.MoreAirportView"
+﻿<UserControl x:Class="FlightTicketSell.Views.MoreAirportView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightTicketSell.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
-        mc:Ignorable="d"
-        Title="Thêm sân bay" Height="350" Width="600"
-        WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
+        xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d"
+        Height="350" Width="600"
         >
-    <Window.DataContext>
+    <UserControl.DataContext>
         <vm:MoreAirportViewModel/>
-    </Window.DataContext>
-    <Grid Background="{StaticResource LightGrayBrush}">
-        <Border CornerRadius="0 0 12 12" Height="100" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
+    </UserControl.DataContext>
 
-        <Grid >
+    <Grid Background="{StaticResource LightGrayBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="301*"/>
+            <ColumnDefinition Width="299*"/>
+        </Grid.ColumnDefinitions>
+        <Border CornerRadius="0 0 12 12" Height="100" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" Grid.ColumnSpan="2" />
+
+        <Grid Grid.ColumnSpan="2" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="10*"/>
@@ -67,8 +70,10 @@
 
             <!--Nút lưu-->
             <Button Grid.Row="2" Grid.Column="1"  Margin="10 0 10 0" Background="{StaticResource GreenBrush}"  FontSize="{StaticResource Small}" Content="Lưu" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                    Command="{Binding Save_Button_Command}"/>
+                    Command="{Binding Save_Button_Command}" >
+
+            </Button>
 
         </Grid>
     </Grid>
-</Window>
+</UserControl>
