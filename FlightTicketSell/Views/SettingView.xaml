@@ -65,7 +65,7 @@
                               />
 
                     <!--Thời gian bay tối thiểu-->
-                    <TextBox Grid.Row="1" Grid.Column="3" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="phút"
+                    <TextBox Grid.Row="1" Grid.Column="3" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="phút"
                              Text="{Binding Min_FlightTime}"
                              >
                         <materialDesign:HintAssist.Hint>
@@ -76,7 +76,7 @@
                     </TextBox>
 
                     <!--Thời gian dừng tối thiểu-->
-                    <TextBox Grid.Row="1" Grid.Column="5" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="phút"
+                    <TextBox Grid.Row="1" Grid.Column="5" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="phút"
                              Text="{Binding Min_TimeStop}"
                              >
                         <materialDesign:HintAssist.Hint>
@@ -87,7 +87,7 @@
                     </TextBox>
 
                     <!--Thời gian đặt vé chậm nhất -->
-                    <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="ngày"
+                    <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"   materialDesign:TextFieldAssist.SuffixText="ngày"
                              Text="{Binding Latest_BookingTime}"
                              >
                         <materialDesign:HintAssist.Hint>
@@ -98,7 +98,7 @@
                     </TextBox>
 
                     <!--Thời gian hủy đặt chỗ-->
-                    <TextBox Grid.Row="3" Grid.Column="3" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="ngày"
+                    <TextBox Grid.Row="3" Grid.Column="3" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"   materialDesign:TextFieldAssist.SuffixText="ngày"
                              Text="{Binding Cancel_BookingTime}"
                              >
                         <materialDesign:HintAssist.Hint>
@@ -109,7 +109,7 @@
                     </TextBox>
 
                     <!--Thời gian dừng tối đa-->
-                    <TextBox Grid.Row="3" Grid.Column="5" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="phút"
+                    <TextBox Grid.Row="3" Grid.Column="5" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="phút"
                              Text="{Binding Max_TimeStop}"
                              >
                         <materialDesign:HintAssist.Hint>
@@ -148,7 +148,8 @@
                                 <!--Viết tắt-->
                                 <GridViewColumn >
                                     <GridViewColumn.Header>
-                                        <TextBlock Text="Viết tắt" Style="{StaticResource Custom_GridviewHeader}"/>
+                                        <!--Chỗ này mã là viết tắt nha-->
+                                        <TextBlock Text="Mã" Style="{StaticResource Custom_GridviewHeader}"/>
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
@@ -194,7 +195,8 @@
 
                         <!--Nút sửa-->
                         <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                                Command="{Binding Airport_Edit_Button_Command}"/>
+                                Command="{Binding Airport_Edit_Button_Command}"
+                                materialDesign:ShadowAssist.Darken="True"/>
 
                         <!--Nút thêm-->
                         <Button Margin="7 0 10 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"

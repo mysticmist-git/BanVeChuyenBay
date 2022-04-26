@@ -210,8 +210,6 @@
     <Compile Include="ViewModels\Sell\SellViewModel.cs" />
     <Compile Include="ViewModels\SettingViewModel.cs" />
     <Compile Include="ViewModels\Setting\Airport.cs" />
-    <Compile Include="ViewModels\Setting\EditAirportViewModel.cs" />
-    <Compile Include="ViewModels\Setting\MoreAirportViewModel.cs" />
     <Compile Include="ViewModels\Setting\TicketClass.cs" />
     <Compile Include="ViewModels\Sell\TicketInfoViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />

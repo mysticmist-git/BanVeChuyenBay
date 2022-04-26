@@ -13,7 +13,7 @@ namespace FlightTicketSell.ViewModels
 {
     public class SettingViewModel : BaseViewModel
     {
-        #region Commands
+        #region Main Commands
         public ICommand Open_Window_MoreAirport_Command { get; set; }
         public ICommand Open_Window_MoreTicketClass_Command { get; set; }
         public ICommand Save_FlightRegulations_Command { get; set; }
@@ -22,7 +22,7 @@ namespace FlightTicketSell.ViewModels
         public ICommand LoadCommand { get; set; }
         #endregion
 
-        #region Public Properties
+        #region Main Public Properties
 
 
         /// <summary>
@@ -67,10 +67,45 @@ namespace FlightTicketSell.ViewModels
 
         #endregion
 
+        #region MoreAirport Commands
+        public ICommand MoreAirport_Save_Button_Command { get; set; }
+        #endregion
+
+        #region MoreAirport Public Properties
+        /// <summary>
+        /// Tên sân bay
+        /// </summary>
+        public string MoreAirport_Name { get; set; }
+
+        /// <summary>
+        /// Viết tắt
+        /// </summary>
+        public string MoreAirport_Code { get; set; }
+
+        /// <summary>
+        /// Tỉnh thành
+        /// </summary>
+        public string MoreAirport_Province { get; set; }
+        #endregion
+
+        #region EditAirport Commands
+        public ICommand EditAirport_Save_Button_Command { get; set; }
+        #endregion
+
+        #region EditAirport Public Properties
+
+        /// <summary>
+        /// Tên mới sân bay
+        /// </summary>
+        public string EditAirport_Name { get; set; }
+        #endregion
+
         public string Title { get; } = "CÀI ĐẶT";
 
         public SettingViewModel()
         {
+            #region Commands
+            
             LoadCommand = new RelayCommand<object>(
                 (p) => { return true; },
                 (p) =>
@@ -96,7 +131,7 @@ namespace FlightTicketSell.ViewModels
                             {
                                 //Sân bay còn hoạt động mới thêm vào list
                                 if (item.TrangThai)
-                                    List_Airport.Add(new Airport() { Code = item.VietTat, Name = item.TenSanBay, Province = item.TinhThanh });
+                                    List_Airport.Add(new Airport() { Id = item.MaSanBay, Code = item.VietTat, Name = item.TenSanBay, Province = item.TinhThanh, Status = item.TrangThai });
                             }
 
                             // Danh sách hạng vé
@@ -121,11 +156,13 @@ namespace FlightTicketSell.ViewModels
                 }
             );
 
-            Open_Window_MoreAirport_Command = new RelayCommand<object>((p) => true, async (p) =>
+            Open_Window_MoreAirport_Command = new RelayCommand<object>(
+                (p) => true, 
+                async (p) =>
                
                 {
                     MoreAirportView moreAirportView = new MoreAirportView();
-                    var result = await DialogHost.Show(moreAirportView, "RootDialog", ClosingEventHandler);
+                    var result = await DialogHost.Show(moreAirportView, "RootDialog");
 
                     using (var context = new FlightTicketSellEntities())
                     {
@@ -219,12 +256,13 @@ namespace FlightTicketSell.ViewModels
 
              (p) => { return true; },
 
-             (p) =>
+            async (p) =>
              {
                  if (Airport_selecteditem !=null)
                  {
-                     EditAirportView editAirportView = new EditAirportView(Airport_selecteditem);
-                     editAirportView.ShowDialog();
+                     EditAirportView editAirportView = new EditAirportView()
+                     { DataContext = this };
+                     var result = await DialogHost.Show(editAirportView, "RootDialog");
                  }
                  else
                  {
@@ -232,39 +270,88 @@ namespace FlightTicketSell.ViewModels
                  }
              }
          );
-        }
+            #endregion
 
-        /// <summary>
-        /// What to do when dialog closing
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="eventArgs"></param>
-        private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
-        {
-            //if (
-            //    Convert.ToInt32(eventArgs.Parameter) == 1 ||
-            //    (
-            //        NameBuffer == HoTen &&
-            //        IDBuffer == CMND &&
-            //        PhoneNumBuffer == SDT &&
-            //        EmailBuffer == Email
-            //    )
-            //)
-            //    return;
+            #region MoreAiport Commands
+            MoreAirport_Save_Button_Command = new RelayCommand<object>(
+                (p) => { return true; },
+                (p) =>
+                {
+                    using (var context = new FlightTicketSellEntities())
+                    {
+                        try
+                        {
+                            if (MoreAirport_Name != null && MoreAirport_Code != null && MoreAirport_Province != null)
+                            {
+                                if (context.SANBAYs.Where(h => h.VietTat == MoreAirport_Code).FirstOrDefault() != null)
+                                {
+                                    MessageBox.Show("Mã sân bay đã tồn tại!", "Cảnh báo");
+                                    MoreAirport_Code = "";
+                                }
+                                else if (context.SANBAYs.Where(h => h.TenSanBay == MoreAirport_Name).FirstOrDefault() != null)
+                                {
+                                    MessageBox.Show("Tên sân bay đã tồn tại!", "Cảnh báo");
+                                    MoreAirport_Name = "";
+                                }
+                                else
+                                {
+                                    SANBAY temp = new SANBAY() { TenSanBay = MoreAirport_Name, TrangThai = true, TinhThanh = MoreAirport_Province, VietTat = MoreAirport_Code };
+                                    context.SANBAYs.Add(temp);
+                                    context.SaveChanges();
+                                    MessageBox.Show("Thêm sân bay thành công!", "Cảnh báo");
 
-            //var result = MessageBox.Show("Bạn có muốn lưu thay đổi", "Lưu thay đổi", MessageBoxButton.YesNoCancel);
-            //switch (result)
-            //{
-            //    case MessageBoxResult.Yes:
-            //        SaveCustomerCommand.Execute(null);
-            //        break;
-            //    case MessageBoxResult.No:
-            //        break;
-            //    case MessageBoxResult.Cancel:
-            //        eventArgs.Cancel();
-            //        break;
+                                    // Close dialog
+                                    DialogHost.CloseDialogCommand.Execute(null, null);
+                                }
 
-            //}
+                            }
+                            else
+                            {
+                                MessageBox.Show("Vui lòng nhập đầy đủ thông tin sân bay!", "Cảnh báo");
+                            }
+
+
+                        }
+                        catch (EntityException e)
+                        {
+                            MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+
+                }
+            );
+            #endregion
+
+            #region EditAirport Commands
+            EditAirport_Save_Button_Command = new RelayCommand<object>(
+                (p) => { return true; },
+                (p) =>
+                {
+                     //using (var context = new FlightTicketSellEntities())
+                     //{
+                     //    try
+                     //    {
+                     //        if (Name != null)
+                     //        {
+                     //            SANBAY temp = new SANBAY() { TenSanBay = Name, TrangThai = true, TinhThanh = Province, VietTat = Code };
+                     //            context.SANBAYs.Add(temp);
+                     //            context.SaveChanges();
+                     //            MessageBox.Show("Thay đổi tên sân bay thành công!", "Cảnh báo");
+                     //        }
+                     //        else
+                     //        {
+                     //            MessageBox.Show("Vui lòng nhập tên mới!", "Cảnh báo");
+                     //        }
+                     //    }
+                     //    catch (EntityException e)
+                     //    {
+                     //        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                     //    }
+                     //}
+
+                 }
+            );
+            #endregion
         }
     }
 }

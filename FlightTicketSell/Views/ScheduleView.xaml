@@ -89,7 +89,8 @@
 
                     <!--Thời gian bay-->
                     <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="phút"
-                             Text="{Binding FlightTime, Converter={valueConverters:StringFlightTimeToIntFlightTimeConverter}}">
+                             Text="{Binding FlightTime, Converter={valueConverters:StringFlightTimeToIntFlightTimeConverter}}"
+                             PreviewTextInput="PreviewTextInput">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                 <TextBlock Text="Thời gian bay" />

@@ -1,4 +1,4 @@
-﻿<Window x:Class="FlightTicketSell.Views.SettingViewRelated.EditAirportView"
+﻿<UserControl x:Class="FlightTicketSell.Views.SettingViewRelated.EditAirportView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,13 +7,11 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
         mc:Ignorable="d"
-        Title="Chỉnh sửa sân bay" Height="350" Width="600"
-        WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
+        Height="350" Width="600"
         >
-    <Window.DataContext>
-        <vm:EditAirportViewModel/>
-    </Window.DataContext>
+    <UserControl.DataContext>
+        <vm:SettingViewModel/>
+    </UserControl.DataContext>
     <Grid Background="{StaticResource LightGrayBrush}" >
         <Border CornerRadius="0 0 12 12" Height="100" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
 
@@ -71,37 +69,38 @@
                             </Grid.RowDefinitions>
 
                             <!--Viết tắt-->
-                            <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Viết tắt" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-                                      x:Name="CodeTextblock"
+                            <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Mã" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
                                       IsReadOnly="True"
                                       Focusable="False"
+                                      Text="{Binding Airport_selecteditem.Code}"
                                       />
 
                             <!--Tỉnh thành-->
                             <TextBox  Grid.Row="1" Grid.Column="3" materialDesign:HintAssist.Hint="Tỉnh thành" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-                                      x:Name="ProvinceTextblock"
                                       IsReadOnly="True"
-                                      Focusable="False"/>
+                                      Focusable="False"
+                                      Text="{Binding Airport_selecteditem.Province}"
+                                      />
 
                             <!--Tên cũ-->
                             <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" materialDesign:HintAssist.Hint="Tên cũ" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-                             x:Name="NameTextblock"
-                             IsReadOnly="True" 
-                             Focusable="False"
-                             />
+                                     IsReadOnly="True" 
+                                     Focusable="False"
+                                     Text="{Binding Airport_selecteditem.Name}"
+                                     />
                         </Grid>
                     </Border>
 
                     <!--Tên mới-->
                     <TextBox Margin="20 0 20 0" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" materialDesign:HintAssist.Hint="Tên mới" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-                             Text="{Binding Name}"/>
+                             Text="{Binding EditAirport_Name}"/>
                 </Grid>
             </Border>
 
             <!--Nút lưu-->
             <Button Grid.Row="2" Grid.Column="1"  Margin="10 0 10 0" Background="{StaticResource GreenBrush}"  FontSize="{StaticResource Small}" Content="Lưu" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                    Command="{Binding Save_Button_Command}"/>
+                    Command="{Binding EditAirport_Save_Button_Command}"/>
 
         </Grid>
     </Grid>
-</Window>
+</UserControl>

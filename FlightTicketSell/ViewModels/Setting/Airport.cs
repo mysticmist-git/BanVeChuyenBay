@@ -9,14 +9,15 @@ namespace FlightTicketSell.ViewModels.Setting
     public class Airport: BaseViewModel
     {
         #region Private Members
-        
+
         #endregion
 
         #region Public Properties
-        public string Code { get; set; }
-
+        public int Id { get; set; }
         public string Name { get; set; }
+        public string Code { get; set; }
         public string Province { get; set; }
+        public bool Status { get; set; }
         #endregion
 
         #region Methods
