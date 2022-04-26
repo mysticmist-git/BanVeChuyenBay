@@ -147,15 +147,26 @@
                     Margin="40 20 40 0"
                     VerticalAlignment="Stretch">
 
-                <DataGrid x:Name="reportDataGrid"
-                          ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
-                          CellStyle="{StaticResource DataGridCellCenter}"
-                          ItemsSource="{Binding Report, Converter={valueConverters:ReportTypeConverter}}"
-                          ColumnWidth="*"
-                          attachedProperties:ReportTypeProperty.Value="{Binding CurrentReportType}"
-                          >
-                    <DataGrid.Columns></DataGrid.Columns>
-                </DataGrid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!-- Table name  -->
+                        <RowDefinition Height="Auto" />
+                        <!-- Report table -->
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Table name  -->
+                    <TextBlock Text="Bảng báo cáo doanh thu" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Center" />
+
+                    <!-- Report table -->
+                    <DataGrid x:Name="reportDataGrid"
+                              Grid.Row="1"
+                              ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                              CellStyle="{StaticResource DataGridCellCenter}"
+                              ItemsSource="{Binding Report, Converter={valueConverters:ReportTypeConverter}}"
+                              ColumnWidth="*"
+                              attachedProperties:ReportTypeProperty.Value="{Binding CurrentReportType}" />
+                </Grid>
 
             </Border>
             

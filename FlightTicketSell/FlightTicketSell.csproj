@@ -228,6 +228,9 @@
     <Compile Include="Views\EnterTicketClassView.xaml.cs">
       <DependentUpon>EnterTicketClassView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ReportViewRelated\PrintPreviewWindow.xaml.cs">
+      <DependentUpon>PrintPreviewWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SellViewRelated\ChangeTicketView.xaml.cs">
       <DependentUpon>ChangeTicketView.xaml</DependentUpon>
     </Compile>
@@ -246,9 +249,6 @@
     <Compile Include="Views\Helper\ReportHelper.cs" />
     <Compile Include="Views\BookViewRelated\BookPayView.xaml.cs">
       <DependentUpon>BookPayView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ReportViewRelated\ReportPrintView.xaml.cs">
-      <DependentUpon>ReportPrintView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReportViewRelated\ReportView.xaml.cs">
       <DependentUpon>ReportView.xaml</DependentUpon>
@@ -331,6 +331,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ReportViewRelated\PrintPreviewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SellViewRelated\ChangeTicketView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -352,10 +356,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BookViewRelated\BookPayView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ReportViewRelated\ReportPrintView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -436,6 +436,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\paper-plane.png" />
     <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>
