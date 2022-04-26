@@ -26,7 +26,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Indicate that it is report loadable
         /// </summary>
-        private bool _reportLoadAllow = false;
+        private bool _reportLoadAllow = true;
 
         #endregion
 
@@ -117,6 +117,9 @@ namespace FlightTicketSell.ViewModels
         {
             LoadCommand = new RelayCommand<object>((p) => true, (p) => 
             {
+                // Init everything when viewmodel first load
+                if (_firstLoad) Init();
+                
                 OnPropertyChanged(nameof(Report));
             });
             
@@ -140,6 +143,9 @@ namespace FlightTicketSell.ViewModels
                 // Only allow load report when everything is done
                 _reportLoadAllow = false;
 
+                // A buffer to store current month value selected
+                var month = Month;
+
                 // Load months
                 using (var context = new FlightTicketSellEntities())
                 {
@@ -160,13 +166,20 @@ namespace FlightTicketSell.ViewModels
                 // Allow report load
                 _reportLoadAllow = true;
 
-                MonthIndex = 0;
+                // Reload previous month if another year also have it
+                if (Months.Contains(month.ToString()))
+                    MonthIndex = Months.IndexOf(month.ToString());
+                else
+                    MonthIndex = 0;
+
+                // Check if any flight departed to add a report if needed
+                await ReportHelper.ReportExistGuarantee();
+
+                // Update report
+                Report = await ReportHelper.GetReportAsync(Month, Year);
             });
 
             PrintCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.ReportPrint);
-
-            // Init essential things
-            Init();
         }
 
         /// <summary>
