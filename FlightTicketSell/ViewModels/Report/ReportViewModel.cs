@@ -1,4 +1,4 @@
-﻿using FlightTicketSell.Models;
+﻿    using FlightTicketSell.Models;
 using FlightTicketSell.ViewModels.Report;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
@@ -11,6 +11,7 @@ using FlightTicketSell.Views.Helper;
 using System.ComponentModel;
 using System.Windows;
 using System.Data.Entity.Core;
+using FlightTicketSell.Views.ReportViewRelated;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -179,7 +180,7 @@ namespace FlightTicketSell.ViewModels
                 Report = await ReportHelper.GetReportAsync(Month, Year);
             });
 
-            PrintCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.ReportPrint);
+            PrintCommand = new RelayCommand<object>((p) => true, (p) => new ReportPrintPreviewWindow().ShowDialog() );
         }
 
         /// <summary>

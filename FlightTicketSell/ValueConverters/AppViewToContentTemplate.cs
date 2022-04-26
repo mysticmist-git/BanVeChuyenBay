@@ -40,8 +40,6 @@ namespace FlightTicketSell.ValueConverters
                 // Report realted
                 case AppView.Report:
                     return new ReportView();
-                case AppView.ReportPrint:
-                    return new ReportPrintView();
                 // Settings
                 case AppView.Setting:
                     return new SettingView();
