@@ -8,10 +8,12 @@ namespace FlightTicketSell.ViewModels
 {
     public class ReportPrintViewModel : BaseViewModel
     {
+        #region Public Properties
+        
         /// <summary>
         /// The text that indicate which period of time this report takes
         /// </summary>
-        public string PrintPeriod 
+        public string PrintPeriod
         {
             get
             {
@@ -27,7 +29,7 @@ namespace FlightTicketSell.ViewModels
                     case ReportType.OneMonthOfAllYears:
                         return
                             reportVM.Years[1] == reportVM.Years[reportVM.Years.Count - 1] ?
-                            string.Format($"Trong tháng {reportVM.Month} của năm {reportVM.Years[1]}"):
+                            string.Format($"Trong tháng {reportVM.Month} của năm {reportVM.Years[1]}") :
                             string.Format($"Trong tháng {reportVM.Month} từ năm {reportVM.Years[1]} tới năm {reportVM.Years[reportVM.Years.Count - 1]}");
                     case ReportType.AllYears:
                         return
@@ -44,7 +46,9 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The print date, which return DateTime.Now in a formated form
         /// </summary>
-        public string PrintDate { get => DateTime.Now.ToString("dddd, dd MMMM yyyy", new CultureInfo("vi-VN")); }
+        public string PrintDate { get => DateTime.Now.ToString("dddd, dd MMMM yyyy", new CultureInfo("vi-VN")); } 
+
+        #endregion
 
         #region Commands
 
