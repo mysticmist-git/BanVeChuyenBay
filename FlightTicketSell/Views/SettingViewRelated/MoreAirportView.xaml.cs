@@ -17,7 +17,7 @@ namespace FlightTicketSell.Views
     /// <summary>
     /// Interaction logic for MoreAirportView.xaml
     /// </summary>
-    public partial class MoreAirportView : Window
+    public partial class MoreAirportView : UserControl
     {
         public MoreAirportView()
         {

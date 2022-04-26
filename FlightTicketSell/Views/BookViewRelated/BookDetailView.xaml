@@ -16,7 +16,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>-->
 
-    <materialDesign:DialogHost Identifier="RootDialog" Grid.Column="4" Grid.Row="3" CloseOnClickAway="True" >
+    <materialDesign:DialogHost Identifier="RootDialog" CloseOnClickAway="True" >
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>

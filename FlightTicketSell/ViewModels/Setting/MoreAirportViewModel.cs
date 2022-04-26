@@ -60,6 +60,7 @@ namespace FlightTicketSell.ViewModels
                                     context.SANBAYs.Add(temp);
                                     context.SaveChanges();
                                     MessageBox.Show("Thêm sân bay thành công!", "Cảnh báo");
+                                    
                                 }    
                                
                             }

@@ -18,6 +18,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
+    <materialDesign:DialogHost CloseOnClickAway="True" Identifier="RootDialog">
     <Grid >
         <Grid Margin="100 20 100 20 ">
             <Grid.ColumnDefinitions>
@@ -198,7 +199,7 @@
                         <!--Nút thêm-->
                         <Button Margin="7 0 10 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
                                 Command="{Binding Open_Window_MoreAirport_Command}"
-                                />
+                                materialDesign:ShadowAssist.Darken="True"/>
                     </StackPanel>
 
                 </Grid>
@@ -271,4 +272,5 @@
 
 
     </Grid>
+    </materialDesign:DialogHost>
 </UserControl>
