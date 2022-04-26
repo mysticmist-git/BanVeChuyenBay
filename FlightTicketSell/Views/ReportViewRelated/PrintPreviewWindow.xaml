@@ -1,0 +1,142 @@
+﻿<Window x:Class="FlightTicketSell.Views.ReportViewRelated.ReportPrintPreviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FlightTicketSell.Views.ReportViewRelated"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
+        xmlns:attachedProperties="clr-namespace:FlightTicketSell.AttachedProperties" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="Bản xem trước khi in báo cáo" Height="600" Width="535.5"
+        WindowStartupLocation="CenterScreen" Loaded="Window_Loaded"
+        ResizeMode="NoResize">
+    <Window.DataContext>
+        <vm:ReportPrintViewModel />
+    </Window.DataContext>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <StackPanel Margin="20 0 0 20" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Orientation="Horizontal">
+                <!-- Print button -->
+                <Button 
+                    HorizontalContentAlignment="Stretch"
+                    Background="{StaticResource GreenBrush}"                 
+                    BorderThickness="0"                
+                    materialDesign:ButtonAssist.CornerRadius="5"
+                    Height="30"
+                    Click="Print_Confirm">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="In "  Grid.Column="0" FontSize="{StaticResource Small}"  VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Kind="Printer" Grid.Column="1" VerticalAlignment="Stretch" Width="20" Height="20" />
+                    </Grid>
+                </Button>
+
+                <Button 
+                    HorizontalContentAlignment="Stretch"
+                    Background="{StaticResource OrangeBrush}"                 
+                    BorderThickness="0"                
+                    materialDesign:ButtonAssist.CornerRadius="5"
+                    Height="30"
+                    Margin="10 0 0 0"
+                    Click="Cancel_Print">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Hủy" Grid.Column="0" FontSize="{StaticResource Small}"  VerticalAlignment="Center"/>
+                        <materialDesign:PackIcon Kind="CloseBox" Grid.Column="1" VerticalAlignment="Stretch" Width="20" Height="20" />
+                    </Grid>
+                </Button>
+            </StackPanel>
+
+            <Grid x:Name="print">
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <!-- Header -->
+                        <RowDefinition Height="2*" />
+                        <!-- Report -->
+                        <RowDefinition Height="8*" />
+                        <!-- Date -->
+                        <RowDefinition Height="0.5*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Header -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <!-- Spacing -->
+                            <ColumnDefinition Width="0.5*" />
+                            <!-- Header -->
+                            <ColumnDefinition Width="9*" />
+                            <!-- Spacing -->
+                            <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Header -->
+                        <Grid Grid.Column="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="0.5*" />
+                                    <ColumnDefinition Width="9.5*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Logo -->
+                                <Image Grid.Column="0" Source="pack://application:,,,/Images/paper-plane.png" Width="100" />
+
+                                <!-- Texts -->
+                                <StackPanel Grid.Column="2" Margin="10" VerticalAlignment="Center">
+                                    <TextBlock Text="BÁO CÁO DOANH THU" FontSize="{StaticResource Regular}" FontWeight="Bold" HorizontalAlignment="Center" />
+                                    <TextBlock Text="{Binding PrintPeriod}" FontSize="{StaticResource Small}" HorizontalAlignment="Center" />
+                                </StackPanel>
+
+                            </Grid>
+                        </Grid>
+
+                    </Grid>
+
+                    <!-- Report -->
+                    <Grid Grid.Row="1" Margin="0 20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Table name  -->
+                        <TextBlock Text="Bảng báo cáo doanh thu" Grid.Row="0" 
+                               HorizontalAlignment="Left" 
+                               FontSize="{StaticResource Small}" FontFamily="{StaticResource RobotoBlack}" 
+                               Margin="0 0 0 5"/>
+
+                        <Border Grid.Row="1" BorderBrush="{StaticResource LightGrayBrush}" BorderThickness="1">
+                            <DataGrid x:Name="reportDataGrid"
+                              Background="White"
+                              ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                              CellStyle="{StaticResource DataGridCellCenter}"
+                              ItemsSource="{Binding ReportViewModel.Report, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:ReportTypeConverter}}"
+                              ColumnWidth="*"
+                              attachedProperties:ReportTypeProperty.Value="{Binding ReportViewModel.CurrentReportType, Source={x:Static vm:ViewModelLocator.Instance}}" />
+                        </Border>
+                    </Grid>
+
+                    <!-- Date -->
+                    <TextBlock Text="{Binding PrintDate}" Grid.Row="2" HorizontalAlignment="Right" FontWeight="Bold"/>
+                </Grid>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</Window>

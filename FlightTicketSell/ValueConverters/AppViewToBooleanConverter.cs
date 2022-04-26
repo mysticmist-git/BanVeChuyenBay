@@ -20,7 +20,7 @@ namespace FlightTicketSell.ValueConverters
                 case AppView.Schedule:
                     return new[] { AppView.Schedule}.Any(x => x == (AppView)value);
                 case AppView.Report:
-                    return new[] { AppView.Report, AppView.ReportPrint}.Any(x => x == (AppView)value);
+                    return new[] { AppView.Report }.Any(x => x == (AppView)value);
                 case AppView.Setting:
                     return new[] { AppView.Setting}.Any(x => x == (AppView)value);
                 default:

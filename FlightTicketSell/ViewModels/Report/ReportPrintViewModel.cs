@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace FlightTicketSell.ViewModels
@@ -62,11 +63,6 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand LoadCommand { get; set; }
 
-        /// <summary>
-        /// Export PDF
-        /// </summary>
-        public ICommand PrintCommand { get; set; }
-
         #endregion
 
         #region Constructor
@@ -81,9 +77,6 @@ namespace FlightTicketSell.ViewModels
 
             // TODO: rất tà đạo, nên sửa nếu có thời gian
             LoadCommand = new RelayCommand<object>((p) => true, (p) =>  IoC.IoC.Get<ReportViewModel>().LoadCommand.Execute(null) );
-
-            // TODO: Implemented this later
-            PrintCommand = new RelayCommand<object>((p) => true, (p) => MessageBox.Show("Xuất PDF", "In báo cáo", MessageBoxButton.OK, MessageBoxImage.Information) );
         }
 
         #endregion

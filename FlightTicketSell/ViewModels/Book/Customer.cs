@@ -135,7 +135,6 @@ namespace FlightTicketSell.ViewModels
                 case MessageBoxResult.Cancel:
                     eventArgs.Cancel();
                     break;
-
             }
         }
 

@@ -46,10 +46,6 @@
         /// </summary>
         Report,
         /// <summary>
-        /// The report print view
-        /// </summary>
-        ReportPrint,
-        /// <summary>
         /// The setting view
         /// </summary>
         Setting

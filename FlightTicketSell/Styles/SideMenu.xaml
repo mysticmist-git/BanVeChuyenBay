@@ -38,10 +38,6 @@
         <views:ReportView/>
     </DataTemplate>
 
-    <DataTemplate x:Key="ReportPrintViewTemplate">
-        <views:ReportPrintView/>
-    </DataTemplate>
-
     <DataTemplate x:Key="SettingViewTemplate">
         <views:SettingView/>
     </DataTemplate>
