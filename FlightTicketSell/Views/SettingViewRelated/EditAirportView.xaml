@@ -69,14 +69,14 @@
                             </Grid.RowDefinitions>
 
                             <!--Viết tắt-->
-                            <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Mã" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                            <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Mã sân bay" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
                                       IsReadOnly="True"
                                       Focusable="False"
                                       Text="{Binding Airport_selecteditem.Code}"
                                       />
 
                             <!--Tỉnh thành-->
-                            <TextBox  Grid.Row="1" Grid.Column="3" materialDesign:HintAssist.Hint="Tỉnh thành" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                            <TextBox  Grid.Row="1" Grid.Column="3" materialDesign:HintAssist.Hint="Tỉnh thành cũ" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
                                       IsReadOnly="True"
                                       Focusable="False"
                                       Text="{Binding Airport_selecteditem.Province}"
@@ -92,8 +92,13 @@
                     </Border>
 
                     <!--Tên mới-->
-                    <TextBox Margin="20 0 20 0" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" materialDesign:HintAssist.Hint="Tên mới" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-                             Text="{Binding EditAirport_Name}"/>
+                    <TextBox Margin="20 0 0 0" Grid.Row="3" Grid.Column="1" materialDesign:HintAssist.Hint="Tên mới" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                             Text="{Binding EditAirport_Name}"
+                             materialDesign:HintAssist.HelperText="Để trống nếu giữ nguyên!"/>
+                    <!--Tỉnh thành mới-->
+                    <TextBox Margin="0 0 20 0" Grid.Row="3" Grid.Column="3" materialDesign:HintAssist.Hint="Tỉnh thành mới" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                             Text="{Binding EditAirport_Province}"
+                             materialDesign:HintAssist.HelperText="Để trống nếu giữ nguyên!"/>
                 </Grid>
             </Border>
 

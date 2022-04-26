@@ -98,6 +98,11 @@ namespace FlightTicketSell.ViewModels
         /// Tên mới sân bay
         /// </summary>
         public string EditAirport_Name { get; set; }
+
+        /// <summary>
+        /// Tỉnh thành mới sân bay
+        /// </summary>
+        public string EditAirport_Province { get; set; }
         #endregion
 
         public string Title { get; } = "CÀI ĐẶT";
@@ -159,9 +164,9 @@ namespace FlightTicketSell.ViewModels
             Open_Window_MoreAirport_Command = new RelayCommand<object>(
                 (p) => true, 
                 async (p) =>
-               
+
                 {
-                    MoreAirportView moreAirportView = new MoreAirportView();
+                    MoreAirportView moreAirportView = new MoreAirportView() { DataContext = this };
                     var result = await DialogHost.Show(moreAirportView, "RootDialog");
 
                     using (var context = new FlightTicketSellEntities())
@@ -277,45 +282,49 @@ namespace FlightTicketSell.ViewModels
                 (p) => { return true; },
                 (p) =>
                 {
+                    bool IsRun = false;
                     using (var context = new FlightTicketSellEntities())
                     {
+                        
                         try
                         {
-                            if (MoreAirport_Name != null && MoreAirport_Code != null && MoreAirport_Province != null)
-                            {
-                                if (context.SANBAYs.Where(h => h.VietTat == MoreAirport_Code).FirstOrDefault() != null)
-                                {
-                                    MessageBox.Show("Mã sân bay đã tồn tại!", "Cảnh báo");
-                                    MoreAirport_Code = "";
-                                }
-                                else if (context.SANBAYs.Where(h => h.TenSanBay == MoreAirport_Name).FirstOrDefault() != null)
-                                {
-                                    MessageBox.Show("Tên sân bay đã tồn tại!", "Cảnh báo");
-                                    MoreAirport_Name = "";
-                                }
-                                else
-                                {
-                                    SANBAY temp = new SANBAY() { TenSanBay = MoreAirport_Name, TrangThai = true, TinhThanh = MoreAirport_Province, VietTat = MoreAirport_Code };
-                                    context.SANBAYs.Add(temp);
-                                    context.SaveChanges();
-                                    MessageBox.Show("Thêm sân bay thành công!", "Cảnh báo");
-
-                                    // Close dialog
-                                    DialogHost.CloseDialogCommand.Execute(null, null);
-                                }
-
-                            }
-                            else
+                            var list_airport = context.SANBAYs.ToList();
+                            if (!(MoreAirport_Name != null && MoreAirport_Code != null && MoreAirport_Province != null))
                             {
                                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin sân bay!", "Cảnh báo");
+                                return;
+                            }
+                            if (list_airport.Where(h => h.VietTat == MoreAirport_Code).FirstOrDefault() != null)
+                            {
+                                MessageBox.Show("Mã sân bay đã tồn tại!", "Cảnh báo");
+                                MoreAirport_Code = "";
+                                return;
+                            }
+                            if (list_airport.Where(h => h.TenSanBay == MoreAirport_Name).FirstOrDefault() != null)
+                            {
+                                MessageBox.Show("Tên sân bay đã tồn tại!", "Cảnh báo");
+                                MoreAirport_Name = "";
+                                return;
                             }
 
+                            SANBAY temp = new SANBAY() { TenSanBay = MoreAirport_Name, TrangThai = true, TinhThanh = MoreAirport_Province, VietTat = MoreAirport_Code };
+                            context.SANBAYs.Add(temp);
+                            context.SaveChanges();
+                            MessageBox.Show("Thêm sân bay thành công!", "Cảnh báo");
+                            IsRun = true;
 
+                            // Close dialog
+                            DialogHost.CloseDialogCommand.Execute(null, null);
                         }
                         catch (EntityException e)
                         {
                             MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
                         }
+                    }
+
+                    if (IsRun)
+                    {
+                      
                     }
 
                 }
@@ -327,29 +336,35 @@ namespace FlightTicketSell.ViewModels
                 (p) => { return true; },
                 (p) =>
                 {
-                     //using (var context = new FlightTicketSellEntities())
-                     //{
-                     //    try
-                     //    {
-                     //        if (Name != null)
-                     //        {
-                     //            SANBAY temp = new SANBAY() { TenSanBay = Name, TrangThai = true, TinhThanh = Province, VietTat = Code };
-                     //            context.SANBAYs.Add(temp);
-                     //            context.SaveChanges();
-                     //            MessageBox.Show("Thay đổi tên sân bay thành công!", "Cảnh báo");
-                     //        }
-                     //        else
-                     //        {
-                     //            MessageBox.Show("Vui lòng nhập tên mới!", "Cảnh báo");
-                     //        }
-                     //    }
-                     //    catch (EntityException e)
-                     //    {
-                     //        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
-                     //    }
-                     //}
+                    using (var context = new FlightTicketSellEntities())
+                    {
+                        try
+                        {
+                            if (EditAirport_Name != null || EditAirport_Province!=null)
+                            {
+                                if (EditAirport_Name != null)
+                                    context.SANBAYs.ToList().Where(s => s.MaSanBay == Airport_selecteditem.Id).FirstOrDefault().TenSanBay = EditAirport_Name;
+                                if (EditAirport_Province != null)
+                                    context.SANBAYs.ToList().Where(s => s.MaSanBay == Airport_selecteditem.Id).FirstOrDefault().TinhThanh = EditAirport_Province;
 
-                 }
+                                context.SaveChanges();
+                                MessageBox.Show("Lưu thay đổi sân bay thành công!", "Cảnh báo");
+
+                                // Close dialog
+                                DialogHost.CloseDialogCommand.Execute(null, null);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Vui lòng nhập ít nhất một thông tin!", "Cảnh báo");
+                            }
+                        }
+                        catch (EntityException e)
+                        {
+                            MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+
+                }
             );
             #endregion
         }
