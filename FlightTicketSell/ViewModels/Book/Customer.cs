@@ -71,7 +71,7 @@ namespace FlightTicketSell.ViewModels
                 PhoneNumBuffer = SDT;
                 EmailBuffer = Email;    
 
-                var result = await DialogHost.Show(view, "RootDialog", ClosingEventHandler);
+                await DialogHost.Show(view, "RootDialog", ClosingEventHandler);
             });
 
             // Command to remove customer info
