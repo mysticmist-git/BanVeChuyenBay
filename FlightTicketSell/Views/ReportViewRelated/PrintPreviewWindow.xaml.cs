@@ -1,5 +1,6 @@
 ﻿using FlightTicketSell.AttachedProperties;
 using FlightTicketSell.Models.Enums;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +21,7 @@ namespace FlightTicketSell.Views.ReportViewRelated
     /// <summary>
     /// Interaction logic for PrintPreviewWindow.xaml
     /// </summary>
-    public partial class ReportPrintPreviewWindow : Window
+    public partial class ReportPrintPreviewWindow : UserControl
     {
         public ReportPrintPreviewWindow()
         {
@@ -114,7 +115,7 @@ namespace FlightTicketSell.Views.ReportViewRelated
         /// <param name="e"></param>
         private void Cancel_Print(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            DialogHost.CloseDialogCommand.Execute(null, null);
         }
     }
 }

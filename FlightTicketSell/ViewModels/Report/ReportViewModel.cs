@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Data.Entity.Core;
 using FlightTicketSell.Views.ReportViewRelated;
+using MaterialDesignThemes.Wpf;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -180,7 +181,13 @@ namespace FlightTicketSell.ViewModels
                 Report = await ReportHelper.GetReportAsync(Month, Year);
             });
 
-            PrintCommand = new RelayCommand<object>((p) => true, (p) => new ReportPrintPreviewWindow().ShowDialog() );
+            PrintCommand = new RelayCommand<object>((p) => true, async (p) =>
+            {
+                // Create a view
+                var view = new ReportPrintPreviewWindow();
+
+                await DialogHost.Show(view, "RootDialog");
+            });
         }
 
         /// <summary>
