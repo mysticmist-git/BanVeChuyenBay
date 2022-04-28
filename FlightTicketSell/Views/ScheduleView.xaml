@@ -18,19 +18,6 @@
     </i:Interaction.Triggers>
     
     <Grid>
-        <!--<StackPanel Orientation="Vertical"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-            <materialDesign:PackIcon HorizontalAlignment="Center"
-                                              Foreground="{StaticResource BlueBrush}"
-                                              Width="100" Height="100"
-                                              Kind="Airport"/>
-            <TextBlock FontSize="40" FontWeight="Bold" 
-                       VerticalAlignment="Center" HorizontalAlignment="Center" 
-                       Foreground="{StaticResource BlueBrush}"
-                       Text="{Binding Title}"/>
-        </StackPanel>-->
-
 
         <Grid Margin="50 20 50 20">
             <Grid.ColumnDefinitions>
@@ -79,7 +66,8 @@
 
                     <!--Giá vé-->
                     <TextBox Grid.Row="1" Grid.Column="5" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="VND"
-                             Text="{Binding Airfares, Converter={valueConverters:StringAirfaresToIntAirfares}}">
+                             Text="{Binding Airfares, Converter={valueConverters:StringAirfaresToIntAirfares}}"
+                             PreviewTextInput="PreviewTextInput">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                 <TextBlock Text="Giá vé" />
@@ -107,8 +95,11 @@
                         </Grid.ColumnDefinitions>
                         
                         <!--Ngày bay-->
-                        <DatePicker x:Name="FlightDate" Grid.Column="0" materialDesign:HintAssist.Hint="Ngày bay" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black" 
-                                    SelectedDate="{Binding DateFlight,Mode=OneWay, Converter={valueConverters:DatePickerUI_To_DatePickerConverter}}">
+                        <DatePicker Grid.Column="0" materialDesign:HintAssist.Hint="Ngày bay" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black" 
+                                    SelectedDate="{Binding DateFlight, Mode=OneWay, Converter={valueConverters:DatePickerUI_To_DatePickerConverter}}"   
+                                    Grid.ColumnSpan="2"
+                                    HorizontalAlignment="Stretch"
+                                    >
                             <DatePicker.Resources>
                                 <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
                                     <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="{StaticResource BlueBrush}"/>
@@ -134,7 +125,11 @@
 
                         <!--Giờ bay-->
                         <materialDesign:TimePicker Grid.Column="2 " Style="{StaticResource MaterialDesignFloatingHintTimePicker}" Is24Hours="True" materialDesign:HintAssist.Hint="Giờ bay" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black" 
-                                                   SelectedTime="{Binding TimeFlight, Mode=OneWay, Converter={valueConverters:TimePickerUI_To_TimePickerConverter}}"/>
+                                                   SelectedTime="{Binding TimeFlight, Mode=OneWay, Converter={valueConverters:TimePickerUI_To_TimePickerConverter}}"
+                                                   HorizontalAlignment="Stretch"
+                                                   Margin="5 0 0 0">
+                            
+                        </materialDesign:TimePicker>
                     </Grid>
 
                     <!--Sân bay đi-->

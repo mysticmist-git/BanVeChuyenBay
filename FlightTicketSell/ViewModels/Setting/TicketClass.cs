@@ -13,8 +13,10 @@ namespace FlightTicketSell.ViewModels.Setting
         #endregion
 
         #region Public Properties
+        public int Id { get; set; }
         public string Name { get; set; }
         public double Coefficient { get; set; }
+        public bool Status { get; set; }
         #endregion
 
         #region Methods
