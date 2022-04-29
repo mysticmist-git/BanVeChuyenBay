@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace FlightTicketSell.ViewModels
@@ -30,7 +31,17 @@ namespace FlightTicketSell.ViewModels
             // Create commands
             ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.TicketInfo);
 
-            PayCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.ChangeTicket);
+            PayCommand = new RelayCommand<object>((p) => true, (p) => SaveTicketPay());
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void SaveTicketPay()
+        {
+            // TODO: Cài đặt "Thanh toán vé"
+            MessageBox.Show("Thanh toán vé chưa được cài đặt", "Chưa cài đặt");
         }
 
         #endregion
