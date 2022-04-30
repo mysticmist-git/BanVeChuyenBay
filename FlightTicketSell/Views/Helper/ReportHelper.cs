@@ -74,84 +74,18 @@ namespace FlightTicketSell.Views.Helper
                 try
                 {
                     // Get report from database
-                    var objectList = await context.DOANHTHUCHUYENBAYs
-                        .Where(p => p.DOANHTHUTHANG.Thang == month && p.DOANHTHUTHANG.DOANHTHUNAM.Nam == year)
-                        .Join(
-                            context.CHUYENBAYs,
-                            dt => dt.MaChuyenBay,
-                            cb => cb.MaChuyenBay,
-                            (dt, cb) => new
-                            {
-                                MaChuyenBay = cb.MaChuyenBay,
-                                MaDuongBay = cb.MaDuongBay,
-                                NgayGio = cb.NgayGio,
-                                SoVe = dt.SoVe,
-                                DoanhThu = dt.DoanhThu,
-                                TiLe = dt.TiLe
-                            })
-                        .Join(
-                            context.DUONGBAYs,
-                            a => a.MaDuongBay,
-                            db => db.MaDuongBay,
-                            (a, db) => new
-                            {
-                                MaChuyenBay = a.MaChuyenBay,
-                                MaSanBayDi = db.MaSanBayDi,
-                                MaSanBayDen = db.MaSanBayDen,
-                                NgayGio = a.NgayGio,
-                                SoVe = a.SoVe,
-                                DoanhThu = a.DoanhThu,
-                                TiLe = a.TiLe
-                            }
-                        )
-                        .Join
-                        (
-                            context.SANBAYs,
-                            a => a.MaSanBayDi,
-                            sb => sb.MaSanBay,
-                            (a, sb) => new
-                            {
-                                MaChuyenBay = a.MaChuyenBay,
-                                SanBayDiVietTat = sb.VietTat,
-                                MaSanBayDen = a.MaSanBayDen,
-                                NgayGio = a.NgayGio,
-                                SoVe = a.SoVe,
-                                DoanhThu = a.DoanhThu,
-                                TiLe = a.TiLe
-                            }
-                        )
-                        .Join
-                        (
-                            context.SANBAYs,
-                            a => a.MaSanBayDen,
-                            sb => sb.MaSanBay,
-                            (a, sb) => new
-                            {
-                                MaChuyenBay = a.MaChuyenBay,
-                                SanBayDiVietTat = a.SanBayDiVietTat,
-                                SanBayDenVietTat = sb.VietTat,
-                                NgayGio = a.NgayGio,
-                                SoVe = a.SoVe,
-                                DoanhThu = a.DoanhThu,
-                                TiLe = a.TiLe
-                            }
-                        )
-                        .ToListAsync();
 
-                    // Convert to apporiate model
-                    foreach (var item in objectList)
-                    {
-                        report.Add(
-                            new FlightReport
-                            {
-                                FlightCode = item.SanBayDiVietTat + item.SanBayDenVietTat + "-" + item.MaChuyenBay.ToString(),
-                                DepartTime = item.NgayGio.ToString(),
-                                TicketSold = item.SoVe.ToString(),
-                                Revenue = item.DoanhThu.ToString(),
-                                Ratio = item.TiLe.ToString()
-                            }
-                        );
-                    }
+                    var objectList = await context.CHUYENBAYs
+                        .Select(cb => new FlightReport
+                        {
+                            FlightCode = cb.DUONGBAY.SANBAY.VietTat + cb.DUONGBAY.SANBAY1.VietTat + "-" + cb.MaChuyenBay.ToString(),
+                            DepartTime = cb.NgayGio.ToString(),
+                            TicketSold = cb.VEs.Count() + cb.DATCHOes.Sum(dc => dc.SoVeDat).ToString(),
+                            Revenue = cb.DOANHTHUCHUYENBAYs.FirstOrDefault().DoanhThu.ToString(),
+                            Ratio = cb.DOANHTHUCHUYENBAYs.FirstOrDefault().TiLe.ToString()
+                        }).ToListAsync();
+
+                    report = new ObservableCollection<object>(objectList);
                 }
                 catch (EntityException e)
                 {
