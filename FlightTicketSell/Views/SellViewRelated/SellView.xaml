@@ -5,10 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FlightTicketSell.Views" xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <vm:SellViewModel/>
     </UserControl.DataContext>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid >
         <Grid Margin="100 20 100 20 ">
