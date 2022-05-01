@@ -5,14 +5,27 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FlightTicketSell.Views"
              xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:attachedProperties="clr-namespace:FlightTicketSell.AttachedProperties"
+             xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
+             xmlns:models="clr-namespace:FlightTicketSell.Models"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
+             x:Uid="SV"
              d:DesignHeight="500" d:DesignWidth="800">
     <UserControl.DataContext>
         <vm:SearchViewModel/>
     </UserControl.DataContext>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+
     <Grid Background="{StaticResource LightGrayBrush}">
         <Border Height="90" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" >
+
 
         </Border>
         <Grid Margin="50,20,50,20">
@@ -69,15 +82,17 @@
                                             Grid.Column="0"
                                             materialDesign:HintAssist.Hint="Sân bay đi"
                                             Margin="10,0,0,0"
-                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
+                                            ItemsSource="{Binding Airports}"
+                                            DisplayMemberPath="Name"
+                                            SelectedItem="{Binding SanBayDii, Mode=OneWayToSource}"
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                    <ComboBox.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <VirtualizingStackPanel/>
-                                        </ItemsPanelTemplate>
-                                    </ComboBox.ItemsPanel>
+                                    <!-- Command -->
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                 </ComboBox>
-                                
                                 <!--Nút chuyển giữa sân bay đi và sân bay đến-->
                                 <Button  Grid.Column="1" Grid.ColumnSpan="2" Padding="0" Width="22" Height="22" Margin="0" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
                              Command="{Binding Change_Departure_Landing_Airport_Command}">
@@ -94,13 +109,16 @@
                                             Grid.Column="3"
                                             materialDesign:HintAssist.Hint="Sân bay đến"
                                             Margin="10,0,10,0"
-                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
+                                            ItemsSource="{Binding Airports}"
+                                            DisplayMemberPath="Name"
+                                            SelectedItem="{Binding SanBayDenn, Mode=OneWayToSource}"
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                    <ComboBox.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <VirtualizingStackPanel/>
-                                        </ItemsPanelTemplate>
-                                    </ComboBox.ItemsPanel>
+                                    <!-- Command -->
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                 </ComboBox>
                             </Grid>
                         </Grid>
@@ -111,13 +129,23 @@
                             CornerRadius="8"
                             Padding="40 10"
                             Style="{StaticResource ResourceKey=DropShadow}">
-                        <DatePicker
+                        <DatePicker x:Name="dp"
                             Margin="10 0 10 0"
                             materialDesign:HintAssist.Hint="Chọn ngày"
-                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                            SelectedDate="{Binding DateOfEntry}"
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
+                            >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedDateChanged">
+                                    <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DatePicker>
+
                     </Border>
                 </Grid>
             </Border>
+
 
             <!--Bảng hiển thị-->
             <Border Grid.Row="2"
@@ -126,74 +154,65 @@
                     Padding="30 15"
                     Style="{StaticResource DropShadow}">
                 <DataGrid
-                    ItemsSource="{Binding Items3}"
+                    ItemsSource="{Binding Flights}"
+                    ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                    CellStyle="{StaticResource DataGridCellCenter}"
+                    ColumnWidth="*"
                     CanUserSortColumns="True"
                     CanUserAddRows="False"
                     AutoGenerateColumns="False"
                     materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                     materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Loaded">
+                            <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <DataGrid.Columns>
 
-                        <DataGridTextColumn
+                        <DataGridTemplateColumn Header="Mã chuyến bay">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <TextBlock Text="{Binding MaChuyenBay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <Button Content="Chi tiết" Margin="30 0 0 0" Background="{StaticResource LightBlueBrush}" 
+                                                Command="{Binding Open_Window_DescriptionTicketFlight_Command}"
+                                                />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <!--<DataGridTextColumn
                             Width="100"
                             Binding="{Binding MaChuyenBay}"
                             Header="Mã chuyến bay"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />-->
 
                         <materialDesign:DataGridTextColumn
                             Binding="{Binding SanBayDi}"
-                            Header="Sân bay đi"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                            Header="Sân bay đi" />
                         <!-- set a max length to get an indicator in the editor -->
                         <materialDesign:DataGridTextColumn
                             Width="100"
                             Binding="{Binding SanBayDen}"
-                            Header="Sân bay đến"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                            Header="Sân bay đến" />
                         <materialDesign:DataGridTextColumn
-                            Binding="{Binding Numeric}"
-                            Header="Khởi hành"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}">
-
-                            <DataGridTextColumn.HeaderStyle>
-                                <Style
-                                    TargetType="{x:Type DataGridColumnHeader}"
-                                    BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                    <Setter
-                                        Property="HorizontalAlignment"
-                                        Value="Right" />
-                                </Style>
-                            </DataGridTextColumn.HeaderStyle>
-                            <DataGridTextColumn.ElementStyle>
-                                <Style
-                                    TargetType="{x:Type TextBlock}">
-                                    <Setter
-                                    Property="HorizontalAlignment"
-                                    Value="Right" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </materialDesign:DataGridTextColumn>
-
-                        <materialDesign:DataGridTextColumn
-                            Binding="{Binding ThoiGianBay}"
-                            Header="Khởi hành"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                            Binding="{Binding KhoiHanh}"
+                            Header="Khởi hành" />
                         <materialDesign:DataGridTextColumn
                             Binding="{Binding SoDiemDung}"
-                            Header="Số điểm dừng"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                            Header="Số điểm dừng" />
                         <materialDesign:DataGridTextColumn
                             Binding="{Binding SoHangVe}"
-                            Header="số hạng vé"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                            Header="số hạng vé" />
                         <materialDesign:DataGridTextColumn
                             Binding="{Binding GiaCoBan}"
-                            Header="Giá cơ bản"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                            Header="Giá cơ bản" />
                         <materialDesign:DataGridTextColumn
                             Binding="{Binding GheTrong}"
-                            Header="Ghế trống"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                            Header="Ghế trống" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Border>

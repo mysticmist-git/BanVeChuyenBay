@@ -193,6 +193,15 @@
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Book\Customer.cs" />
+    <Compile Include="ViewModels\Search\Airport_Search.cs" />
+    <Compile Include="ViewModels\Search\Booked.cs" />
+    <Compile Include="ViewModels\Search\Customer_Search.cs" />
+    <Compile Include="ViewModels\Search\Datagrid_Search.cs" />
+    <Compile Include="ViewModels\Search\FlightTicket_Search.cs" />
+    <Compile Include="ViewModels\Search\MidAirport_Search.cs" />
+    <Compile Include="ViewModels\Search\TickedSoldBooked_Search.cs" />
+    <Compile Include="ViewModels\Search\TicketClass_Search.cs" />
+    <Compile Include="ViewModels\Search\TicketSold.cs" />
     <Compile Include="ViewModels\Sell\ChangeTicketViewModel.cs" />
     <Compile Include="ViewModels\Book\BookDetailViewModel.cs" />
     <Compile Include="ViewModels\Book\BookViewModel.cs" />
@@ -230,6 +239,15 @@
     </Compile>
     <Compile Include="Views\ReportViewRelated\PrintPreviewWindow.xaml.cs">
       <DependentUpon>PrintPreviewWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchViewMore\DescriptionCustomer.xaml.cs">
+      <DependentUpon>DescriptionCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchViewMore\DescriptionTicketFlight.xaml.cs">
+      <DependentUpon>DescriptionTicketFlight.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchViewMore\TicketSoldBooked.xaml.cs">
+      <DependentUpon>TicketSoldBooked.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SellViewRelated\ChangeTicketView.xaml.cs">
       <DependentUpon>ChangeTicketView.xaml</DependentUpon>
@@ -332,6 +350,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ReportViewRelated\PrintPreviewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchViewMore\DescriptionCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchViewMore\DescriptionTicketFlight.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchViewMore\TicketSoldBooked.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
