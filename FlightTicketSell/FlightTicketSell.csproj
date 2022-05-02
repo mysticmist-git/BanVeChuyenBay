@@ -231,6 +231,9 @@
     <Compile Include="Views\BookViewRelated\CustomerInfoDialog.xaml.cs">
       <DependentUpon>CustomerInfoDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SettingViewRelated\EditTicketClassView.xaml.cs">
+      <DependentUpon>EditTicketClassView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EnterLayoverAirportView.xaml.cs">
       <DependentUpon>EnterLayoverAirportView.xaml</DependentUpon>
     </Compile>
@@ -338,6 +341,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BookViewRelated\CustomerInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingViewRelated\EditTicketClassView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

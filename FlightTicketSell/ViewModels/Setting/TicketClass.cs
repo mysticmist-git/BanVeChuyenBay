@@ -20,7 +20,7 @@ namespace FlightTicketSell.ViewModels.Setting
         #endregion
 
         #region Methods
-
+      
         #endregion
     }
 }

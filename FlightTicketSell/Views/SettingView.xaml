@@ -191,16 +191,16 @@
                     <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right">
                         <!--Nút xóa-->
                         <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                                Command="{Binding Airport_Delete_Button_Command}"/>
+                                Command="{Binding DeleteAirport_Command}"/>
 
                         <!--Nút sửa-->
                         <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                                Command="{Binding Airport_Edit_Button_Command}"
+                                Command="{Binding EditAirport_Command}"
                                 materialDesign:ShadowAssist.Darken="True"/>
 
                         <!--Nút thêm-->
                         <Button Margin="7 0 10 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                                Command="{Binding Open_Window_MoreAirport_Command}"
+                                Command="{Binding MoreAirport_Command}"
                                 materialDesign:ShadowAssist.Darken="True"/>
                     </StackPanel>
 
@@ -222,7 +222,8 @@
                     <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Hạng vé</TextBlock>
 
                     <!--Danh sách hạng vé-->
-                    <ListView Grid.Row="1" ItemsSource="{Binding List_TicketClass}">
+                    <ListView Grid.Row="1" ItemsSource="{Binding List_TicketClass}"
+                              SelectedItem="{Binding TicketClass_selecteditem}">
                         <ListView.View>
                             <GridView >
 
@@ -257,15 +258,18 @@
                     <!--Nút thêm sửa xóa-->
                     <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right">
                         <!--Nút xóa-->
-                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                                Command="{Binding DeleteTicketClass_Command}"/>
 
                         <!--Nút sửa-->
-                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                                Command="{Binding EditTicketClass_Command}"
+                                materialDesign:ShadowAssist.Darken="True"/>
 
                         <!--Nút thêm-->
                         <Button Margin="7 0 10 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                                Command="{Binding Open_Window_MoreTicketClass_Command}"
-                                />
+                                Command="{Binding MoreTicketClass_Command}"
+                                materialDesign:ShadowAssist.Darken="True"/>
                     </StackPanel>
                 </Grid>
             </Border>
