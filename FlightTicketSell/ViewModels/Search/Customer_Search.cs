@@ -19,8 +19,12 @@ namespace FlightTicketSell.ViewModels.Search
 
         public ICommand LoadCommand { get; set; }
 
+        public ICommand ReturnCommand { get; set; }
+
         public Customer_Search()
         {
+
+            ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.TickedSoldBooked);
             LoadCommand = new RelayCommand<object>((p) => true, (p) =>
             {
                 using (var context = new FlightTicketSellEntities())
@@ -48,6 +52,8 @@ namespace FlightTicketSell.ViewModels.Search
                     }
                 }
             });
+
+            
         }
     }
 }

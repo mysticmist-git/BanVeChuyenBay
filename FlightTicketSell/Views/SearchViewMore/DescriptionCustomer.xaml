@@ -32,9 +32,33 @@
                 <RowDefinition Height="30"></RowDefinition>
                 <RowDefinition Height="200"></RowDefinition>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="20*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                                Command="{Binding ReturnCommand}"
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                Width="50"
+                                Height="50"
+                                ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
+                                Background="{StaticResource LightBlueBrush}"
+                                VerticalAlignment="Top"
+                                Margin="-20 0 0 0"
+                                materialDesign:ButtonAssist.CornerRadius="5"
+                                HorizontalContentAlignment="Center" 
+                                VerticalContentAlignment="Center">
+                <materialDesign:PackIcon Kind="ArrowLeft"
+                                                     Height="30"
+                                                     Width="30"
+                                                     HorizontalAlignment="Left"
+                                                     VerticalAlignment="Top" />
+            </Button>
 
             <!--Chi tiết khách hàng-->
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" Grid.Column="1">
                 <Border Background="#fff" CornerRadius="8" Margin="35 0 20 0">
                     <Grid>
                         <Grid.RowDefinitions>

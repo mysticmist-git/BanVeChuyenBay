@@ -75,8 +75,27 @@
                             <TextBox
                                 Grid.Column="3"
                                 materialDesign:HintAssist.Hint="Mã vé"
-                                Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                            <materialDesign:PackIcon Kind="SearchWeb" Grid.Column="4" VerticalAlignment="Center" Height="30" Width="30"/>
+                                Text="{Binding Search_IDSold}"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}" >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                            <Button Grid.Column="4"
+                                    VerticalAlignment="Center" 
+                                    Background="Transparent" 
+                                    Foreground="Black" 
+                                    BorderThickness="0"
+                                    Command="{Binding LoadCommand1}">
+                                <materialDesign:PackIcon Kind="SearchWeb" Height="30" Width="30"/>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectedChange">
+                                        <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
                         </Grid>
 
                         <DataGrid ScrollViewer.VerticalScrollBarVisibility="Disabled"
@@ -175,9 +194,28 @@
 
                             <TextBox
                                 Grid.Column="3"
-                                materialDesign:HintAssist.Hint="Mã đặt chỗ"
-                                Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                            <materialDesign:PackIcon Kind="SearchWeb" Grid.Column="4" VerticalAlignment="Center" Height="30" Width="30"/>
+                                materialDesign:HintAssist.Hint="Mã đặt chỗ" 
+                                Text="{Binding Search_IDBooked}"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                            <Button Grid.Column="4"
+                                    VerticalAlignment="Center" 
+                                    Background="Transparent" 
+                                    Foreground="Black" 
+                                    BorderThickness="0"
+                                    Command="{Binding LoadCommand1}">
+                                <materialDesign:PackIcon Kind="SearchWeb" Height="30" Width="30"/>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectedChange">
+                                        <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Button>
                         </Grid>
 
                         <DataGrid ScrollViewer.VerticalScrollBarVisibility="Disabled"

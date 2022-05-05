@@ -54,24 +54,24 @@ namespace FlightTicketSell.ViewModels
                         Airports = new ObservableCollection<Airport_Search>(context.SANBAYs.Select(s => new Airport_Search { ID = s.MaSanBay, Name = s.TenSanBay }).ToList());
 
                         // load datagrid
-                        if (SanBayDii != null && SanBayDenn != null && DateOfEntry != null)
-                        {
-                            Flights = new ObservableCollection<Datagrid_Search>(
-                                                           context.GetFlightData().Where(result =>
-                                                               result.SanBayDi == SanBayDii.Name && result.SanBayDen == SanBayDenn.Name && result.NgayGio == DateOfEntry.Value)
-                                                               .Select(result => new Datagrid_Search
-                                                               {
-                                                                   MaChuyenBay = result.MaChuyenBay.ToString(),
-                                                                   SanBayDi = result.SanBayDi,
-                                                                   SanBayDen = result.SanBayDen,
-                                                                   KhoiHanh = result.NgayGio,
-                                                                   SoDiemDung = result.SoDiemDung.ToString(),
-                                                                   SoHangVe = result.SoLuongVe.ToString(),
-                                                                   GiaCoBan = result.GiaVe,
-                                                                   GheTrong = result.GheTrong.ToString()
-                                                               }).ToList()
-                                                           );
-                        }
+                        //if (SanBayDii != null && SanBayDenn != null && DateOfEntry != null)
+                        //{
+                        //    Flights = new ObservableCollection<Datagrid_Search>(
+                        //                                   context.GetFlightData().Where(result =>
+                        //                                       result.SanBayDi == SanBayDii.Name && result.SanBayDen == SanBayDenn.Name && result.NgayGio == DateOfEntry.Value)
+                        //                                       .Select(result => new Datagrid_Search
+                        //                                       {
+                        //                                           MaChuyenBay = result.MaChuyenBay.ToString(),
+                        //                                           SanBayDi = result.SanBayDi,
+                        //                                           SanBayDen = result.SanBayDen,
+                        //                                           KhoiHanh = result.NgayGio,
+                        //                                           SoDiemDung = result.SoDiemDung.ToString(),
+                        //                                           SoHangVe = result.SoLuongVe.ToString(),
+                        //                                           GiaCoBan = result.GiaVe,
+                        //                                           GheTrong = result.GheTrong.ToString()
+                        //                                       }).ToList()
+                        //                                   );
+                        //}
                     }
                     catch (EntityException)
                     {
