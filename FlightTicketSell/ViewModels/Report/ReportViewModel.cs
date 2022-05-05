@@ -1,14 +1,12 @@
-﻿    using FlightTicketSell.Models;
+﻿using FlightTicketSell.Models;
 using FlightTicketSell.ViewModels.Report;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
-using System.Threading.Tasks;
 using System.Linq;
 using System.Windows.Input;
 using System;
 using FlightTicketSell.Models.Enums;
 using FlightTicketSell.Views.Helper;
-using System.ComponentModel;
 using System.Windows;
 using System.Data.Entity.Core;
 using FlightTicketSell.Views.ReportViewRelated;
@@ -122,6 +120,7 @@ namespace FlightTicketSell.ViewModels
                 // Init everything when viewmodel first load
                 if (_firstLoad) Init();
                 
+                // Do this to run column formating on report datagrid
                 OnPropertyChanged(nameof(Report));
             });
             

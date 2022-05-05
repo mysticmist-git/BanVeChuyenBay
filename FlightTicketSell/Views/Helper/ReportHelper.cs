@@ -324,7 +324,7 @@ namespace FlightTicketSell.Views.Helper
                         // Check year existence
                         if (context.DOANHTHUNAMs.Where(p => p.Nam == item.NgayGio.Year).ToList().Count == 0)
                         {
-                            var temp = new DOANHTHUNAM { Nam = DateTime.Now.Year };
+                            var temp = new DOANHTHUNAM { Nam = item.NgayGio.Year };
                             context.DOANHTHUNAMs.Add(temp);
                             /// Save changes down to database
                             await context.SaveChangesAsync();
@@ -337,7 +337,7 @@ namespace FlightTicketSell.Views.Helper
                             var yearReportIDHolder = await (context.DOANHTHUNAMs
                                 .Where(p => p.Nam == item.NgayGio.Year).FirstOrDefaultAsync());
 
-                            context.DOANHTHUTHANGs.Add(new DOANHTHUTHANG { Thang = DateTime.Now.Month, MaDoanhThuNam = yearReportIDHolder.MaDoanhThuNam });
+                            context.DOANHTHUTHANGs.Add(new DOANHTHUTHANG { Thang = item.NgayGio.Month, MaDoanhThuNam = yearReportIDHolder.MaDoanhThuNam });
 
                             /// Save changes down to database
                             await context.SaveChangesAsync();
