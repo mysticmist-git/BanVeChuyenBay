@@ -14,7 +14,7 @@ namespace FlightTicketSell.ValueConverters
         {
             if (value == null)
                 return null;
-            return (DatePicker)value;
+            return (DateTime)value;
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

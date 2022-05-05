@@ -20,19 +20,12 @@ namespace FlightTicketSell.Views.SettingViewRelated
     /// <summary>
     /// Interaction logic for EditAirportView.xaml
     /// </summary>
-    public partial class EditAirportView : Window
+    public partial class EditAirportView : UserControl
     {
         public EditAirportView()
         {
             InitializeComponent();
         }
 
-        public EditAirportView(Airport sanbay)
-        {
-            InitializeComponent();
-            CodeTextblock.Text = sanbay.Code;
-            ProvinceTextblock.Text = sanbay.Province;
-            NameTextblock.Text = sanbay.Name;
-        }
     }
 }

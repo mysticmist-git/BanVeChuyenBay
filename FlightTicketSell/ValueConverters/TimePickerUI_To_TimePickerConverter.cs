@@ -15,14 +15,14 @@ namespace FlightTicketSell.ValueConverters
         {
             if (value == null)
                 return null;
-            return (TimePicker)value;
+            return (DateTime)value;
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
                 return null;
-            return (TimePicker)value;
+            return (DateTime)value;
         }
     }
 }

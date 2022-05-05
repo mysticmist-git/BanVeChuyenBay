@@ -16,6 +16,18 @@
         /// <summary>
         /// The view to enter book information
         /// </summary>
+        Customer,
+        /// <summary>
+        /// The view to enter customer information
+        /// </summary>
+        FlightTicket,
+        /// <summary>
+        /// The Ticket Flight to enter Detail
+        /// </summary>
+        TickedSoldBooked,
+        /// <summary>
+        /// The Ticket Sold and Booked to enter Button
+        /// </summary>
         BookDetail,
         /// <summary>
         /// The reserve pay view
@@ -45,10 +57,6 @@
         /// The report view
         /// </summary>
         Report,
-        /// <summary>
-        /// The report print view
-        /// </summary>
-        ReportPrint,
         /// <summary>
         /// The setting view
         /// </summary>

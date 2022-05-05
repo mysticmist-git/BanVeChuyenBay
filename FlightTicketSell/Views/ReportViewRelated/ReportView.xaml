@@ -24,38 +24,39 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid >
-        <Grid Margin="0 20 0 0">
+    <Grid>
+        <materialDesign:DialogHost Identifier="RootDialog" CloseOnClickAway="True">
+            <Grid Margin="0 20 0 0">
 
-            <!-- Row definition -->
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto"  />
-                <RowDefinition Height="*"  />
-                <RowDefinition Height="Auto"  />
-            </Grid.RowDefinitions>
+                <!-- Row definition -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto"  />
+                    <RowDefinition Height="*"  />
+                    <RowDefinition Height="Auto"  />
+                </Grid.RowDefinitions>
 
-            <!-- Month, Year condition -->
-            <Border Grid.Row="0"
+                <!-- Month, Year condition -->
+                <Border Grid.Row="0"
                     CornerRadius="10" 
                     Background="White" 
                     Padding="60 20" 
                     Margin="90 0"
                     MaxWidth="800"
                     Style="{StaticResource DropShadow}">
-                <Border.Resources>
-                    <sys:Int32 x:Key="LayoutTransformWidth">600</sys:Int32>
-                </Border.Resources>
+                    <Border.Resources>
+                        <sys:Int32 x:Key="LayoutTransformWidth">600</sys:Int32>
+                    </Border.Resources>
 
-                <!-- Content -->
-                <StackPanel Orientation="{Binding ElementName=UC, Path=ActualWidth,Converter={valueConverters:WidthToOrientationConverter}, ConverterParameter={StaticResource LayoutTransformWidth}}"
+                    <!-- Content -->
+                    <StackPanel Orientation="{Binding ElementName=UC, Path=ActualWidth,Converter={valueConverters:WidthToOrientationConverter}, ConverterParameter={StaticResource LayoutTransformWidth}}"
                             HorizontalAlignment="Center" >
 
-                    <!-- Month -->
-                    <StackPanel Margin="40 5 40 5"
+                        <!-- Month -->
+                        <StackPanel Margin="40 5 40 5"
                                 HorizontalAlignment="Center">
-                        <TextBlock Text="Tháng" Style="{StaticResource FieldLabelText}" />
-                        <ComboBox materialDesign:HintAssist.Hint="Chọn tháng"
+                            <TextBlock Text="Tháng" Style="{StaticResource FieldLabelText}" />
+                            <ComboBox materialDesign:HintAssist.Hint="Chọn tháng"
                                   materialDesign:HintAssist.HintOpacity=".26"
                                   IsEditable="True"
                                   MinWidth="150"
@@ -64,19 +65,19 @@
                                   SelectedIndex="{Binding MonthIndex, Mode=TwoWay}"
 >
 
-                            <!-- Command -->
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding MonthChangedCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </ComboBox>
-                    </StackPanel>
+                                <!-- Command -->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding MonthChangedCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+                        </StackPanel>
 
-                    <!-- Year -->
-                    <StackPanel Margin="40 5 40 5" HorizontalAlignment="Center">
-                        <TextBlock Text="Năm" Style="{StaticResource FieldLabelText}" />
-                        <ComboBox materialDesign:HintAssist.Hint="Chọn năm"
+                        <!-- Year -->
+                        <StackPanel Margin="40 5 40 5" HorizontalAlignment="Center">
+                            <TextBlock Text="Năm" Style="{StaticResource FieldLabelText}" />
+                            <ComboBox materialDesign:HintAssist.Hint="Chọn năm"
                                   materialDesign:HintAssist.HintOpacity=".26"
                                   IsEditable="True"
                                   MinWidth="150"
@@ -84,48 +85,48 @@
                                   ItemsSource="{Binding Years}"
                                   SelectedIndex="{Binding YearIndex, Mode=TwoWay}">
 
-                            <!-- Command -->
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding YearChangedCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
+                                <!-- Command -->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding YearChangedCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
 
-                        </ComboBox>
+                            </ComboBox>
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </Border>
+                </Border>
 
-            <!-- Total Revenue -->
-            <Border CornerRadius="10" 
+                <!-- Total Revenue -->
+                <Border CornerRadius="10" 
                     Grid.Row="1"
                     HorizontalAlignment="Center" 
                     Background="{StaticResource BlueBrush}" 
                     Padding="30 15"
                     Style="{StaticResource DropShadow}"
                     Margin="60 20 60 0">
-                <Grid MinWidth="300">
-                    <Grid.ColumnDefinitions>
-                        <!-- Label -->
-                        <ColumnDefinition Width="Auto" />
-                        <!-- Revenue -->
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                    <Grid MinWidth="300">
+                        <Grid.ColumnDefinitions>
+                            <!-- Label -->
+                            <ColumnDefinition Width="Auto" />
+                            <!-- Revenue -->
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                    <!-- Label -->
-                    <TextBlock Foreground="White" 
+                        <!-- Label -->
+                        <TextBlock Foreground="White" 
                                Text="Tổng doanh thu" 
                                Grid.Column="0"
                                HorizontalAlignment="Left" 
                                FontSize="{StaticResource Small}"
                                VerticalAlignment="Center" />
 
-                    <!-- Revenue -->
-                    <Viewbox Grid.Column="1" 
+                        <!-- Revenue -->
+                        <Viewbox Grid.Column="1" 
                              MaxHeight="{Binding ElementName=revenueTbl, Path=ActualHeight}"
                              MaxWidth="{Binding ElementName=revenueTbl, Path=ActualWidth}"
                              VerticalAlignment="Center">
-                        <TextBlock Foreground="White"                               
+                            <TextBlock Foreground="White"                               
                                    Text="{Binding TotalRevenue, FallbackValue=600.000.000 VNĐ}"                               
                                    FontFamily="{StaticResource Roboto}"                               
                                    FontWeight="Bold"                               
@@ -133,34 +134,47 @@
                                    Margin="30 0 0 0"
                                    x:Name="revenueTbl"
                                />
-                    </Viewbox>
+                        </Viewbox>
 
-                </Grid>
-            </Border>
+                    </Grid>
+                </Border>
 
-            <!-- Report table -->
-            <Border CornerRadius="10"
+                <!-- Report table -->
+                <Border CornerRadius="10"
                     Grid.Row="2"
                     Background="White" 
                     Padding="30 15"
                     Style="{StaticResource DropShadow}"
                     Margin="40 20 40 0"
-                    VerticalAlignment="Stretch">
+                    VerticalAlignment="Stretch"
+                    VirtualizingPanel.VirtualizationMode="Recycling">
 
-                <DataGrid x:Name="reportDataGrid"
-                          ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
-                          CellStyle="{StaticResource DataGridCellCenter}"
-                          ItemsSource="{Binding Report, Converter={valueConverters:ReportTypeConverter}}"
-                          ColumnWidth="*"
-                          attachedProperties:ReportTypeProperty.Value="{Binding CurrentReportType}"
-                          >
-                    <DataGrid.Columns></DataGrid.Columns>
-                </DataGrid>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <!-- Table name  -->
+                            <RowDefinition Height="Auto" />
+                            <!-- Report table -->
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
-            </Border>
-            
-            <!-- Print button -->
-            <Button Content="In báo cáo" 
+                        <!-- Table name  -->
+                        <TextBlock Text="Bảng báo cáo doanh thu" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Center" />
+
+                        <!-- Report table -->
+                        <DataGrid x:Name="reportDataGrid"
+                              Grid.Row="1"
+                              ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                              CellStyle="{StaticResource DataGridCellCenter}"
+                              ItemsSource="{Binding Report, Converter={valueConverters:ReportTypeConverter}}"
+                              ColumnWidth="*"
+                              attachedProperties:ReportTypeProperty.Value="{Binding CurrentReportType}"
+                               />
+                    </Grid>
+
+                </Border>
+
+                <!-- Print button -->
+                <Button Content="In báo cáo" 
                     Command="{Binding PrintCommand}"
                     Grid.Row="3" 
                     HorizontalAlignment="Right" 
@@ -169,6 +183,7 @@
                     materialDesign:ButtonAssist.CornerRadius="5"
                     BorderThickness="0"
                     Margin="0 20 20 20"/>
-        </Grid>
+            </Grid>
+        </materialDesign:DialogHost>
     </Grid>
 </UserControl>

@@ -1,5 +1,6 @@
 ﻿using FlightTicketSell.Models;
 using FlightTicketSell.Views;
+using FlightTicketSell.Views.SearchViewMore;
 using System;
 using System.Globalization;
 
@@ -18,6 +19,15 @@ namespace FlightTicketSell.ValueConverters
                 // Search
                 case AppView.Search:
                     return new SearchView();
+                // Ticket Flight
+                case AppView.FlightTicket:
+                    return new DescriptionTicketFlight();
+                // Customer
+                case AppView.Customer:
+                    return new DescriptionCustomer();
+                //TicketsoldBooked
+                case AppView.TickedSoldBooked:
+                    return new TicketSoldBooked();
                 // Book related
                 case AppView.Book:
                     return new BookView();
@@ -40,8 +50,6 @@ namespace FlightTicketSell.ValueConverters
                 // Report realted
                 case AppView.Report:
                     return new ReportView();
-                case AppView.ReportPrint:
-                    return new ReportPrintView();
                 // Settings
                 case AppView.Setting:
                     return new SettingView();

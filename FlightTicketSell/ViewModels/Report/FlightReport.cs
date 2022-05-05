@@ -66,7 +66,7 @@ namespace FlightTicketSell.ViewModels.Report
         /// <summary>
         /// This flight revenue compare to month's revenue
         /// </summary>
-        public string Ratio { get => (ratio * 100).ToString() + "%"; set => ratio = decimal.Parse(value);  }
+        public string Ratio { get => ratio.ToString() + "%"; set => ratio = decimal.Parse(value);  }
 
         #endregion
 

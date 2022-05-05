@@ -30,7 +30,6 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand Keep_Departure_DifferentFrom_Landing_Command { get; set; }
         public ICommand Keep_Landing_DifferentFrom_Departure_Command { get; set; }
-
         public ICommand LoadCommand { get; set; }
         #endregion
 
@@ -53,11 +52,11 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Ngày bay
         /// </summary>
-        public DatePicker DateFlight { get; set; }
+        public DateTime DateFlight { get; set; }
         /// <summary>
         /// Giờ bay
         /// </summary>
-        public TimePicker TimeFlight { get; set; }
+        public DateTime TimeFlight { get; set; } 
         /// <summary>
         /// Sân bay đi
         /// </summary>
@@ -85,11 +84,18 @@ namespace FlightTicketSell.ViewModels
 
         public ScheduleViewModel()
         {
+            #region Main Command
+           
             LoadCommand = new RelayCommand<object>((p) => { return true; },
                (p) =>
                {
                    try
                    {
+                       // Gán ngày hiện tại cho datepicker lúc mở 
+                       DateFlight = DateTime.Now;
+                       // Gán ngày hiện tại cho datepicker lúc mở 
+                       TimeFlight = DateTime.Now;
+
                        using (var context = new FlightTicketSellEntities())
                        {
                            //Danh sách sân bay đi
@@ -181,6 +187,11 @@ namespace FlightTicketSell.ViewModels
                     }
                 }
             );
+
+
+            #endregion
+
+
         }
     }
 }

@@ -2,16 +2,19 @@
 using System;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace FlightTicketSell.ViewModels
 {
     public class ReportPrintViewModel : BaseViewModel
     {
+        #region Public Properties
+        
         /// <summary>
         /// The text that indicate which period of time this report takes
         /// </summary>
-        public string PrintPeriod 
+        public string PrintPeriod
         {
             get
             {
@@ -27,7 +30,7 @@ namespace FlightTicketSell.ViewModels
                     case ReportType.OneMonthOfAllYears:
                         return
                             reportVM.Years[1] == reportVM.Years[reportVM.Years.Count - 1] ?
-                            string.Format($"Trong tháng {reportVM.Month} của năm {reportVM.Years[1]}"):
+                            string.Format($"Trong tháng {reportVM.Month} của năm {reportVM.Years[1]}") :
                             string.Format($"Trong tháng {reportVM.Month} từ năm {reportVM.Years[1]} tới năm {reportVM.Years[reportVM.Years.Count - 1]}");
                     case ReportType.AllYears:
                         return
@@ -44,7 +47,9 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The print date, which return DateTime.Now in a formated form
         /// </summary>
-        public string PrintDate { get => DateTime.Now.ToString("dddd, dd MMMM yyyy", new CultureInfo("vi-VN")); }
+        public string PrintDate { get => DateTime.Now.ToString("dddd, dd MMMM yyyy", new CultureInfo("vi-VN")); } 
+
+        #endregion
 
         #region Commands
 
@@ -57,11 +62,6 @@ namespace FlightTicketSell.ViewModels
         /// The command executed when user control load
         /// </summary>
         public ICommand LoadCommand { get; set; }
-
-        /// <summary>
-        /// Export PDF
-        /// </summary>
-        public ICommand PrintCommand { get; set; }
 
         #endregion
 
@@ -77,9 +77,6 @@ namespace FlightTicketSell.ViewModels
 
             // TODO: rất tà đạo, nên sửa nếu có thời gian
             LoadCommand = new RelayCommand<object>((p) => true, (p) =>  IoC.IoC.Get<ReportViewModel>().LoadCommand.Execute(null) );
-
-            // TODO: Implemented this later
-            PrintCommand = new RelayCommand<object>((p) => true, (p) => MessageBox.Show("Xuất PDF", "In báo cáo", MessageBoxButton.OK, MessageBoxImage.Information) );
         }
 
         #endregion

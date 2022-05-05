@@ -18,6 +18,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
+    <materialDesign:DialogHost CloseOnClickAway="True" Identifier="RootDialog">
     <Grid >
         <Grid Margin="100 20 100 20 ">
             <Grid.ColumnDefinitions>
@@ -61,12 +62,12 @@
                     <!--Số sân bay trung gian tối đa-->
                     <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Số sân bay trung gian tối đa" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
                               Text="{Binding Max_LayoverAirport}"
-                              />
+                              PreviewTextInput="PreviewTextInput"/>
 
                     <!--Thời gian bay tối thiểu-->
-                    <TextBox Grid.Row="1" Grid.Column="3" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="phút"
+                    <TextBox Grid.Row="1" Grid.Column="3" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="phút"
                              Text="{Binding Min_FlightTime}"
-                             >
+                             PreviewTextInput="PreviewTextInput">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                 <TextBlock Text="Thời gian bay tối thiểu" />
@@ -75,9 +76,9 @@
                     </TextBox>
 
                     <!--Thời gian dừng tối thiểu-->
-                    <TextBox Grid.Row="1" Grid.Column="5" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="phút"
+                    <TextBox Grid.Row="1" Grid.Column="5" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="phút"
                              Text="{Binding Min_TimeStop}"
-                             >
+                             PreviewTextInput="PreviewTextInput">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                 <TextBlock Text="Thời gian dừng tối thiểu" />
@@ -86,9 +87,9 @@
                     </TextBox>
 
                     <!--Thời gian đặt vé chậm nhất -->
-                    <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="ngày"
+                    <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"   materialDesign:TextFieldAssist.SuffixText="ngày"
                              Text="{Binding Latest_BookingTime}"
-                             >
+                             PreviewTextInput="PreviewTextInput">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                 <TextBlock Text="Thời gian đặt vé chậm nhất" />
@@ -97,9 +98,9 @@
                     </TextBox>
 
                     <!--Thời gian hủy đặt chỗ-->
-                    <TextBox Grid.Row="3" Grid.Column="3" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="ngày"
+                    <TextBox Grid.Row="3" Grid.Column="3" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"   materialDesign:TextFieldAssist.SuffixText="ngày"
                              Text="{Binding Cancel_BookingTime}"
-                             >
+                             PreviewTextInput="PreviewTextInput">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                 <TextBlock Text="Thời gian hủy đặt chỗ" />
@@ -108,9 +109,9 @@
                     </TextBox>
 
                     <!--Thời gian dừng tối đa-->
-                    <TextBox Grid.Row="3" Grid.Column="5" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.HasClearButton="True"  materialDesign:TextFieldAssist.SuffixText="phút"
+                    <TextBox Grid.Row="3" Grid.Column="5" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="phút"
                              Text="{Binding Max_TimeStop}"
-                             >
+                             PreviewTextInput="PreviewTextInput">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                 <TextBlock Text="Thời gian dừng tối đa" />
@@ -147,7 +148,8 @@
                                 <!--Viết tắt-->
                                 <GridViewColumn >
                                     <GridViewColumn.Header>
-                                        <TextBlock Text="Viết tắt" Style="{StaticResource Custom_GridviewHeader}"/>
+                                        <!--Chỗ này mã là viết tắt nha-->
+                                        <TextBlock Text="Mã" Style="{StaticResource Custom_GridviewHeader}"/>
                                     </GridViewColumn.Header>
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
@@ -189,16 +191,17 @@
                     <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right">
                         <!--Nút xóa-->
                         <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                                Command="{Binding Airport_Delete_Button_Command}"/>
+                                Command="{Binding DeleteAirport_Command}"/>
 
                         <!--Nút sửa-->
                         <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                                Command="{Binding Airport_Edit_Button_Command}"/>
+                                Command="{Binding EditAirport_Command}"
+                                materialDesign:ShadowAssist.Darken="True"/>
 
                         <!--Nút thêm-->
                         <Button Margin="7 0 10 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                                Command="{Binding Open_Window_MoreAirport_Command}"
-                                />
+                                Command="{Binding MoreAirport_Command}"
+                                materialDesign:ShadowAssist.Darken="True"/>
                     </StackPanel>
 
                 </Grid>
@@ -219,7 +222,8 @@
                     <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Hạng vé</TextBlock>
 
                     <!--Danh sách hạng vé-->
-                    <ListView Grid.Row="1" ItemsSource="{Binding List_TicketClass}">
+                    <ListView Grid.Row="1" ItemsSource="{Binding List_TicketClass}"
+                              SelectedItem="{Binding TicketClass_selecteditem}">
                         <ListView.View>
                             <GridView >
 
@@ -254,15 +258,18 @@
                     <!--Nút thêm sửa xóa-->
                     <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right">
                         <!--Nút xóa-->
-                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                                Command="{Binding DeleteTicketClass_Command}"/>
 
                         <!--Nút sửa-->
-                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                        <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                                Command="{Binding EditTicketClass_Command}"
+                                materialDesign:ShadowAssist.Darken="True"/>
 
                         <!--Nút thêm-->
                         <Button Margin="7 0 10 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                                Command="{Binding Open_Window_MoreTicketClass_Command}"
-                                />
+                                Command="{Binding MoreTicketClass_Command}"
+                                materialDesign:ShadowAssist.Darken="True"/>
                     </StackPanel>
                 </Grid>
             </Border>
@@ -271,4 +278,5 @@
 
 
     </Grid>
+    </materialDesign:DialogHost>
 </UserControl>

@@ -1,5 +1,6 @@
 ﻿using FlightTicketSell.AttachedProperties;
 using FlightTicketSell.Models.Enums;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,27 +14,26 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FlightTicketSell.Views
+namespace FlightTicketSell.Views.ReportViewRelated
 {
     /// <summary>
-    /// Interaction logic for ReportPrintView.xaml
+    /// Interaction logic for PrintPreviewWindow.xaml
     /// </summary>
-    public partial class ReportPrintView : UserControl
+    public partial class ReportPrintPreviewWindow : UserControl
     {
-        public ReportPrintView()
+        public ReportPrintPreviewWindow()
         {
             InitializeComponent();
         }
 
         /// <summary>
-        /// Task to do when user control loaded
-        /// </summary>
+        /// Task to do when window loaded
+        /// </summary>-
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var dpd = DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, typeof(DataGrid));
             if (dpd != null)
@@ -80,6 +80,42 @@ namespace FlightTicketSell.Views
                     break;
             }
 
+        }
+
+        /// <summary>
+        /// Print report
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Print_Confirm(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Disable button so it won't be clicked many times
+                this.IsEnabled = false;
+
+                var printDialog = new PrintDialog();
+
+                if (printDialog.ShowDialog() == true)
+                {
+                    printDialog.PrintVisual(print, "Invoice");
+                }
+            }
+            catch (Exception ex) { }
+            finally
+            {
+                this.IsEnabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Cancel print and close window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Cancel_Print(object sender, RoutedEventArgs e)
+        {
+            DialogHost.CloseDialogCommand.Execute(null, null);
         }
     }
 }

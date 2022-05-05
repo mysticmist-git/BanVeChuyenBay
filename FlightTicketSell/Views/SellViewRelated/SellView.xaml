@@ -74,11 +74,12 @@
                         </Grid>
                         <Grid Grid.Row="3" >
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                                <ColumnDefinition Width="2*"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="33*"></ColumnDefinition>
+                                <ColumnDefinition Width="97*"></ColumnDefinition>
+                                <ColumnDefinition Width="34*"></ColumnDefinition>
+                                <ColumnDefinition Width="30*"/>
+                                <ColumnDefinition Width="97*"></ColumnDefinition>
+                                <ColumnDefinition Width="32*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*" ></RowDefinition>
@@ -87,19 +88,17 @@
                             </Grid.RowDefinitions>
 
                             <!--Điểm đi-->
-                            <ComboBox Grid.Row="0" Grid.Column="1"
+                            <ComboBox Grid.Row="0"
                                             materialDesign:HintAssist.Hint="Điểm đi"           
-                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
-                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                <ComboBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel/>
-                                    </ItemsPanelTemplate>
-                                </ComboBox.ItemsPanel>
+                                            ItemsSource="{Binding Locations}"
+                                            SelectedItem="{Binding DiemDii, Mode=OneWayToSource}"
+                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.ColumnSpan="3" Margin="32,0,33.705,0">
+                                
+                    
                             </ComboBox>
                             <!--Nút chuyển giữa điểm đi và điểm đến-->
-                            <Button Grid.Row="0" Grid.Column="2"  Padding="0" Width="22" Height="22" Margin="0" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                 Command="{Binding Change_Departure_Landing_Airport_Command}">
+                            <Button Grid.Row="0" Grid.Column="2"  Padding="0" Width="22" Height="22" Margin="21.5,8,21,7" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                 Command="{Binding Change_Departure_Landing_Airport_Command}" Grid.ColumnSpan="2">
                                 <Button.Content>
                                     <materialDesign:PackIcon Kind="MenuSwap" Margin="0"  Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" RenderTransformOrigin="0.5,0.5" >
                                         <materialDesign:PackIcon.RenderTransform>
@@ -109,38 +108,36 @@
                                 </Button.Content>
                             </Button>
                             <!--Điểm đến-->
-                            <ComboBox Grid.Row="0" Grid.Column="3"
+                            <ComboBox Grid.Row="0" Grid.Column="4"
                                             materialDesign:HintAssist.Hint="Điểm đến"
-                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
+                                            ItemsSource="{Binding Locations}"
+                                            SelectedItem="{Binding DiemDen, Mode=OneWayToSource}"
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                <ComboBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel/>
-                                    </ItemsPanelTemplate>
-                                </ComboBox.ItemsPanel>
+                                
                             </ComboBox>
 
-                            
 
-                            <DatePicker Grid.Row="1" Grid.Column="1"
+
+                            <DatePicker Grid.Row="1"
                             
                             materialDesign:HintAssist.Hint="Chọn ngày"
-                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
+                            Grid.ColumnSpan="3" 
+                            SelectedDate="{Binding DateOfEntry}"
+                            Margin="32,0,33.705,0" />
 
                             <!--Sân bay đi-->
-                            <ComboBox Grid.Row="2" Grid.Column="1"
+                            <ComboBox Grid.Row="2"
                                             materialDesign:HintAssist.Hint="Sân bay đi"
-                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
-                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                <ComboBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel/>
-                                    </ItemsPanelTemplate>
-                                </ComboBox.ItemsPanel>
+                                            ItemsSource="{Binding Airports}"
+                                            DisplayMemberPath="Name"
+                                            SelectedItem="{Binding SanBayDii, Mode=OneWayToSource}"
+                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}" Grid.ColumnSpan="3" Margin="32,0,33.705,0">
+                               
                             </ComboBox>
                             <!--Nút chuyển giữa sân bay đi và sân bay đến-->
-                            <Button Grid.Row="2" Grid.Column="2"  Padding="0" Width="22" Height="22" Margin="0" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                 Command="{Binding Change_Departure_Landing_Airport_Command}">
+                            <Button Grid.Row="2" Grid.Column="2"  Padding="0" Width="22" Height="22" Margin="21.5,8,21,7" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                 Command="{Binding Change_Departure_Landing_Airport_Command}" Grid.ColumnSpan="2">
                                 <Button.Content>
                                     <materialDesign:PackIcon Kind="MenuSwap" Margin="0"  Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" RenderTransformOrigin="0.5,0.5" >
                                         <materialDesign:PackIcon.RenderTransform>
@@ -150,15 +147,13 @@
                                 </Button.Content>
                             </Button>
                             <!--Sân bay đến-->
-                            <ComboBox Grid.Row="2" Grid.Column="3"
+                            <ComboBox Grid.Row="2" Grid.Column="4"
                                             materialDesign:HintAssist.Hint="Sân bay đến"
-                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
-                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                <ComboBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel/>
-                                    </ItemsPanelTemplate>
-                                </ComboBox.ItemsPanel>
+                                            ItemsSource="{Binding Airports}"
+                                            DisplayMemberPath="Name"
+                                            SelectedItem="{Binding SanBayDenn, Mode=OneWayToSource}"
+                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}" SelectionChanged="ComboBox_SelectionChanged">
+                                
                             </ComboBox>
                         </Grid>
                     </Grid>
@@ -170,7 +165,8 @@
                 <Grid>
 
                     <DataGrid
-                            ItemsSource="{Binding Items3}"
+                            ItemsSource="{Binding Flights}"
+                            ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                             CanUserSortColumns="True"
                             CanUserAddRows="False"
                             AutoGenerateColumns="False"
@@ -223,7 +219,18 @@
                     </DataGrid>
                 </Grid>
             </Border>
-            <Button Command="{Binding ContinueCommand}" Width="150" Grid.Row="2" HorizontalAlignment="Right" Margin="0,10.5,0,0"  Height="24" Background="{StaticResource OrangeBrush}"  FontSize="{StaticResource RealSmall}" Content="Tiếp tục" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7" VerticalAlignment="Top"/>
+            <Button Command="{Binding ContinueCommand}" 
+                    Width="150" 
+                    Grid.Row="2" 
+                    HorizontalAlignment="Right" 
+                    Margin="0,10.5,0,0"  
+                    Height="auto" 
+                    Background="{StaticResource OrangeBrush}"  
+                    FontSize="{StaticResource RealSmall}" 
+                    Content="Tiếp tục" 
+                    BorderThickness="0,0,0,0" 
+                    materialDesign:ButtonAssist.CornerRadius="7" 
+                    />
         </Grid>
     </Grid>
 </UserControl>

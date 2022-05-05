@@ -40,116 +40,162 @@
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center" />
         </Button>
-        <Grid Margin="120 30 120 20 ">
+
+        <!-- Main -->
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*" ></RowDefinition>
-                <RowDefinition Height="0.5*"></RowDefinition>
-                <RowDefinition Height="10.5*"></RowDefinition>
-                <RowDefinition Height="2*"></RowDefinition>
+                <!-- Spacing -->
+                <RowDefinition Height="1*" />
+                <!-- Flight detail-->
+                <RowDefinition Height="7*" />
+                <!-- Spacing -->
+                <RowDefinition Height="1*" />
+                <!-- Customer info -->
+                <RowDefinition Height="8*" />
+                <!-- Spacing -->
+                <RowDefinition Height="1*" />
+                <!-- Ticket tier -->
+                <RowDefinition Height="5*" />
+                <!-- Spacing -->
+                <RowDefinition Height="1*" />
+                <!-- Continue button -->
+                <RowDefinition Height="4*" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" >
-                <Border  Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
-                    <Grid>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*" ></RowDefinition>
-                            <RowDefinition Height="3*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <TextBlock Padding="20,5,0,0" FontSize="20" VerticalAlignment="Center" Grid.Row="0"  FontWeight="Bold"> Chi tiết chuyến bay</TextBlock>
+            <!-- Flight detail -->
+            <Grid Grid.Row="1" >
 
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <!-- Spacing -->
+                        <ColumnDefinition Width="1.5*" />
+                        <!-- Content -->
+                        <ColumnDefinition Width="7*" />
+                        <!-- Spacing -->
+                        <ColumnDefinition Width="1.5*" />
+                    </Grid.ColumnDefinitions>
 
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="3*"></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock FontWeight="Bold">Mã chuyến bay</TextBlock>
-                                <TextBox>TSNNB-8</TextBox>
-                            </StackPanel>
+                    <!-- Content -->
+                    <Border Grid.Column="1" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                        <Grid>
 
-                            <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock FontWeight="Bold">Sân bay đi</TextBlock>
-                                <TextBox>Tân Sơn Nhất</TextBox>
-                            </StackPanel>
+                            <Grid.RowDefinitions>
+                                <!-- Heading -->
+                                <RowDefinition Height="1*" ></RowDefinition>
+                                <!-- Flight infos -->
+                                <RowDefinition Height="3*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Padding="20,5,0,0" FontSize="20" VerticalAlignment="Center" Grid.Row="0"  FontWeight="Bold"> Chi tiết chuyến bay</TextBlock>
 
-                            <StackPanel Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock FontWeight="Bold">Sân bay đến</TextBlock>
-                                <TextBox>Nội Bài</TextBox>
-                            </StackPanel>
+                            <Grid Grid.Row="1">
 
-                            <StackPanel Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock FontWeight="Bold">Ngày giờ bay</TextBlock>
-                                <TextBox>15:00 31/2/2022</TextBox>
-                            </StackPanel>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
 
-                            <StackPanel Grid.Column="9" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock FontWeight="Bold">Số điểm dừng</TextBlock>
-                                <TextBox>0</TextBox>
-                            </StackPanel>
+                                <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock FontWeight="Bold">Mã chuyến bay</TextBlock>
+                                    <TextBox>TSNNB-8</TextBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock FontWeight="Bold">Sân bay đi</TextBlock>
+                                    <TextBox>Tân Sơn Nhất</TextBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock FontWeight="Bold">Sân bay đến</TextBlock>
+                                    <TextBox>Nội Bài</TextBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock FontWeight="Bold">Ngày giờ bay</TextBlock>
+                                    <TextBox>15:00 31/2/2022</TextBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="9" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock FontWeight="Bold">Số điểm dừng</TextBlock>
+                                    <TextBox>0</TextBox>
+                                </StackPanel>
+
+                            </Grid>
+
                         </Grid>
-                    </Grid>
-                </Border>
+                    </Border>
+
+                </Grid>
+                
+                
             </Grid>
 
-            <Grid Grid.Row="2" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="4*"></RowDefinition>
-                    <RowDefinition Height="0.5*"></RowDefinition>
-                    <RowDefinition Height="2*"></RowDefinition>
+            <!-- Customer info -->
+            <Grid Grid.Row="3">
 
-                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <!-- Spacing -->
+                        <ColumnDefinition Width="2.5*" />
+                        <!-- Content -->
+                        <ColumnDefinition Width="5*" />
+                        <!-- Spacing -->
+                        <ColumnDefinition Width="2.5*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Content -->
+                    <Border Grid.Column="1"  Padding="10 10 10 10"  Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"></RowDefinition>
+                                <RowDefinition Height="3*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.ColumnSpan="2" Padding="10,5,0,0" FontSize="20" VerticalAlignment="Center" Grid.Row="0"  FontWeight="Bold"> Khách hàng</TextBlock>
+
+                            <StackPanel Width="200" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock FontWeight="Bold" Margin="0 10 0 0">Họ Tên</TextBlock>
+                                <TextBox>Đoàn Gia Bảo</TextBox>
+                                <TextBlock FontWeight="Bold" Margin="0 10 0 0">Số điện thoại</TextBlock>
+                                <TextBox>0834002706</TextBox>
+                            </StackPanel>
+
+                            <StackPanel Width="200" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock FontWeight="Bold" Margin="0 10 0 0">CMND/CCCD</TextBlock>
+                                <TextBox>312602950</TextBox>
+                                <TextBlock FontWeight="Bold" Margin="0 10 0 0">Email</TextBlock>
+                                <TextBox>doangiabao276@gmail.com</TextBox>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+
+            <!-- Ticket tier -->
+            <Grid Grid.Row="5">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="8*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <!-- Spacing -->
+                    <ColumnDefinition Width="2.5*" />
+                    <!-- Content -->
+                    <ColumnDefinition Width="5*" />
+                    <!-- Spacing -->
+                    <ColumnDefinition Width="2.5*" />
                 </Grid.ColumnDefinitions>
 
-                <!--Khách hàng đặt chỗ-->
-                <Border Grid.Column="1"  Padding="10 10 10 10"  Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
-
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="3*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-
-
-                        <TextBlock Grid.ColumnSpan="2" Padding="10,5,0,0" FontSize="20" VerticalAlignment="Center" Grid.Row="0"  FontWeight="Bold"> Khách hàng</TextBlock>
-
-                        <StackPanel Width="200" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock FontWeight="Bold" Margin="0 10 0 0">Họ Tên</TextBlock>
-                            <TextBox>Đoàn Gia Bảo</TextBox>
-                            <TextBlock FontWeight="Bold" Margin="0 10 0 0">Số điện thoại</TextBlock>
-                            <TextBox>0834002706</TextBox>
-                        </StackPanel>
-
-                        <StackPanel Width="200" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock FontWeight="Bold" Margin="0 10 0 0">CMND/CCCD</TextBlock>
-                            <TextBox>312602950</TextBox>
-                            <TextBlock FontWeight="Bold" Margin="0 10 0 0">Email</TextBlock>
-                            <TextBox>doangiabao276@gmail.com</TextBox>
-                        </StackPanel>
-
-
-                    </Grid>
-                </Border>
-                <!--Hạng vé-->
-                <Border Grid.Column="1" Grid.Row="2"  Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                <Border Grid.Column="1" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"></RowDefinition>
@@ -180,13 +226,33 @@
                         </Grid>
                     </Grid>
                 </Border>
-
-
             </Grid>
-            <Button Width="150" Grid.Row="3" Command="{Binding ContinueCommand}" 
-                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 10 0 0"  Height="auto" Background="{StaticResource OrangeBrush}"  FontSize="{StaticResource RealSmall}" Content="Tiếp tục" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
-        </Grid>
 
+            <!-- Continue button -->
+            <Grid Grid.Row="7" >
+
+                <Grid.ColumnDefinitions>
+                    <!-- Spacing -->
+                    <ColumnDefinition Width="1*" />
+                    <!-- Content -->
+                    <ColumnDefinition Width="8*" />
+                    <!-- Spacing -->
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Width="150" 
+                    Grid.Column="1"
+                    Command="{Binding ContinueCommand}" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Center" 
+                    Height="auto"
+                    Background="{StaticResource OrangeBrush}"
+                    FontSize="{StaticResource RealSmall}"
+                    Content="Tiếp tục"
+                    BorderThickness="0,0,0,0" 
+                    materialDesign:ButtonAssist.CornerRadius="7"/>
+            </Grid>
+
+        </Grid>
     </Grid>
-    
 </UserControl>
