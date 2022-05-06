@@ -15,11 +15,11 @@ namespace FlightTicketSell.ViewModels.Search
             {
                 IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightTicket;
                 IoC.IoC.Get<FlightTicket_Search>().MaChuyenBay = MaChuyenBay;
-                /*IoC.IoC.Get<TickedSoldBooked_Search>().MaChuyenBay = MaChuyenBay;
+               IoC.IoC.Get<TickedSoldBooked_Search>().MaChuyenBay = MaChuyenBay;
                 IoC.IoC.Get<FlightTicket_Search>().SanBayDi = SanBayDi;
                 IoC.IoC.Get<FlightTicket_Search>().SanBayDen = SanBayDen;
                 IoC.IoC.Get<FlightTicket_Search>().NgayGioBay = KhoiHanh.ToString();
-                IoC.IoC.Get<FlightTicket_Search>().GiaCoBan = GiaCoBan;*/
+                IoC.IoC.Get<FlightTicket_Search>().GiaCoBan = GiaCoBan;
             });
         }
 
