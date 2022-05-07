@@ -1,6 +1,5 @@
 ﻿using FlightTicketSell.Models;
 using FlightTicketSell.ViewModels;
-using FlightTicketSell.ViewModels.Search;
 using Ninject;
 using System;
 
@@ -43,9 +42,8 @@ namespace FlightTicketSell.IoC
             Kernel.Bind<BookDetailViewModel>().ToConstant(new BookDetailViewModel());
 
             Kernel.Bind<SearchViewModel>().ToConstant(new SearchViewModel());
-            Kernel.Bind<FlightTicket_Search>().ToConstant(new FlightTicket_Search());
-            Kernel.Bind<TickedSoldBooked_Search>().ToConstant(new TickedSoldBooked_Search());
-            Kernel.Bind<Customer_Search>().ToConstant(new Customer_Search());
+            Kernel.Bind<FlightDetailViewModel>().ToConstant(new FlightDetailViewModel());
+            Kernel.Bind<FlightTicketAndReservationViewModel>().ToConstant(new FlightTicketAndReservationViewModel());
         }
 
         #endregion

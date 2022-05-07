@@ -11,11 +11,8 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              x:Uid="SV"
-             d:DesignHeight="500" d:DesignWidth="800">
-    <UserControl.DataContext>
-        <vm:SearchViewModel/>
-    </UserControl.DataContext>
-
+             d:DesignHeight="500" d:DesignWidth="800"
+             DataContext="{Binding SearchViewModel, Source={x:Static vm:ViewModelLocator.Instance}}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
@@ -79,17 +76,19 @@
                                     <ColumnDefinition Width="6*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <ComboBox
-                                            Grid.Column="0"
-                                            materialDesign:HintAssist.Hint="Sân bay đi"
-                                            Margin="10,0,0,0"
-                                            ItemsSource="{Binding Airports}"
-                                            DisplayMemberPath="Name"
-                                            SelectedItem="{Binding SanBayDii, Mode=OneWayToSource}"
-                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                    Grid.Column="0"
+                                    materialDesign:HintAssist.Hint="Sân bay đi"
+                                    Margin="10,0,0,0"
+                                    ItemsSource="{Binding Airports}"
+                                    DisplayMemberPath="Name"
+                                    SelectedItem="{Binding SanBayDii, Mode=OneWayToSource}"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                    IsEnabled="{Binding IsLoadFinished}"
+                                    >
                                     <!-- Command -->
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                                            <i:InvokeCommandAction Command="{Binding ParamsChangedCommand}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ComboBox>
@@ -106,17 +105,18 @@
                                 </Button>
 
                                 <ComboBox
-                                            Grid.Column="3"
-                                            materialDesign:HintAssist.Hint="Sân bay đến"
-                                            Margin="10,0,10,0"
-                                            ItemsSource="{Binding Airports}"
-                                            DisplayMemberPath="Name"
-                                            SelectedItem="{Binding SanBayDenn, Mode=OneWayToSource}"
-                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                    Grid.Column="3"
+                                    materialDesign:HintAssist.Hint="Sân bay đến"
+                                    Margin="10,0,10,0"
+                                    ItemsSource="{Binding Airports}"
+                                    DisplayMemberPath="Name"
+                                    SelectedItem="{Binding SanBayDenn, Mode=OneWayToSource}"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                    IsEnabled="{Binding IsLoadFinished}">
                                     <!-- Command -->
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                                            <i:InvokeCommandAction Command="{Binding ParamsChangedCommand}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ComboBox>
@@ -133,11 +133,12 @@
                             Margin="10 0 10 0"
                             materialDesign:HintAssist.Hint="Chọn ngày"
                             SelectedDate="{Binding DateOfEntry}"
-                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" 
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                            IsEnabled="{Binding IsLoadFinished}"
                             >
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectedDateChanged">
-                                    <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                                    <i:InvokeCommandAction Command="{Binding ParamsChangedCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </DatePicker>
@@ -155,9 +156,11 @@
                     Style="{StaticResource DropShadow}">
                 <DataGrid
                     ItemsSource="{Binding Flights}"
+                    Background="Transparent"
                     ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                     CellStyle="{StaticResource DataGridCellCenter}"
                     ColumnWidth="*"
+                    RowHeight="50"
                     CanUserSortColumns="True"
                     CanUserAddRows="False"
                     AutoGenerateColumns="False"
@@ -171,15 +174,28 @@
                     </i:Interaction.Triggers>
                     <DataGrid.Columns>
 
-                        <DataGridTemplateColumn Header="Mã chuyến bay">
+                        <DataGridTemplateColumn Header="Mã chuyến bay" Width="200">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <TextBlock Text="{Binding MaChuyenBay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                        <Button Content="Chi tiết" Margin="30 0 0 0" Background="{StaticResource LightBlueBrush}" 
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <!-- Flight code -->
+                                        <TextBlock Grid.Column="0"
+                                                   Text="{Binding DisplayFlightCode}"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Left"/>
+                                        
+                                        <!-- Detail button -->
+                                        <Button Content="Chi tiết"
+                                                Grid.Column="1"
+                                                Style="{StaticResource FlightDetailButton}"
                                                 Command="{Binding Open_Window_DescriptionTicketFlight_Command}"
                                                 />
-                                    </StackPanel>
+                                    </Grid>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -199,16 +215,16 @@
                             Binding="{Binding SanBayDen}"
                             Header="Sân bay đến" />
                         <materialDesign:DataGridTextColumn
-                            Binding="{Binding KhoiHanh}"
+                            Binding="{Binding DisplayDepartDate}"
                             Header="Khởi hành" />
                         <materialDesign:DataGridTextColumn
                             Binding="{Binding SoDiemDung}"
                             Header="Số điểm dừng" />
                         <materialDesign:DataGridTextColumn
                             Binding="{Binding SoHangVe}"
-                            Header="số hạng vé" />
+                            Header="Số hạng vé" />
                         <materialDesign:DataGridTextColumn
-                            Binding="{Binding GiaCoBan}"
+                            Binding="{Binding DisplayPrice}"
                             Header="Giá cơ bản" />
                         <materialDesign:DataGridTextColumn
                             Binding="{Binding GheTrong}"

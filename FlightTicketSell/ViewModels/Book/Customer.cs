@@ -12,18 +12,39 @@ namespace FlightTicketSell.ViewModels
     /// </summary>
     public class Customer : KHACHHANG
     {
+        #region Public Properties
+
         /// <summary>
         /// The index of the customer in the list
         /// </summary>
         public int Index { get; set; }
 
         /// <summary>
-        /// Name buffer
+        /// The display index of the customer
+        /// </summary>
+        public string DisplayIndex { get => "Khách hàng " + Index; }
+
+        /// <summary>
+        /// The name buffer
         /// </summary>
         public string NameBuffer { get; set; }
+
+        /// <summary>
+        /// The ID buffer
+        /// </summary>
         public string IDBuffer { get; set; }
+
+        /// <summary>
+        /// The phone number buffer
+        /// </summary>
         public string PhoneNumBuffer { get; set; }
+
+        /// <summary>
+        /// The email buffer
+        /// </summary>
         public string EmailBuffer { get; set; }
+
+        #endregion
 
         #region Commands
 
@@ -51,6 +72,25 @@ namespace FlightTicketSell.ViewModels
         #endregion
 
         #region Constructor
+
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        public Customer(KHACHHANG khachHang) : this()
+        {
+            if (khachHang is null)
+                return;
+
+            // Copy information from a base instance
+            MaKhachHang = khachHang.MaKhachHang;
+            HoTen = khachHang.HoTen;
+            CMND = khachHang.CMND;
+            SDT = khachHang.SDT;
+            Email = khachHang.Email;
+            CHITIETDATCHOes = khachHang.CHITIETDATCHOes;
+            DATCHOes = khachHang.DATCHOes;
+            VEs = khachHang.VEs;
+        }
 
         /// <summary>
         /// Default constructor

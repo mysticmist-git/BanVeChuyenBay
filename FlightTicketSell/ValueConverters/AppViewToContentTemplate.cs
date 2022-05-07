@@ -22,11 +22,8 @@ namespace FlightTicketSell.ValueConverters
                 // Ticket Flight
                 case AppView.FlightTicket:
                     return new DescriptionTicketFlight();
-                // Customer
-                case AppView.Customer:
-                    return new DescriptionCustomer();
                 //TicketsoldBooked
-                case AppView.TickedSoldBooked:
+                case AppView.TicketSoldOrBooked:
                     return new TicketSoldBooked();
                 // Book related
                 case AppView.Book:

@@ -134,6 +134,7 @@
     <Compile Include="Models\DUONGBAY.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Enums\CustomerDetailType.cs" />
     <Compile Include="Models\Enums\ReportType.cs" />
     <Compile Include="Models\GetFlightData_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -165,6 +166,9 @@
     <Compile Include="Models\SANBAYTG.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SearchRelated\DetailFlilghtInfo.cs" />
+    <Compile Include="ViewModels\Search\CustomersDetailViewModel.cs" />
+    <Compile Include="ViewModels\Search\FlightInfo.cs" />
     <Compile Include="Models\THAMSO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -193,15 +197,13 @@
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Book\Customer.cs" />
-    <Compile Include="ViewModels\Search\Airport_Search.cs" />
-    <Compile Include="ViewModels\Search\Booked.cs" />
-    <Compile Include="ViewModels\Search\Customer_Search.cs" />
-    <Compile Include="ViewModels\Search\Datagrid_Search.cs" />
-    <Compile Include="ViewModels\Search\FlightTicket_Search.cs" />
-    <Compile Include="ViewModels\Search\MidAirport_Search.cs" />
-    <Compile Include="ViewModels\Search\TickedSoldBooked_Search.cs" />
-    <Compile Include="ViewModels\Search\TicketClass_Search.cs" />
-    <Compile Include="ViewModels\Search\TicketSold.cs" />
+    <Compile Include="Models\SearchRelated\Airport_Search.cs" />
+    <Compile Include="ViewModels\Search\PlaceReservation.cs" />
+    <Compile Include="ViewModels\Search\FlightDetailViewModel.cs" />
+    <Compile Include="Models\SearchRelated\OverlayAirport_Search.cs" />
+    <Compile Include="ViewModels\Search\FlightTicketAndReservationViewModel.cs" />
+    <Compile Include="Models\SearchRelated\TicketTier_Search.cs" />
+    <Compile Include="ViewModels\Search\Ticket.cs" />
     <Compile Include="ViewModels\Sell\ChangeTicketViewModel.cs" />
     <Compile Include="ViewModels\Book\BookDetailViewModel.cs" />
     <Compile Include="ViewModels\Book\BookViewModel.cs" />
@@ -231,6 +233,9 @@
     <Compile Include="Views\BookViewRelated\CustomerInfoDialog.xaml.cs">
       <DependentUpon>CustomerInfoDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SearchViewRelated\CustomerDetail.xaml.cs">
+      <DependentUpon>CustomerDetail.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingViewRelated\EditTicketClassView.xaml.cs">
       <DependentUpon>EditTicketClassView.xaml</DependentUpon>
     </Compile>
@@ -243,14 +248,11 @@
     <Compile Include="Views\ReportViewRelated\PrintPreviewWindow.xaml.cs">
       <DependentUpon>PrintPreviewWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SearchViewMore\DescriptionCustomer.xaml.cs">
-      <DependentUpon>DescriptionCustomer.xaml</DependentUpon>
+    <Compile Include="Views\SearchViewRelated\FlightDetail.xaml.cs">
+      <DependentUpon>FlightDetail.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SearchViewMore\DescriptionTicketFlight.xaml.cs">
-      <DependentUpon>DescriptionTicketFlight.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SearchViewMore\TicketSoldBooked.xaml.cs">
-      <DependentUpon>TicketSoldBooked.xaml</DependentUpon>
+    <Compile Include="Views\SearchViewRelated\FlightTicketAndReservation.xaml.cs">
+      <DependentUpon>FlightTicketAndReservation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SellViewRelated\ChangeTicketView.xaml.cs">
       <DependentUpon>ChangeTicketView.xaml</DependentUpon>
@@ -267,7 +269,7 @@
     <Compile Include="Views\SettingViewRelated\MoreTicketClassView.xaml.cs">
       <DependentUpon>MoreTicketClassView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Helper\ReportHelper.cs" />
+    <Compile Include="ViewModels\Helper\ReportHelper.cs" />
     <Compile Include="Views\BookViewRelated\BookPayView.xaml.cs">
       <DependentUpon>BookPayView.xaml</DependentUpon>
     </Compile>
@@ -320,10 +322,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\SideMenu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Styles\Texts.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -344,6 +342,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SearchViewRelated\CustomerDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SettingViewRelated\EditTicketClassView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -360,15 +362,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SearchViewMore\DescriptionCustomer.xaml">
+    <Page Include="Views\SearchViewRelated\FlightDetail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SearchViewMore\DescriptionTicketFlight.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SearchViewMore\TicketSoldBooked.xaml">
+    <Page Include="Views\SearchViewRelated\FlightTicketAndReservation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -474,6 +472,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\paper-plane.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>

@@ -9,16 +9,21 @@
 
 namespace FlightTicketSell.Models
 {
+    using FlightTicketSell.ViewModels;
     using System;
     
-    public partial class GetFlightData_Result
+    public partial class GetFlightData_Result : BaseViewModel
     {
         public int MaChuyenBay { get; set; }
+        public int MaSanBayDi { get; set; }
+        public int MaSanBayDen { get; set; }
         public string SanBayDi { get; set; }
         public string SanBayDen { get; set; }
+        public string SanBayDiVietTat { get; set; }
+        public string SanBayDenVietTat { get; set; }
         public System.DateTime NgayGio { get; set; }
         public Nullable<int> SoDiemDung { get; set; }
-        public Nullable<int> SoLuongVe { get; set; }
+        public Nullable<int> SoHangVe { get; set; }
         public decimal GiaVe { get; set; }
         public Nullable<int> GheTrong { get; set; }
     }

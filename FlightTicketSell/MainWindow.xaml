@@ -74,9 +74,7 @@
     </Window.Resources>
 
     <Grid Background="{StaticResource LightGrayBrush}">
-        <Border CornerRadius="12" Height="160" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" >
-
-        </Border>
+        <Border CornerRadius="12" Height="160" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
         <Grid >
             <Grid.RowDefinitions>
                 <!--Navigation Bar-->

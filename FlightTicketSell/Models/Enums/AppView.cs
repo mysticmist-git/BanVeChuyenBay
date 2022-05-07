@@ -24,7 +24,7 @@
         /// <summary>
         /// The Ticket Flight to enter Detail
         /// </summary>
-        TickedSoldBooked,
+        TicketSoldOrBooked,
         /// <summary>
         /// The Ticket Sold and Booked to enter Button
         /// </summary>

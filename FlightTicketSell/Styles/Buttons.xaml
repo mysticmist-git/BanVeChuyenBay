@@ -77,6 +77,15 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    
+    <!-- Flight detail button -->
+    <Style x:Key="FlightDetailButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
+        <Setter Property="Background" Value="{StaticResource LightBlueBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="5" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
+    </Style>
 
     <!-- CustomerInfoButton -->
     <Style x:Key="CustomerInfoButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">

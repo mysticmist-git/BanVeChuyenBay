@@ -12,6 +12,11 @@
     <Color x:Key="LightGray">#DDDCDB</Color>
     <SolidColorBrush x:Key="LightGrayBrush" Color="{StaticResource LightGray}" />
 
+    <!--Gray-->
+    <Color x:Key="Gray">#FF717171</Color>
+    <SolidColorBrush x:Key="GrayBrush" Color="{StaticResource Gray}" />
+
+
     <!--Red-->
     <Color x:Key="Red">#C7282A</Color>
     <SolidColorBrush x:Key="RedBrush" Color="{StaticResource Red}" />

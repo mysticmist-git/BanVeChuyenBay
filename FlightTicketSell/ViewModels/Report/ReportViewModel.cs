@@ -1,5 +1,5 @@
 ﻿using FlightTicketSell.Models;
-using FlightTicketSell.ViewModels.Report;
+using FlightTicketSell.ViewModels;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;

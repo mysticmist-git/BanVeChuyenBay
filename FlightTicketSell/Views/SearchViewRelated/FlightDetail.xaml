@@ -8,6 +8,8 @@
         xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
+        d:Width="1366" d:Height="768"
+        d:Background="{StaticResource LightGrayBrush}"
         DataContext="{Binding FlightTicket_Search, Source={x:Static vm:ViewModelLocator.Instance}}"
         >
     <!--<UserControl.DataContext>
@@ -19,10 +21,32 @@
             <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <Grid Background="{StaticResource LightGrayBrush}">
-        <Border Height="70" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" >
 
-        </Border>
+    <Grid>
+
+        <!-- Return button -->
+        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                Command="{Binding ReturnCommand}"
+                Grid.Column="0"
+                Grid.RowSpan="2"
+                Width="50"
+                Height="50"
+                ToolTip="Quay lại"
+                Background="{StaticResource LightBlueBrush}"
+                BorderThickness="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="20 20 10 0"
+                materialDesign:ButtonAssist.CornerRadius="5"
+                HorizontalContentAlignment="Center" 
+                VerticalContentAlignment="Center">
+            <materialDesign:PackIcon Kind="ArrowLeft"
+                                     Height="30"
+                                     Width="30"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center" />
+        </Button>
+
         <Grid Margin="50,20,50,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*"></RowDefinition>
@@ -39,26 +63,6 @@
                         <ColumnDefinition Width="12*"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-
-                    <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                        Command="{Binding ReturnCommand}"
-                        Grid.Column="0"
-                        Grid.RowSpan="2"
-                        Width="50"
-                        Height="50"
-                        ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
-                        Background="{StaticResource LightBlueBrush}"
-                        VerticalAlignment="Top"
-                        Margin="0 20 10 0"
-                        materialDesign:ButtonAssist.CornerRadius="5"
-                        HorizontalContentAlignment="Center" 
-                        VerticalContentAlignment="Center">
-                        <materialDesign:PackIcon Kind="ArrowLeft"
-                                             Height="30"
-                                             Width="30"
-                                             HorizontalAlignment="Left"
-                                             VerticalAlignment="Top" />
-                    </Button>
 
                     <Border Grid.Column="1" Background="White" CornerRadius="8" Style="{StaticResource ResourceKey=DropShadow}">
                         <Grid>
@@ -94,7 +98,11 @@
                                     </Grid.RowDefinitions>
 
                                     <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Mã chuyến bay</TextBlock>
-                                    <TextBox  IsReadOnly="True" Text="{Binding MaChuyenBay}" Grid.Row="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Top">
+                                    <TextBox  IsReadOnly="True"
+                                              Text="{Binding FlightInfo.DisplayFlightCode, Mode=OneWay}"
+                                              Grid.Row="1" 
+                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                              VerticalAlignment="Top">
                                         <materialDesign:HintAssist.Hint>
                                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                                 <TextBlock/>
@@ -109,7 +117,11 @@
                                     </Grid.RowDefinitions>
 
                                     <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đi</TextBlock>
-                                    <TextBox IsReadOnly="True" Text="{Binding SanBayDi}" Grid.Row="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Top">
+                                    <TextBox IsReadOnly="True" 
+                                             Text="{Binding FlightInfo.SanBayDi, Mode=OneWay}"
+                                             Grid.Row="1"
+                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                                             VerticalAlignment="Top">
                                         <materialDesign:HintAssist.Hint>
                                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                                 <TextBlock/>
@@ -124,7 +136,11 @@
                                     </Grid.RowDefinitions>
 
                                     <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đến</TextBlock>
-                                    <TextBox IsReadOnly="True" Text="{Binding SanBayDen}" Grid.Row="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top">
+                                    <TextBox IsReadOnly="True" 
+                                             Text="{Binding FlightInfo.SanBayDen, Mode=OneWay}" 
+                                             Grid.Row="1" 
+                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                             VerticalAlignment="Top">
                                         <materialDesign:HintAssist.Hint>
                                             <StackPanel Orientation="Horizontal"  Margin="-2 0 0 0">
                                                 <TextBlock/>
@@ -140,7 +156,11 @@
 
                                     <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Ngày giờ bay</TextBlock>
                                     <Grid Grid.Row="1">
-                                        <TextBox IsReadOnly="True" Text="{Binding NgayGioBay}" Grid.Row="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top">
+                                        <TextBox IsReadOnly="True" 
+                                                 Text="{Binding FlightInfo.NgayGio, Mode=OneWay}"
+                                                 Grid.Row="1"
+                                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                                                 VerticalAlignment="Top">
                                             <materialDesign:HintAssist.Hint>
                                                 <StackPanel Orientation="Horizontal"  Margin="-2 0 0 0">
                                                     <TextBlock/>
@@ -156,7 +176,11 @@
                                     </Grid.RowDefinitions>
 
                                     <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Thời gian bay</TextBlock>
-                                    <TextBox IsReadOnly="True" Text="{Binding ThoiGianBay}" Grid.Row="1" Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Center" materialDesign:TextFieldAssist.SuffixText="phút">
+                                    <TextBox IsReadOnly="True"
+                                             Text="{Binding FlightInfo.ThoiGianBay, Mode=OneWay}"
+                                             Grid.Row="1"
+                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Center"
+                                             materialDesign:TextFieldAssist.SuffixText="phút">
                                         <materialDesign:HintAssist.Hint>
                                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                                 <TextBlock/>
@@ -179,109 +203,128 @@
                 </Grid.ColumnDefinitions>
 
                 <!--Sân bay trung gian-->
-                <Border Grid.Column="0" Background="#fff" CornerRadius="8" Margin="35 0 20 0">
+                <Border Grid.Column="0"
+                        Background="White"
+                        Style="{StaticResource DropShadow}"
+                        CornerRadius="7 7 7 7">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="91*"/>
-                            <ColumnDefinition Width="19*"/>
-                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"></RowDefinition>
                             <RowDefinition Height="8*"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <Border CornerRadius="7" Height="35" VerticalAlignment="Center" Background="{StaticResource BlueBrush}" Grid.ColumnSpan="2" >
-                            <TextBlock Margin="21,0,0,0" Foreground="#fff" VerticalAlignment="Center" HorizontalAlignment="Center"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}">Sân bay trung gian</TextBlock>
-
+                        <!-- Heading -->
+                        <Border CornerRadius="7, 7, 0, 0"
+                            Grid.Row="0"
+                            Background="{StaticResource BlueBrush}">
+                            <TextBlock Foreground="#fff"
+                                       Text="SÂN BAY TRUNG GIAN"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"  
+                                       FontFamily="{StaticResource RobotoBlack}"
+                                       FontSize="{StaticResource Small}" />
                         </Border>
 
-                        <DataGrid
-                            Margin="0 8 0 0"
-                            Grid.Row="1"
-                            ItemsSource="{Binding MidAirport}"
-                            CanUserSortColumns="True"
-                            CanUserAddRows="False"
-                            AutoGenerateColumns="False"
-                            ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
-                            CellStyle="{StaticResource DataGridCellCenter}"
-                            ColumnWidth="*"
-                            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                            materialDesign:DataGridAssist.ColumnHeaderPadding="8" Grid.ColumnSpan="2">
-                            <DataGrid.Columns>
+                        <!-- Bảng sân bay trung gian -->
+                        <Border Grid.Row="1" CornerRadius="0 0 7 7">
+                            <DataGrid
+                                ItemsSource="{Binding OverlayAirport}"
+                                Padding="30 15"
+                                Background="Transparent"
+                                CanUserSortColumns="True"
+                                CanUserAddRows="False"
+                                AutoGenerateColumns="False"
+                                ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                                CellStyle="{StaticResource DataGridCellCenter}"
+                                ColumnWidth="*"
+                                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                                materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                                <DataGrid.Columns>
 
-                                <DataGridTextColumn
+                                    <DataGridTextColumn
                                     Width="100"
                                     Binding="{Binding ThuTu}"
                                     Header="Thứ tự"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
 
-                                <materialDesign:DataGridTextColumn
+                                    <materialDesign:DataGridTextColumn
                                     Width="150"
                                     Binding="{Binding TenSanBay}"
                                     Header="Tên sân bay"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                                <!-- set a max length to get an indicator in the editor -->
-                                <materialDesign:DataGridTextColumn
+                                    <!-- set a max length to get an indicator in the editor -->
+                                    <materialDesign:DataGridTextColumn
                                     Width="150"
                                     Binding="{Binding ThoiGianDung}"
                                     Header="Thời gian dừng"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                                <materialDesign:DataGridTextColumn
+                                    <materialDesign:DataGridTextColumn
                                     Width="150"
                                     Binding="{Binding GhiChu}"
                                     Header="Ghi chú"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
                     </Grid>
-
                 </Border>
+
                 <!--Hạng vé-->
-                <Border Grid.Column="2" Background="#fff" CornerRadius="8" Margin="30 0 35 0">
+                <Border Grid.Column="2"
+                        Background="White"
+                        Style="{StaticResource DropShadow}"
+                        CornerRadius="7 7 7 7">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"></RowDefinition>
                             <RowDefinition Height="8*"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <Border Grid.Row="0" CornerRadius="7" Height="35" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" >
-                            <TextBlock Margin="21,0,0,0" Foreground="#fff" VerticalAlignment="Center" HorizontalAlignment="Center"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}">Hạng vé</TextBlock>
-
+                        <Border CornerRadius="7, 7, 0, 0"
+                            Grid.Row="0"
+                            Background="{StaticResource BlueBrush}">
+                            <TextBlock Foreground="#fff"
+                                       Text="HẠNG VÉ"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"  
+                                       FontFamily="{StaticResource RobotoBlack}"
+                                       FontSize="{StaticResource Small}" />
                         </Border>
 
-                        <DataGrid
-                            Margin="0 8 0 0"
-                            Grid.Row="1"
-                            ItemsSource="{Binding TicketClass}"
-                            CanUserSortColumns="True"
-                            CanUserAddRows="False"
-                            AutoGenerateColumns="False"
-                            ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
-                            CellStyle="{StaticResource DataGridCellCenter}"
-                            ColumnWidth="*"
-                            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                            materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                        <Border Grid.Row="1" Padding="30 15">
+                            <DataGrid
+                                Background="Transparent"
+                                ItemsSource="{Binding TicketTier}"
+                                CanUserSortColumns="True"
+                                CanUserAddRows="False"
+                                AutoGenerateColumns="False"
+                                ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                                CellStyle="{StaticResource DataGridCellCenter}"
+                                ColumnWidth="*"
+                                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                                materialDesign:DataGridAssist.ColumnHeaderPadding="8">
 
-                            <DataGrid.Columns>
+                                <DataGrid.Columns>
 
-                                <materialDesign:DataGridTextColumn
+                                    <materialDesign:DataGridTextColumn
                                     Width="120"
                                     Binding="{Binding TenHangVe}"
                                     Header="Tên hạng vé"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                                <!-- set a max length to get an indicator in the editor -->
-                                <materialDesign:DataGridTextColumn
+                                    <!-- set a max length to get an indicator in the editor -->
+                                    <materialDesign:DataGridTextColumn
                                     Width="120"
                                     Binding="{Binding GiaTien}"
                                     Header="Giá tiền"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                                <materialDesign:DataGridTextColumn
+                                    <materialDesign:DataGridTextColumn
                                     Width="120"
                                     Binding="{Binding GheTrong}"
                                     Header="Ghế trống"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
 
                     </Grid>
 

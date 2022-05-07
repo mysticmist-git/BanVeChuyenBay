@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace FlightTicketSell.Views.SearchViewMore
 {
     /// <summary>
-    /// Interaction logic for DescriptionCustomer.xaml
+    /// Interaction logic for DetailCustomers.xaml
     /// </summary>
-    public partial class DescriptionCustomer : UserControl
+    public partial class DetailCustomers : Window
     {
-        public DescriptionCustomer()
+        public DetailCustomers()
         {
             InitializeComponent();
         }

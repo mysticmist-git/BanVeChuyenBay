@@ -28,11 +28,12 @@
 
                 <!-- Heading -->
                 <TextBlock Grid.ColumnSpan="2"
+                           Grid.Row="0"
                            Text="{Binding Index, Converter={valueConverters:IndexToDisplayHeading}}"
+                           d:Text="Khách hàng 1"
                            Padding="20,5,0,0"
                            FontSize="20"
                            VerticalAlignment="Center"
-                           Grid.Row="0"
                            FontWeight="Bold" />
 
                 <StackPanel Width="200" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">

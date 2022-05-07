@@ -1,34 +1,49 @@
 ﻿using FlightTicketSell.Views;
 using FlightTicketSell.Models;
-using FlightTicketSell.ViewModels.Search;
 using FlightTicketSell.Views.SearchViewMore;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Linq;
 using System.Data.Entity.Core;
 using System.Windows;
+using System.Data.Entity;
+using FlightTicketSell.Models.SearchRelated;
 
 namespace FlightTicketSell.ViewModels
 {
     public class SearchViewModel : BaseViewModel
     {
-        public string Title { get; } = "TRA CỨU";
+        #region Private Members
 
-        public ICommand LoadCommand { get; set; }
-        public ICommand SanBayDoi { get; set; }
+        /// <summary>
+        /// The depart date of the flights
+        /// </summary>
+        public System.DateTime? _date;
 
-        public ICommand ReturnCommand { get; set; }
+        #endregion
 
-        //public ICommand Open_Window_DescriptionTicketFlight_Command { get; set; }
+        #region Public Properties
 
+        /// <summary>
+        /// Airport list
+        /// </summary>
         public ObservableCollection<Airport_Search> Airports { get; set; }
-        public ObservableCollection<Datagrid_Search> Flights { get; set; }
 
+        /// <summary>
+        /// Flight list
+        /// </summary>
+        public ObservableCollection<FlightInfo> Flights { get; set; }
+
+        /// <summary>
+        /// Start airport param
+        /// </summary>
         public Airport_Search SanBayDii { get; set; }
+
+        /// <summary>
+        /// Destinattion airport param
+        /// </summary>
         public Airport_Search SanBayDenn { get; set; }
 
-
-        public System.DateTime? _date;
         public System.DateTime? DateOfEntry
         {
             get
@@ -40,84 +55,108 @@ namespace FlightTicketSell.ViewModels
                 _date = value;
             }
         }
+
+        public bool IsLoadFinished { get; set; } = false;
+
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// Execute this first when view load
+        /// </summary>
+        public ICommand LoadCommand { get; set; }
+
+        /// <summary>
+        /// When params changed, use it to changes flight list
+        /// </summary>
+        public ICommand ParamsChangedCommand { get; set; }
+
+        /// <summary>
+        /// Return the the previous view
+        /// </summary>
+        public ICommand ReturnCommand { get; set; }
+
+        public ICommand Open_Window_DescriptionTicketFlight_Command { get; set; }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Defaultl constructor
+        /// </summary>
         public SearchViewModel()
         {
 
-            LoadCommand = new RelayCommand<object>((p) => true, (p) =>
+            LoadCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
+                // Loading
+                IsLoadFinished = false;
+
+                // Get airports for combobox and initialize flight table
                 using (var context = new FlightTicketSellEntities())
                 {
                     try
                     {
-                        //System.DateTime? selectedDate = searchView.dp.SelectedDate.Value;
-                        // Airports
-                        Airports = new ObservableCollection<Airport_Search>(context.SANBAYs.Select(s => new Airport_Search { ID = s.MaSanBay, Name = s.TenSanBay }).ToList());
+                        // Load airports
+                        Airports = new ObservableCollection<Airport_Search>(await context.SANBAYs.Select(s => new Airport_Search { ID = s.MaSanBay, Name = s.TenSanBay }).ToListAsync());
 
-                        // load datagrid
-                        //if (SanBayDii != null && SanBayDenn != null && DateOfEntry != null)
-                        //{
-                        //    Flights = new ObservableCollection<Datagrid_Search>(
-                        //                                   context.GetFlightData().Where(result =>
-                        //                                       result.SanBayDi == SanBayDii.Name && result.SanBayDen == SanBayDenn.Name && result.NgayGio == DateOfEntry.Value)
-                        //                                       .Select(result => new Datagrid_Search
-                        //                                       {
-                        //                                           MaChuyenBay = result.MaChuyenBay.ToString(),
-                        //                                           SanBayDi = result.SanBayDi,
-                        //                                           SanBayDen = result.SanBayDen,
-                        //                                           KhoiHanh = result.NgayGio,
-                        //                                           SoDiemDung = result.SoDiemDung.ToString(),
-                        //                                           SoHangVe = result.SoLuongVe.ToString(),
-                        //                                           GiaCoBan = result.GiaVe,
-                        //                                           GheTrong = result.GheTrong.ToString()
-                        //                                       }).ToList()
-                        //                                   );
-                        //}
+                        // Load flights list on first load
+                        var result = await context.Database.SqlQuery<FlightInfo>("EXEC GetFlightData").ToListAsync();
+                        Flights = new ObservableCollection<FlightInfo>(result.Select(f => new FlightInfo(f)));
                     }
-                    catch (EntityException)
+                    catch (EntityException e)
                     {
-                        // TODO: messagebox vo
-                        return;
+                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
+
+                // Load finish
+                IsLoadFinished = true;
             });
 
             ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.Search);
 
-            SanBayDoi = new RelayCommand<object>((p) => true, (p) =>
+            ParamsChangedCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
+                // Loading
+                IsLoadFinished = false;
+
+                // Load new flight table
                 using (var context = new FlightTicketSellEntities())
                 {
                     try
                     {
-                        //System.DateTime? selectedDate = searchView.dp.SelectedDate.Value;
-                        if (SanBayDii != null && SanBayDenn != null && DateOfEntry != null)
-                        {
-                            Flights = new ObservableCollection<Datagrid_Search>(
-                                                           context.GetFlightData().Where(result =>
-                                                               result.SanBayDi == SanBayDii.Name && result.SanBayDen == SanBayDenn.Name && result.NgayGio == DateOfEntry.Value)
-                                                               .Select(result => new Datagrid_Search
-                                                               {
-                                                                   MaChuyenBay = result.MaChuyenBay.ToString(),
-                                                                   SanBayDi = result.SanBayDi,
-                                                                   SanBayDen = result.SanBayDen,
-                                                                   KhoiHanh = result.NgayGio,
-                                                                   SoDiemDung = result.SoDiemDung.ToString(),
-                                                                   SoHangVe = result.SoLuongVe.ToString(),
-                                                                   GiaCoBan = result.GiaVe,
-                                                                   GheTrong = result.GheTrong.ToString()
-                                                               }).ToList()
-                                                           );
-                        }
+                        // Get flights
+                        var result = await context.Database.SqlQuery<FlightInfo>("EXEC GetFlightData").ToListAsync();
+                        //var result = context.GetFlightData().ToList();
+
+                        // Apply Start airport param if there is
+                        if (SanBayDii != null)
+                            result = result.Where(f => f.MaSanBayDi == SanBayDii.ID).ToList();
+                        // Apply Destination airport param if there is
+                        if (SanBayDenn != null)
+                            result = result.Where(f => f.MaSanBayDen == SanBayDenn.ID).ToList();
+                        // Apply Date param if there is
+                        if (DateOfEntry != null)
+                            result = result.Where(f => f.NgayGio == DateOfEntry.Value).ToList();
+
+                        Flights = new ObservableCollection<FlightInfo>(result.Select(f => new FlightInfo(f)));
                     }
-                    catch (EntityException)
+                    catch (EntityException e)
                     {
-                        // TODO: messagebox vo
-                        return;
+                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
+
+                // Load finish
+                IsLoadFinished = true;
             });
 
         }
+
+        #endregion
 
     }
 }

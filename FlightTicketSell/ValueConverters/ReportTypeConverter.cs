@@ -1,5 +1,5 @@
 ﻿using FlightTicketSell.Models.Enums;
-using FlightTicketSell.ViewModels.Report;
+using FlightTicketSell.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

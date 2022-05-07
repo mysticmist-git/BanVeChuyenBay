@@ -1,6 +1,8 @@
-﻿namespace FlightTicketSell.ViewModels.Search
+﻿using FlightTicketSell.ViewModels;
+
+namespace FlightTicketSell.Models.SearchRelated
 {
-    public class MidAirport_Search : BaseViewModel
+    public class OverlayAirport_Search : BaseViewModel
     {
         public string ThuTu { get; set; }
         public string TenSanBay { get; set; }
