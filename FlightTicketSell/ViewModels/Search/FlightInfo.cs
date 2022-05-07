@@ -69,7 +69,7 @@ namespace FlightTicketSell.Models
         {
             Open_Window_DescriptionTicketFlight_Command = new RelayCommand<object>((p) => true, (p) =>
             {
-                IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightTicket;
+                IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightDetail;
                 IoC.IoC.Get<FlightDetailViewModel>().FlightInfo = new DetailFlilghtInfo(this);
             });
         }

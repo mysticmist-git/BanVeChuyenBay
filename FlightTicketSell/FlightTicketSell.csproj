@@ -266,8 +266,8 @@
     <Compile Include="Views\SellViewRelated\ChangeTicketView.xaml.cs">
       <DependentUpon>ChangeTicketView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SellViewRelated\TicketInfoView.xaml.cs">
-      <DependentUpon>TicketInfoView.xaml</DependentUpon>
+    <Compile Include="Views\SellViewRelated\TicketInfoFillingView.xaml.cs">
+      <DependentUpon>TicketInfoFillingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingViewRelated\EditAirportView.xaml.cs">
       <DependentUpon>EditAirportView.xaml</DependentUpon>
@@ -288,7 +288,7 @@
     <Compile Include="Views\ScheduleView.xaml.cs">
       <DependentUpon>ScheduleView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SearchView.xaml.cs">
+    <Compile Include="Views\SearchViewRelated\SearchView.xaml.cs">
       <DependentUpon>SearchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SellViewRelated\SellView.xaml.cs">
@@ -383,7 +383,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SellViewRelated\TicketInfoView.xaml">
+    <Page Include="Views\SellViewRelated\TicketInfoFillingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -411,7 +411,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SearchView.xaml">
+    <Page Include="Views\SearchViewRelated\SearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -43,7 +43,7 @@ namespace FlightTicketSell.ViewModels
 
         public FlightTicketAndReservationViewModel()
         {
-            ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightTicket);
+            ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightDetail);
 
             LoadCommand = new RelayCommand<object>((p) => true, (p) =>
             {

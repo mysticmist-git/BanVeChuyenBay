@@ -29,7 +29,7 @@ namespace FlightTicketSell.ViewModels
         public SellPayViewModel()
         {
             // Create commands
-            ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.TicketInfo);
+            ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.TicketInfoFilling);
 
             PayCommand = new RelayCommand<object>((p) => true, (p) => SaveTicketPay());
         }

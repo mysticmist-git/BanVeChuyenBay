@@ -46,9 +46,19 @@ namespace FlightTicketSell.ViewModels
         public ICommand ReturnCommand { get; set; }
 
         /// <summary>
+        /// Navigate to <see cref="AppView.BookDetail"/> View
+        /// </summary>
+        public ICommand PlaceBookCommand { get; set; }
+
+        /// <summary>
+        /// Navigate to <see cref="AppView.TicketInfoFilling"/> View
+        /// </summary>
+        public ICommand TicketBuyCommand { get; set; }
+
+        /// <summary>
         /// Navigate to <see cref="AppView.TicketSoldOrBooked"/> View
         /// </summary>
-        public ICommand Open_Window_TickedSoldBooked_Command { get; set; }
+        public ICommand TickedSoldBookedCommand { get; set; }
 
         #endregion
 
@@ -62,7 +72,15 @@ namespace FlightTicketSell.ViewModels
             // Create commands
             ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.Search);
 
-            Open_Window_TickedSoldBooked_Command = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.TicketSoldOrBooked);
+            PlaceBookCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.BookDetail);
+
+            TicketBuyCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.TicketInfoFilling;
+
+            });
+
+            TickedSoldBookedCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.TicketSoldOrBooked);
             
             LoadCommand = new RelayCommand<object>((p) => true, (p) =>
             {

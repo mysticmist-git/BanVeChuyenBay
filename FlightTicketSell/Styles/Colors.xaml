@@ -24,8 +24,13 @@
     <!--Green-->
     <Color x:Key="Green">#24B44C</Color>
     <SolidColorBrush x:Key="GreenBrush" Color="{StaticResource Green}" />
+    
     <!--Orange-->
     <Color x:Key="Orange">#f96421</Color>
     <SolidColorBrush x:Key="OrangeBrush" Color="{StaticResource Orange}" />
+
+    <!-- Light Orange -->
+    <Color x:Key="LightOrange">#eab367</Color>
+    <SolidColorBrush x:Key="LightOrangeBrush" Color="{StaticResource LightOrange}" />
 
 </ResourceDictionary>

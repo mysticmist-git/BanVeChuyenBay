@@ -18,9 +18,9 @@ namespace FlightTicketSell.Views.SellViewRelated
     /// <summary>
     /// Interaction logic for TicketInfoView.xaml
     /// </summary>
-    public partial class TicketInfoView : UserControl
+    public partial class TicketInfoFillingView : UserControl
     {
-        public TicketInfoView()
+        public TicketInfoFillingView()
         {
             InitializeComponent();
         }

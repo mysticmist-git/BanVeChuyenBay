@@ -38,6 +38,7 @@ namespace FlightTicketSell.ViewModels
 
 
         public decimal HeSo {get; set; }
+
         #endregion
 
         #region Constructor
@@ -50,7 +51,7 @@ namespace FlightTicketSell.ViewModels
             // Create commands
             ContinueCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.SellPay);
 
-            ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.Sell);
+            ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightDetail);
 
             LoadCommand = new RelayCommand<object>((p) => true, (p) =>
             {

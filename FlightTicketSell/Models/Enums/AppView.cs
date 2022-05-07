@@ -20,7 +20,7 @@
         /// <summary>
         /// The view to enter customer information
         /// </summary>
-        FlightTicket,
+        FlightDetail,
         /// <summary>
         /// The Ticket Flight to enter Detail
         /// </summary>
@@ -40,7 +40,7 @@
         /// <summary>
         /// The view to get ticket paid
         /// </summary>
-        TicketInfo,
+        TicketInfoFilling,
         /// <summary>
         /// The view shows detailed ticket info
         /// </summary>

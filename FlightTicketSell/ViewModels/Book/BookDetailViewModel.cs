@@ -45,7 +45,7 @@ namespace FlightTicketSell.ViewModels
         {
             // Create command
             ContinueCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.ReservePay);
-            ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.Book);
+            ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightDetail);
 
             AddCustomerCommand = new RelayCommand<object>((p) => true, (p) => 
             {

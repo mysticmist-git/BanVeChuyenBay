@@ -333,21 +333,53 @@
 
             <!--Vé đã bán/Chỗ đã đặt-->
 
-            <Button
-                Grid.Row="3"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Margin="0 0 35 0"
-                Background="#ff4500"
-                Foreground="#fff"
-                Style="{StaticResource MaterialDesignRaisedAccentButton}"
-                Width="250"
-                Height="45"
-                Command="{Binding Open_Window_TickedSoldBooked_Command}"
-                ToolTip="Resource name: MaterialDesignRaisedAccentButton"
-                materialDesign:RippleAssist.Feedback="#DD000000">
-                Vé đã bán / Chỗ đã đặt
-            </Button>
+            <StackPanel Grid.Row="3" 
+                        Margin="0 0 35 0" 
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+
+                <!-- Place Reservation book button -->
+                <Button Content="Đặt chỗ"
+                        Background="{StaticResource OrangeBrush}"
+                        Foreground="#fff"
+                        BorderThickness="0"
+                        materialDesign:ButtonAssist.CornerRadius="10"
+                        Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                        Height="45"
+                        Padding="30 0"
+                        Margin="0 0 20 0"
+                        Command="{Binding PlaceBookCommand}"
+                        ToolTip="Xem vé đã bán, chỗ đã đặt"
+                        materialDesign:RippleAssist.Feedback="#DD000000" />
+                
+                <!-- Buy ticket button -->
+                <Button Content="Mua vé"
+                        Background="{StaticResource LightOrangeBrush}"
+                        Foreground="#fff"
+                        BorderThickness="0"
+                        materialDesign:ButtonAssist.CornerRadius="10"
+                        Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                        Height="45"
+                        Padding="30 0"
+                        Margin="0 0 20 0"
+                        Command="{Binding TicketBuyCommand}"
+                        ToolTip="Xem vé đã bán, chỗ đã đặt"
+                        materialDesign:RippleAssist.Feedback="#DD000000" />
+                
+                <!-- Show ticket sold, place reserved button -->
+                <Button Content="Vé đã bán / Chỗ đã đặt"
+                        Background="{StaticResource BlueBrush}"
+                        Foreground="#fff"
+                        BorderThickness="0"
+                        materialDesign:ButtonAssist.CornerRadius="10"
+                        Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                        Padding="30 0"
+                        Height="45"
+                        Command="{Binding TickedSoldBookedCommand}"
+                        ToolTip="Xem vé đã bán, chỗ đã đặt"
+                        materialDesign:RippleAssist.Feedback="#DD000000" />
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

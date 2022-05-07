@@ -20,7 +20,7 @@ namespace FlightTicketSell.ValueConverters
                 case AppView.Search:
                     return new SearchView();
                 // Ticket Flight
-                case AppView.FlightTicket:
+                case AppView.FlightDetail:
                     return new DescriptionTicketFlight();
                 //TicketsoldBooked
                 case AppView.TicketSoldOrBooked:
@@ -37,8 +37,8 @@ namespace FlightTicketSell.ValueConverters
                     return new SellView();
                 case AppView.SellPay:
                     return new SellPayView();
-                case AppView.TicketInfo:
-                    return new Views.SellViewRelated.TicketInfoView();
+                case AppView.TicketInfoFilling:
+                    return new Views.SellViewRelated.TicketInfoFillingView();
                 case AppView.ChangeTicket:
                     return new Views.SellViewRelated.ChangeTicketView();
                 // Schedule
