@@ -21,7 +21,15 @@ namespace FlightTicketSell.ViewModels.Setting
         #endregion
 
         #region Methods
-
+        public Airport() { }
+        public Airport(Airport airport)
+        {
+            Id= airport.Id;
+            Name= airport.Name;
+            Code= airport.Code;    
+            Province= airport.Province;
+            Status= airport.Status;
+        }
         #endregion
     }
 }

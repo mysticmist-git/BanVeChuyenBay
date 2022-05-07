@@ -139,11 +139,12 @@
                                    Style="{StaticResource CustomTextbox}" 
                                    VerticalAlignment="Center" 
                                    Text="{Binding DepartureAirport.Name}"
+
                                    >
                             <!-- Command -->
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PreviewMouseDown">
-                                    <i:InvokeCommandAction Command="{Binding ChooseAirport_Command}"/>
+                                    <i:InvokeCommandAction Command="{Binding ChooseDepartureAirport_Command}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </TextBox>
@@ -165,11 +166,11 @@
                                    materialDesign:HintAssist.Hint="Sân bay đến" 
                                    Style="{StaticResource CustomTextbox}" 
                                    VerticalAlignment="Center" 
-                                    Text="{Binding LandingAirport.Name}">
+                                    Text="{Binding LandingAirport.Name, UpdateSourceTrigger=PropertyChanged}">
                             <!-- Command -->
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PreviewMouseDown">
-                                    <i:InvokeCommandAction Command="{Binding ChooseAirport_Command}"/>
+                                    <i:InvokeCommandAction Command="{Binding ChooseLandingAirport_Command}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </TextBox>

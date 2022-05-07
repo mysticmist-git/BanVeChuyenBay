@@ -33,13 +33,21 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand EnterLayoverAirport_LoadCommand { get; set; }
         /// <summary>
-        /// DialogHost Thêm sân bay
+        /// Mở DialogHost Chọn sân bay đi
         /// </summary>
-        public ICommand ChooseAirport_Command { get; set; }
+        public ICommand ChooseDepartureAirport_Command { get; set; }
         /// <summary>
-        /// Hàm load DialogHost Thêm sân bay
+        /// Mở DialogHost Chọn sân bay đến
+        /// </summary>
+        public ICommand ChooseLandingAirport_Command { get; set; }
+        /// <summary>
+        /// Hàm load DialogHost Chọn sân bay
         /// </summary>
         public ICommand ChooseAirport_LoadCommand { get; set; }
+        /// <summary>
+        /// Nút chọn trong Chọn sân bay
+        /// </summary>
+        public ICommand ChooseAirportButton_Command { get; set; }
         #endregion
 
         #region Public Properties
@@ -69,7 +77,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Sân bay đi
         /// </summary>
-        public Airport DepartureAirport { get; set; } 
+        public  Airport DepartureAirport { get; set; } 
 
         /// <summary>
         /// Sân bay đến
@@ -79,7 +87,12 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Danh sách sân bay được chọn
         /// </summary>
-        public ObservableCollection<Airport> ChooseAirport_List { get; set; }
+        public ObservableCollection<Airport> ChooseAirport_List { get; set; } = new ObservableCollection<Airport>();
+
+        /// <summary>
+        /// Sân bay được chọn trong Chọn sân bay
+        /// </summary>
+        public Airport ChooseAirport_SelectedItem { get; set; }
 
         /// <summary>
         /// Danh sách sân bay trung gian
@@ -93,6 +106,13 @@ namespace FlightTicketSell.ViewModels
 
         #endregion
 
+        #region Private Properties
+        /// <summary>
+        /// Biến đánh dấu thành phần nào đã mở DialogHost Chọn sân bay
+        /// </summary>
+        private static string OpenChooseAirport { get; set; }
+
+        #endregion
         public ScheduleViewModel()
         {
             #region Main Command
@@ -141,7 +161,7 @@ namespace FlightTicketSell.ViewModels
             Change_Departure_Landing_Airport_Command = new RelayCommand<object>((p) => { return true; },
                (p) =>
                {
-
+                  
                }
            );
 
@@ -161,14 +181,24 @@ namespace FlightTicketSell.ViewModels
                 }
             );
 
-            ChooseAirport_Command = new RelayCommand<object>((p) => { return true; },
+            ChooseDepartureAirport_Command = new RelayCommand<object>((p) => { return true; },
              async (p) =>
              {
+                 
                 ChooseAirportView chooseAirportView = new ChooseAirportView();
+                 OpenChooseAirport = "Departure";
                  var result = await DialogHost.Show(chooseAirportView, "RootDialog");
              }
            );
-
+            ChooseLandingAirport_Command = new RelayCommand<object>((p) => { return true; },
+             async (p) =>
+             {
+               
+                 ChooseAirportView chooseAirportView = new ChooseAirportView();
+                 var result = await DialogHost.Show(chooseAirportView, "RootDialog");
+                 OpenChooseAirport = "Landing";
+             }
+           );
             ChooseAirport_LoadCommand = new RelayCommand<object>((p) => { return true; },
               (p) =>
               {
@@ -176,17 +206,27 @@ namespace FlightTicketSell.ViewModels
                   {
                       try
                       {
-                          var list = context.SANBAYs.ToList();
-                          if (list!=null)
+                          // Danh sách sân bay
+                          if (ChooseAirport_List != null)
                           {
-                              ChooseAirport_List = new ObservableCollection<Airport>();
-                              foreach (var s in list)
+                              ChooseAirport_List.Clear();
+                          }
+                          foreach (var item in context.SANBAYs.ToList())
+                          {
+                              //Sân bay còn hoạt động mới thêm vào list
+                              if (item.TrangThai )
+                                  ChooseAirport_List.Add(new Airport() { Id = item.MaSanBay, Code = item.VietTat, Name = item.TenSanBay, Province = item.TinhThanh, Status = item.TrangThai });
+                              if (LandingAirport!=null)
                               {
-                                  ChooseAirport_List.Add(new Airport{ Id = s.MaSanBay, Code = s.VietTat, Name = s.TenSanBay, Province = s.TinhThanh, Status = s.TrangThai });
+                                  ChooseAirport_List.Remove (LandingAirport);
+                              }
+                              if (DepartureAirport != null)
+                              {
+                                  ChooseAirport_List.Remove(DepartureAirport);
                               }
                           }
-                         
-                       
+
+
                       }
                       catch (EntityException e)
                       {
@@ -194,6 +234,30 @@ namespace FlightTicketSell.ViewModels
                       }
                   }
               }
+          );
+            ChooseAirportButton_Command = new RelayCommand<object>((p) => { return true; },
+             (p) =>
+            {
+                if (string.IsNullOrEmpty(OpenChooseAirport) || ChooseAirport_SelectedItem==null)
+                    return;
+                if (OpenChooseAirport=="Departure")
+                {
+                    DepartureAirport = new Airport
+                    {
+                        Id = ChooseAirport_SelectedItem.Id,
+                        Name = ChooseAirport_SelectedItem.Name,
+                        Province = ChooseAirport_SelectedItem.Province,
+                        Code = ChooseAirport_SelectedItem.Code,
+                        Status = ChooseAirport_SelectedItem.Status
+                    };
+                }
+                if (OpenChooseAirport=="Landing")
+                {
+                    LandingAirport = new Airport(ChooseAirport_SelectedItem);
+                }
+                // Close dialog
+                DialogHost.CloseDialogCommand.Execute(null, null);
+            }
           );
             #endregion
 

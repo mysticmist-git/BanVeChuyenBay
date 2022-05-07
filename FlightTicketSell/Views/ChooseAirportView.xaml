@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         xmlns:local="clr-namespace:FlightTicketSell.Views" xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
              mc:Ignorable="d"
-        Height="400" Width="350">
+        Height="400" Width="420">
     <UserControl.DataContext>
         <vm:ScheduleViewModel />
     </UserControl.DataContext>
@@ -50,10 +50,9 @@
             Grid.Row="2"
             CornerRadius="10"
             Background="White"
-            Padding="30 15"
             >
-            <DataGrid
-                    ItemsSource="{Binding ChooseAirport_List}"
+            <!--<DataGrid
+                    ItemsSource="{Binding ChooseAirport_List, UpdateSourceTrigger=PropertyChanged}"
                     d:ItemsSource="{d:SampleData ItemCount=5}"
                     
                     ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
@@ -80,7 +79,54 @@
                             Header="Tỉnh thành" />
                     
                 </DataGrid.Columns>
-            </DataGrid>
+            </DataGrid>-->
+            <!--Danh sách sân bay-->
+            <ListView ItemsSource="{Binding ChooseAirport_List}"
+                              SelectedItem="{Binding ChooseAirport_SelectedItem}">
+                <ListView.View>
+                    <GridView>
+
+                        <!--Viết tắt-->
+                        <GridViewColumn >
+                            <GridViewColumn.Header>
+                                <!--Chỗ này mã là viết tắt nha-->
+                                <TextBlock Text="Mã" Style="{StaticResource Custom_GridviewHeader}"/>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Code}"  Style="{StaticResource Custom_GridviewCell}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <!--Tên sân bay-->
+                        <GridViewColumn >
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Tên sân bay" Style="{StaticResource Custom_GridviewHeader}"/>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource Custom_GridviewCell}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <!--Tên sân bay-->
+                        <GridViewColumn >
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Tỉnh thành" Style="{StaticResource Custom_GridviewHeader}"/>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Province}" Style="{StaticResource Custom_GridviewCell}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                    </GridView>
+                </ListView.View>
+
+            </ListView>
         </Border>
 
         <!--Hai nút bấm-->
@@ -109,6 +155,7 @@
                 Content="Chọn" BorderThickness="0,0,0,0" 
                 Margin="20 10 20 0"
                 materialDesign:ButtonAssist.CornerRadius="7"
+                Command="{Binding ChooseAirportButton_Command}"
                 >
                 
             </Button>
