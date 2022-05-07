@@ -9,10 +9,9 @@
 
 namespace FlightTicketSell.Models
 {
-    using FlightTicketSell.ViewModels;
     using System;
     
-    public partial class GetFlightData_Result : BaseViewModel
+    public partial class GetFlightData_Result
     {
         public int MaChuyenBay { get; set; }
         public int MaSanBayDi { get; set; }

@@ -47,7 +47,10 @@ namespace FlightTicketSell.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFlightData_Result>("GetFlightData");
         }
     
-        
+        public virtual ObjectResult<GetFlightData2_Result> GetFlightData2()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFlightData2_Result>("GetFlightData2");
+        }
     
         public virtual ObjectResult<GetFlightData_updated_Result> GetFlightData_updated()
         {
