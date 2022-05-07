@@ -9,6 +9,7 @@ using System.Linq;
 using System.Data.Entity.Core;
 using System.Windows;
 using System;
+using FlightTicketSell.Models.SearchRelated;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -28,9 +29,9 @@ namespace FlightTicketSell.ViewModels
         public ICommand LoadCommand { get; set; }
         public DateTime TicketDeadline { get; set; }
 
-        public ObservableCollection<MidAirport_Search> MidAirports { get; set; }
+        public ObservableCollection<OverlayAirport_Search> MidAirports { get; set; }
 
-        public ObservableCollection<TicketSold> Customers { get; set; }
+        public ObservableCollection<Ticket> Customers { get; set; }
 
         public string MaDuongBay { get; set; }
         #endregion
@@ -58,10 +59,10 @@ namespace FlightTicketSell.ViewModels
                     {
                         MaDuongBay = context.CHUYENBAYs.Where(result => result.MaChuyenBay== 1).FirstOrDefault().MaDuongBay.ToString();
 
-                        MidAirports = new ObservableCollection<MidAirport_Search>(
+                        MidAirports = new ObservableCollection<OverlayAirport_Search>(
                                                                 context.SANBAYTGs.Where(result =>
                                                                 result.MaDuongBay.ToString() == MaDuongBay)
-                                                                .Select(result => new MidAirport_Search
+                                                                .Select(result => new OverlayAirport_Search
                                                                 {
                                                                     ThuTu = result.ThuTu.ToString(),
                                                                     TenSanBay = context.SANBAYs.Where(x => x.MaSanBay == result.MaSanBay).FirstOrDefault().TenSanBay,
@@ -69,13 +70,13 @@ namespace FlightTicketSell.ViewModels
                                                                     ThoiGianDung = result.ThoiGianDung.ToString()
                                                                 }).ToList());
 
-                        Customers = new ObservableCollection<TicketSold>(
+                        Customers = new ObservableCollection<Ticket>(
                                                                 context.VEs.Where(result =>
                                                                 result.MaChuyenBay == 1)
-                                                                .Select(result => new TicketSold
+                                                                .Select(result => new Ticket
                                                                 {                                                                  
                                                                     TenKhachHang = context.KHACHHANGs.Where(x => x.MaKhachHang == result.MaKhachHang).FirstOrDefault().HoTen,
-                                                                    MaKhachHang = result.MaKhachHang.ToString(),                                                                
+                                                                    MaKhachHang = result.MaKhachHang,                                                                
                                                                 }).ToList()
                                                            );
 

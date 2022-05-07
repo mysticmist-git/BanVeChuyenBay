@@ -51,6 +51,11 @@ namespace FlightTicketSell.ViewModels.Search
         /// </summary>
         public string TenKhachHang { get; set; }
 
+        /// <summary>
+        /// Customer code
+        /// </summary>
+        public int MaKhachHang { get; set; }
+
         #endregion
 
         #region Commands

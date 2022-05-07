@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Linq;
 using System.Data.Entity.Core;
 using System.Windows;
+using FlightTicketSell.Models.SearchRelated;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -32,7 +33,7 @@ namespace FlightTicketSell.ViewModels
 
         public ObservableCollection<Airport_Search> Airports { get; set; }
         public ObservableCollection<Locations_List> Locations { get; set; }
-        public ObservableCollection<Datagrid_Search> Flights { get; set; }
+        public ObservableCollection<FlightInfo> Flights { get; set; }
 
         public Airport_Search SanBayDii { get; set; }
         public Airport_Search SanBayDenn { get; set; }
@@ -100,19 +101,19 @@ namespace FlightTicketSell.ViewModels
                     {
                         if (MaChuyenBay > 0)
                         {
-                            Flights = new ObservableCollection<Datagrid_Search>(
+                            Flights = new ObservableCollection<FlightInfo>(
                                                            context.GetFlightData_updated().Where(result =>
                                                                result.MaChuyenBay == MaChuyenBay)
-                                                               .Select(result => new Datagrid_Search
+                                                               .Select(result => new FlightInfo
                                                                {
-                                                                   MaChuyenBay = result.MaChuyenBay.ToString(),
+                                                                   MaChuyenBay = result.MaChuyenBay,
                                                                    SanBayDi = result.SanBayDi,
                                                                    SanBayDen = result.SanBayDen,
-                                                                   KhoiHanh = result.NgayGio,
-                                                                   SoDiemDung = result.SoDiemDung.ToString(),
-                                                                   SoHangVe = result.SoLuongVe.ToString(),
-                                                                   GiaCoBan = result.GiaVe,
-                                                                   GheTrong = result.GheTrong.ToString()
+                                                                   NgayGio = result.NgayGio,
+                                                                   SoDiemDung = result.SoDiemDung,
+                                                                   SoHangVe = result.SoLuongVe,
+                                                                   GiaVe = result.GiaVe,
+                                                                   GheTrong = result.GheTrong
                                                                }).ToList()
                                                            );
                         }
@@ -120,19 +121,19 @@ namespace FlightTicketSell.ViewModels
                         //System.DateTime? selectedDate = searchView.dp.SelectedDate.Value;  && DateOfEntry != null  && result.NgayGio == DateOfEntry.Value DiemDii.Name && result.DiemDen == DiemDenn.Name
                         if (DiemDii != null && DiemDenn != null && SanBayDii != null && SanBayDenn != null && DateOfEntry != null)
                         {
-                            Flights = new ObservableCollection<Datagrid_Search>(
+                            Flights = new ObservableCollection<FlightInfo>(
                                                            context.GetFlightData_updated().Where(result =>
                                                                result.DiemDi == DiemDii.Name && result.DiemDen == DiemDenn.Name && result.NgayGio == DateOfEntry.Value && result.SanBayDi == SanBayDii.Name && result.SanBayDen == SanBayDenn.Name)
-                                                               .Select(result => new Datagrid_Search
+                                                               .Select(result => new FlightInfo
                                                                {
-                                                                   MaChuyenBay = result.MaChuyenBay.ToString(),
+                                                                   MaChuyenBay = result.MaChuyenBay,
                                                                    SanBayDi = result.SanBayDi,
                                                                    SanBayDen = result.SanBayDen,
-                                                                   KhoiHanh = result.NgayGio,
-                                                                   SoDiemDung = result.SoDiemDung.ToString(),
-                                                                   SoHangVe = result.SoLuongVe.ToString(),
-                                                                   GiaCoBan = result.GiaVe,
-                                                                   GheTrong = result.GheTrong.ToString()
+                                                                   NgayGio = result.NgayGio,
+                                                                   SoDiemDung = result.SoDiemDung,
+                                                                   SoHangVe = result.SoLuongVe,
+                                                                   GiaVe = result.GiaVe,
+                                                                   GheTrong = result.GheTrong
                                                                }).ToList()
                                                            );
                         }

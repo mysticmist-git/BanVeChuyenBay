@@ -362,7 +362,7 @@
         <Function Name="GetFlightData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetFlightData_updated" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetFlightData2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="BANVECHUYENBAYModelStoreContainer">
+        <EntityContainer Name="FlightTicketSellModelStoreContainer">
           <EntitySet Name="CHITIETDATCHO" EntityType="Self.CHITIETDATCHO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHITIETHANGVE" EntityType="Self.CHITIETHANGVE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHUYENBAY" EntityType="Self.CHUYENBAY" Schema="dbo" store:Type="Tables" />
@@ -931,9 +931,9 @@
             <End Role="SANBAY" EntitySet="SANBAYs" />
             <End Role="SANBAYTG" EntitySet="SANBAYTGs" />
           </AssociationSet>
-          <FunctionImport Name="GetFlightData" ReturnType="Collection(BANVECHUYENBAYModel.GetFlightData_Result)" />
-          <FunctionImport Name="GetFlightData2" ReturnType="Collection(BANVECHUYENBAYModel.GetFlightData2_Result)" />
-          <FunctionImport Name="GetFlightData_updated" ReturnType="Collection(BANVECHUYENBAYModel.GetFlightData_updated_Result)" />
+          <FunctionImport Name="GetFlightData" ReturnType="Collection(FlightTicketSellModel.GetFlightData_Result)" />
+          <FunctionImport Name="GetFlightData2" ReturnType="Collection(FlightTicketSellModel.GetFlightData2_Result)" />
+          <FunctionImport Name="GetFlightData_updated" ReturnType="Collection(FlightTicketSellModel.GetFlightData_updated_Result)" />
         </EntityContainer>
         <ComplexType Name="GetFlightData_Result">
           <Property Type="Int32" Name="MaChuyenBay" Nullable="false" />
@@ -1147,9 +1147,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetFlightData2" FunctionName="BANVECHUYENBAYModel.Store.GetFlightData2">
+          <FunctionImportMapping FunctionImportName="GetFlightData2" FunctionName="FlightTicketSellModel.Store.GetFlightData2">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="BANVECHUYENBAYModel.GetFlightData2_Result">
+              <ComplexTypeMapping TypeName="FlightTicketSellModel.GetFlightData2_Result">
                 <ScalarProperty Name="MaChuyenBay" ColumnName="MaChuyenBay" />
                 <ScalarProperty Name="SanBayDi" ColumnName="SanBayDi" />
                 <ScalarProperty Name="SanBayDen" ColumnName="SanBayDen" />
@@ -1161,9 +1161,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetFlightData_updated" FunctionName="BANVECHUYENBAYModel.Store.GetFlightData_updated">
+          <FunctionImportMapping FunctionImportName="GetFlightData_updated" FunctionName="FlightTicketSellModel.Store.GetFlightData_updated">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="BANVECHUYENBAYModel.GetFlightData_updated_Result">
+              <ComplexTypeMapping TypeName="FlightTicketSellModel.GetFlightData_updated_Result">
                 <ScalarProperty Name="MaChuyenBay" ColumnName="MaChuyenBay" />
                 <ScalarProperty Name="SanBayDi" ColumnName="SanBayDi" />
                 <ScalarProperty Name="SanBayDen" ColumnName="SanBayDen" />
