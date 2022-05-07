@@ -17,15 +17,15 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand SearchCommand { get; set; }
 
-        /// <summary>
-        /// To open the ticket book view
-        /// </summary>
-        public ICommand BookCommand { get; set; }
+        ///// <summary>
+        ///// To open the ticket book view
+        ///// </summary>
+        //public ICommand BookCommand { get; set; }
 
-        /// <summary>
-        /// To open the ticket sell view
-        /// </summary>
-        public ICommand SellCommand { get; set; }
+        ///// <summary>
+        ///// To open the ticket sell view
+        ///// </summary>
+        //public ICommand SellCommand { get; set; }
 
         /// <summary>
         /// To open the flight schedule view
@@ -53,8 +53,8 @@ namespace FlightTicketSell.ViewModels
         {
             // Create command
             SearchCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.Search);
-            BookCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.Book);
-            SellCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.Sell);
+            //BookCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.Book);
+            //SellCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.Sell);
             ScheduleCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.Schedule);
             ReportCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.Report);
             SettingCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.Setting);
