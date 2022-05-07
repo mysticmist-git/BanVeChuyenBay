@@ -4,6 +4,8 @@ using FlightTicketSell.Views.Helper;
 using System.Globalization;
 using FlightTicketSell.Views.SearchViewMore;
 using FlightTicketSell.ViewModels;
+using FlightTicketSell.Models.Enums;
+using System.Windows;
 
 namespace FlightTicketSell.ViewModels.Search
 {
@@ -61,16 +63,67 @@ namespace FlightTicketSell.ViewModels.Search
         /// </summary>
         public string DisplayReservationPrice { get => ReportHelper.VietnamCurrencyConvert(GiaTien_Ve) + " VNĐ"; }
 
+        /// <summary>
+        /// The state of this reservation
+        /// ChuaDoi: It hasn't been changed for tickets
+        /// DaDoi: It has been changed for tickets
+        /// DaHuy: It has been canceled
+        /// </summary>
+        public string TrangThai { get; set; }
+
+        public BookingState BookingState 
+        { 
+            get
+            {
+                switch (TrangThai)
+                {
+                    case "ChuaDoi":
+                        return BookingState.NotChanged;
+                    case "DaDoi":
+                        return BookingState.Changed;
+                    case "DaHuy":
+                        return BookingState.NotChanged;
+                    default:
+                        return BookingState.NotChanged;
+                }
+            }
+
+            set
+            {
+                switch (value)
+                {
+                    case BookingState.NotChanged:
+                        TrangThai = "ChuaDoi";
+                        break;
+                    case BookingState.Changed:
+                        TrangThai = "DaDoi";
+                        break;
+                    case BookingState.Cancel:
+                        TrangThai = "DaHuy";
+                        break;
+                }
+            }
+        }
+
         #endregion
 
         #region Commands
 
+        /// <summary>
+        /// The command to open the detail description customer widow
+        /// </summary>
         public ICommand Open_Window_DescriptionCustomer_Command { get; set; }
+        
+        /// <summary>
+        /// The command to show more information about the booking
+        /// </summary>
+        public ICommand ShowMoreCommand { get; set; }
 
         #endregion
 
         public PlaceReservation()
         {
+            // Create commands 
             Open_Window_DescriptionCustomer_Command = new RelayCommand<object>((p) => true, (p) =>
             {
                 var view = new DetailCustomers()
@@ -84,7 +137,10 @@ namespace FlightTicketSell.ViewModels.Search
 
                 view.ShowDialog();
             });
+            ShowMoreCommand = new RelayCommand<object>(p => true, p =>
+            {
+                IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.ChangeTicket;
+            });
         }
-
     }
 }

@@ -76,7 +76,8 @@ namespace FlightTicketSell.ViewModels
                                                                     SoCho = result.SoVeDat,
                                                                     TenHangVe = context.HANGVEs.Where(x => x.MaHangVe == result.MaHangVe).FirstOrDefault().TenHangVe,
                                                                     NgayDatVe = result.NgayGioDat,
-                                                                    GiaTien_Ve = result.GiaTien
+                                                                    GiaTien_Ve = result.GiaTien,
+                                                                    TrangThai = result.TrangThai
                                                                 }).ToList()
                                                            );
                     }

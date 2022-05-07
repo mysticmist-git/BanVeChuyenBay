@@ -229,6 +229,7 @@
                         <Border Grid.Row="1" CornerRadius="0 0 7 7">
                             <DataGrid
                                 ItemsSource="{Binding OverlayAirport}"
+                                d:ItemsSource="{d:SampleData ItemCount=10}"
                                 Padding="30 15"
                                 Background="Transparent"
                                 CanUserSortColumns="True"
@@ -295,6 +296,7 @@
                             <DataGrid
                                 Background="Transparent"
                                 ItemsSource="{Binding TicketTier}"
+                                d:ItemsSource="{d:SampleData ItemCount=3}"
                                 CanUserSortColumns="True"
                                 CanUserAddRows="False"
                                 AutoGenerateColumns="False"

@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:FlightTicketSell.Views"
              xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1366"
@@ -158,6 +159,7 @@
                                   CellStyle="{StaticResource DataGridCellCenter}"
                                   ColumnWidth="*"
                                   ItemsSource="{Binding Tickets}"
+                                  d:ItemsSource="{d:SampleData ItemCount=5}"
                                   CanUserSortColumns="True"
                                   CanUserAddRows="False"
                                   AutoGenerateColumns="False"
@@ -166,11 +168,12 @@
                                 <DataGrid.Columns>
 
                                     <DataGridTextColumn                                    
-                                    Binding="{Binding DisplayTicketID}"
-                                    Header="Mã vé"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                        IsReadOnly="True"
+                                        Binding="{Binding DisplayTicketID}"
+                                        Header="Mã vé"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
 
-                                    <DataGridTemplateColumn Header="Tên khách hàng" Width="250">
+                                    <DataGridTemplateColumn Header="Tên khách hàng" Width="250" IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Grid>
@@ -197,17 +200,18 @@
 
                                     <!-- set a max length to get an indicator in the editor -->
                                     <materialDesign:DataGridTextColumn
-                                    Binding="{Binding TenHangVe}"
-                                    Header="Tên hạng vé"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                        IsReadOnly="True"
+                                        Binding="{Binding TenHangVe}"
+                                        Header="Tên hạng vé"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                                     <materialDesign:DataGridTextColumn
-                                    Binding="{Binding DisplayPayDate}"
-                                    Header="Ngày thanh toán"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                        Binding="{Binding DisplayPayDate}"
+                                        Header="Ngày thanh toán"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                                     <materialDesign:DataGridTextColumn
-                                    Binding="{Binding DisplayTicketPrice}"
-                                    Header="Giá tiền"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                        Binding="{Binding DisplayTicketPrice}"
+                                        Header="Giá tiền"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
@@ -304,9 +308,10 @@
                                   Margin="20 8 20 0"
                                   Grid.Row="1"
                                   ItemsSource="{Binding PlaceReservations}"
+                                  d:ItemsSource="{d:SampleData ItemCount=5}"
                                   ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                                   CellStyle="{StaticResource DataGridCellCenter}"
-                                  ColumnWidth="*"
+                                  ColumnWidth="Auto"
                                   CanUserSortColumns="True"
                                   CanUserAddRows="False"
                                   AutoGenerateColumns="False"
@@ -314,13 +319,13 @@
                                   materialDesign:DataGridAssist.ColumnHeaderPadding="8">
                                 <DataGrid.Columns>
 
-                                    <DataGridTextColumn
+                                    <DataGridTextColumn IsReadOnly="True"
                                     Width="100"
                                     Binding="{Binding DisplayReservationID}"
                                     Header="Mã đặt chỗ"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
 
-                                    <DataGridTemplateColumn Header="Tên khách hàng">
+                                    <DataGridTemplateColumn Header="Tên khách hàng" IsReadOnly="True">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Grid>
@@ -344,27 +349,67 @@
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
+                                    
                                     <!-- set a max length to get an indicator in the editor -->
-                                    <materialDesign:DataGridTextColumn
+                                    <materialDesign:DataGridTextColumn IsReadOnly="True"
                                     Width="100"
                                     Binding="{Binding SoCho}"
                                     Header="Số chỗ"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                                    <materialDesign:DataGridTextColumn
+                                    
+                                    <!-- Tên hạng vé -->
+                                    <materialDesign:DataGridTextColumn IsReadOnly="True"
                                     Width="200"
                                     Binding="{Binding TenHangVe}"
                                     Header="Tên hạng vé"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                                    <materialDesign:DataGridTextColumn
+
+                                    <!-- Ngày đặt vé -->
+                                    <materialDesign:DataGridTextColumn IsReadOnly="True"
                                     Width="175"
                                     Binding="{Binding DisplayBookDate}"
                                     Header="Ngày đặt vé"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                                    <materialDesign:DataGridTextColumn
+
+                                    <!-- Giá tiền / vé -->
+                                    <materialDesign:DataGridTextColumn IsReadOnly="True"
                                     Width="175"
                                     Binding="{Binding DisplayReservationPrice}"
                                     Header="Giá tiền / Vé"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+
+                                    <!-- Trạng thái -->
+                                    <DataGridTemplateColumn Header="Trạng thái" IsReadOnly="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="70" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!-- Flight code -->
+                                                    <TextBlock Grid.Column="0"
+                                                               Text="{Binding BookingState, Mode=OneWay, Converter={valueConverters:BookingStateToStringConverter}}"
+                                                               Foreground="{Binding BookingState, Mode=OneWay, Converter={valueConverters:BookingStateToColorConverter}}"
+                                                               VerticalAlignment="Center"
+                                                               HorizontalAlignment="Left"/>
+
+                                                    <!-- Booking change button -->
+                                                    <Button ToolTip="Đổi vé"
+                                                            Grid.Column="1"
+                                                            Background="{StaticResource GreenBrush}"
+                                                            BorderThickness="0"
+                                                            Command="{Binding ShowMoreCommand}">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Xem " />
+                                                            <materialDesign:PackIcon Kind="TicketAccount" VerticalAlignment="Center" />
+                                                        </StackPanel>
+                                                    </Button>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>

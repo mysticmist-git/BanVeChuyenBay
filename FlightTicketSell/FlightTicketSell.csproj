@@ -134,8 +134,9 @@
     <Compile Include="Models\DUONGBAY.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Enums\CustomerDetailType.cs" />
-    <Compile Include="Models\Enums\ReportType.cs" />
+    <Compile Include="Models\Enums\Search\CustomerDetailType.cs" />
+    <Compile Include="Models\Enums\Report\ReportType.cs" />
+    <Compile Include="Models\Enums\Search\BookingState.cs" />
     <Compile Include="Models\GetFlightData2_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -173,6 +174,8 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SearchRelated\DetailFlilghtInfo.cs" />
+    <Compile Include="ValueConverters\Search\BookingStateToColorConverter.cs" />
+    <Compile Include="ValueConverters\Search\BookingStateToStringConverter.cs" />
     <Compile Include="ViewModels\Search\CustomersDetailViewModel.cs" />
     <Compile Include="ViewModels\Search\FlightInfo.cs" />
     <Compile Include="Models\THAMSO.cs">
