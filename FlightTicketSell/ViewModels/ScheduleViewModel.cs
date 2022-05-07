@@ -31,6 +31,7 @@ namespace FlightTicketSell.ViewModels
         public ICommand Keep_Departure_DifferentFrom_Landing_Command { get; set; }
         public ICommand Keep_Landing_DifferentFrom_Departure_Command { get; set; }
         public ICommand LoadCommand { get; set; }
+        public ICommand EnterLayoverAirport_LoadCommand { get; set; }
         #endregion
 
         #region Public Properties
@@ -42,7 +43,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Giá vé
         /// </summary>
-        public int Airfares { get; set; }
+        public string Airfares { get; set; }
 
         /// <summary>
         /// Thời gian bay
@@ -70,7 +71,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Danh sách sân bay trung gian
         /// </summary>
-        //public ObservableCollection<Airport> List_Airport { get; set; } = new ObservableCollection<Airport>();
+        //public ObservableCollection<LayoverAirport> List_LayoverAirport { get; set; } = new ObservableCollection<LayoverAirport>();
 
         /// <summary>
         /// Danh sách hạng vé
@@ -85,7 +86,7 @@ namespace FlightTicketSell.ViewModels
         public ScheduleViewModel()
         {
             #region Main Command
-           
+
             LoadCommand = new RelayCommand<object>((p) => { return true; },
                (p) =>
                {
@@ -117,6 +118,25 @@ namespace FlightTicketSell.ViewModels
                            {
                                LandingAirport.Items.Add(item.TenSanBay);
                            }
+
+                       }
+                   }
+                   catch (System.Data.Entity.Core.EntityException e)
+                   {
+                       MessageBox.Show($"Exception: {e.Message}");
+                   }
+               }
+           );
+
+            EnterLayoverAirport_LoadCommand = new RelayCommand<object>((p) => { return true; },
+               (p) =>
+               {
+                   try
+                   {
+                       using (var context = new FlightTicketSellEntities())
+                       {
+                      
+
                        }
                    }
                    catch (System.Data.Entity.Core.EntityException e)
@@ -139,18 +159,18 @@ namespace FlightTicketSell.ViewModels
            );
 
             Open_Window_EnterLayoverAirport_Command = new RelayCommand<object>((p) => { return true; },
-                (p) =>
+              async (p) =>
                 {
                     EnterLayoverAirportView enterLayoverAirportView = new EnterLayoverAirportView();
-                    enterLayoverAirportView.ShowDialog();
+                    var result = await DialogHost.Show(enterLayoverAirportView, "RootDialog");
                 }
             );
 
             Open_Window_EnterTicketClass_Command = new RelayCommand<object>((p) => { return true; },
-                (p) =>
+               async (p) =>
                 {
                     EnterTicketClassView enterTicketClassView = new EnterTicketClassView();
-                    enterTicketClassView.ShowDialog();
+                    var result = await DialogHost.Show(enterTicketClassView, "RootDialog");
                 }
             );
 

@@ -55,11 +55,14 @@
 
                     <!--Tên hạng vé-->
                     <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Tên hạng vé" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-                              Text="{Binding MoreTicketClass_Name}"/>
+                              Text="{Binding MoreTicketClass_Name}"
+                              materialDesign:HintAssist.HelperText="Ví dụ: Thương gia"/>
 
                     <!--Hệ số-->
                     <TextBox  Grid.Row="1" Grid.Column="3" materialDesign:HintAssist.Hint="Hệ số" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-                              Text="{Binding MoreTicketClass_Coefficien}"/>
+                              Text="{Binding MoreTicketClass_Coefficien}"
+                              materialDesign:HintAssist.HelperText="Ví dụ: 1.4"
+                               PreviewTextInput="TextBox_PreviewTextInput"/>
 
                 </Grid>
             </Border>

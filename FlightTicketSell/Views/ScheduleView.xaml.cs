@@ -27,7 +27,7 @@ namespace FlightTicketSell.Views
         }
 
         //Không cho nhập chữ
-        private void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private new void PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);

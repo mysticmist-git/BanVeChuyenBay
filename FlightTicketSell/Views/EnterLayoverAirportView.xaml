@@ -1,4 +1,4 @@
-﻿<Window x:Class="FlightTicketSell.Views.EnterLayoverAirportView"
+﻿<UserControl x:Class="FlightTicketSell.Views.EnterLayoverAirportView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,9 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
         mc:Ignorable="d"
-        Title="Nhập hạng vé" Height="350" Width="600"
-        WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
+        Height="350" Width="600"
         >
     <Grid Background="{StaticResource LightGrayBrush}">
         <Border CornerRadius="0 0 12 12" Height="100" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
@@ -86,4 +84,4 @@
 
         </Grid>
     </Grid>
-</Window>
+</UserControl>

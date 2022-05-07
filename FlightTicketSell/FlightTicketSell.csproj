@@ -176,6 +176,7 @@
     <Compile Include="Models\SearchRelated\DetailFlilghtInfo.cs" />
     <Compile Include="ValueConverters\Search\BookingStateToColorConverter.cs" />
     <Compile Include="ValueConverters\Search\BookingStateToStringConverter.cs" />
+    <Compile Include="ViewModels\Schedule\LayoverAirport.cs" />
     <Compile Include="ViewModels\Search\CustomersDetailViewModel.cs" />
     <Compile Include="ViewModels\Search\FlightInfo.cs" />
     <Compile Include="Models\THAMSO.cs">
