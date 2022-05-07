@@ -9,7 +9,7 @@
              xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
+             d:DesignHeight="720" d:DesignWidth="1366"
              DataContext="{Binding BookViewModel, Source={x:Static vm:ViewModelLocator.Instance}}">
 
     <Grid >
@@ -181,6 +181,9 @@
                         </Grid.ColumnDefinitions>-->
                         <DataGrid
                             ItemsSource="{Binding Items3}"
+                            Background="Transparent"
+                            d:ItemsSource="{d:SampleData ItemCount=5}"
+                            RowHeight="50"
                             CanUserSortColumns="True"
                             CanUserAddRows="False"
                             ColumnWidth="*"
