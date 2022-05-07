@@ -1,8 +1,10 @@
 ﻿using FlightTicketSell.Models;
+using FlightTicketSell.ViewModels.Setting;
 using FlightTicketSell.Views;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,13 +27,19 @@ namespace FlightTicketSell.ViewModels
         /// Nút đổi sân bay đi & sân bay đến
         /// </summary>
         public ICommand Change_Departure_Landing_Airport_Command { get; set; }
-        /// <summary>
-        /// Sân bay đi không trùng sân bay đến
-        /// </summary>
-        public ICommand Keep_Departure_DifferentFrom_Landing_Command { get; set; }
-        public ICommand Keep_Landing_DifferentFrom_Departure_Command { get; set; }
         public ICommand LoadCommand { get; set; }
+        /// <summary>
+        /// Thêm sân bay trung gian
+        /// </summary>
         public ICommand EnterLayoverAirport_LoadCommand { get; set; }
+        /// <summary>
+        /// DialogHost Thêm sân bay
+        /// </summary>
+        public ICommand ChooseAirport_Command { get; set; }
+        /// <summary>
+        /// Hàm load DialogHost Thêm sân bay
+        /// </summary>
+        public ICommand ChooseAirport_LoadCommand { get; set; }
         #endregion
 
         #region Public Properties
@@ -61,12 +69,17 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Sân bay đi
         /// </summary>
-        public ComboBox DepartureAirport { get; set; } = new ComboBox();
+        public Airport DepartureAirport { get; set; } 
 
         /// <summary>
         /// Sân bay đến
         /// </summary>
-        public ComboBox LandingAirport { get; set; } = new ComboBox();
+        public Airport LandingAirport { get; set; }
+
+        /// <summary>
+        /// Danh sách sân bay được chọn
+        /// </summary>
+        public ObservableCollection<Airport> ChooseAirport_List { get; set; }
 
         /// <summary>
         /// Danh sách sân bay trung gian
@@ -79,9 +92,6 @@ namespace FlightTicketSell.ViewModels
         //public ObservableCollection<TicketClass> List_TicketClass { get; set; } = new ObservableCollection<TicketClass>();
 
         #endregion
-
-
-        public string Title { get; } = "NHẬN LỊCH";
 
         public ScheduleViewModel()
         {
@@ -99,25 +109,7 @@ namespace FlightTicketSell.ViewModels
 
                        using (var context = new FlightTicketSellEntities())
                        {
-                           //Danh sách sân bay đi
-                           if (DepartureAirport.Items.Count > 0)
-                           {
-                               DepartureAirport.Items.Clear();
-                           }
-                           foreach (var item in context.SANBAYs.ToList())
-                           {
-                               DepartureAirport.Items.Add(item.TenSanBay);
-                           }
-
-                           //Danh sách sân bay đến
-                           if (LandingAirport.Items.Count > 0)
-                           {
-                               LandingAirport.Items.Clear();
-                           }
-                           foreach (var item in context.SANBAYs.ToList())
-                           {
-                               LandingAirport.Items.Add(item.TenSanBay);
-                           }
+                           
 
                        }
                    }
@@ -149,11 +141,6 @@ namespace FlightTicketSell.ViewModels
             Change_Departure_Landing_Airport_Command = new RelayCommand<object>((p) => { return true; },
                (p) =>
                {
-                   var temp1 = DepartureAirport.SelectedIndex;
-                   var temp2 = LandingAirport.SelectedIndex;
-                   LandingAirport.SelectedIndex = -1;
-                   DepartureAirport.SelectedIndex = temp2;
-                   LandingAirport.SelectedIndex = temp1;
 
                }
            );
@@ -174,41 +161,40 @@ namespace FlightTicketSell.ViewModels
                 }
             );
 
-            Keep_Departure_DifferentFrom_Landing_Command = new RelayCommand<object>((p) => { return true; },
-                (p) =>
-                {
-                    if (DepartureAirport.SelectedIndex != -1)
-                    {
-                        if (LandingAirport.SelectedIndex != -1)
-                        {
-                            if (DepartureAirport.SelectedIndex == LandingAirport.SelectedIndex)
-                            {
-                                _ = MessageBox.Show("Sân bay đi không trùng với sân bay đến", "Thông báo");
-                                DepartureAirport.SelectedIndex = -1;
-                            }
-                        }
-                    }
-                }
-            );
+            ChooseAirport_Command = new RelayCommand<object>((p) => { return true; },
+             async (p) =>
+             {
+                ChooseAirportView chooseAirportView = new ChooseAirportView();
+                 var result = await DialogHost.Show(chooseAirportView, "RootDialog");
+             }
+           );
 
-            Keep_Landing_DifferentFrom_Departure_Command = new RelayCommand<object>((p) => { return true; },
-                (p) =>
-                {
-                    if (LandingAirport.SelectedIndex != -1)
-                    {
-                        if (DepartureAirport.SelectedIndex != -1)
-                        {
-                            if (DepartureAirport.SelectedIndex == LandingAirport.SelectedIndex)
-                            {
-                                _ = MessageBox.Show("Sân bay đến không trùng với sân bay đi", "Thông báo");
-                                LandingAirport.SelectedIndex = -1;
-                            }
-                        }
-                    }
-                }
-            );
-
-
+            ChooseAirport_LoadCommand = new RelayCommand<object>((p) => { return true; },
+              (p) =>
+              {
+                  using (var context = new FlightTicketSellEntities())
+                  {
+                      try
+                      {
+                          var list = context.SANBAYs.ToList();
+                          if (list!=null)
+                          {
+                              ChooseAirport_List = new ObservableCollection<Airport>();
+                              foreach (var s in list)
+                              {
+                                  ChooseAirport_List.Add(new Airport{ Id = s.MaSanBay, Code = s.VietTat, Name = s.TenSanBay, Province = s.TinhThanh, Status = s.TrangThai });
+                              }
+                          }
+                         
+                       
+                      }
+                      catch (EntityException e)
+                      {
+                          MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                      }
+                  }
+              }
+          );
             #endregion
 
 

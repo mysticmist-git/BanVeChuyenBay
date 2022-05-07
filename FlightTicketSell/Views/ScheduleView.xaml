@@ -20,7 +20,7 @@
     <materialDesign:DialogHost CloseOnClickAway="True" Identifier="RootDialog">
         <Grid>
 
-            <Grid Margin="50 20 50 20">
+            <Grid Margin="30 30 30 30">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="8*"/>
                     <ColumnDefinition Width="0.5*"/>
@@ -134,17 +134,19 @@
                         </Grid>
 
                         <!--Sân bay đi-->
-                        <ComboBox Grid.Row="5" Grid.Column="1" materialDesign:HintAssist.Hint="Sân bay đi" Style="{StaticResource MaterialDesignFloatingHintComboBox}" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black"
-                              ItemsSource="{Binding DepartureAirport.Items}"
-                              SelectedIndex="{Binding DepartureAirport.SelectedIndex}">
-
+                        <TextBox   Grid.Row="5" Grid.Column="1" 
+                                   materialDesign:HintAssist.Hint="Sân bay đi" 
+                                   Style="{StaticResource CustomTextbox}" 
+                                   VerticalAlignment="Center" 
+                                   Text="{Binding DepartureAirport.Name}"
+                                   >
                             <!-- Command -->
                             <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding Keep_Departure_DifferentFrom_Landing_Command}"/>
+                                <i:EventTrigger EventName="PreviewMouseDown">
+                                    <i:InvokeCommandAction Command="{Binding ChooseAirport_Command}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </ComboBox>
+                        </TextBox>
 
                         <!--Nút chuyển giữa sân bay đi và sân bay đến-->
                         <Button  Grid.Row="5" Grid.Column="3" Padding="0" Width="22" Height="22" Margin="0" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
@@ -159,19 +161,18 @@
                         </Button>
 
                         <!--Sân bay đến-->
-                        <ComboBox Grid.Row="5" Grid.Column="5" materialDesign:HintAssist.Hint="Sân bay đến" Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
-                              FontFamily="{StaticResource Roboto}" 
-                              FontSize="{StaticResource Small}" 
-                              Foreground="Black"
-                              ItemsSource="{Binding LandingAirport.Items}"
-                              SelectedIndex="{Binding LandingAirport.SelectedIndex}">
+                        <TextBox   Grid.Row="5" Grid.Column="5" 
+                                   materialDesign:HintAssist.Hint="Sân bay đến" 
+                                   Style="{StaticResource CustomTextbox}" 
+                                   VerticalAlignment="Center" 
+                                    Text="{Binding LandingAirport.Name}">
                             <!-- Command -->
                             <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding Keep_Landing_DifferentFrom_Departure_Command}"/>
+                                <i:EventTrigger EventName="PreviewMouseDown">
+                                    <i:InvokeCommandAction Command="{Binding ChooseAirport_Command}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </ComboBox>
+                        </TextBox>
                     </Grid>
                 </Border>
 
@@ -358,18 +359,6 @@
                     <Button Margin="0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource Regular}" Content="Hủy" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
 
                     <Button Margin="20 0 0 0" Height="auto" Background="{StaticResource GreenBrush}"  FontSize="{StaticResource Regular}" Content="Nhận lịch bay" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
-
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox materialDesign:HintAssist.Hint="Mã chuyến bay" VerticalAlignment="Center" 
-                         Style="{StaticResource CustomTextbox}"
-                         Width="200">
-
-                        </TextBox>
-                        <materialDesign:PackIcon Kind="AirplaneTakeoff" Margin="-30 0 0 -3" VerticalAlignment="Bottom" Height="30" Width="30" 
-                                         />
-                    </StackPanel>
-
-
 
                 </StackPanel>
 
