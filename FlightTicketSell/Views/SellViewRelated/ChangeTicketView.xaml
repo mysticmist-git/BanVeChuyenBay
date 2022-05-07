@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="720" d:DesignWidth="1366">
     <UserControl.DataContext>
         <vm:ChangeTicketViewModel />
     </UserControl.DataContext>
@@ -192,15 +192,16 @@
 
                         <DataGrid Grid.Row="1"
                                   ItemsSource="{Binding MidAirports}"
-                                  
-                                CanUserSortColumns="True"
-                                CanUserAddRows="False"
-                                AutoGenerateColumns="False"
-                                ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
-                                CellStyle="{StaticResource DataGridCellCenter}"
-                                ColumnWidth="*"
-                                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                                materialDesign:DataGridAssist.ColumnHeaderPadding="8" Grid.ColumnSpan="2">
+                                  d:ItemsSource="{d:SampleData ItemCount=2}"
+                                  RowHeight="50"
+                                  CanUserSortColumns="True"
+                                  CanUserAddRows="False"
+                                  AutoGenerateColumns="False"
+                                  ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                                  CellStyle="{StaticResource DataGridCellCenter}"
+                                  ColumnWidth="*"
+                                  materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                                  materialDesign:DataGridAssist.ColumnHeaderPadding="8" Grid.ColumnSpan="2">
                             <DataGrid.Columns>
                                 <DataGridTextColumn
                                     Width="80"
@@ -249,12 +250,14 @@
                         <!-- Customers table -->
                         <DataGrid Grid.Row="1"
                                   ItemsSource="{Binding Customers}"
+                                  d:ItemsSource="{d:SampleData ItemCount=5}"
+                                  RowHeight="50"
                                   CanUserSortColumns="True"
-                                CanUserAddRows="False"
-                                AutoGenerateColumns="False"
-                                ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
-                                CellStyle="{StaticResource DataGridCellCenter}"
-                                ColumnWidth="*">
+                                  CanUserAddRows="False"
+                                  AutoGenerateColumns="False"
+                                  ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                                  CellStyle="{StaticResource DataGridCellCenter}"
+                                  ColumnWidth="*">
                             <DataGrid.Columns>
                                 <materialDesign:DataGridTextColumn
                                     Width="80"
