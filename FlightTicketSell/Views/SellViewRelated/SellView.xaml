@@ -5,13 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FlightTicketSell.Views" xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <vm:SellViewModel/>
     </UserControl.DataContext>
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid >
-        <Grid Margin="100 20 100 20 ">
+        <Grid Margin="50,20,50,20">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" ></RowDefinition>
@@ -52,11 +59,26 @@
                                 BorderThickness="0"
                                 materialDesign:HintAssist.Hint="Mã chuyến bay"
                                 TextAlignment="Center"
-                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                                Text="{Binding MaChuyenBay, Mode=TwoWay, StringFormat='{}{0:#}'}"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                        <!-- Command -->
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="SelectionChanged">
+                                                <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
                                     <Grid Grid.Column="1" >
                                         <Button
-                                    Style="{DynamicResource MaterialDesignToolButton}">
+                                    Style="{DynamicResource MaterialDesignToolButton}"
+                                            Command="{Binding SanBayDoi}">
                                             <materialDesign:PackIcon Kind="Magnify" Opacity=".80" Height="30" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            <!-- Command -->
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="SelectionChanged">
+                                                    <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
                                         </Button>
                                     </Grid>
 
@@ -82,13 +104,16 @@
                             <!--Điểm đi-->
                             <ComboBox Grid.Row="0" Grid.Column="1"
                                             materialDesign:HintAssist.Hint="Điểm đi"           
-                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
+                                            ItemsSource="{Binding Locations}"
+                                            DisplayMemberPath="Name"
+                                            SelectedItem="{Binding DiemDii, Mode=OneWayToSource}"  
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                <ComboBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel/>
-                                    </ItemsPanelTemplate>
-                                </ComboBox.ItemsPanel>
+                                <!-- Command -->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </ComboBox>
                             <!--Nút chuyển giữa điểm đi và điểm đến-->
                             <Button Grid.Row="0" Grid.Column="2"  Padding="0" Width="22" Height="22" Margin="0" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
@@ -104,32 +129,45 @@
                             <!--Điểm đến-->
                             <ComboBox Grid.Row="0" Grid.Column="3"
                                             materialDesign:HintAssist.Hint="Điểm đến"
-                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
+                                            ItemsSource="{Binding Locations}"
+                                            DisplayMemberPath="Name"
+                                            SelectedItem="{Binding DiemDenn, Mode=OneWayToSource}" 
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                <ComboBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel/>
-                                    </ItemsPanelTemplate>
-                                </ComboBox.ItemsPanel>
+                                <!-- Command -->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </ComboBox>
 
-                            
+
 
                             <DatePicker Grid.Row="1" Grid.Column="1"
-                            
+                            SelectedDate="{Binding DateOfEntry}"
                             materialDesign:HintAssist.Hint="Chọn ngày"
-                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                                <!-- Command -->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </DatePicker>
 
                             <!--Sân bay đi-->
                             <ComboBox Grid.Row="2" Grid.Column="1"
                                             materialDesign:HintAssist.Hint="Sân bay đi"
-                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
+                                            ItemsSource="{Binding Airports}"
+                                            DisplayMemberPath="Name"
+                                            SelectedItem="{Binding SanBayDii, Mode=OneWayToSource}" 
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                <ComboBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel/>
-                                    </ItemsPanelTemplate>
-                                </ComboBox.ItemsPanel>
+                                <!-- Command -->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </ComboBox>
                             <!--Nút chuyển giữa sân bay đi và sân bay đến-->
                             <Button Grid.Row="2" Grid.Column="2"  Padding="0" Width="22" Height="22" Margin="0" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
@@ -145,13 +183,16 @@
                             <!--Sân bay đến-->
                             <ComboBox Grid.Row="2" Grid.Column="3"
                                             materialDesign:HintAssist.Hint="Sân bay đến"
-                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
+                                            ItemsSource="{Binding Airports}"
+                                            DisplayMemberPath="Name"
+                                            SelectedItem="{Binding SanBayDenn, Mode=OneWayToSource}" 
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                                <ComboBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel/>
-                                    </ItemsPanelTemplate>
-                                </ComboBox.ItemsPanel>
+                                <!-- Command -->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </ComboBox>
                         </Grid>
                     </Grid>
@@ -161,21 +202,35 @@
 
             <Border Padding="20" Grid.Row="1"  Background="White" CornerRadius="10"  Margin="0 20 0 0"  Style="{StaticResource ResourceKey=DropShadow}" >
                 <Grid>
-
                     <DataGrid
-                            ItemsSource="{Binding Items3}"
+                            ItemsSource="{Binding Flights}"
                             CanUserSortColumns="True"
                             CanUserAddRows="False"
                             AutoGenerateColumns="False"
                             ColumnWidth="*"
                             materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                             materialDesign:DataGridAssist.ColumnHeaderPadding="8">
-                        <DataGrid.Columns >
-                            <DataGridTextColumn
-                                    
-                                    Binding="{Binding MaChuyenBay}"
-                                    Header="Mã chuyến bay"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Loaded">
+                                <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        
+                            
+                            <DataGrid.Columns >
+                            <DataGridTemplateColumn Header="Mã chuyến bay" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <TextBlock Text="{Binding MaChuyenBay}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            <Button Content="Chi tiết" Margin="30 0 0 0" Background="{StaticResource LightBlueBrush}" 
+                                                Command="{Binding Open_Window_DescriptionTicketFlight_Command}"
+                                                />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
 
                             <materialDesign:DataGridTextColumn
                                     Binding="{Binding SanBayDi}"
@@ -189,7 +244,7 @@
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 
                             <materialDesign:DataGridTextColumn
-                                    Binding="{Binding ThoiGianBay}"
+                                    Binding="{Binding KhoiHanh}"
                                     Header="Khởi hành"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
 

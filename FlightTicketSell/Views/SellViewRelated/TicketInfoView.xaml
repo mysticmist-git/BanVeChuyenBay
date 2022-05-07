@@ -6,11 +6,18 @@
              xmlns:local="clr-namespace:FlightTicketSell.Views.SellViewRelated"
              xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="760" d:DesignWidth="1366"
-             d:Background="{StaticResource LightGrayBrush}">
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <vm:TicketInfoViewModel/>
     </UserControl.DataContext>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid>
         <!-- Return button -->
         <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
@@ -98,7 +105,7 @@
 
                                 <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <TextBlock FontWeight="Bold">Mã chuyến bay</TextBlock>
-                                    <TextBox>TSNNB-8</TextBox>
+                                    <TextBox Text="{Binding MaChuyenBay}"></TextBox>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -203,19 +210,31 @@
 
                         <ComboBox Width="200" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top"
                                             materialDesign:HintAssist.Hint="Hạng vé"
-                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
+                                            ItemsSource="{Binding TicketClasses}"
+                                            DisplayMemberPath="Name"
+                                            SelectedItem="{Binding HangVe, Mode=OneWayToSource}"
                                             Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                            <ComboBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel/>
-                                </ItemsPanelTemplate>
-                            </ComboBox.ItemsPanel>
+                            <!-- Command -->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding HienGiaTien}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </ComboBox>
 
                         <Grid Width="200" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="top">
-                            <TextBox                               
+                            <TextBox    
+                                IsReadOnly="True"
                                 materialDesign:HintAssist.Hint="Giá tiền"
-                                Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                Text="{Binding GiaTien}">
+                                <!-- Command -->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding HienGiaTien}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
                         </Grid>
                     </Grid>
                 </Border>
