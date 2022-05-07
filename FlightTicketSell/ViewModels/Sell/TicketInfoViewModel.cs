@@ -1,14 +1,18 @@
-﻿using FlightTicketSell.Views;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using FlightTicketSell.Models;
-using FlightTicketSell.ViewModels.Sell;
-using FlightTicketSell.ViewModels.Search;
+using System.Data.Entity.Core;
+using FlightTicketSell.Models.SearchRelated;
 using FlightTicketSell.Views.SearchViewMore;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
-using System.Linq;
-using System.Data.Entity.Core;
-using System.Windows;
-using System;
+using FlightTicketSell.ViewModels.Sell;
+
+
 
 
 namespace FlightTicketSell.ViewModels
@@ -30,12 +34,17 @@ namespace FlightTicketSell.ViewModels
 
         public ObservableCollection<TicketClass> TicketClasses { get; set; }
 
+        public DetailFlilghtInfo FlightInfo { get; set; }
+
         public int MaChuyenBay { get; set; }
 
         public int GiaTien { get; set; }
 
         public TicketClass HangVe { get; set; }
-
+        public string HoTen { get; set; }
+        public string CMND { get; set; }
+        public string SDT { get; set; }
+        public string Email { get; set; }
 
         public decimal HeSo {get; set; }
 
@@ -49,7 +58,33 @@ namespace FlightTicketSell.ViewModels
         public TicketInfoViewModel()
         {
             // Create commands
-            ContinueCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.SellPay);
+           
+
+            ContinueCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.SellPay;
+                try
+                {
+                    
+                        IoC.IoC.Get<SellPayViewModel>().FlightInfo = new DetailFlilghtInfo(FlightInfo);
+                        IoC.IoC.Get<SellPayViewModel>().HoTen = HoTen;
+                        IoC.IoC.Get<SellPayViewModel>().SDT = SDT;
+                        IoC.IoC.Get<SellPayViewModel>().CMND = CMND;
+                        IoC.IoC.Get<SellPayViewModel>().Email = Email;
+                        IoC.IoC.Get<SellPayViewModel>().GiaTien = GiaTien.ToString() + " VND";
+                        IoC.IoC.Get<SellPayViewModel>().HangVe = HangVe.Name;
+                    
+                    
+                        
+                    
+                }
+                catch(NullReferenceException) {
+                    MessageBox.Show("Vui long nhap day du thong tin", "Thong tin bi thieu!!");
+                    return;
+                }
+
+
+            });
 
             ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightDetail);
 
@@ -60,15 +95,15 @@ namespace FlightTicketSell.ViewModels
                     try
                     {
                         TicketClasses = new ObservableCollection<TicketClass>(context.CHUYENBAYs.Where(result =>
-                                                                result.MaChuyenBay == 1).FirstOrDefault()
+                                                                result.MaChuyenBay == FlightInfo.MaChuyenBay).FirstOrDefault()
                                                                 .CHITIETHANGVEs.Select(cthv => new TicketClass
                                                                 {
                                                                     ID = cthv.MaHangVe,
                                                                     Name = cthv.HANGVE.TenHangVe,
-                                                                    Price = 1000,
-                                                                }).ToList()); 
-                                                  
+                                                                    
+                                                                }).ToList());
 
+                        
                     }
                     catch (EntityException)
                     {
@@ -84,15 +119,16 @@ namespace FlightTicketSell.ViewModels
             {
                 try
                 {
-                        HeSo = context.HANGVEs.Where(result => result.TenHangVe == HangVe.Name).FirstOrDefault().HeSo;
-
 
                         if (HangVe != null)
+                        {
+                            HeSo = context.HANGVEs.Where(result => result.TenHangVe == HangVe.Name).FirstOrDefault().HeSo;
+
                             GiaTien = System.Convert.ToInt32(context.CHUYENBAYs.Where(result =>
-                                                                result.MaChuyenBay == 1).FirstOrDefault()
+                                                                result.MaChuyenBay == FlightInfo.MaChuyenBay).FirstOrDefault()
                                                                 .GiaVe * HeSo);
-                                                                
-                      
+
+                        }
 
 
 

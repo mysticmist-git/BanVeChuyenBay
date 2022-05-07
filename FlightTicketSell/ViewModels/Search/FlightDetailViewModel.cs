@@ -77,6 +77,8 @@ namespace FlightTicketSell.ViewModels
             TicketBuyCommand = new RelayCommand<object>((p) => true, (p) =>
             {
                 IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.TicketInfoFilling;
+                
+               IoC.IoC.Get<TicketInfoViewModel>().FlightInfo = new DetailFlilghtInfo(FlightInfo);
 
             });
 
