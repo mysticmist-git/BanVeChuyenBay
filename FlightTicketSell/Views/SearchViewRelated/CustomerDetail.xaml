@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="DetailCustomers" Height="450" Width="500"
         WindowStartupLocation="CenterScreen"
-        d:Background="{StaticResource LightGrayBrush}">
+        Background="{StaticResource LightGrayBrush}">
     
     <Window.DataContext>
         <vm:CustomersDetailViewModel />
