@@ -162,6 +162,7 @@
                                   d:ItemsSource="{d:SampleData ItemCount=5}"
                                   CanUserSortColumns="True"
                                   CanUserAddRows="False"
+                                  RowHeight="50"
                                   AutoGenerateColumns="False"
                                   materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                                   materialDesign:DataGridAssist.ColumnHeaderPadding="8" Grid.RowSpan="2">
@@ -315,6 +316,7 @@
                                   CanUserSortColumns="True"
                                   CanUserAddRows="False"
                                   AutoGenerateColumns="False"
+                                  RowHeight="50"
                                   materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                                   materialDesign:DataGridAssist.ColumnHeaderPadding="8">
                                 <DataGrid.Columns>

@@ -230,6 +230,7 @@
                             <DataGrid
                                 ItemsSource="{Binding OverlayAirport}"
                                 d:ItemsSource="{d:SampleData ItemCount=10}"
+                                RowHeight="50"
                                 Padding="30 15"
                                 Background="Transparent"
                                 CanUserSortColumns="True"
@@ -298,6 +299,7 @@
                                 ItemsSource="{Binding TicketTier}"
                                 d:ItemsSource="{d:SampleData ItemCount=3}"
                                 CanUserSortColumns="True"
+                                RowHeight="50"
                                 CanUserAddRows="False"
                                 AutoGenerateColumns="False"
                                 ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
