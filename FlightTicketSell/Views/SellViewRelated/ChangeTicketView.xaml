@@ -6,10 +6,17 @@
              xmlns:local="clr-namespace:FlightTicketSell.Views.SellViewRelated"
              xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <vm:ChangeTicketViewModel />
     </UserControl.DataContext>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
         <!-- Return button -->
@@ -81,27 +88,27 @@
 
                             <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Mã chuyến bay</TextBlock>
-                                <TextBox>TSNNB-8</TextBox>
+                                <TextBox IsReadOnly="True" Text="{Binding MaChuyenBay}"></TextBox>
                             </StackPanel>
 
                             <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Sân bay đi</TextBlock>
-                                <TextBox>Tân Sơn Nhất</TextBox>
+                                <TextBox IsReadOnly="True" Text="{Binding TenSayBay}"></TextBox>
                             </StackPanel>
 
                             <StackPanel Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Sân bay đến</TextBlock>
-                                <TextBox>Nội Bài</TextBox>
+                                <TextBox IsReadOnly="True" Text="{Binding MaChuyenBay}"></TextBox>
                             </StackPanel>
 
                             <StackPanel Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Ngày giờ bay</TextBlock>
-                                <TextBox>15:00 31/2/2022</TextBox>
+                                <TextBox IsReadOnly="True" Text="{Binding MaChuyenBay}"></TextBox>
                             </StackPanel>
 
                             <StackPanel Grid.Column="9" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Số điểm dừng</TextBlock>
-                                <TextBox>0</TextBox>
+                                <TextBox IsReadOnly="True" Text="{Binding MaChuyenBay}"></TextBox>
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -145,7 +152,7 @@
                                    HorizontalAlignment="Right"
                                    VerticalAlignment="Center"
                                    Grid.Column="1"
-                                   Text="{Binding LatestTicketChange, FallbackValue=15:00 30/02/2022}"                               
+                                   Text="{Binding TicketDeadline}"                               
                                    FontFamily="{StaticResource Roboto}"                               
                                    FontWeight="Bold"                               
                                    FontSize="{StaticResource Large}"                                
@@ -184,17 +191,41 @@
                         <TextBlock Text="Sân bay trung gian" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" />
 
                         <DataGrid Grid.Row="1"
-                                  ItemsSource="{Binding OverlayAirports}"
-                                  Margin="0 10 0 0"
-                                  ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
-                                  CellStyle="{StaticResource DataGridCellCenter}"
-                                  ColumnWidth="*">
+                                  ItemsSource="{Binding MidAirports}"
+                                  
+                                CanUserSortColumns="True"
+                                CanUserAddRows="False"
+                                AutoGenerateColumns="False"
+                                ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                                CellStyle="{StaticResource DataGridCellCenter}"
+                                ColumnWidth="*"
+                                materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                                materialDesign:DataGridAssist.ColumnHeaderPadding="8" Grid.ColumnSpan="2">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Thứ tự" Binding="{Binding Order}" />
-                                <DataGridTextColumn Header="Tên sân bay" Binding="{Binding Name}" />
-                                <DataGridTextColumn Header="Thời gian dừng" Binding="{Binding OverlayTime}" />
-                                <DataGridTextColumn Header="Ghi chú" Binding="{Binding Note}" />
+                                <DataGridTextColumn
+                                    Width="80"
+                                    Binding="{Binding ThuTu}"
+                                    Header="Thứ tự"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+
+                                <materialDesign:DataGridTextColumn
+                                    Width="120"
+                                    Binding="{Binding TenSanBay}"
+                                    Header="Tên sân bay"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                <!-- set a max length to get an indicator in the editor -->
+                                <materialDesign:DataGridTextColumn
+                                    Width="100"
+                                    Binding="{Binding ThoiGianDung}"
+                                    Header="Thời gian dừng"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                <materialDesign:DataGridTextColumn
+                                    Width="150"
+                                    Binding="{Binding GhiChu}"
+                                    Header="Ghi chú"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                             </DataGrid.Columns>
+                           
                         </DataGrid>
 
                     </Grid>
@@ -218,13 +249,25 @@
                         <!-- Customers table -->
                         <DataGrid Grid.Row="1"
                                   ItemsSource="{Binding Customers}"
-                                  Margin="0 10 0 0"
-                                  ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
-                                  CellStyle="{StaticResource DataGridCellCenter}"
-                                  ColumnWidth="*">
+                                  CanUserSortColumns="True"
+                                CanUserAddRows="False"
+                                AutoGenerateColumns="False"
+                                ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                                CellStyle="{StaticResource DataGridCellCenter}"
+                                ColumnWidth="*">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Thứ tự" Binding="{Binding Order}" />
-                                <DataGridTextColumn Header="Tên khách hàng" Binding="{Binding Name}" />
+                                <materialDesign:DataGridTextColumn
+                                    Width="80"
+                                    Binding="{Binding MaKhachHang}"
+                                    Header="Thứ tự"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+
+                                <materialDesign:DataGridTextColumn
+                                    Width="120"
+                                    Binding="{Binding TenKhachHang}"
+                                    Header="Tên khách hàng"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                
                             </DataGrid.Columns>
                         </DataGrid>
 
