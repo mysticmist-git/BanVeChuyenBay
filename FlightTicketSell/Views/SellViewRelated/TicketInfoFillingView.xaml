@@ -172,16 +172,16 @@
 
                             <StackPanel Width="200" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold" Margin="0 10 0 0">Họ Tên</TextBlock>
-                                <TextBox Text="{Binding HoTen, Mode=TwoWay}"></TextBox>
+                                <TextBox Text="{Binding HoTen, Mode=TwoWay}" materialDesign:HintAssist.Hint="Họ và tên"></TextBox>
                                 <TextBlock FontWeight="Bold" Margin="0 10 0 0">Số điện thoại</TextBlock>
-                                <TextBox Text="{Binding SDT, Mode=TwoWay}"></TextBox>
+                                <TextBox Text="{Binding SDT, Mode=TwoWay}" materialDesign:HintAssist.Hint="SDT"></TextBox>
                             </StackPanel>
 
                             <StackPanel Width="200" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold" Margin="0 10 0 0">CMND/CCCD</TextBlock>
-                                <TextBox Text="{Binding CMND, Mode=TwoWay}"></TextBox>
+                                <TextBox Text="{Binding CMND, Mode=TwoWay}" materialDesign:HintAssist.Hint="CMND/CCCD"></TextBox>
                                 <TextBlock FontWeight="Bold" Margin="0 10 0 0">Email</TextBlock>
-                                <TextBox Text="{Binding Email, Mode=TwoWay}"></TextBox>
+                                <TextBox Text="{Binding Email, Mode=TwoWay}" materialDesign:HintAssist.Hint="Email"></TextBox>
                             </StackPanel>
                         </Grid>
                     </Border>
@@ -262,9 +262,9 @@
                     Command="{Binding ContinueCommand}" 
                     HorizontalAlignment="Right" 
                     VerticalAlignment="Center" 
-                    Height="auto"
+                    Height="50"
                     Background="{StaticResource OrangeBrush}"
-                    FontSize="{StaticResource RealSmall}"
+                    FontSize="{StaticResource Regular}"
                     Content="Tiếp tục"
                     BorderThickness="0,0,0,0" 
                     materialDesign:ButtonAssist.CornerRadius="7"/>
