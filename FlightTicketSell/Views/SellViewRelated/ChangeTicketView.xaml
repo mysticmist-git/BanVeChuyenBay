@@ -7,10 +7,9 @@
              xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+              DataContext="{Binding ChangeTicketViewModel, Source={x:Static vm:ViewModelLocator.Instance}}"
              d:DesignHeight="720" d:DesignWidth="1366">
-    <UserControl.DataContext>
-        <vm:ChangeTicketViewModel />
-    </UserControl.DataContext>
+    
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -88,27 +87,32 @@
 
                             <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Mã chuyến bay</TextBlock>
-                                <TextBox IsReadOnly="True" Text="{Binding MaChuyenBay}"></TextBox>
+                                <TextBox IsReadOnly="True"
+                                              Text="{Binding FlightInfo.DisplayFlightCode, Mode=OneWay}"></TextBox>
                             </StackPanel>
 
                             <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Sân bay đi</TextBlock>
-                                <TextBox IsReadOnly="True" Text="{Binding TenSayBay}"></TextBox>
+                                <TextBox IsReadOnly="True"
+                                              Text="{Binding FlightInfo.SanBayDi, Mode=OneWay}"></TextBox>
                             </StackPanel>
 
                             <StackPanel Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Sân bay đến</TextBlock>
-                                <TextBox IsReadOnly="True" Text="{Binding MaChuyenBay}"></TextBox>
+                                <TextBox IsReadOnly="True"
+                                              Text="{Binding FlightInfo.SanBayDen, Mode=OneWay}"></TextBox>
                             </StackPanel>
 
                             <StackPanel Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Ngày giờ bay</TextBlock>
-                                <TextBox IsReadOnly="True" Text="{Binding MaChuyenBay}"></TextBox>
+                                <TextBox IsReadOnly="True"
+                                              Text="{Binding FlightInfo.NgayGio, Mode=OneWay}"></TextBox>
                             </StackPanel>
 
                             <StackPanel Grid.Column="9" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Số điểm dừng</TextBlock>
-                                <TextBox IsReadOnly="True" Text="{Binding MaChuyenBay}"></TextBox>
+                                <TextBox IsReadOnly="True"
+                                              Text="{Binding FlightInfo.SoDiemDung, Mode=OneWay}"></TextBox>
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -261,13 +265,13 @@
                             <DataGrid.Columns>
                                 <materialDesign:DataGridTextColumn
                                     Width="80"
-                                    Binding="{Binding MaKhachHang}"
+                                    Binding="{Binding Index}"
                                     Header="Thứ tự"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
 
                                 <materialDesign:DataGridTextColumn
                                     Width="120"
-                                    Binding="{Binding TenKhachHang}"
+                                    Binding="{Binding HoTen}"
                                     Header="Tên khách hàng"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                                 
@@ -295,7 +299,7 @@
                                 <!-- Heading -->
                                 <RowDefinition Height="Auto" />
                                 <!-- Bill table -->
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="2*" />
                             </Grid.RowDefinitions>
 
 
@@ -320,7 +324,7 @@
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="Hạng vé" Grid.Column="0" />
-                                        <TextBlock d:Text="Phổ thông" Grid.Column="1" HorizontalAlignment="Right" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding TenHangVe}" Grid.Column="1" HorizontalAlignment="Right" FontWeight="Bold"/>
                                     </Grid>
                                 </Grid>
 
@@ -331,7 +335,7 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="Giá vé" Grid.Column="0" />
-                                    <TextBlock  d:Text="920.000 VNĐ" Grid.Column="1" HorizontalAlignment="Right" />
+                                    <TextBlock  Text="{Binding GiaTien_Ve}" Grid.Column="1" HorizontalAlignment="Right" />
                                 </Grid>
 
                                 <!-- Customer paid -->
@@ -341,7 +345,7 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="Số lượng chỗ" Grid.Column="0" />
-                                    <TextBlock d:Text="3" Grid.Column="1" HorizontalAlignment="Right" />
+                                    <TextBlock Text="{Binding SoCho}" Grid.Column="1" HorizontalAlignment="Right" />
                                 </Grid>
 
                                 <!-- Customer paid -->
@@ -351,7 +355,7 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="Người thanh toán" Grid.Column="0" />
-                                    <TextBlock  d:Text="Nguyễn Văn A" Grid.Column="1" HorizontalAlignment="Right" />
+                                    <TextBlock  Text="{Binding TenKhachDat}" Grid.Column="1" HorizontalAlignment="Right" />
                                 </Grid>
 
                             </Grid>
@@ -360,7 +364,7 @@
                     </Border>
 
                     <!-- Total price to pay -->
-                    <Border Background="White" Grid.Row="1" CornerRadius="10" Padding="20" Margin="0 20 0 0" Style="{StaticResource DropShadow}">
+                    <Border Background="White" Grid.Row="1" Padding="15" CornerRadius="10" Margin="0 10 0 0" Style="{StaticResource DropShadow}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <!-- Heading -->
@@ -371,10 +375,10 @@
 
 
                             <!-- Heading -->
-                            <TextBlock Text="Thành tiền" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" Margin="0,-2,0,2" />
+                            <TextBlock Text="Thành tiền"  Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" Margin="0,-2,0,2" />
                             <!-- Heading -->
                             <TextBlock 
-                                       d:Text="2.760.000 VNĐ"
+                                       Text="{Binding GiaTong}"
                                        Grid.Row="1"
                                        HorizontalAlignment="Right"
                                        FontSize="{StaticResource Regular}" 

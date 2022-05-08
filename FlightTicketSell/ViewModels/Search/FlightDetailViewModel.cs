@@ -55,6 +55,9 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand TicketBuyCommand { get; set; }
 
+        
+
+
         /// <summary>
         /// Navigate to <see cref="AppView.TicketSoldOrBooked"/> View
         /// </summary>
@@ -82,8 +85,15 @@ namespace FlightTicketSell.ViewModels
 
             });
 
-            TickedSoldBookedCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.TicketSoldOrBooked);
+            TickedSoldBookedCommand = new RelayCommand<object>((p) => true, (p) =>
+                {
+                    IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.TicketSoldOrBooked;
+                    IoC.IoC.Get<FlightTicketAndReservationViewModel>().FlightInfo = new DetailFlilghtInfo(FlightInfo);
+
+                });
+
             
+
             LoadCommand = new RelayCommand<object>((p) => true, (p) =>
             {
                 using (var context = new FlightTicketSellEntities())

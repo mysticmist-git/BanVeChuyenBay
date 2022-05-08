@@ -140,6 +140,14 @@ namespace FlightTicketSell.ViewModels.Search
             ShowMoreCommand = new RelayCommand<object>(p => true, p =>
             {
                 IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.ChangeTicket;
+                IoC.IoC.Get<ChangeTicketViewModel>().FlightInfo = IoC.IoC.Get<FlightDetailViewModel>().FlightInfo;
+
+                IoC.IoC.Get<ChangeTicketViewModel>().SoCho = SoCho;
+                IoC.IoC.Get<ChangeTicketViewModel>().TenKhachDat = TenKhachDat;
+                IoC.IoC.Get<ChangeTicketViewModel>().TenHangVe = TenHangVe;
+                IoC.IoC.Get<ChangeTicketViewModel>().GiaTien_Ve = (Convert.ToInt32(GiaTien_Ve) / SoCho).ToString() + " VND";
+                IoC.IoC.Get<ChangeTicketViewModel>().MaDatCho = MaDatCho;
+                IoC.IoC.Get<ChangeTicketViewModel>().GiaTong = DisplayReservationPrice;
             });
         }
     }

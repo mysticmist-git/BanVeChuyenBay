@@ -7,6 +7,7 @@ using System.Linq;
 using System.Data.Entity.Core;
 using System.Windows;
 using FlightTicketSell.ViewModels.Search;
+using FlightTicketSell.Models.SearchRelated;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -32,17 +33,22 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ObservableCollection<PlaceReservation> PlaceReservations { get; set; }
 
+        public DetailFlilghtInfo FlightInfo { get; set; }
+
         #region Commands
 
         public ICommand ReturnCommand { get; set; }
         public ICommand LoadCommand { get; set; }
         public ICommand TicketSearchCommand { get; set; } 
-        public ICommand PlaceReservationSearchCommand { get; set; } 
+        public ICommand PlaceReservationSearchCommand { get; set; }
+        public ICommand ShowMoreCommand { get; set; }
 
         #endregion
 
         public FlightTicketAndReservationViewModel()
         {
+            
+
             ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightDetail);
 
             LoadCommand = new RelayCommand<object>((p) => true, (p) =>
