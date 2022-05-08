@@ -138,7 +138,7 @@
                                    materialDesign:HintAssist.Hint="Sân bay đi" 
                                    Style="{StaticResource CustomTextbox}" 
                                    VerticalAlignment="Center" 
-                                   Text="{Binding DepartureAirport.Name}"
+                                   Text="{Binding DepartureAirport.Name, UpdateSourceTrigger=PropertyChanged}"
 
                                    >
                             <!-- Command -->
