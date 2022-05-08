@@ -197,11 +197,22 @@ namespace FlightTicketSell.ViewModels
                         string to = Email; //To address    
 
                         // enter your email
-                        string from = "user@gmail.com"; //From address    
+                        string from = "flightsystem53@gmail.com"; //From address    
 
                         MailMessage message = new MailMessage(from, to);
 
-                        string mailbody = "Your payment is sucessful!!!!";
+                        string mailbody = "<head>" +
+            "Here comes some logo" +
+          "</head>" +
+          "<body>" +
+            "<h1>Payment comfirmation: sucessfull</h1>" + Environment.NewLine +
+            "<a>Dear  </a>" + HoTen + Environment.NewLine +
+            "<a>Here are some information about the ticket </a>" + Environment.NewLine +
+            "<a>Your flight code is </a>" + FlightInfo.DisplayFlightCode + Environment.NewLine +
+            "<a>The flight will start at </a>" + FlightInfo.NgayGio + Environment.NewLine +
+            "<a>Please take note the information above!!!  </a>" + Environment.NewLine
+            + "<a>Hope you have a great flight, </a>" +
+          "</body>";
 
                         message.Subject = "Flight ticket payment";
 
@@ -215,7 +226,7 @@ namespace FlightTicketSell.ViewModels
 
                         System.Net.NetworkCredential basicCredential1 = new
 
-                        System.Net.NetworkCredential("user@gmail.com", "password");
+                        System.Net.NetworkCredential("flightsystem53@gmail.com", "flightsystem123");
 
                         client.EnableSsl = true;
 
