@@ -231,7 +231,6 @@
     <Compile Include="ViewModels\ScheduleViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\Sell\Locations_List.cs" />
-    <Compile Include="ViewModels\Sell\OverlayAiport_Search.cs" />
     <Compile Include="ViewModels\Sell\SellPayViewModel.cs" />
     <Compile Include="ViewModels\Sell\SellViewModel.cs" />
     <Compile Include="ViewModels\Sell\TicketClass.cs" />

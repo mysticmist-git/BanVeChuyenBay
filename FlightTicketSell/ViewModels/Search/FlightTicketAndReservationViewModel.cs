@@ -8,11 +8,14 @@ using System.Data.Entity.Core;
 using System.Windows;
 using FlightTicketSell.ViewModels.Search;
 using FlightTicketSell.Models.SearchRelated;
+using System;
 
 namespace FlightTicketSell.ViewModels
 {
     public class FlightTicketAndReservationViewModel : BaseViewModel
     {
+        #region Public Properties
+
         /// <summary>
         /// The place reservation id for searching
         /// </summary>
@@ -33,22 +36,35 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ObservableCollection<PlaceReservation> PlaceReservations { get; set; }
 
-        public DetailFlilghtInfo FlightInfo { get; set; }
+        /// <summary>
+        /// Contains information for 
+        /// </summary>
+        public DetailFlilghtInfo FlightInfo { get => IoC.IoC.Get<FlightDetailViewModel>().FlightInfo; }
+
+        /// <summary>
+        /// The overlay airport
+        /// </summary>
+        public ObservableCollection<OverlayAirport_Search> OverlayAirport { get => IoC.IoC.Get<FlightDetailViewModel>().OverlayAirport; }
+
+        #endregion
 
         #region Commands
 
         public ICommand ReturnCommand { get; set; }
         public ICommand LoadCommand { get; set; }
-        public ICommand TicketSearchCommand { get; set; } 
+        public ICommand TicketSearchCommand { get; set; }
         public ICommand PlaceReservationSearchCommand { get; set; }
         public ICommand ShowMoreCommand { get; set; }
 
         #endregion
 
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public FlightTicketAndReservationViewModel()
         {
-            
-
             ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightDetail);
 
             LoadCommand = new RelayCommand<object>((p) => true, (p) =>
@@ -82,7 +98,7 @@ namespace FlightTicketSell.ViewModels
                                                                     SoCho = result.SoVeDat,
                                                                     TenHangVe = context.HANGVEs.Where(x => x.MaHangVe == result.MaHangVe).FirstOrDefault().TenHangVe,
                                                                     NgayDatVe = result.NgayGioDat,
-                                                                    GiaTien_Ve = result.GiaTien,
+                                                                    GiaTien_Ve = result.HANGVE.HeSo * result.CHUYENBAY.GiaVe,
                                                                     TrangThai = result.TrangThai
                                                                 }).ToList()
                                                            );
@@ -93,7 +109,8 @@ namespace FlightTicketSell.ViewModels
                     }
                 }
             });
-
         }
+
+        #endregion
     }
 }

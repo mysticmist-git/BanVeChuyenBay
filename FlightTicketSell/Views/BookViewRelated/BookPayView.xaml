@@ -137,7 +137,7 @@
 
                         <!-- Label -->
                         <TextBlock Foreground="White" 
-                               Text="Hạn chót lấy vé:" 
+                               Text="Hạn chót hủy đặt chỗ:" 
                                Grid.Column="0"
                                HorizontalAlignment="Left" 
                                FontSize="{StaticResource Small}"

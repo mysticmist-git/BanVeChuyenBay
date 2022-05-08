@@ -8,7 +8,7 @@ using System.Windows.Input;
 namespace FlightTicketSell.ViewModels
 {
     /// <summary>
-    /// A specialize version of <see cref="KHACHHANG"/> for book view
+    /// A specialized version of <see cref="KHACHHANG"/> for book view
     /// </summary>
     public class Customer : KHACHHANG
     {

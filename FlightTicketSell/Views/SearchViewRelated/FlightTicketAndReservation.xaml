@@ -376,7 +376,7 @@
                                     <!-- Giá tiền / vé -->
                                     <materialDesign:DataGridTextColumn IsReadOnly="True"
                                     Width="175"
-                                    Binding="{Binding DisplayReservationPrice}"
+                                    Binding="{Binding DisplayTicketPrice}"
                                     Header="Giá tiền / Vé"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
 

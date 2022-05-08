@@ -65,7 +65,6 @@ namespace FlightTicketSell.ViewModels
                 IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.SellPay;
                 try
                 {
-                    
                         IoC.IoC.Get<SellPayViewModel>().FlightInfo = new DetailFlilghtInfo(FlightInfo);
                         IoC.IoC.Get<SellPayViewModel>().HoTen = HoTen;
                         IoC.IoC.Get<SellPayViewModel>().SDT = SDT;
@@ -73,10 +72,6 @@ namespace FlightTicketSell.ViewModels
                         IoC.IoC.Get<SellPayViewModel>().Email = Email;
                         IoC.IoC.Get<SellPayViewModel>().GiaTien = GiaTien.ToString() + " VND";
                         IoC.IoC.Get<SellPayViewModel>().HangVe = HangVe.Name;
-                    
-                    
-                        
-                    
                 }
                 catch(NullReferenceException) {
                     MessageBox.Show("Vui long nhap day du thong tin", "Thong tin bi thieu!!");

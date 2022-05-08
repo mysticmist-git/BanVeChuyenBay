@@ -36,7 +36,7 @@ namespace FlightTicketSell.Models
         /// What to do when click "Detail" button on each flight infos
         /// </summary>
         public ICommand Open_Window_DescriptionTicketFlight_Command { get; set; }
-        public ICommand TicketBuyCommand { get; set; }
+
         #endregion
 
         #region Constructor
