@@ -15,6 +15,8 @@ namespace FlightTicketSell.ViewModels
 
         public static SellPayViewModel SellPayViewModel => IoC.IoC.Get<SellPayViewModel>();
 
+        public static ChangeTicketViewModel ChangeTicketViewModel => IoC.IoC.Get<ChangeTicketViewModel>();
+
         public static TicketInfoViewModel TicketInfoViewModel => IoC.IoC.Get<TicketInfoViewModel>();
 
         
