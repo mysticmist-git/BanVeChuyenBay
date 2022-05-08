@@ -137,6 +137,9 @@
     <Compile Include="Models\Enums\Search\CustomerDetailType.cs" />
     <Compile Include="Models\Enums\Report\ReportType.cs" />
     <Compile Include="Models\Enums\Search\BookingState.cs" />
+    <Compile Include="Models\GetBookedCustomers_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GetFlightData2_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

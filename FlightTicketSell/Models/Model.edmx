@@ -359,6 +359,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetBookedCustomers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MaDatCho" Type="int" Mode="In" />
+          <Parameter Name="MaChuyenBay" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetFlightData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetFlightData_updated" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetFlightData2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -934,6 +938,10 @@
           <FunctionImport Name="GetFlightData" ReturnType="Collection(FlightTicketSellModel.GetFlightData_Result)" />
           <FunctionImport Name="GetFlightData2" ReturnType="Collection(FlightTicketSellModel.GetFlightData2_Result)" />
           <FunctionImport Name="GetFlightData_updated" ReturnType="Collection(FlightTicketSellModel.GetFlightData_updated_Result)" />
+          <FunctionImport Name="GetBookedCustomers" ReturnType="Collection(FlightTicketSellModel.GetBookedCustomers_Result)">
+            <Parameter Name="MaDatCho" Mode="In" Type="Int32" />
+            <Parameter Name="MaChuyenBay" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetFlightData_Result">
           <Property Type="Int32" Name="MaChuyenBay" Nullable="false" />
@@ -970,6 +978,24 @@
           <Property Type="Int32" Name="SoLuongVe" Nullable="true" />
           <Property Type="Decimal" Name="GiaVe" Nullable="false" Precision="19" />
           <Property Type="Int32" Name="GheTrong" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetBookedCustomers_Result">
+          <Property Type="Int32" Name="MaDatCho" Nullable="false" />
+          <Property Type="Int32" Name="MaHangVe" Nullable="false" />
+          <Property Type="Int32" Name="MaChuyenBay" Nullable="false" />
+          <Property Type="Int32" Name="MaNguoiDat" Nullable="false" />
+          <Property Type="DateTime" Name="NgayGioDat" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="SoVeDat" Nullable="false" />
+          <Property Type="Decimal" Name="GiaTien" Nullable="false" Precision="19" />
+          <Property Type="String" Name="TrangThai" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="MaChiTietDatCho" Nullable="false" />
+          <Property Type="Int32" Name="MaDatCho1" Nullable="false" />
+          <Property Type="Int32" Name="MaKhachHang" Nullable="false" />
+          <Property Type="Int32" Name="MaKhachHang1" Nullable="false" />
+          <Property Type="String" Name="HoTen" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="CMND" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="SDT" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1174,6 +1200,28 @@
                 <ScalarProperty Name="SoLuongVe" ColumnName="SoLuongVe" />
                 <ScalarProperty Name="GiaVe" ColumnName="GiaVe" />
                 <ScalarProperty Name="GheTrong" ColumnName="GheTrong" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetBookedCustomers" FunctionName="FlightTicketSellModel.Store.GetBookedCustomers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FlightTicketSellModel.GetBookedCustomers_Result">
+                <ScalarProperty Name="MaDatCho" ColumnName="MaDatCho" />
+                <ScalarProperty Name="MaHangVe" ColumnName="MaHangVe" />
+                <ScalarProperty Name="MaChuyenBay" ColumnName="MaChuyenBay" />
+                <ScalarProperty Name="MaNguoiDat" ColumnName="MaNguoiDat" />
+                <ScalarProperty Name="NgayGioDat" ColumnName="NgayGioDat" />
+                <ScalarProperty Name="SoVeDat" ColumnName="SoVeDat" />
+                <ScalarProperty Name="GiaTien" ColumnName="GiaTien" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+                <ScalarProperty Name="MaChiTietDatCho" ColumnName="MaChiTietDatCho" />
+                <ScalarProperty Name="MaDatCho1" ColumnName="MaDatCho1" />
+                <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
+                <ScalarProperty Name="MaKhachHang1" ColumnName="MaKhachHang1" />
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+                <ScalarProperty Name="CMND" ColumnName="CMND" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

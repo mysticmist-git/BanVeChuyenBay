@@ -56,5 +56,18 @@ namespace FlightTicketSell.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFlightData_updated_Result>("GetFlightData_updated");
         }
+    
+        public virtual ObjectResult<GetBookedCustomers_Result> GetBookedCustomers(Nullable<int> maDatCho, Nullable<int> maChuyenBay)
+        {
+            var maDatChoParameter = maDatCho.HasValue ?
+                new ObjectParameter("MaDatCho", maDatCho) :
+                new ObjectParameter("MaDatCho", typeof(int));
+    
+            var maChuyenBayParameter = maChuyenBay.HasValue ?
+                new ObjectParameter("MaChuyenBay", maChuyenBay) :
+                new ObjectParameter("MaChuyenBay", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetBookedCustomers_Result>("GetBookedCustomers", maDatChoParameter, maChuyenBayParameter);
+        }
     }
 }

@@ -88,31 +88,36 @@ namespace FlightTicketSell.ViewModels
 
             LoadCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
-                using (var context = new FlightTicketSellEntities())
+            using (var context = new FlightTicketSellEntities())
+            {
+                try
                 {
-                    try
-                    {
-                        MaDuongBay = context.CHUYENBAYs.Where(result => result.MaChuyenBay== FlightInfo.MaChuyenBay).FirstOrDefault().MaDuongBay.ToString();
+                    int ThoiGianHuyVe = context.THAMSOes.Where(result => result.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri;
+                    TicketDeadline = FlightInfo.NgayGio.AddDays(-ThoiGianHuyVe);
+                    MaDuongBay = context.CHUYENBAYs.Where(result => result.MaChuyenBay == FlightInfo.MaChuyenBay).FirstOrDefault().MaDuongBay.ToString();
 
-                        MidAirports = new ObservableCollection<OverlayAirport_Search>(
-                                                                context.SANBAYTGs.Where(result =>
-                                                                result.MaDuongBay.ToString() == MaDuongBay)
-                                                                .Select(result => new OverlayAirport_Search
-                                                                {
-                                                                    ThuTu = result.ThuTu.ToString(),
-                                                                    TenSanBay = context.SANBAYs.Where(x => x.MaSanBay == result.MaSanBay).FirstOrDefault().TenSanBay,
-                                                                    GhiChu = result.GhiChu.ToString(),
-                                                                    ThoiGianDung = result.ThoiGianDung.ToString()
-                                                                }).ToList());                      
+                    MidAirports = new ObservableCollection<OverlayAirport_Search>(
+                                                            context.SANBAYTGs.Where(result =>
+                                                            result.MaDuongBay.ToString() == MaDuongBay)
+                                                            .Select(result => new OverlayAirport_Search
+                                                            {
+                                                                ThuTu = result.ThuTu.ToString(),
+                                                                TenSanBay = context.SANBAYs.Where(x => x.MaSanBay == result.MaSanBay).FirstOrDefault().TenSanBay,
+                                                                GhiChu = result.GhiChu.ToString(),
+                                                                ThoiGianDung = result.ThoiGianDung.ToString()
+                                                            }).ToList());
 
-                        /*var results = await context.DATCHOes
-                                .Where(dc => dc.MaChuyenBay == FlightInfo.MaChuyenBay && dc.MaDatCho == 1)
-                                .Select(dc => dc.CHITIETDATCHOes
-                                    .Select(ctdc => ctdc.KHACHHANG)
-                                    )
-                                .FirstOrDefaultAsync();
-                        for (int i = 1; i <= results.Count(); i++)
-                            Customers.Add(new Customer(results.ElementAt(i - 1)) { Index = i });*/
+
+
+                        Customers = new ObservableCollection<Customer>(
+                                                           context.GetBookedCustomers(MaDatCho,FlightInfo.MaChuyenBay)
+                                                               .Select(result => new Customer
+                                                               {
+                                                                   Index = result.MaKhachHang,
+                                                                   HoTen = result.HoTen
+                                                               }).ToList()
+                                                           );
+
 
                         // Convert KHACHHANG to Customer and add it to Customers list
 
