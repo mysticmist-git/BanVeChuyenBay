@@ -32,7 +32,7 @@ namespace FlightTicketSell.ViewModels
 
         #endregion
         public DetailFlilghtInfo FlightInfo { get; set; }
-        public ObservableCollection<OverlayAirport_Search> MidAirports { get; set; }
+        public ObservableCollection<OverlayAirport_Search> OverlayAirports { get; set; }
         public string HoTen { get; set; }
         public string CMND { get; set; }
         public string SDT { get; set; }
@@ -63,7 +63,7 @@ namespace FlightTicketSell.ViewModels
                     {
                         MaDuongBay = context.CHUYENBAYs.Where(result => result.MaChuyenBay == FlightInfo.MaChuyenBay).FirstOrDefault().MaDuongBay.ToString();
 
-                        MidAirports = new ObservableCollection<OverlayAirport_Search>(
+                        OverlayAirports = new ObservableCollection<OverlayAirport_Search>(
                                                                 context.SANBAYTGs.Where(result =>
                                                                 result.MaDuongBay.ToString() == MaDuongBay)
                                                                 .Select(result => new OverlayAirport_Search
