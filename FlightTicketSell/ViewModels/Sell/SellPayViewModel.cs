@@ -82,7 +82,7 @@ namespace FlightTicketSell.ViewModels
         public string MaDuongBay { get; set; }
 
         public int GiaTien { get; set; }
-
+        #endregion
         public string GiaTien_Convert_VND { get; set; }
         #region Constructor
 
