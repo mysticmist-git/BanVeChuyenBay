@@ -53,7 +53,7 @@
                 <Button 
                     Content="Lưu"
                     Grid.Row="2"
-                    Grid.ColumnSpan="2"
+                    Grid.Column="1"
                     BorderThickness="0"
                     Background="OrangeRed"
                     Command="{Binding SaveCustomerCommand}"
@@ -64,6 +64,16 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     materialDesign:ShadowAssist.Darken="True">
+                </Button>
+                <Button
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    IsCancel="True"
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    HorizontalAlignment="Center"
+                    Content="Thoát"
+                    FontWeight="Bold">
                 </Button>
             </Grid>
         </Border>

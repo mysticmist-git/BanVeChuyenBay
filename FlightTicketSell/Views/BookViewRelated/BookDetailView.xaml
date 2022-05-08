@@ -16,7 +16,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>-->
 
-    <materialDesign:DialogHost Identifier="RootDialog" CloseOnClickAway="True" >
+    <materialDesign:DialogHost Identifier="RootDialog" >
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -233,7 +233,8 @@
                                             Grid.Column="1"
                                             Command="{Binding OpenCustomerInfoCommand}" 
                                             Background="{StaticResource GreenBrush}"
-                                            Style="{StaticResource CustomerInfoButton}" />
+                                            Style="{StaticResource CustomerInfoButton}"
+                                            />
 
                                     <!-- Remove button -->
                                     <Button Content="X"
