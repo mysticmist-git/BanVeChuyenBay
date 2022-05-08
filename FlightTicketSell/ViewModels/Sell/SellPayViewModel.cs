@@ -30,27 +30,61 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand ReturnCommand { get; set; }
 
+        /// <summary>
+        /// The command to save ticket, customer
+        /// </summary>
         public ICommand PayCommand { get; set; }
 
+        /// <summary>
+        /// The command execute on view load
+        /// </summary>
         public ICommand LoadCommand { get; set; }
 
-
         #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// Stores flight information
+        /// </summary>
         public DetailFlilghtInfo FlightInfo { get; set; }
-        public ObservableCollection<OverlayAirport_Search> MidAirports { get; set; }
+
+        /// <summary>
+        /// Stores overlay airports of this flight
+        /// </summary>
+        public ObservableCollection<OverlayAirport_Search> OverlayAirports { get; set; }
+
+        /// <summary>
+        /// Customer name
+        /// </summary>
         public string HoTen { get; set; }
+
+        /// <summary>
+        /// The customer ID
+        /// </summary>
         public string CMND { get; set; }
+
+        /// <summary>
+        /// The phone number of the customer
+        /// </summary>
         public string SDT { get; set; }
+
+        /// <summary>
+        /// The email of the customer
+        /// </summary>
         public string Email { get; set; }
         public int MaHangVe { get; set; }
         public string HangVe { get; set; }
+
+        /// <summary>
+        /// The flight route this flight take
+        /// </summary>
         public string MaDuongBay { get; set; }
 
         public int GiaTien { get; set; }
 
         public string GiaTien_Convert_VND { get; set; }
         #region Constructor
-
 
         /// <summary>
         /// Default constructor
@@ -60,7 +94,7 @@ namespace FlightTicketSell.ViewModels
             // Create commands
             ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.TicketInfoFilling);
 
-            PayCommand = new RelayCommand<object>((p) => true, (p) => SaveTicketPay());
+            PayCommand = new RelayCommand<object>((p) => true, (p) => SaveTicketInformation());
 
             LoadCommand = new RelayCommand<object>((p) => true, (p) =>
             {
@@ -72,7 +106,7 @@ namespace FlightTicketSell.ViewModels
 
                         MaDuongBay = context.CHUYENBAYs.Where(result => result.MaChuyenBay == FlightInfo.MaChuyenBay).FirstOrDefault().MaDuongBay.ToString();
 
-                        MidAirports = new ObservableCollection<OverlayAirport_Search>(
+                        OverlayAirports = new ObservableCollection<OverlayAirport_Search>(
                                                                 context.SANBAYTGs.Where(result =>
                                                                 result.MaDuongBay.ToString() == MaDuongBay)
                                                                 .Select(result => new OverlayAirport_Search
@@ -99,7 +133,10 @@ namespace FlightTicketSell.ViewModels
 
         #region Methods
 
-        private void SaveTicketPay()
+        /// <summary>
+        /// Saves customer information, ticket information down database
+        /// </summary>
+        private void SaveTicketInformation()
         {
             using (var context = new FlightTicketSellEntities())
             {

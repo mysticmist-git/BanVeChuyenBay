@@ -137,7 +137,7 @@
 
                         <!-- Label -->
                         <TextBlock Foreground="White" 
-                               Text="Hạn chót lấy vé:" 
+                               Text="Hạn chót hủy đặt chỗ:" 
                                Grid.Column="0"
                                HorizontalAlignment="Left" 
                                FontSize="{StaticResource Small}"
@@ -188,6 +188,9 @@
 
                         <DataGrid Grid.Row="1"
                                   ItemsSource="{Binding OverlayAirports}"
+                                  Background="Transparent"
+                                  d:ItemsSource="{d:SampleData ItemCount=5}"
+                                  RowHeight="50"
                                   Margin="0 10 0 0"
                                   ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                                   CellStyle="{StaticResource DataGridCellCenter}"
@@ -221,6 +224,9 @@
                         <!-- Customers table -->
                         <DataGrid Grid.Row="1"
                                   ItemsSource="{Binding Customers}"
+                                  d:ItemsSource="{d:SampleData ItemCount=5}"
+                                  Background="Transparent"
+                                  RowHeight="50"
                                   Margin="0 10 0 0"
                                   ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                                   CellStyle="{StaticResource DataGridCellCenter}"

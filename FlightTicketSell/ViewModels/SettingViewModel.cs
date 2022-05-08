@@ -37,7 +37,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Thời gian bay tối thiểu
         /// </summary>
-        public int Min_FlightTime{ get; set; }
+        public int Min_FlightTime { get; set; }
 
         /// <summary>
         /// Thời gian đặt vé chậm nhất
@@ -81,6 +81,10 @@ namespace FlightTicketSell.ViewModels
         /// Lưu khi thêm sân bay
         /// </summary>
         public ICommand MoreAirport_Save_Button_Command { get; set; }
+        /// <summary>
+        /// Hủy khi thêm sân bay
+        /// </summary>
+        public ICommand MoreAirport_Cancel_Button_Command { get; set; }
         /// <summary>
         /// Mở sửa sân bay
         /// </summary>
@@ -142,8 +146,8 @@ namespace FlightTicketSell.ViewModels
         /// Xóa hạng vé
         /// </summary>
         public ICommand DeleteTicketClass_Command { get; set; }
-      
-        
+
+
         #endregion
 
         #region TicketClass Public Properties
@@ -156,7 +160,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Hệ số
         /// </summary>
-        public double MoreTicketClass_Coefficien { get; set; }
+        public string MoreTicketClass_Coefficien { get; set; }
         /// <summary>
         /// Tên hạng vé
         /// </summary>
@@ -229,12 +233,12 @@ namespace FlightTicketSell.ViewModels
         public SettingViewModel()
         {
             #region Main Commands
-            
+
             LoadCommand = new RelayCommand<object>(
                 (p) => { return true; },
                 (p) =>
                 {
-                    using(var context = new FlightTicketSellEntities())
+                    using (var context = new FlightTicketSellEntities())
                     {
                         try
                         {
@@ -267,7 +271,7 @@ namespace FlightTicketSell.ViewModels
                             {
                                 //Hạng vé còn áp dụng mới thêm vào list
                                 if (item.TrangThai)
-                                    List_TicketClass.Add(new TicketClass() { Id = item.MaHangVe, Name = item.TenHangVe, Coefficient = (double)item.HeSo, Status=item.TrangThai });
+                                    List_TicketClass.Add(new TicketClass() { Id = item.MaHangVe, Name = item.TenHangVe, Coefficient = (double)item.HeSo, Status = item.TrangThai });
                             }
 
                         }
@@ -280,8 +284,8 @@ namespace FlightTicketSell.ViewModels
                 }
             );
 
-           
-          
+
+
 
             Save_FlightRegulations_Command = new RelayCommand<object>(
                (p) => { return true; },
@@ -298,7 +302,10 @@ namespace FlightTicketSell.ViewModels
                            context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDatVeChamNhat").FirstOrDefault().GiaTri = Latest_BookingTime;
                            context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri = Cancel_BookingTime;
                            context.SaveChanges();
-                           MessageBox.Show("Lưu thành công!");
+                           if (context.SaveChanges() > 0)
+                               MessageBox.Show("Lưu thành công!", "Cảnh báo");
+                           else
+                               MessageBox.Show("Bạn chưa thực hiện thay đổi các quy định!", "Cảnh báo");
                        }
                        catch (EntityException e)
                        {
@@ -308,9 +315,9 @@ namespace FlightTicketSell.ViewModels
                }
            );
 
-          
 
-           
+
+
             #endregion
 
             #region Aiport Commands
@@ -319,11 +326,14 @@ namespace FlightTicketSell.ViewModels
                (p) => true,
                async (p) =>
                {
+                   MoreAirport_Name = string.Empty;
+                   MoreAirport_Code = string.Empty;
+                   MoreAirport_Province = string.Empty;
                    MoreAirportView moreAirportView = new MoreAirportView { DataContext = this };
                    var result = await DialogHost.Show(moreAirportView, "RootDialog");
 
-                    //Load lại danh sách sân bay
-                    ReLoadList_Airport();
+                   //Load lại danh sách sân bay
+                   ReLoadList_Airport();
                }
            );
 
@@ -337,7 +347,7 @@ namespace FlightTicketSell.ViewModels
                        try
                        {
                            var list_airport = context.SANBAYs.ToList();
-                           if (!(MoreAirport_Name != null && MoreAirport_Code != null && MoreAirport_Province != null))
+                           if (string.IsNullOrEmpty(MoreAirport_Name) || string.IsNullOrEmpty(MoreAirport_Code) || string.IsNullOrEmpty(MoreAirport_Province))
                            {
                                MessageBox.Show("Vui lòng nhập đầy đủ thông tin sân bay!", "Cảnh báo");
                                return;
@@ -370,9 +380,32 @@ namespace FlightTicketSell.ViewModels
 
                    if (IsRun)
                    {
-                        // Close dialog
-                        DialogHost.CloseDialogCommand.Execute(null, null);
+                       if (string.IsNullOrEmpty(MoreAirport_Name) || string.IsNullOrEmpty(MoreAirport_Code) || string.IsNullOrEmpty(MoreAirport_Province))
+                       {
+                           MessageBox.Show("Vui lòng nhập đầy đủ thông tin sân bay!", "Cảnh báo");
+                           return;
+                       }
+                       // Close dialog
+                       DialogHost.CloseDialogCommand.Execute(null, null);
                    }
+
+               }
+           );
+
+            MoreAirport_Cancel_Button_Command = new RelayCommand<object>(
+               (p) => { return true; },
+               (p) =>
+               {
+
+                   if (!string.IsNullOrEmpty(MoreAirport_Name) || !string.IsNullOrEmpty(MoreAirport_Code) || !string.IsNullOrEmpty(MoreAirport_Province))
+                   {
+                       MessageBoxResult temp = MessageBox.Show("Bạn muốn hủy?!", "Cảnh báo", MessageBoxButton.YesNo);
+                       if (temp == MessageBoxResult.No)
+                           return;
+                       //Close dialog
+                       DialogHost.CloseDialogCommand.Execute(null, null);
+                   }
+
 
                }
            );
@@ -383,6 +416,8 @@ namespace FlightTicketSell.ViewModels
            {
                if (Airport_selecteditem != null)
                {
+                   EditAirport_Name = string.Empty;
+                   EditAirport_Province = string.Empty;
                    EditAirportView editAirportView = new EditAirportView()
                    { DataContext = this };
                    var result = await DialogHost.Show(editAirportView, "RootDialog");
@@ -443,8 +478,8 @@ namespace FlightTicketSell.ViewModels
                     {
                         if (Airport_selecteditem != null)
                         {
-                              //Kiểm tra chắc chắn muốn xóa
-                              MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắn chắn muốn xóa sân bay?", "Cảnh báo", MessageBoxButton.YesNo);
+                            //Kiểm tra chắc chắn muốn xóa
+                            MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắn chắn muốn xóa sân bay?", "Cảnh báo", MessageBoxButton.YesNo);
                             if (messageBoxResult == MessageBoxResult.No)
                                 return;
 
@@ -456,8 +491,8 @@ namespace FlightTicketSell.ViewModels
                                 context.SaveChanges();
                                 MessageBox.Show($"Xóa sân bay {Airport_selecteditem.Code} - {Airport_selecteditem.Name} - {Airport_selecteditem.Province}\nthành công!");
 
-                                  //Load lại danh sách sân bay
-                                  ReLoadList_Airport();
+                                //Load lại danh sách sân bay
+                                ReLoadList_Airport();
                             }
                         }
                         else
@@ -480,11 +515,13 @@ namespace FlightTicketSell.ViewModels
               (p) => { return true; },
               async (p) =>
               {
+                  MoreTicketClass_Name = string.Empty;
+                  MoreTicketClass_Coefficien = string.Empty;
                   MoreTicketClassView moreTicketClassView = new MoreTicketClassView { DataContext = this };
                   var result = await DialogHost.Show(moreTicketClassView, "RootDialog");
 
-                    // Load lại danh sách hạng vé
-                    ReLoadList_TicketClass();
+                  // Load lại danh sách hạng vé
+                  ReLoadList_TicketClass();
               }
           );
 
@@ -496,7 +533,7 @@ namespace FlightTicketSell.ViewModels
                        try
                        {
                            var list_ticketclass = context.HANGVEs.ToList();
-                           if (string.IsNullOrEmpty(MoreTicketClass_Name) && MoreTicketClass_Coefficien <= 0)
+                           if (string.IsNullOrEmpty(MoreTicketClass_Name) && string.IsNullOrEmpty(MoreTicketClass_Coefficien))
                            {
                                MessageBox.Show("Vui lòng nhập đầy đủ thông tin hạng vé!", "Cảnh báo");
                                return;
@@ -507,7 +544,7 @@ namespace FlightTicketSell.ViewModels
                                MoreTicketClass_Name = "";
                                return;
                            }
-                           HANGVE temp = new HANGVE() { TenHangVe = MoreTicketClass_Name, TrangThai = true, HeSo = (decimal)MoreTicketClass_Coefficien };
+                           HANGVE temp = new HANGVE() { TenHangVe = MoreTicketClass_Name, TrangThai = true, HeSo = (decimal)(double.Parse(MoreTicketClass_Coefficien)) };
                            context.HANGVEs.Add(temp);
                            context.SaveChanges();
                            MessageBox.Show("Thêm hạng vé thành công!", "Cảnh báo");
@@ -526,6 +563,8 @@ namespace FlightTicketSell.ViewModels
              {
                  if (TicketClass_selecteditem != null)
                  {
+                     EditTicketClass_Name = string.Empty;
+                     EditTicketClass_Coefficien = string.Empty;
                      EditTicketClassView editTicketClassView = new EditTicketClassView { DataContext = this };
                      var result = await DialogHost.Show(editTicketClassView, "RootDialog");
 
@@ -546,7 +585,7 @@ namespace FlightTicketSell.ViewModels
                    {
                        try
                        {
-                           if ( !string.IsNullOrEmpty(EditTicketClass_Name) || !string.IsNullOrEmpty(EditTicketClass_Coefficien))
+                           if (!string.IsNullOrEmpty(EditTicketClass_Name) || !string.IsNullOrEmpty(EditTicketClass_Coefficien))
                            {
 
                                if (!string.IsNullOrEmpty(EditTicketClass_Name))
@@ -556,7 +595,7 @@ namespace FlightTicketSell.ViewModels
 
                                context.SaveChanges();
                                MessageBox.Show("Lưu thay đổi hạng vé thành công!", "Cảnh báo");
-                              
+
                                // Close dialog
                                DialogHost.CloseDialogCommand.Execute(null, null);
                            }
@@ -613,7 +652,7 @@ namespace FlightTicketSell.ViewModels
              }
          );
 
-           
+
             #endregion
         }
     }

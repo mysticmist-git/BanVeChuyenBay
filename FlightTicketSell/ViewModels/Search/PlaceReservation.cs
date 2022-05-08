@@ -6,6 +6,7 @@ using FlightTicketSell.Views.SearchViewMore;
 using FlightTicketSell.ViewModels;
 using FlightTicketSell.Models.Enums;
 using System.Windows;
+using FlightTicketSell.Models;
 
 namespace FlightTicketSell.ViewModels.Search
 {
@@ -59,9 +60,19 @@ namespace FlightTicketSell.ViewModels.Search
         public decimal GiaTien_Ve { get; set; }
 
         /// <summary>
+        /// The display price of the ticket
+        /// </summary>
+        public string DisplayTicketPrice { get => ReportHelper.VietnamCurrencyConvert(GiaTien_Ve) + " VNĐ"; }
+
+        /// <summary>
+        /// The total price of the reservation
+        /// </summary>
+        public decimal TongTien { get => GiaTien_Ve * SoCho; }
+
+        /// <summary>
         /// The display total price of the reservation
         /// </summary>
-        public string DisplayReservationPrice { get => ReportHelper.VietnamCurrencyConvert(GiaTien_Ve) + " VNĐ"; }
+        public string DislayBookingPrice { get => ReportHelper.VietnamCurrencyConvert(TongTien) + " VNĐ"; }
 
         /// <summary>
         /// The state of this reservation
@@ -71,6 +82,10 @@ namespace FlightTicketSell.ViewModels.Search
         /// </summary>
         public string TrangThai { get; set; }
 
+        /// <summary>
+        /// The state of this reservation.
+        /// This is a interface for <see cref="TrangThai"/>.
+        /// </summary>
         public BookingState BookingState 
         { 
             get
@@ -84,7 +99,7 @@ namespace FlightTicketSell.ViewModels.Search
                     case "DaHuy":
                         return BookingState.NotChanged;
                     default:
-                        return BookingState.NotChanged;
+                        return BookingState.None;
                 }
             }
 
@@ -121,6 +136,11 @@ namespace FlightTicketSell.ViewModels.Search
 
         #endregion
 
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public PlaceReservation()
         {
             // Create commands 
@@ -137,18 +157,16 @@ namespace FlightTicketSell.ViewModels.Search
 
                 view.ShowDialog();
             });
+
             ShowMoreCommand = new RelayCommand<object>(p => true, p =>
             {
+                // Changes view
                 IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.ChangeTicket;
-                IoC.IoC.Get<ChangeTicketViewModel>().FlightInfo = IoC.IoC.Get<FlightDetailViewModel>().FlightInfo;
 
-                IoC.IoC.Get<ChangeTicketViewModel>().SoCho = SoCho;
-                IoC.IoC.Get<ChangeTicketViewModel>().TenKhachDat = TenKhachDat;
-                IoC.IoC.Get<ChangeTicketViewModel>().TenHangVe = TenHangVe;
-                IoC.IoC.Get<ChangeTicketViewModel>().GiaTien_Ve = (Convert.ToInt32(GiaTien_Ve) / SoCho).ToString() + " VND";
-                IoC.IoC.Get<ChangeTicketViewModel>().MaDatCho = MaDatCho;
-                IoC.IoC.Get<ChangeTicketViewModel>().GiaTong = DisplayReservationPrice;
+                IoC.IoC.Get<ChangeTicketViewModel>().BookingInfo = this;
             });
-        }
+        } 
+
+        #endregion
     }
 }

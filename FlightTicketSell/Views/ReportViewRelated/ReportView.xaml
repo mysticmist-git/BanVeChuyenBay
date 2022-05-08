@@ -162,13 +162,14 @@
 
                         <!-- Report table -->
                         <DataGrid x:Name="reportDataGrid"
-                              Grid.Row="1"
-                              ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
-                              CellStyle="{StaticResource DataGridCellCenter}"
-                              ItemsSource="{Binding Report, Converter={valueConverters:ReportTypeConverter}}"
-                              ColumnWidth="*"
-                              attachedProperties:ReportTypeProperty.Value="{Binding CurrentReportType}"
-                               />
+                                  Background="Transparent"
+                                  Grid.Row="1"
+                                  ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                                  CellStyle="{StaticResource DataGridCellCenter}"
+                                  ItemsSource="{Binding Report, Converter={valueConverters:ReportTypeConverter}}"
+                                  d:ItemsSource="{d:SampleData ItemCount=3}"
+                                  ColumnWidth="*"
+                                  attachedProperties:ReportTypeProperty.Value="{Binding CurrentReportType}" />
                     </Grid>
 
                 </Border>

@@ -88,8 +88,6 @@ namespace FlightTicketSell.ViewModels
             TickedSoldBookedCommand = new RelayCommand<object>((p) => true, (p) =>
                 {
                     IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.TicketSoldOrBooked;
-                    IoC.IoC.Get<FlightTicketAndReservationViewModel>().FlightInfo = new DetailFlilghtInfo(FlightInfo);
-
                 });
 
             
@@ -103,8 +101,6 @@ namespace FlightTicketSell.ViewModels
                         FlightInfo.ThoiGianBay = context.CHUYENBAYs.Where(result => result.MaChuyenBay == FlightInfo.MaChuyenBay).FirstOrDefault().DUONGBAY.ThoiGianBay;
 
                         FlightInfo.MaDuongBay = context.CHUYENBAYs.Where(result => result.MaChuyenBay == FlightInfo.MaChuyenBay).FirstOrDefault().MaDuongBay;
-
-                        //context.CHITIETHANGVEs.Where(result => result.MaChuyenBay.ToString() == MaChuyenBay).FirstOrDefault().MaHangVe.ToString();
 
                         OverlayAirport = new ObservableCollection<OverlayAirport_Search>(
                                                                 context.SANBAYTGs.Where(result =>
@@ -127,8 +123,8 @@ namespace FlightTicketSell.ViewModels
                                                                     context.VEs.Where(ve => ve.MaChuyenBay== FlightInfo.MaChuyenBay && ve.HANGVE.MaHangVe == cthv.HANGVE.MaHangVe).Count() -
                                                                     (context.DATCHOes.Where(dc =>
                                                                     dc.MaChuyenBay== FlightInfo.MaChuyenBay &&
-                                                                    dc.HANGVE.MaHangVe == cthv.HANGVE.MaHangVe).Sum(dcc => (int?)dcc.SoVeDat) ?? 0)).ToString(),
-                                                                    GiaTien = ((cthv.HANGVE.HeSo) * FlightInfo.GiaVe).ToString()
+                                                                    dc.HANGVE.MaHangVe == cthv.HANGVE.MaHangVe).Sum(dcc => (int?)dcc.SoVeDat) ?? 0)),
+                                                                    GiaTien = ((cthv.HANGVE.HeSo) * FlightInfo.GiaVe)
                                                                 }).ToList()
                             );
 

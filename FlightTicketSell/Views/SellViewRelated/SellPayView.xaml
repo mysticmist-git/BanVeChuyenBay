@@ -183,9 +183,11 @@
                         <TextBlock Text="Sân bay trung gian" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" />
 
                         <DataGrid Grid.Row="1"
-                                  ItemsSource="{Binding MidAirports}"
+                                  ItemsSource="{Binding OverlayAirports}"
                                   d:ItemsSource="{d:SampleData ItemCount=2}"
+                                  Background="Transparent"
                                   RowHeight="50"
+                                  Margin="0 10 0 0"
                                   CanUserSortColumns="True"
                                   CanUserAddRows="False"
                                   AutoGenerateColumns="False"

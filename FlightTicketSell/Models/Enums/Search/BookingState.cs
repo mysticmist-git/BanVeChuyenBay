@@ -3,6 +3,10 @@
     public enum BookingState
     {
         /// <summary>
+        /// For unexpected state
+        /// </summary>
+        None,
+        /// <summary>
         /// The booking has been changed for a ticket
         /// </summary>
         Changed,

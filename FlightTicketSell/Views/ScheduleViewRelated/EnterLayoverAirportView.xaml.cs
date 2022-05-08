@@ -17,7 +17,7 @@ namespace FlightTicketSell.Views
     /// <summary>
     /// Interaction logic for EnterLayoverAirportView.xaml
     /// </summary>
-    public partial class EnterLayoverAirportView : Window
+    public partial class EnterLayoverAirportView : UserControl
     {
         public EnterLayoverAirportView()
         {
