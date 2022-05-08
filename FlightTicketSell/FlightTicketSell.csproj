@@ -179,6 +179,7 @@
     <Compile Include="Models\SearchRelated\DetailFlilghtInfo.cs" />
     <Compile Include="ValueConverters\Search\BookingStateToColorConverter.cs" />
     <Compile Include="ValueConverters\Search\BookingStateToStringConverter.cs" />
+    <Compile Include="ViewModels\Schedule\LayoverAirport.cs" />
     <Compile Include="ViewModels\Search\CustomersDetailViewModel.cs" />
     <Compile Include="ViewModels\Search\FlightInfo.cs" />
     <Compile Include="Models\THAMSO.cs">
@@ -248,16 +249,19 @@
     <Compile Include="Views\BookViewRelated\CustomerInfoDialog.xaml.cs">
       <DependentUpon>CustomerInfoDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ChooseAirportView.xaml.cs">
+      <DependentUpon>ChooseAirportView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SearchViewRelated\CustomerDetail.xaml.cs">
       <DependentUpon>CustomerDetail.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingViewRelated\EditTicketClassView.xaml.cs">
       <DependentUpon>EditTicketClassView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EnterLayoverAirportView.xaml.cs">
+    <Compile Include="Views\ScheduleViewRelated\EnterLayoverAirportView.xaml.cs">
       <DependentUpon>EnterLayoverAirportView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EnterTicketClassView.xaml.cs">
+    <Compile Include="Views\ScheduleViewRelated\EnterTicketClassView.xaml.cs">
       <DependentUpon>EnterTicketClassView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReportViewRelated\PrintPreviewWindow.xaml.cs">
@@ -357,6 +361,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ChooseAirportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SearchViewRelated\CustomerDetail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -365,11 +373,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\EnterLayoverAirportView.xaml">
+    <Page Include="Views\ScheduleViewRelated\EnterLayoverAirportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\EnterTicketClassView.xaml">
+    <Page Include="Views\ScheduleViewRelated\EnterTicketClassView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

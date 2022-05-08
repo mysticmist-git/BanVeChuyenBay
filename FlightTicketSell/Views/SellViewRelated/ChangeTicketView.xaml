@@ -195,6 +195,7 @@
                         <TextBlock Text="Sân bay trung gian" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" />
 
                         <DataGrid Grid.Row="1"
+                                  Background="Transparent"
                                   ItemsSource="{Binding MidAirports}"
                                   d:ItemsSource="{d:SampleData ItemCount=2}"
                                   RowHeight="50"
@@ -253,6 +254,7 @@
 
                         <!-- Customers table -->
                         <DataGrid Grid.Row="1"
+                                  Background="Transparent"
                                   ItemsSource="{Binding Customers}"
                                   d:ItemsSource="{d:SampleData ItemCount=5}"
                                   RowHeight="50"

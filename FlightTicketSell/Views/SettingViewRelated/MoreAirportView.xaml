@@ -24,6 +24,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="10*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -33,7 +34,7 @@
             </Grid.RowDefinitions>
 
             <!--Sân bay-->
-            <Border Grid.Row="1" Grid.Column="1" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+            <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -55,26 +56,35 @@
 
                     <!--Tên sân bay-->
                     <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Tên sân bay" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-                              Text="{Binding MoreAirport_Name}"/>
+                              Text="{Binding MoreAirport_Name}"
+                              materialDesign:HintAssist.HelperText="Ví dụ: Liên Khương"/>
 
                     <!--Viết tắt-->
-                    <TextBox  Grid.Row="1" Grid.Column="3" materialDesign:HintAssist.Hint="Viết tắt" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-                               Text="{Binding MoreAirport_Code}"/>
+                    <TextBox  Grid.Row="1" Grid.Column="3" materialDesign:HintAssist.Hint="Mã sân bay" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                               Text="{Binding MoreAirport_Code}"
+                              materialDesign:HintAssist.HelperText="Ví dụ: DLI"/>
 
                     <!--Tỉnh thành-->
                     <TextBox  Grid.Row="2" Grid.Column="1" materialDesign:HintAssist.Hint="Tỉnh thành" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-                               Text="{Binding MoreAirport_Province}"/>
+                               Text="{Binding MoreAirport_Province}"
+                              materialDesign:HintAssist.HelperText="Ví dụ: Lâm Đồng"/>
 
                 </Grid>
             </Border>
 
             <!--Nút lưu-->
-            <Button Grid.Row="2" Grid.Column="1"  Margin="10 0 10 0" Background="{StaticResource GreenBrush}"  FontSize="{StaticResource Small}" Content="Lưu" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+            <Button Grid.Row="2" Grid.Column="2"  Margin="-30 0 30 0" Background="{StaticResource GreenBrush}"  FontSize="{StaticResource Small}" Content="Lưu" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
                     Command="{Binding MoreAirport_Save_Button_Command}" 
                     >
 
             </Button>
 
+            <!--Nút hủy-->
+            <Button Grid.Row="2" Grid.Column="1"  Margin="30 0 50 0" Background="{StaticResource RedBrush}"  FontSize="{StaticResource Small}" Content="Hủy" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                    Command="{Binding MoreAirport_Cancel_Button_Command}" 
+                    >
+
+            </Button>
         </Grid>
     </Grid>
 </UserControl>
