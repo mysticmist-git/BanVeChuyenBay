@@ -201,17 +201,15 @@ namespace FlightTicketSell.ViewModels
 
                         MailMessage message = new MailMessage(from, to);
 
-                        string mailbody = "<head>" +
-            "Here comes some logo" +
-          "</head>" +
+                        string mailbody = 
           "<body>" +
-            "<h1>Payment comfirmation: sucessfull</h1>" + Environment.NewLine +
+            "<h2>Payment comfirmation</h2>" + Environment.NewLine +
             "<a>Dear  </a>" + HoTen + Environment.NewLine +
-            "<a>Here are some information about the ticket </a>" + Environment.NewLine +
-            "<a>Your flight code is </a>" + FlightInfo.DisplayFlightCode + Environment.NewLine +
-            "<a>The flight will start at </a>" + FlightInfo.NgayGio + Environment.NewLine +
-            "<a>Please take note the information above!!!  </a>" + Environment.NewLine
-            + "<a>Hope you have a great flight, </a>" +
+            "<a>. Here are some information about the ticket</a>" + Environment.NewLine +
+            "<a>. Your flight code is </a>" + FlightInfo.DisplayFlightCode + Environment.NewLine +
+            "<a>. The flight will start at </a>" + FlightInfo.NgayGio + Environment.NewLine +
+            "<a>. Please take note the information above!!!  </a>" + Environment.NewLine
+            + "<a>. Hope you have a great flight !!! </a>" +
           "</body>";
 
                         message.Subject = "Flight ticket payment";
