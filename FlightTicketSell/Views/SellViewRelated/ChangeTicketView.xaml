@@ -399,23 +399,23 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="3"   
-                        Content="In ve" 
+                        Content="In vé" 
                         VerticalAlignment="Center"
-                        FontSize="{StaticResource RealSmall}"
+                        FontSize="{StaticResource Regular}"
                         Background="{StaticResource GreenBrush}"                 
                         BorderThickness="0"  
-                        Height="30"
-                        materialDesign:ButtonAssist.CornerRadius="5"
+                        Height="50"
+                        materialDesign:ButtonAssist.CornerRadius="7"
                                 >
                 </Button>
 
                 <Button Grid.Column="1"   
-                        FontSize="{StaticResource RealSmall}"
-                        Content="Huy dat ve"        
+                        FontSize="{StaticResource Regular}"
+                        Content="Hủy đặt vé"        
                         Background="{StaticResource RedBrush}"                 
                         BorderThickness="0"   
-                        Height="30"
-                        materialDesign:ButtonAssist.CornerRadius="5"
+                        Height="50"
+                        materialDesign:ButtonAssist.CornerRadius="7"
                                 >
                 </Button>
             </Grid>
