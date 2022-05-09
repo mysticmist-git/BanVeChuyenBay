@@ -380,7 +380,7 @@
                             <!-- Heading -->
                             <TextBlock Text="Thành tiền" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" Margin="0,-2,0,2" />
                             <!-- Heading -->
-                            <TextBlock Text="{Binding GiaTien}"
+                            <TextBlock Text="{Binding GiaTien_Convert_VND}"
                                        d:Text="2.760.000 VNĐ"
                                        Grid.Row="1"
                                        HorizontalAlignment="Right"
