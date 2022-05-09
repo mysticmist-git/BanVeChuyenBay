@@ -70,8 +70,13 @@ namespace FlightTicketSell.ViewModels
                         IoC.IoC.Get<SellPayViewModel>().SDT = SDT;
                         IoC.IoC.Get<SellPayViewModel>().CMND = CMND;
                         IoC.IoC.Get<SellPayViewModel>().Email = Email;
-                        IoC.IoC.Get<SellPayViewModel>().GiaTien = GiaTien.ToString() + " VND";
+                        IoC.IoC.Get<SellPayViewModel>().GiaTien = GiaTien;
                         IoC.IoC.Get<SellPayViewModel>().HangVe = HangVe.Name;
+                        IoC.IoC.Get<SellPayViewModel>().MaHangVe = HangVe.ID;
+
+
+
+
                 }
                 catch(NullReferenceException) {
                     MessageBox.Show("Vui long nhap day du thong tin", "Thong tin bi thieu!!");
