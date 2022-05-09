@@ -16,6 +16,8 @@ namespace FlightTicketSell.ViewModels
     public class ScheduleViewModel : BaseViewModel
     {
         #region LayoverAirport
+
+        #region Command
         /// <summary>
         /// Mở nhập sân bay trung gian
         /// </summary>
@@ -24,6 +26,23 @@ namespace FlightTicketSell.ViewModels
         /// Thêm sân bay trung gian
         /// </summary>
         public ICommand EnterLayoverAirport_LoadCommand { get; set; }
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Danh sách sân bay
+        /// </summary>
+        public ObservableCollection<Airport> LayoverAirport_List_Airport { get; set; } = new ObservableCollection<Airport>();
+        /// <summary>
+        /// Thời gian dừng
+        /// </summary>
+        public string LayoverAirport_StopTime { get; set; }
+        /// <summary>
+        /// Ghi chú
+        /// </summary>
+        public string LayoverAirport_Note { get; set; }
+        #endregion
+
         #endregion
 
         #region TicketClass
@@ -111,7 +130,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Danh sách sân bay trung gian
         /// </summary>
-        public ObservableCollection<LayoverAirport> List_LayoverAirport { get; set; }
+        public ObservableCollection<LayoverAirport> List_LayoverAirport { get; set; } = new ObservableCollection<LayoverAirport> ();
 
         /// <summary>
         /// Danh sách hạng vé
@@ -158,18 +177,7 @@ namespace FlightTicketSell.ViewModels
                        {
                            try
                            {
-                               List_LayoverAirport = new ObservableCollection<LayoverAirport>
-                               (context.SANBAYTGs.Select(sbtg => new LayoverAirport
-                               {
-                                   Id = sbtg.MaSanBayTG,
-                                   Id_Airport=sbtg.MaSanBay,
-                                   Id_Route=sbtg.MaDuongBay,
-                                   AirportName = sbtg.SANBAY.TenSanBay,
-                                   Note=sbtg.GhiChu,
-                                   Order=sbtg.ThuTu,
-                                   StopTime=sbtg.ThoiGianDung
 
-                               }));
                            }
                            catch (EntityException e)
                            {
@@ -191,8 +199,40 @@ namespace FlightTicketSell.ViewModels
                    {
                        using (var context = new FlightTicketSellEntities())
                        {
-                      
+                           LayoverAirport_List_Airport = new ObservableCollection<Airport>
+                              (context.SANBAYs.Select(h => new Airport
+                              {
+                                  Id = h.MaSanBay,
+                                  Name = h.TenSanBay,
+                                  Code = h.VietTat,
+                                  Province = h.TinhThanh,
+                                  Status= h.TrangThai
 
+                              }).Where(k => k.Status!=false).ToList()
+                              );
+                           if (!string.IsNullOrEmpty(LandingAirport.Name))
+                           {
+                               RemoveAirportItem(LayoverAirport_List_Airport, LandingAirport);
+                           }
+                           if (!string.IsNullOrEmpty(DepartureAirport.Name))
+                           {
+                               RemoveAirportItem(LayoverAirport_List_Airport, DepartureAirport);
+                           }
+                           if (List_LayoverAirport.Count > 0)
+                           {
+                               foreach (var item in LayoverAirport_List_Airport)
+                               {
+                                   bool temp = false;
+                                   foreach (var h in List_LayoverAirport)
+                                       if (h.Id_Airport == item.Id)
+                                       {
+                                           temp = true;
+                                           return;
+                                       }
+                                   if (temp)
+                                       LayoverAirport_List_Airport.Remove(item);
+                               }
+                           }
                        }
                    }
                    catch (System.Data.Entity.Core.EntityException e)
@@ -252,6 +292,21 @@ namespace FlightTicketSell.ViewModels
                           if (!string.IsNullOrEmpty(DepartureAirport.Name))
                           {
                               RemoveAirportItem(ChooseAirport_List, DepartureAirport);
+                          }
+                          if (List_LayoverAirport.Count>0)
+                          {
+                              foreach(var item in ChooseAirport_List)
+                              {
+                                  bool temp = false;
+                                  foreach (var h in List_LayoverAirport)
+                                      if (h.Id_Airport == item.Id)
+                                      {
+                                          temp = true;
+                                          return;
+                                      }
+                                  if (temp)
+                                      ChooseAirport_List.Remove(item);
+                              }
                           }
 
                       }
