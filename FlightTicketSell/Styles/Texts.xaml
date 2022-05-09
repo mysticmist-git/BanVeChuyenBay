@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" >
 
     <!-- AppName Text -->
     <Style x:Key="AppNameText" TargetType="{x:Type TextBlock}">
@@ -38,6 +39,10 @@
         <Setter Property="FontFamily" Value="{StaticResource Roboto}" />
         <Setter Property="FontSize" Value="{StaticResource Small}"/>
         <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="materialDesign:TextFieldAssist.UnderlineBrush" Value="{StaticResource BlueBrush}"/>
+        <Setter Property="materialDesign:HintAssist.Foreground" Value="{StaticResource BlueBrush}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource BlueBrush}"/>
+
     </Style>
 
     <!--GridViewColumn.Header-->

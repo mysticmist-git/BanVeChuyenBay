@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FlightTicketSell.Views" xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
+             xmlns:local="clr-namespace:FlightTicketSell.Views" xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
              mc:Ignorable="d" 
              d:Background="{StaticResource LightGrayBrush}"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -97,10 +100,13 @@
 
                             <!--Ngày bay-->
                             <DatePicker Grid.Column="0" materialDesign:HintAssist.Hint="Ngày bay" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black" 
-                                    SelectedDate="{Binding DateFlight, Mode=OneWay, Converter={valueConverters:DatePickerUI_To_DatePickerConverter}}"   
-                                    Grid.ColumnSpan="2"
-                                    HorizontalAlignment="Stretch"
-                                    >
+                                        SelectedDate="{Binding DateFlight,StringFormat={}{0:dd-MM-yyyy}, Converter={valueConverters:DatePickerUI_To_DatePickerConverter}}"   
+                                        Grid.ColumnSpan="2"
+                                        HorizontalAlignment="Stretch"
+                                        materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource BlueBrush}"
+                                        materialDesign:HintAssist.Foreground="{StaticResource BlueBrush}"
+                                        
+                                        >
                                 <DatePicker.Resources>
                                     <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
                                         <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="{StaticResource BlueBrush}"/>
@@ -128,9 +134,11 @@
                             <materialDesign:TimePicker Grid.Column="2 " Style="{StaticResource MaterialDesignFloatingHintTimePicker}" Is24Hours="True" materialDesign:HintAssist.Hint="Giờ bay" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black" 
                                                    SelectedTime="{Binding TimeFlight, Mode=OneWay, Converter={valueConverters:TimePickerUI_To_TimePickerConverter}}"
                                                    HorizontalAlignment="Stretch"
-                                                   Margin="5 0 0 0">
+                                                   Margin="5 0 0 0"
+                                                       />
 
-                            </materialDesign:TimePicker>
+
+
                         </Grid>
 
                         <!--Sân bay đi-->
@@ -198,63 +206,51 @@
                         <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Sân bay trung gian</TextBlock>
 
                         <!--Danh sách hạng vé-->
-                        <ListView Grid.Row="1" Grid.Column="1"
-                              ItemsSource="{Binding List_LayoverAirport}">
-                            <ListView.View>
-                                <GridView>
+                        <DataGrid
+                            ItemsSource="{Binding List_LayoverAirport}"
+                            d:ItemsSource="{d:SampleData ItemCount=5}"
+                            Background="Transparent"
+                            
+                            RowHeight="40"
+                            CanUserSortColumns="True"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            Grid.Row="1"
+                            Margin="20 0 20 0"
+                            IsReadOnly="True">  
 
-                                    <!--Thứ tự-->
-                                    <GridViewColumn >
-                                        <GridViewColumn.Header>
-                                            <TextBlock Text="Thứ tự" Style="{StaticResource Custom_GridviewHeader}"/>
-                                        </GridViewColumn.Header>
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Order}"  Style="{StaticResource Custom_GridviewCell}"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                            <DataGrid.Columns>
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding Order}"
+                                    Header="Thứ tự"
+                                    Width="0.7*"
+                                    CellStyle="{StaticResource DataGridCellCenter}"
+                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding AirportName}"
+                                    Header="Tên sân bay" 
+                                    Width="*"
+                                    CellStyle="{StaticResource DataGridCellCenter}"
+                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding StopTime}"
+                                    Header="Thời gian dừng"
+                                    Width="*"
+                                    CellStyle="{StaticResource DataGridCellCenter}"
+                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding Note}"
+                                     HeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                                    Header="Ghi chú" 
+                                    Width="2*"/>
 
-                                    <!--Tên sân bay-->
-                                    <GridViewColumn >
-                                        <GridViewColumn.Header>
-                                            <TextBlock Text="Tên sân bay" Style="{StaticResource Custom_GridviewHeader}"/>
-                                        </GridViewColumn.Header>
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding AirportName}"  Style="{StaticResource Custom_GridviewCell}"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
 
-                                    <!--Thời gian dừng-->
-                                    <GridViewColumn >
-                                        <GridViewColumn.Header>
-                                            <TextBlock Text="Thời gian dừng" Style="{StaticResource Custom_GridviewHeader}"/>
-                                        </GridViewColumn.Header>
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding StopTime}"  Style="{StaticResource Custom_GridviewCell}"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
 
-                                    <!--Ghi chú-->
-                                    <GridViewColumn >
-                                        <GridViewColumn.Header>
-                                            <TextBlock Text="Ghi chú" Style="{StaticResource Custom_GridviewHeader}"/>
-                                        </GridViewColumn.Header>
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Note}"  Style="{StaticResource Custom_GridviewCell}"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-
+                            </DataGrid.Columns>
+                        </DataGrid>
+           
                         <!--Nút thêm sửa xóa-->
                         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right">
                             <!--Nút xóa-->
@@ -356,7 +352,7 @@
                 </Border>
 
                 <!--Nút nhận lịch chuyến bay/ Hủy-->
-                <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <Button Margin="0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource Regular}" Content="Hủy" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
 
                     <Button Margin="20 0 0 0" Height="auto" Background="{StaticResource GreenBrush}"  FontSize="{StaticResource Regular}" Content="Nhận lịch bay" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>

@@ -1,4 +1,5 @@
 ﻿using FlightTicketSell.Models;
+using FlightTicketSell.ViewModels.Schedule;
 using FlightTicketSell.ViewModels.Setting;
 using FlightTicketSell.Views;
 using MaterialDesignThemes.Wpf;
@@ -14,24 +15,34 @@ namespace FlightTicketSell.ViewModels
 {
     public class ScheduleViewModel : BaseViewModel
     {
-        #region Commands
+        #region LayoverAirport
         /// <summary>
         /// Mở nhập sân bay trung gian
         /// </summary>
         public ICommand Open_Window_EnterLayoverAirport_Command { get; set; }
         /// <summary>
+        /// Thêm sân bay trung gian
+        /// </summary>
+        public ICommand EnterLayoverAirport_LoadCommand { get; set; }
+        #endregion
+
+        #region TicketClass
+        /// <summary>
         /// Mở nhập hạng vé
         /// </summary>
         public ICommand Open_Window_EnterTicketClass_Command { get; set; }
+        #endregion
+
+        #region Main Commands
         /// <summary>
         /// Nút đổi sân bay đi & sân bay đến
         /// </summary>
         public ICommand Change_Departure_Landing_Airport_Command { get; set; }
-        public ICommand LoadCommand { get; set; }
         /// <summary>
-        /// Thêm sân bay trung gian
+        /// Hàm load chính
         /// </summary>
-        public ICommand EnterLayoverAirport_LoadCommand { get; set; }
+        public ICommand LoadCommand { get; set; }
+       
         /// <summary>
         /// Mở DialogHost Chọn sân bay đi
         /// </summary>
@@ -50,7 +61,7 @@ namespace FlightTicketSell.ViewModels
         public ICommand ChooseAirportButton_Command { get; set; }
         #endregion
 
-        #region Public Properties
+        #region Main Properties
         /// <summary>
         /// Mã chuyến bay
         /// </summary>
@@ -93,11 +104,14 @@ namespace FlightTicketSell.ViewModels
         /// Sân bay được chọn trong Chọn sân bay
         /// </summary>
         public Airport ChooseAirport_SelectedItem { get; set; }= new Airport();
-
+        /// <summary>
+        /// Biến đánh dấu thành phần nào đã mở DialogHost Chọn sân bay
+        /// </summary>
+        private static string OpenChooseAirport { get; set; }
         /// <summary>
         /// Danh sách sân bay trung gian
         /// </summary>
-        //public ObservableCollection<LayoverAirport> List_LayoverAirport { get; set; } = new ObservableCollection<LayoverAirport>();
+        public ObservableCollection<LayoverAirport> List_LayoverAirport { get; set; }
 
         /// <summary>
         /// Danh sách hạng vé
@@ -106,15 +120,7 @@ namespace FlightTicketSell.ViewModels
 
         #endregion
 
-        #region Private Properties
-        /// <summary>
-        /// Biến đánh dấu thành phần nào đã mở DialogHost Chọn sân bay
-        /// </summary>
-        private static string OpenChooseAirport { get; set; }
-
-        #endregion
-
-        #region Public Method
+        #region Main Method
         /// <summary>
         /// Loại bỏ 1 phần tử trong ObservableCollection
         /// </summary>
@@ -137,7 +143,6 @@ namespace FlightTicketSell.ViewModels
         public ScheduleViewModel()
         {
             #region Main Command
-
             LoadCommand = new RelayCommand<object>((p) => { return true; },
                (p) =>
                {
@@ -148,10 +153,28 @@ namespace FlightTicketSell.ViewModels
                        // Gán ngày hiện tại cho datepicker lúc mở 
                        TimeFlight = DateTime.Now;
 
+                       //Danh sách sân bay trung gian
                        using (var context = new FlightTicketSellEntities())
                        {
-                           
+                           try
+                           {
+                               List_LayoverAirport = new ObservableCollection<LayoverAirport>
+                               (context.SANBAYTGs.Select(sbtg => new LayoverAirport
+                               {
+                                   Id = sbtg.MaSanBayTG,
+                                   Id_Airport=sbtg.MaSanBay,
+                                   Id_Route=sbtg.MaDuongBay,
+                                   AirportName = sbtg.SANBAY.TenSanBay,
+                                   Note=sbtg.GhiChu,
+                                   Order=sbtg.ThuTu,
+                                   StopTime=sbtg.ThoiGianDung
 
+                               }));
+                           }
+                           catch (EntityException e)
+                           {
+                               MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                           }
                        }
                    }
                    catch (System.Data.Entity.Core.EntityException e)
@@ -185,23 +208,6 @@ namespace FlightTicketSell.ViewModels
                    (LandingAirport, DepartureAirport) = (DepartureAirport, LandingAirport);
                }
            );
-
-            Open_Window_EnterLayoverAirport_Command = new RelayCommand<object>((p) => { return true; },
-              async (p) =>
-                {
-                    EnterLayoverAirportView enterLayoverAirportView = new EnterLayoverAirportView{ DataContext = this };
-                    var result = await DialogHost.Show(enterLayoverAirportView, "RootDialog");
-                }
-            );
-
-            Open_Window_EnterTicketClass_Command = new RelayCommand<object>((p) => { return true; },
-               async (p) =>
-                {
-                    EnterTicketClassView enterTicketClassView = new EnterTicketClassView { DataContext=this};
-                    var result = await DialogHost.Show(enterTicketClassView, "RootDialog");
-                }
-            );
-
             ChooseDepartureAirport_Command = new RelayCommand<object>((p) => { return true; },
              async (p) =>
              {
@@ -283,7 +289,25 @@ namespace FlightTicketSell.ViewModels
           );
             #endregion
 
+            #region LayoverAirport
+            Open_Window_EnterLayoverAirport_Command = new RelayCommand<object>((p) => { return true; },
+               (p) =>
+               {
+                   EnterLayoverAirportView enterLayoverAirportView = new EnterLayoverAirportView { DataContext = this };
+                   var result = DialogHost.Show(enterLayoverAirportView, "RootDialog");
+               }
+            );
+            #endregion
 
+            #region TicketClass
+            Open_Window_EnterTicketClass_Command = new RelayCommand<object>((p) => { return true; },
+               async (p) =>
+               {
+                   EnterTicketClassView enterTicketClassView = new EnterTicketClassView { DataContext = this };
+                   var result = await DialogHost.Show(enterTicketClassView, "RootDialog");
+               }
+            );
+            #endregion
         }
     }
 }

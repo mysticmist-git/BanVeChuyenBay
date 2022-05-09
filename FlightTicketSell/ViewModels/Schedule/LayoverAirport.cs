@@ -20,26 +20,7 @@ namespace FlightTicketSell.ViewModels.Schedule
         public int Id { get; set; }
         public int Id_Route { get; set; }
         public int Id_Airport { get; set; }
-        public string AirportName
-        {
-            get { return AirportName; }
-            set
-            {
-                using (var context = new FlightTicketSellEntities())
-                {
-                    try
-                    {
-                        var list = context.SANBAYs.ToList().Where(h => h.MaSanBay == Id_Airport).FirstOrDefault().TenSanBay;
-                        AirportName = list ?? value;
-                    }
-                    catch (EntityException e)
-                    {
-                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-
-            }
-        }
+        public string AirportName { get; set; }
         public int Order { get; set; }
         public int StopTime { get; set; }
         public string Note { get; set; }
