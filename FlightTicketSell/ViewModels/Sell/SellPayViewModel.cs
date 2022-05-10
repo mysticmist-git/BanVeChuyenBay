@@ -80,8 +80,7 @@ namespace FlightTicketSell.ViewModels
                 await SaveTicketInformation();
 
                 // Clear view models
-                IoC.IoC.Get<TicketInfoFillingViewModel>().Customer = new Customer();
-                IoC.IoC.Get<TicketInfoFillingViewModel>().DuplicatedCustomer = new Customer();
+                IoC.IoC.Get<TicketInfoFillingViewModel>().ClearData();
 
                 // Navigate back to flight detail view
                 IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.FlightDetail;

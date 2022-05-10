@@ -137,14 +137,28 @@ namespace FlightTicketSell.ViewModels
                     CurrentTicketTier = TicketTiers.ElementAt(0);
             });
 
-            ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightDetail);
+            ReturnCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                this.ClearData();
+                
+                IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightDetail;
+            });
         }
 
+        #endregion
+
+        #region Helpers
+
+        /// <summary>
+        /// What to do when dialog close
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
         private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
             if (eventArgs is null)
                 return;
-            
+
             switch ((int)eventArgs.Parameter)
             {
                 case 0:
@@ -156,6 +170,16 @@ namespace FlightTicketSell.ViewModels
                     Customer.Email = DuplicatedCustomer.Email;
                     return;
             }
+        }
+
+        /// <summary>
+        /// Clear this view information
+        /// </summary>
+        public void ClearData()
+        {
+            Customer = new KHACHHANG();
+            DuplicatedCustomer = new KHACHHANG();
+            CurrentTicketTier = null;
         }
 
         #endregion
