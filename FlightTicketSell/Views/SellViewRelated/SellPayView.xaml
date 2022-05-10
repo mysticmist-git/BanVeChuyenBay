@@ -264,25 +264,25 @@
                             <!-- Name -->
                             <StackPanel Grid.Column="0" Grid.Row="0">
                                 <TextBlock Text="Họ tên" Style="{StaticResource FieldLabelText}" FontSize="14" />
-                                <TextBox IsReadOnly="True" Text="{Binding HoTen}"  Opacity="0.8" />
+                                <TextBox IsReadOnly="True" Text="{Binding Customer.HoTen}"  Opacity="0.8" />
                             </StackPanel>
 
                             <!-- ID -->
                             <StackPanel Grid.Column="2" Grid.Row="0">
                                 <TextBlock Text="CMND" Style="{StaticResource FieldLabelText}" FontSize="14" />
-                                <TextBox IsReadOnly="True" Text="{Binding CMND}"  Opacity="0.8" />
+                                <TextBox IsReadOnly="True" Text="{Binding Customer.CMND}"  Opacity="0.8" />
                             </StackPanel>
 
                             <!-- Phone number -->
                             <StackPanel Grid.Column="0" Grid.Row="2">
                                 <TextBlock Text="Số điện thoại" Style="{StaticResource FieldLabelText}" FontSize="14" />
-                                <TextBox IsReadOnly="True" Text="{Binding SDT}"  Opacity="0.8" />
+                                <TextBox IsReadOnly="True" Text="{Binding Customer.SDT}"  Opacity="0.8" />
                             </StackPanel>
 
                             <!-- Email -->
                             <StackPanel Grid.Column="2" Grid.Row="2">
                                 <TextBlock Text="Email" Style="{StaticResource FieldLabelText}" FontSize="14" />
-                                <TextBox IsReadOnly="True" Text="{Binding Email}"  Opacity="0.8" />
+                                <TextBox IsReadOnly="True" Text="{Binding Customer.Email}"  Opacity="0.8" />
                             </StackPanel>
 
                         </Grid>
@@ -318,6 +318,7 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
                             <!-- Ticket tier -->
@@ -327,27 +328,37 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="Hạng vé" Grid.Column="0" FontSize="{StaticResource Small}" />
-                                <TextBlock Text="{Binding HangVe}"  Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource FieldLabelText}"/>
+                                <TextBlock Text="{Binding CurrentTicketTier.TenHangVe}" d:Text="Phổ thông" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource FieldLabelText}"/>
                             </Grid>
 
-                            <!-- Ticket price -->
+                            <!-- Ticket coefficient -->
                             <Grid Grid.Row="1" VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="Giá vé" Grid.Column="0" FontSize="{StaticResource Small}" />
-                                <TextBlock Text="{Binding GiaTien}" d:Text="920.000 VNĐ" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource FieldLabelText}" />
+                                <TextBlock Text="Hệ số" Grid.Column="0" FontSize="{StaticResource Small}" />
+                                <TextBlock Text="{Binding CurrentTicketTier.DisplayCoefficient}" d:Text="120%" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource FieldLabelText}"/>
                             </Grid>
 
-                            <!-- Customer paid -->
+                            <!-- Ticket price -->
                             <Grid Grid.Row="2" VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
+                                <TextBlock Text="Giá vé gốc" Grid.Column="0" FontSize="{StaticResource Small}" />
+                                <TextBlock Text="{Binding FlightInfo.DisplayPrice}" d:Text="920.000 VNĐ" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource FieldLabelText}" />
+                            </Grid>
+
+                            <!-- Customer paid -->
+                            <Grid Grid.Row="3" VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
                                 <TextBlock Text="Người thanh toán" Grid.Column="0" FontSize="{StaticResource Small}" />
-                                <TextBlock Text="{Binding HoTen}" d:Text="Nguyễn Văn A" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource FieldLabelText}" />
+                                <TextBlock Text="{Binding Customer.HoTen}" d:Text="Nguyễn Văn A" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource FieldLabelText}" />
                             </Grid>
 
                         </Grid>
@@ -380,7 +391,7 @@
                             <!-- Heading -->
                             <TextBlock Text="Thành tiền" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" Margin="0,-2,0,2" />
                             <!-- Heading -->
-                            <TextBlock Text="{Binding GiaTien_Convert_VND}"
+                            <TextBlock Text="{Binding CurrentTicketTier.DisplayTicketPrice}"
                                        d:Text="2.760.000 VNĐ"
                                        Grid.Row="1"
                                        HorizontalAlignment="Right"

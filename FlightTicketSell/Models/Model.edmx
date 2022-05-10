@@ -140,7 +140,7 @@
           <Property Name="MaHangVe" Type="int" Nullable="false" />
           <Property Name="MaChuyenBay" Type="int" Nullable="false" />
           <Property Name="MaKhachHang" Type="int" Nullable="false" />
-          <Property Name="GiaTien" Type="int" Nullable="false" />
+          <Property Name="GiaTien" Type="money" Nullable="false" />
           <Property Name="NgayThanhToan" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK_CHITIETDATCHO_MaDatCho">
@@ -359,13 +359,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="GetBookedCustomers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="MaDatCho" Type="int" Mode="In" />
-          <Parameter Name="MaChuyenBay" Type="int" Mode="In" />
-        </Function>
         <Function Name="GetFlightData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetFlightData_updated" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetFlightData2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="FlightTicketSellModelStoreContainer">
           <EntitySet Name="CHITIETDATCHO" EntityType="Self.CHITIETDATCHO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHITIETHANGVE" EntityType="Self.CHITIETHANGVE" Schema="dbo" store:Type="Tables" />
@@ -492,7 +486,7 @@
           <NavigationProperty Name="DUONGBAY" Relationship="Self.FK_CHUYENBAY_MaDuongBay" FromRole="CHUYENBAY" ToRole="DUONGBAY" />
           <NavigationProperty Name="DATCHOes" Relationship="Self.FK_DATCHO_MaChuyenBay" FromRole="CHUYENBAY" ToRole="DATCHO" />
           <NavigationProperty Name="DOANHTHUCHUYENBAYs" Relationship="Self.FK_DOANHTHUCHUYENBAY_MaChuyenBay" FromRole="CHUYENBAY" ToRole="DOANHTHUCHUYENBAY" />
-          <NavigationProperty Name="VEs" Relationship="Self.FK_VE_MaChuyenBay" FromRole="CHUYENBAY" ToRole="VE" />
+          <NavigationProperty Name="VEs" Relationship="FlightTicketSellModel.FK_VE_MaChuyenBay" FromRole="CHUYENBAY" ToRole="VE" />
         </EntityType>
         <EntityType Name="DATCHO">
           <Key>
@@ -570,7 +564,7 @@
           <Property Name="TrangThai" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CHITIETHANGVEs" Relationship="Self.FK_CHITIETHANGVE_MaHangVe" FromRole="HANGVE" ToRole="CHITIETHANGVE" />
           <NavigationProperty Name="DATCHOes" Relationship="Self.FK_DATCHO_MaHangVe" FromRole="HANGVE" ToRole="DATCHO" />
-          <NavigationProperty Name="VEs" Relationship="Self.FK_VE_MaHangVe" FromRole="HANGVE" ToRole="VE" />
+          <NavigationProperty Name="VEs" Relationship="FlightTicketSellModel.FK_VE_MaHangVe" FromRole="HANGVE" ToRole="VE" />
         </EntityType>
         <EntityType Name="KHACHHANG">
           <Key>
@@ -583,7 +577,7 @@
           <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CHITIETDATCHOes" Relationship="Self.FK_CHITIETDATCHO_MaKhachHang" FromRole="KHACHHANG" ToRole="CHITIETDATCHO" />
           <NavigationProperty Name="DATCHOes" Relationship="Self.FK_DATCHO_MaNguoiDat" FromRole="KHACHHANG" ToRole="DATCHO" />
-          <NavigationProperty Name="VEs" Relationship="Self.FK_VE_MaKhachHang" FromRole="KHACHHANG" ToRole="VE" />
+          <NavigationProperty Name="VEs" Relationship="FlightTicketSellModel.FK_VE_MaKhachHang" FromRole="KHACHHANG" ToRole="VE" />
         </EntityType>
         <EntityType Name="SANBAY">
           <Key>
@@ -617,20 +611,6 @@
           </Key>
           <Property Name="TenThamSo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GiaTri" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="VE">
-          <Key>
-            <PropertyRef Name="MaVe" />
-          </Key>
-          <Property Name="MaVe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MaHangVe" Type="Int32" Nullable="false" />
-          <Property Name="MaChuyenBay" Type="Int32" Nullable="false" />
-          <Property Name="MaKhachHang" Type="Int32" Nullable="false" />
-          <Property Name="GiaTien" Type="Int32" Nullable="false" />
-          <Property Name="NgayThanhToan" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="CHUYENBAY" Relationship="Self.FK_VE_MaChuyenBay" FromRole="VE" ToRole="CHUYENBAY" />
-          <NavigationProperty Name="HANGVE" Relationship="Self.FK_VE_MaHangVe" FromRole="VE" ToRole="HANGVE" />
-          <NavigationProperty Name="KHACHHANG" Relationship="Self.FK_VE_MaKhachHang" FromRole="VE" ToRole="KHACHHANG" />
         </EntityType>
         <Association Name="FK_CHITIETDATCHO_MaDatCho">
           <End Role="DATCHO" Type="Self.DATCHO" Multiplicity="1" />
@@ -712,18 +692,6 @@
               <PropertyRef Name="MaChuyenBay" />
             </Principal>
             <Dependent Role="DOANHTHUCHUYENBAY">
-              <PropertyRef Name="MaChuyenBay" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_VE_MaChuyenBay">
-          <End Role="CHUYENBAY" Type="Self.CHUYENBAY" Multiplicity="1" />
-          <End Role="VE" Type="Self.VE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CHUYENBAY">
-              <PropertyRef Name="MaChuyenBay" />
-            </Principal>
-            <Dependent Role="VE">
               <PropertyRef Name="MaChuyenBay" />
             </Dependent>
           </ReferentialConstraint>
@@ -812,30 +780,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VE_MaHangVe">
-          <End Role="HANGVE" Type="Self.HANGVE" Multiplicity="1" />
-          <End Role="VE" Type="Self.VE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="HANGVE">
-              <PropertyRef Name="MaHangVe" />
-            </Principal>
-            <Dependent Role="VE">
-              <PropertyRef Name="MaHangVe" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_VE_MaKhachHang">
-          <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="1" />
-          <End Role="VE" Type="Self.VE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="KHACHHANG">
-              <PropertyRef Name="MaKhachHang" />
-            </Principal>
-            <Dependent Role="VE">
-              <PropertyRef Name="MaKhachHang" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SANBAYTG_MaSanBay">
           <End Role="SANBAY" Type="Self.SANBAY" Multiplicity="1" />
           <End Role="SANBAYTG" Type="Self.SANBAYTG" Multiplicity="*" />
@@ -862,7 +806,6 @@
           <EntitySet Name="SANBAYs" EntityType="Self.SANBAY" />
           <EntitySet Name="SANBAYTGs" EntityType="Self.SANBAYTG" />
           <EntitySet Name="THAMSOes" EntityType="Self.THAMSO" />
-          <EntitySet Name="VEs" EntityType="Self.VE" />
           <AssociationSet Name="FK_CHITIETDATCHO_MaDatCho" Association="Self.FK_CHITIETDATCHO_MaDatCho">
             <End Role="DATCHO" EntitySet="DATCHOes" />
             <End Role="CHITIETDATCHO" EntitySet="CHITIETDATCHOes" />
@@ -890,10 +833,6 @@
           <AssociationSet Name="FK_DOANHTHUCHUYENBAY_MaChuyenBay" Association="Self.FK_DOANHTHUCHUYENBAY_MaChuyenBay">
             <End Role="CHUYENBAY" EntitySet="CHUYENBAYs" />
             <End Role="DOANHTHUCHUYENBAY" EntitySet="DOANHTHUCHUYENBAYs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VE_MaChuyenBay" Association="Self.FK_VE_MaChuyenBay">
-            <End Role="CHUYENBAY" EntitySet="CHUYENBAYs" />
-            <End Role="VE" EntitySet="VEs" />
           </AssociationSet>
           <AssociationSet Name="FK_DATCHO_MaHangVe" Association="Self.FK_DATCHO_MaHangVe">
             <End Role="HANGVE" EntitySet="HANGVEs" />
@@ -923,26 +862,29 @@
             <End Role="DUONGBAY" EntitySet="DUONGBAYs" />
             <End Role="SANBAYTG" EntitySet="SANBAYTGs" />
           </AssociationSet>
-          <AssociationSet Name="FK_VE_MaHangVe" Association="Self.FK_VE_MaHangVe">
-            <End Role="HANGVE" EntitySet="HANGVEs" />
-            <End Role="VE" EntitySet="VEs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VE_MaKhachHang" Association="Self.FK_VE_MaKhachHang">
-            <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
-            <End Role="VE" EntitySet="VEs" />
-          </AssociationSet>
           <AssociationSet Name="FK_SANBAYTG_MaSanBay" Association="Self.FK_SANBAYTG_MaSanBay">
             <End Role="SANBAY" EntitySet="SANBAYs" />
             <End Role="SANBAYTG" EntitySet="SANBAYTGs" />
           </AssociationSet>
           <FunctionImport Name="GetFlightData" ReturnType="Collection(FlightTicketSellModel.GetFlightData_Result)" />
-          <FunctionImport Name="GetFlightData2" ReturnType="Collection(FlightTicketSellModel.GetFlightData2_Result)" />
-          <FunctionImport Name="GetFlightData_updated" ReturnType="Collection(FlightTicketSellModel.GetFlightData_updated_Result)" />
           <FunctionImport Name="GetBookedCustomers" ReturnType="Collection(FlightTicketSellModel.GetBookedCustomers_Result)">
             <Parameter Name="MaDatCho" Mode="In" Type="Int32" />
             <Parameter Name="MaChuyenBay" Mode="In" Type="Int32" />
           </FunctionImport>
-        </EntityContainer>
+          <EntitySet Name="VEs" EntityType="FlightTicketSellModel.VE" />
+          <AssociationSet Name="FK_VE_MaChuyenBay" Association="FlightTicketSellModel.FK_VE_MaChuyenBay">
+            <End Role="CHUYENBAY" EntitySet="CHUYENBAYs" />
+            <End Role="VE" EntitySet="VEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VE_MaHangVe" Association="FlightTicketSellModel.FK_VE_MaHangVe">
+            <End Role="HANGVE" EntitySet="HANGVEs" />
+            <End Role="VE" EntitySet="VEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VE_MaKhachHang" Association="FlightTicketSellModel.FK_VE_MaKhachHang">
+            <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
+            <End Role="VE" EntitySet="VEs" />
+          </AssociationSet>
+          </EntityContainer>
         <ComplexType Name="GetFlightData_Result">
           <Property Type="Int32" Name="MaChuyenBay" Nullable="false" />
           <Property Type="Int32" Name="MaSanBayDi" Nullable="false" />
@@ -954,28 +896,6 @@
           <Property Type="DateTime" Name="NgayGio" Nullable="false" Precision="23" />
           <Property Type="Int32" Name="SoDiemDung" Nullable="true" />
           <Property Type="Int32" Name="SoHangVe" Nullable="true" />
-          <Property Type="Decimal" Name="GiaVe" Nullable="false" Precision="19" />
-          <Property Type="Int32" Name="GheTrong" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetFlightData2_Result">
-          <Property Type="Int32" Name="MaChuyenBay" Nullable="false" />
-          <Property Type="String" Name="SanBayDi" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="SanBayDen" Nullable="false" MaxLength="200" />
-          <Property Type="DateTime" Name="NgayGio" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="SoDiemDung" Nullable="true" />
-          <Property Type="Int32" Name="SoLuongVe" Nullable="true" />
-          <Property Type="Decimal" Name="GiaVe" Nullable="false" Precision="19" />
-          <Property Type="Int32" Name="GheTrong" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetFlightData_updated_Result">
-          <Property Type="Int32" Name="MaChuyenBay" Nullable="false" />
-          <Property Type="String" Name="SanBayDi" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="SanBayDen" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="DiemDi" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="DiemDen" Nullable="false" MaxLength="200" />
-          <Property Type="DateTime" Name="NgayGio" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="SoDiemDung" Nullable="true" />
-          <Property Type="Int32" Name="SoLuongVe" Nullable="true" />
           <Property Type="Decimal" Name="GiaVe" Nullable="false" Precision="19" />
           <Property Type="Int32" Name="GheTrong" Nullable="true" />
         </ComplexType>
@@ -997,7 +917,57 @@
           <Property Type="String" Name="SDT" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Email" Nullable="true" />
         </ComplexType>
-      </Schema>
+        <EntityType Name="VE">
+          <Key>
+            <PropertyRef Name="MaVe" />
+          </Key>
+          <Property Name="MaVe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaHangVe" Type="Int32" Nullable="false" />
+          <Property Name="MaChuyenBay" Type="Int32" Nullable="false" />
+          <Property Name="MaKhachHang" Type="Int32" Nullable="false" />
+          <Property Name="GiaTien" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="NgayThanhToan" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CHUYENBAY" Relationship="FlightTicketSellModel.FK_VE_MaChuyenBay" FromRole="VE" ToRole="CHUYENBAY" />
+          <NavigationProperty Name="HANGVE" Relationship="FlightTicketSellModel.FK_VE_MaHangVe" FromRole="VE" ToRole="HANGVE" />
+          <NavigationProperty Name="KHACHHANG" Relationship="FlightTicketSellModel.FK_VE_MaKhachHang" FromRole="VE" ToRole="KHACHHANG" />
+        </EntityType>
+        <Association Name="FK_VE_MaChuyenBay">
+          <End Type="FlightTicketSellModel.CHUYENBAY" Role="CHUYENBAY" Multiplicity="1" />
+          <End Type="FlightTicketSellModel.VE" Role="VE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CHUYENBAY">
+              <PropertyRef Name="MaChuyenBay" />
+            </Principal>
+            <Dependent Role="VE">
+              <PropertyRef Name="MaChuyenBay" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VE_MaHangVe">
+          <End Type="FlightTicketSellModel.HANGVE" Role="HANGVE" Multiplicity="1" />
+          <End Type="FlightTicketSellModel.VE" Role="VE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HANGVE">
+              <PropertyRef Name="MaHangVe" />
+            </Principal>
+            <Dependent Role="VE">
+              <PropertyRef Name="MaHangVe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VE_MaKhachHang">
+          <End Type="FlightTicketSellModel.KHACHHANG" Role="KHACHHANG" Multiplicity="1" />
+          <End Type="FlightTicketSellModel.VE" Role="VE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHACHHANG">
+              <PropertyRef Name="MaKhachHang" />
+            </Principal>
+            <Dependent Role="VE">
+              <PropertyRef Name="MaKhachHang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1143,18 +1113,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="VEs">
-            <EntityTypeMapping TypeName="FlightTicketSellModel.VE">
-              <MappingFragment StoreEntitySet="VE">
-                <ScalarProperty Name="MaVe" ColumnName="MaVe" />
-                <ScalarProperty Name="MaHangVe" ColumnName="MaHangVe" />
-                <ScalarProperty Name="MaChuyenBay" ColumnName="MaChuyenBay" />
-                <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
-                <ScalarProperty Name="GiaTien" ColumnName="GiaTien" />
-                <ScalarProperty Name="NgayThanhToan" ColumnName="NgayThanhToan" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetFlightData" FunctionName="FlightTicketSellModel.Store.GetFlightData">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FlightTicketSellModel.GetFlightData_Result">
@@ -1173,59 +1131,19 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetFlightData2" FunctionName="FlightTicketSellModel.Store.GetFlightData2">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="FlightTicketSellModel.GetFlightData2_Result">
-                <ScalarProperty Name="MaChuyenBay" ColumnName="MaChuyenBay" />
-                <ScalarProperty Name="SanBayDi" ColumnName="SanBayDi" />
-                <ScalarProperty Name="SanBayDen" ColumnName="SanBayDen" />
-                <ScalarProperty Name="NgayGio" ColumnName="NgayGio" />
-                <ScalarProperty Name="SoDiemDung" ColumnName="SoDiemDung" />
-                <ScalarProperty Name="SoLuongVe" ColumnName="SoLuongVe" />
-                <ScalarProperty Name="GiaVe" ColumnName="GiaVe" />
-                <ScalarProperty Name="GheTrong" ColumnName="GheTrong" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetFlightData_updated" FunctionName="FlightTicketSellModel.Store.GetFlightData_updated">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="FlightTicketSellModel.GetFlightData_updated_Result">
-                <ScalarProperty Name="MaChuyenBay" ColumnName="MaChuyenBay" />
-                <ScalarProperty Name="SanBayDi" ColumnName="SanBayDi" />
-                <ScalarProperty Name="SanBayDen" ColumnName="SanBayDen" />
-                <ScalarProperty Name="DiemDi" ColumnName="DiemDi" />
-                <ScalarProperty Name="DiemDen" ColumnName="DiemDen" />
-                <ScalarProperty Name="NgayGio" ColumnName="NgayGio" />
-                <ScalarProperty Name="SoDiemDung" ColumnName="SoDiemDung" />
-                <ScalarProperty Name="SoLuongVe" ColumnName="SoLuongVe" />
-                <ScalarProperty Name="GiaVe" ColumnName="GiaVe" />
-                <ScalarProperty Name="GheTrong" ColumnName="GheTrong" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetBookedCustomers" FunctionName="FlightTicketSellModel.Store.GetBookedCustomers">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="FlightTicketSellModel.GetBookedCustomers_Result">
-                <ScalarProperty Name="MaDatCho" ColumnName="MaDatCho" />
-                <ScalarProperty Name="MaHangVe" ColumnName="MaHangVe" />
-                <ScalarProperty Name="MaChuyenBay" ColumnName="MaChuyenBay" />
-                <ScalarProperty Name="MaNguoiDat" ColumnName="MaNguoiDat" />
-                <ScalarProperty Name="NgayGioDat" ColumnName="NgayGioDat" />
-                <ScalarProperty Name="SoVeDat" ColumnName="SoVeDat" />
+          <EntitySetMapping Name="VEs">
+            <EntityTypeMapping TypeName="FlightTicketSellModel.VE">
+              <MappingFragment StoreEntitySet="VE">
+                <ScalarProperty Name="NgayThanhToan" ColumnName="NgayThanhToan" />
                 <ScalarProperty Name="GiaTien" ColumnName="GiaTien" />
-                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
-                <ScalarProperty Name="MaChiTietDatCho" ColumnName="MaChiTietDatCho" />
-                <ScalarProperty Name="MaDatCho1" ColumnName="MaDatCho1" />
                 <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
-                <ScalarProperty Name="MaKhachHang1" ColumnName="MaKhachHang1" />
-                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
-                <ScalarProperty Name="CMND" ColumnName="CMND" />
-                <ScalarProperty Name="SDT" ColumnName="SDT" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-        </EntityContainerMapping>
+                <ScalarProperty Name="MaChuyenBay" ColumnName="MaChuyenBay" />
+                <ScalarProperty Name="MaHangVe" ColumnName="MaHangVe" />
+                <ScalarProperty Name="MaVe" ColumnName="MaVe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

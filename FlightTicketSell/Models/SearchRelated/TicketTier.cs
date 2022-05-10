@@ -1,14 +1,15 @@
 ﻿using FlightTicketSell.Views.Helper;
+using System;
 
 namespace FlightTicketSell.Models.SearchRelated
 {
-    public class TicketTier_Search
+    public class TicketTier : HANGVE
     {
         /// <summary>
-        /// The name of the ticket tier
+        /// The display ticket tier coefficient
         /// </summary>
-        public string TenHangVe { get; set; }
-
+        public string DisplayCoefficient { get => Convert.ToInt32(HeSo * 100) +  "%"; }
+        
         /// <summary>
         /// The price of the ticket tier for a specific flight
         /// </summary>
