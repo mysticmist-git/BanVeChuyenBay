@@ -29,7 +29,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Ticket Tier infos
         /// </summary>
-        public ObservableCollection<TicketTier_Search> TicketTier { get; set; }
+        public ObservableCollection<TicketTier> TicketTier { get; set; }
 
         #endregion
 
@@ -80,15 +80,12 @@ namespace FlightTicketSell.ViewModels
             TicketBuyCommand = new RelayCommand<object>((p) => true, (p) =>
             {
                 IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.TicketInfoFilling;
-                
-               IoC.IoC.Get<TicketInfoViewModel>().FlightInfo = new DetailFlilghtInfo(FlightInfo);
-
             });
 
             TickedSoldBookedCommand = new RelayCommand<object>((p) => true, (p) =>
-                {
-                    IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.TicketSoldOrBooked;
-                });
+            {
+                IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.TicketSoldOrBooked;
+            });
 
             
 
@@ -113,18 +110,23 @@ namespace FlightTicketSell.ViewModels
                                                                     ThoiGianDung = result.ThoiGianDung.ToString()
                                                                 }).ToList()
                                                            );
-                        TicketTier = new ObservableCollection<TicketTier_Search>(
+                        TicketTier = new ObservableCollection<TicketTier>(
                                                                 context.CHUYENBAYs.Where(result =>
                                                                 result.MaChuyenBay== FlightInfo.MaChuyenBay).FirstOrDefault()
-                                                                .CHITIETHANGVEs.Select(cthv => new TicketTier_Search
+                                                                .CHITIETHANGVEs.Select(cthv => new TicketTier
                                                                 {
                                                                     TenHangVe = cthv.HANGVE.TenHangVe,
                                                                     GheTrong = (cthv.SoGhe -
-                                                                    context.VEs.Where(ve => ve.MaChuyenBay== FlightInfo.MaChuyenBay && ve.HANGVE.MaHangVe == cthv.HANGVE.MaHangVe).Count() -
-                                                                    (context.DATCHOes.Where(dc =>
-                                                                    dc.MaChuyenBay== FlightInfo.MaChuyenBay &&
-                                                                    dc.HANGVE.MaHangVe == cthv.HANGVE.MaHangVe).Sum(dcc => (int?)dcc.SoVeDat) ?? 0)),
-                                                                    GiaTien = ((cthv.HANGVE.HeSo) * FlightInfo.GiaVe)
+                                                                    context.VEs
+                                                                        .Where(ve => ve.MaChuyenBay== FlightInfo.MaChuyenBay && ve.HANGVE.MaHangVe == cthv.HANGVE.MaHangVe).Count() -
+                                                                            (context.DATCHOes
+                                                                                .Where(dc => dc.MaChuyenBay== FlightInfo.MaChuyenBay &&
+                                                                                             dc.HANGVE.MaHangVe == cthv.HANGVE.MaHangVe)
+                                                                                .Sum(dcc => (int?)dcc.SoVeDat) ?? 0)),
+                                                                    GiaTien = ((cthv.HANGVE.HeSo) * FlightInfo.GiaVe),
+                                                                    HeSo = cthv.HANGVE.HeSo,
+                                                                    MaHangVe = cthv.HANGVE.MaHangVe,
+                                                                    TrangThai = cthv.HANGVE.TrangThai
                                                                 }).ToList()
                             );
 

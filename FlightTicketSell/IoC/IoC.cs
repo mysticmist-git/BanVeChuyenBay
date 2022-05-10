@@ -42,7 +42,7 @@ namespace FlightTicketSell.IoC
             Kernel.Bind<BookDetailViewModel>().ToConstant(new BookDetailViewModel());
             Kernel.Bind<SellPayViewModel>().ToConstant(new SellPayViewModel());
             Kernel.Bind<SellViewModel>().ToConstant(new SellViewModel());
-            Kernel.Bind<TicketInfoViewModel>().ToConstant(new TicketInfoViewModel());
+            Kernel.Bind<TicketInfoFillingViewModel>().ToConstant(new TicketInfoFillingViewModel());
             Kernel.Bind<ChangeTicketViewModel>().ToConstant(new ChangeTicketViewModel());
             Kernel.Bind<SearchViewModel>().ToConstant(new SearchViewModel());
             Kernel.Bind<FlightDetailViewModel>().ToConstant(new FlightDetailViewModel());

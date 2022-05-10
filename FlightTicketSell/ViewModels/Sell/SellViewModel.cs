@@ -93,58 +93,58 @@ namespace FlightTicketSell.ViewModels
                 }
             });
 
-            SanBayDoi = new RelayCommand<object>((p) => true, (p) =>
-            {
-                using (var context = new FlightTicketSellEntities())
-                {
-                    try
-                    {
-                        if (MaChuyenBay > 0)
-                        {
-                            Flights = new ObservableCollection<FlightInfo>(
-                                                           context.GetFlightData_updated().Where(result =>
-                                                               result.MaChuyenBay == MaChuyenBay)
-                                                               .Select(result => new FlightInfo
-                                                               {
-                                                                   MaChuyenBay = result.MaChuyenBay,
-                                                                   SanBayDi = result.SanBayDi,
-                                                                   SanBayDen = result.SanBayDen,
-                                                                   NgayGio = result.NgayGio,
-                                                                   SoDiemDung = result.SoDiemDung,
-                                                                   SoHangVe = result.SoLuongVe,
-                                                                   GiaVe = result.GiaVe,
-                                                                   GheTrong = result.GheTrong
-                                                               }).ToList()
-                                                           );
-                        }
+            //SanBayDoi = new RelayCommand<object>((p) => true, (p) =>
+            //{
+            //    using (var context = new FlightTicketSellEntities())
+            //    {
+            //        try
+            //        {
+            //            if (MaChuyenBay > 0)
+            //            {
+            //                Flights = new ObservableCollection<FlightInfo>(
+            //                                               context.GetFlightData_updated().Where(result =>
+            //                                                   result.MaChuyenBay == MaChuyenBay)
+            //                                                   .Select(result => new FlightInfo
+            //                                                   {
+            //                                                       MaChuyenBay = result.MaChuyenBay,
+            //                                                       SanBayDi = result.SanBayDi,
+            //                                                       SanBayDen = result.SanBayDen,
+            //                                                       NgayGio = result.NgayGio,
+            //                                                       SoDiemDung = result.SoDiemDung,
+            //                                                       SoHangVe = result.SoLuongVe,
+            //                                                       GiaVe = result.GiaVe,
+            //                                                       GheTrong = result.GheTrong
+            //                                                   }).ToList()
+            //                                               );
+            //            }
 
-                        //System.DateTime? selectedDate = searchView.dp.SelectedDate.Value;  && DateOfEntry != null  && result.NgayGio == DateOfEntry.Value DiemDii.Name && result.DiemDen == DiemDenn.Name
-                        if (DiemDii != null && DiemDenn != null && SanBayDii != null && SanBayDenn != null && DateOfEntry != null)
-                        {
-                            Flights = new ObservableCollection<FlightInfo>(
-                                                           context.GetFlightData_updated().Where(result =>
-                                                               result.DiemDi == DiemDii.Name && result.DiemDen == DiemDenn.Name && result.NgayGio == DateOfEntry.Value && result.SanBayDi == SanBayDii.Name && result.SanBayDen == SanBayDenn.Name)
-                                                               .Select(result => new FlightInfo
-                                                               {
-                                                                   MaChuyenBay = result.MaChuyenBay,
-                                                                   SanBayDi = result.SanBayDi,
-                                                                   SanBayDen = result.SanBayDen,
-                                                                   NgayGio = result.NgayGio,
-                                                                   SoDiemDung = result.SoDiemDung,
-                                                                   SoHangVe = result.SoLuongVe,
-                                                                   GiaVe = result.GiaVe,
-                                                                   GheTrong = result.GheTrong
-                                                               }).ToList()
-                                                           );
-                        }
-                    }
-                    catch (EntityException)
-                    {
-                        // TODO: messagebox vo
-                        return;
-                    }
-                }
-            });
+            //            //System.DateTime? selectedDate = searchView.dp.SelectedDate.Value;  && DateOfEntry != null  && result.NgayGio == DateOfEntry.Value DiemDii.Name && result.DiemDen == DiemDenn.Name
+            //            if (DiemDii != null && DiemDenn != null && SanBayDii != null && SanBayDenn != null && DateOfEntry != null)
+            //            {
+            //                Flights = new ObservableCollection<FlightInfo>(
+            //                                               context.GetFlightData_updated().Where(result =>
+            //                                                   result.DiemDi == DiemDii.Name && result.DiemDen == DiemDenn.Name && result.NgayGio == DateOfEntry.Value && result.SanBayDi == SanBayDii.Name && result.SanBayDen == SanBayDenn.Name)
+            //                                                   .Select(result => new FlightInfo
+            //                                                   {
+            //                                                       MaChuyenBay = result.MaChuyenBay,
+            //                                                       SanBayDi = result.SanBayDi,
+            //                                                       SanBayDen = result.SanBayDen,
+            //                                                       NgayGio = result.NgayGio,
+            //                                                       SoDiemDung = result.SoDiemDung,
+            //                                                       SoHangVe = result.SoLuongVe,
+            //                                                       GiaVe = result.GiaVe,
+            //                                                       GheTrong = result.GheTrong
+            //                                                   }).ToList()
+            //                                               );
+            //            }
+            //        }
+            //        catch (EntityException)
+            //        {
+            //            // TODO: messagebox vo
+            //            return;
+            //        }
+            //    }
+            //});
 
 
         }
