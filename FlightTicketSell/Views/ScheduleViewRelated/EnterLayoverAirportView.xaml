@@ -98,7 +98,9 @@
                             Grid.Row="1"
                             Grid.ColumnSpan="3"
                             IsReadOnly="True"
-                            Margin="10 0 10 0">
+                            Margin="10 0 10 0"
+                            SelectedItem="{Binding LayoverAirport_Airport_SelectedItem}"
+                            >
 
                         <DataGrid.Columns>
                             <materialDesign:DataGridTextColumn
@@ -152,7 +154,8 @@
                         FontFamily="{StaticResource Roboto}"
                         FontSize="{StaticResource Small}"
                         materialDesign:TextFieldAssist.SuffixText="phút"
-                        Text="{Binding LayoverAirport_StopTime}"/>
+                        Text="{Binding LayoverAirport_StopTime}"
+                        PreviewTextInput="PreviewTextInput"/>
 
                     <!--Ghi chú-->
                     <TextBox 
@@ -166,7 +169,8 @@
                         materialDesign:HintAssist.Hint="Ghi chú"
                         FontFamily="{StaticResource Roboto}"
                         FontSize="{StaticResource Small}"
-                        Text="{Binding LayoverAirport_Note}"/>
+                        Text="{Binding LayoverAirport_Note}"
+                        materialDesign:HintAssist.HelperText="Có thể trống"/>
                 </Grid>
             </Border>
             
@@ -191,7 +195,7 @@
                          FontSize="{StaticResource Small}" 
                          Content="Lưu" BorderThickness="0,0,0,0" 
                          materialDesign:ButtonAssist.CornerRadius="7"
-                         />
+                         Command="{Binding EnterLayoverAirport_Save_Command}"/>
             </StackPanel>
 
         </Grid>

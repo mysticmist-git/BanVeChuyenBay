@@ -26,6 +26,10 @@ namespace FlightTicketSell.ViewModels
         /// Thêm sân bay trung gian
         /// </summary>
         public ICommand EnterLayoverAirport_LoadCommand { get; set; }
+        /// <summary>
+        /// Nút lưu
+        /// </summary>
+        public ICommand EnterLayoverAirport_Save_Command { get; set; }
         #endregion
 
         #region Properties
@@ -33,6 +37,10 @@ namespace FlightTicketSell.ViewModels
         /// Danh sách sân bay
         /// </summary>
         public ObservableCollection<Airport> LayoverAirport_List_Airport { get; set; } = new ObservableCollection<Airport>();
+        /// <summary>
+        /// Sân bay được chọn
+        /// </summary>
+        public Airport LayoverAirport_Airport_SelectedItem { get; set; }
         /// <summary>
         /// Thời gian dừng
         /// </summary>
@@ -346,12 +354,39 @@ namespace FlightTicketSell.ViewModels
 
             #region LayoverAirport
             Open_Window_EnterLayoverAirport_Command = new RelayCommand<object>((p) => { return true; },
-               (p) =>
+             async (p) =>
                {
                    EnterLayoverAirportView enterLayoverAirportView = new EnterLayoverAirportView { DataContext = this };
-                   var result = DialogHost.Show(enterLayoverAirportView, "RootDialog");
+                   var result = await DialogHost.Show(enterLayoverAirportView, "RootDialog");
                }
             );
+
+            EnterLayoverAirport_Save_Command = new RelayCommand<object>((p) => { return true; },
+              (p) =>
+              {
+                  if (string.IsNullOrEmpty(LayoverAirport_StopTime))
+                  {
+                      MessageBox.Show("Bạn chưa nhập thời gian dừng!", "Cảnh báo");
+                      return;
+                  }
+                     
+                  if (string.IsNullOrEmpty(LayoverAirport_Airport_SelectedItem.Name))
+                  {
+                      MessageBox.Show("Bạn chưa chọn sân bay!", "Cảnh báo");
+                      return;
+                  }
+                  List_LayoverAirport.Add(new LayoverAirport 
+                  {
+                      Id_Airport = LayoverAirport_Airport_SelectedItem.Id,
+                      AirportName = LayoverAirport_Airport_SelectedItem.Name,
+                      StopTime = int.Parse(LayoverAirport_StopTime),
+                      Note = LayoverAirport_Note?.ToString(),
+                      Order = List_LayoverAirport.Count + 1
+                  });
+                  // Close dialog
+                  DialogHost.CloseDialogCommand.Execute(null, null);
+              }
+           );
             #endregion
 
             #region TicketClass
