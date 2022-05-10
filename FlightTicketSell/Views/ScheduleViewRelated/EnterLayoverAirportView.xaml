@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d"
-        Height="350" Width="600"
+        Height="400" Width="600"
         >
     
     <UserControl.DataContext>
@@ -26,9 +26,9 @@
         <Grid >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="10*"/>
                 <ColumnDefinition Width="0.5*" />
-                <ColumnDefinition Width="7.5*"/>
+                <ColumnDefinition Width="8*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -98,33 +98,30 @@
                             Grid.Row="1"
                             Grid.ColumnSpan="3"
                             IsReadOnly="True"
-                            Margin="10 0 10 0"
+                            Margin="20 0 10 0"
                             SelectedItem="{Binding LayoverAirport_Airport_SelectedItem}"
-                            >
+                            CellStyle="{StaticResource DataGridCellCenter}"
+                            ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}">
 
                         <DataGrid.Columns>
                             <materialDesign:DataGridTextColumn
                                     Binding="{Binding Code}"
                                     Header="Mã"
-                                    Width="0.3*"
-                                    CellStyle="{StaticResource DataGridCellCenter}"
-                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                                    Width="60"   
+                                />
                             <materialDesign:DataGridTextColumn
                                     Binding="{Binding Name}"
                                     Header="Tên sân bay" 
-                                    Width="*"
-                                    CellStyle="{StaticResource DataGridCellCenter}"
-                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                                    Width="150"
                                     />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
             </Border>
 
-            <!--Thông tin-->
+            <!--Thời gian dừng-->
             <Border Grid.Row="3" 
                     Grid.Column="3" 
-                    Grid.RowSpan="3"
                     Background="White" 
                     CornerRadius="10" 
                     Style="{StaticResource ResourceKey=DropShadow}">
@@ -136,32 +133,59 @@
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="3*" ></RowDefinition>
-                        <RowDefinition Height="7*"></RowDefinition>
                         <RowDefinition Height="1*" ></RowDefinition>
-                        <RowDefinition Height="12*"></RowDefinition>
+                        <RowDefinition Height="9*"></RowDefinition>
                         <RowDefinition Height="1*" ></RowDefinition>
+                        
                     </Grid.RowDefinitions>
                     
                     <!--Thời gian dừng-->
                     <TextBox 
                         Grid.Row="1" 
                         Grid.Column="1" 
-                        VerticalAlignment="Top" BorderBrush="{StaticResource LightGrayBrush}"
-                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                        Height="60"
+                        VerticalAlignment="Center" 
+                        Style="{StaticResource CustomTextbox}"
+                        Height="55"
                         materialDesign:HintAssist.Hint="Thời gian dừng"
                         FontFamily="{StaticResource Roboto}"
                         FontSize="{StaticResource Small}"
                         materialDesign:TextFieldAssist.SuffixText="phút"
-                        Text="{Binding LayoverAirport_StopTime}"
-                        PreviewTextInput="PreviewTextInput"/>
+                        Text="{Binding LayoverAirport_StopTime, UpdateSourceTrigger=PropertyChanged}"
+                        PreviewTextInput="PreviewTextInput"
+                        materialDesign:HintAssist.HelperText="{Binding LayoverAirport_MinMaxStopTime}"
+                        MaxLines="1"
+                        >
+                    </TextBox>
 
+                   
+                </Grid>
+            </Border>
+            
+            <!--Ghi chú-->
+            <Border Grid.Row="5" 
+                    Grid.Column="3" 
+                     Background="White" 
+                    CornerRadius="10" 
+                    Style="{StaticResource ResourceKey=DropShadow}"
+                >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="10*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" ></RowDefinition>
+                        <RowDefinition Height="9*"></RowDefinition>
+                        <RowDefinition Height="1*" ></RowDefinition>
+
+                    </Grid.RowDefinitions>
                     <!--Ghi chú-->
                     <TextBox 
-                        Grid.Row="3" Grid.Column="1"
-                        VerticalAlignment="Top" BorderBrush="{StaticResource LightGrayBrush}"
-                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        Grid.Row="1" Grid.Column="1"
+                        VerticalAlignment="Top" 
+                        Style="{StaticResource CustomTextbox}"
                         TextWrapping="Wrap"
                         Height="100"
                         MaxLength="200"
@@ -172,8 +196,9 @@
                         Text="{Binding LayoverAirport_Note}"
                         materialDesign:HintAssist.HelperText="Có thể trống"/>
                 </Grid>
+                
+             
             </Border>
-            
             <!--Nút hủy, nút lưu-->
             <StackPanel Grid.Row="7"
                         Grid.Column="1"
@@ -188,6 +213,7 @@
                          FontSize="{StaticResource Small}" 
                          Content="Hủy" BorderThickness="0,0,0,0" 
                          materialDesign:ButtonAssist.CornerRadius="7"
+                         Command="{Binding EnterLayoverAirport_Cancel_Command}"
                          />
                 <!--Nút lưu-->
                 <Button  Margin="10 0 10 0" 

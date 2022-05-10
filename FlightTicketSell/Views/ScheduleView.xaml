@@ -149,14 +149,14 @@
                                    Text="{Binding DepartureAirport.Name, UpdateSourceTrigger=PropertyChanged}"
 
                                    >
-                            <!-- Command -->
+                             <!--Command--> 
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PreviewMouseDown">
                                     <i:InvokeCommandAction Command="{Binding ChooseDepartureAirport_Command}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </TextBox>
-
+                       
                         <!--Nút chuyển giữa sân bay đi và sân bay đến-->
                         <Button  Grid.Row="5" Grid.Column="3" Padding="0" Width="22" Height="22" Margin="0" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
                              Command="{Binding Change_Departure_Landing_Airport_Command}">
@@ -210,7 +210,6 @@
                             ItemsSource="{Binding List_LayoverAirport}"
                             d:ItemsSource="{d:SampleData ItemCount=5}"
                             Background="Transparent"
-                            
                             RowHeight="40"
                             CanUserSortColumns="True"
                             CanUserAddRows="False"
@@ -219,7 +218,8 @@
                             Grid.ColumnSpan="3"
                             Grid.Row="1"
                             Margin="20 0 20 0"
-                            IsReadOnly="True">  
+                            IsReadOnly="True"
+                            SelectedItem="{Binding List_LayoverAirport_SelectedItem}">  
 
                             <DataGrid.Columns>
                                 <materialDesign:DataGridTextColumn
@@ -257,7 +257,9 @@
                             <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
 
                             <!--Nút sửa-->
-                            <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                            <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                                    Command="{Binding Open_Window_EditLayoverAirport_Command}"
+                                    materialDesign:ShadowAssist.Darken="True"/>
 
                             <!--Nút thêm-->
                             <Button Margin="7 0 20 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
