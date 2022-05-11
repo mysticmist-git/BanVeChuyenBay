@@ -142,6 +142,11 @@
     <Compile Include="Models\Enums\Search\CustomerDetailType.cs" />
     <Compile Include="Models\Enums\Report\ReportType.cs" />
     <Compile Include="Models\Enums\Search\BookingState.cs" />
+    <Compile Include="Models\Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Report\FlightReport.cs" />
     <Compile Include="Models\GetBookedCustomers_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -185,6 +190,7 @@
     <Compile Include="ValueConverters\Search\BookingStateToStringConverter.cs" />
     <Compile Include="ValueConverters\Application\ViewToInterfaceConverter.cs" />
     <Compile Include="ViewModels\Schedule\LayoverAirport.cs" />
+    <Compile Include="ViewModels\Schedule\TicketClassDetail.cs" />
     <Compile Include="ViewModels\Search\CustomersDetailViewModel.cs" />
     <Compile Include="ViewModels\Search\FlightInfo.cs" />
     <Compile Include="Models\THAMSO.cs">

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FlightTicketSell.Views" xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Height="350" Width="600">
+        Height="400" Width="550">
     <UserControl.DataContext>
         <vm:ScheduleViewModel/>
     </UserControl.DataContext>
@@ -16,12 +16,12 @@
         <Grid >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="15*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="20" />
-                <RowDefinition Height="4*" />
+                <RowDefinition Height="6.5*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
 
@@ -30,9 +30,9 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="5*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="5.5*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        <ColumnDefinition Width="7*"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
@@ -45,15 +45,21 @@
                     </Grid.RowDefinitions>
 
                     <!--Tựa-->
-                    <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Chỉnh sửa Sân bay</TextBlock>
+                    <TextBlock 
+                        Grid.Row="0" 
+                        Grid.ColumnSpan="5" 
+                        VerticalAlignment="Center"  
+                        FontFamily="{StaticResource RobotoBlack}" 
+                        HorizontalAlignment="Center"
+                        FontSize="{StaticResource Small}" >Chỉnh sửa thời gian dừng / ghi chú </TextBlock>
 
                     <!--Thông tin sân bay-->
-                    <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Background="{StaticResource LightGrayBrush}"
+                    <Border Grid.Row="1" Grid.Column="1" 
+                            Grid.RowSpan="3"
+                            Background="{StaticResource LightGrayBrush}"
                             CornerRadius="5" Style="{StaticResource ResourceKey=DropShadow}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="15*"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                                 <ColumnDefinition Width="15*"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -61,8 +67,11 @@
 
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*" ></RowDefinition>
-                                <RowDefinition Height="5*"></RowDefinition>
-                                <RowDefinition Height="5*"></RowDefinition>
+                                <RowDefinition Height="4*"></RowDefinition>
+                                <RowDefinition Height="1*" ></RowDefinition>
+                                <RowDefinition Height="4*"></RowDefinition>
+                                <RowDefinition Height="1*"></RowDefinition>
+                                <RowDefinition Height="8*"></RowDefinition>
                                 <RowDefinition Height="1*"></RowDefinition>
                             </Grid.RowDefinitions>
 
@@ -72,38 +81,64 @@
                                       Focusable="False"
                                       Text="{Binding List_LayoverAirport_SelectedItem.AirportName}"
                                       />
-
-                            <!--Ghi chú-->
-                            <TextBox  Grid.Row="1" Grid.Column="3" 
-                                      Grid.RowSpan="2"
-                                      Height="91.2"
-                                      materialDesign:HintAssist.Hint="Ghi chú" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-                                      IsReadOnly="True"
-                                      Focusable="False"
-                                      Text="{Binding List_LayoverAirport_SelectedItem.Note}"
-                                      />
-
-                            <!--Thời gian dừng-->
-                            <TextBox Grid.Row="2" Grid.Column="1" 
-                                     materialDesign:HintAssist.Hint="Thời gian dừng" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                            <!--Thời gian dừng cũ-->
+                            <TextBox Grid.Row="3" Grid.Column="1" 
+                                     materialDesign:HintAssist.Hint="Thời gian dừng cũ" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
                                      IsReadOnly="True" 
                                      Focusable="False"
                                      Text="{Binding List_LayoverAirport_SelectedItem.StopTime}"
                                      materialDesign:TextFieldAssist.SuffixText="phút"
+                                      materialDesign:HintAssist.HelperText="{Binding LayoverAirport_MinMaxStopTime}"
                                      />
+                            <!--Ghi chú-->
+                            <TextBox  Grid.Row="5" Grid.Column="1" 
+                                      Grid.RowSpan="2"
+                                      Height="100"
+                                      materialDesign:HintAssist.Hint="Ghi chú" Style="{StaticResource CustomTextbox}" 
+                                      VerticalAlignment="Center" 
+                                      IsReadOnly="True"
+                                      Focusable="False"
+                                      Text="{Binding List_LayoverAirport_SelectedItem.Note}"
+                                      />
                         </Grid>
                     </Border>
 
-                    <!--Thời gian dừng mới-->
-                    <TextBox Margin="20 0 0 0" Grid.Row="3" Grid.Column="1" materialDesign:HintAssist.Hint="Thời gian dừng mới" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                    <!--Thông tin mới-->
+                    <Grid Grid.Row="1"
+                          Grid.Column="3"
+                          Grid.RowSpan="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="15*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" ></RowDefinition>
+                            <RowDefinition Height="4*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="8*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!--Thời gian dừng mới-->
+                        <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Thời gian dừng mới" Style="{StaticResource CustomTextbox}" 
+                                  VerticalAlignment="Top" 
                              Text="{Binding EditLayoverAirport_StopTime}"
                              materialDesign:HintAssist.HelperText="Để trống nếu giữ nguyên!"
                              materialDesign:TextFieldAssist.SuffixText="phút"
-                             />
-                    <!--Ghi chú mới-->
-                    <TextBox Margin="0 0 20 0" Grid.Row="3" Grid.Column="3" materialDesign:HintAssist.Hint="Ghi chú" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                              PreviewTextInput="PreviewTextInput"/>
+                        
+                        <!--Ghi chú mới-->
+                        <TextBox  Grid.Row="3" Grid.Column="1" materialDesign:HintAssist.Hint="Ghi chú mới" Style="{StaticResource CustomTextbox}" 
+                                  VerticalAlignment="Top" 
                              Text="{Binding EditLayoverAirport_Note}"
+                                   Height="120"
+                                  MaxLength="200"
                              materialDesign:HintAssist.HelperText="Để trống nếu giữ nguyên!"/>
+
+                    </Grid>
+                   
                 </Grid>
             </Border>
 

@@ -23,7 +23,7 @@
     <materialDesign:DialogHost CloseOnClickAway="True" Identifier="RootDialog">
         <Grid>
 
-            <Grid Margin="30 30 30 30">
+            <Grid Margin="10 10 10 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="8*"/>
                     <ColumnDefinition Width="0.5*"/>
@@ -35,7 +35,9 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1.5*"/>
                 </Grid.RowDefinitions>
 
                 <!--Thông tin chuyến bay-->
@@ -186,7 +188,7 @@
                 </Border>
 
                 <!--Sân bay trung gian-->
-                <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="5" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
@@ -196,7 +198,7 @@
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="2*"/>
-                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="17*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="2*"/>
                             <RowDefinition Height="1*"/>
@@ -205,7 +207,7 @@
                         <!--Tựa-->
                         <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Sân bay trung gian</TextBlock>
 
-                        <!--Danh sách hạng vé-->
+                        <!--Danh sách sân bay trung gian-->
                         <DataGrid
                             ItemsSource="{Binding List_LayoverAirport}"
                             d:ItemsSource="{d:SampleData ItemCount=5}"
@@ -254,7 +256,8 @@
                         <!--Nút thêm sửa xóa-->
                         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right">
                             <!--Nút xóa-->
-                            <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                            <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                                    Command="{Binding Delete_LayoverAirport_Command}"/>
 
                             <!--Nút sửa-->
                             <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
@@ -281,61 +284,52 @@
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="2*"/>
-                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="8*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="2*"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
 
                         <!--Tựa-->
-                        <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Hạng vé</TextBlock>
+                        <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Hạng vé</TextBlock>
 
                         <!--Danh sách hạng vé-->
-                        <ListView Grid.Row="1" Grid.Column="1"
-                              ItemsSource="{Binding List_TicketClass}">
-                            <ListView.View>
-                                <GridView>
-
-                                    <!--Tên hạng vé-->
-                                    <GridViewColumn >
-                                        <GridViewColumn.Header>
-                                            <TextBlock Text="Tên hạng vé" Style="{StaticResource Custom_GridviewHeader}"/>
-                                        </GridViewColumn.Header>
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Code}"  Style="{StaticResource Custom_GridviewCell}"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-
-                                    <!--Giá tiền-->
-                                    <GridViewColumn >
-                                        <GridViewColumn.Header>
-                                            <TextBlock Text="Giá tiền" Style="{StaticResource Custom_GridviewHeader}"/>
-                                        </GridViewColumn.Header>
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Code}"  Style="{StaticResource Custom_GridviewCell}"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-
-                                    <!--Số ghế-->
-                                    <GridViewColumn >
-                                        <GridViewColumn.Header>
-                                            <TextBlock Text="Số ghế" Style="{StaticResource Custom_GridviewHeader}"/>
-                                        </GridViewColumn.Header>
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Code}"  Style="{StaticResource Custom_GridviewCell}"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-
+                        <DataGrid
+                            ItemsSource="{Binding List_TicketClass}"
+                             d:ItemsSource="{d:SampleData ItemCount=5}"
+                             Background="Transparent"
+                            RowHeight="40"
+                            CanUserSortColumns="True"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            Grid.ColumnSpan="3"
+                            Grid.Row="1" Grid.Column="0"
+                            Margin="15 0 15 0"
+                            IsReadOnly="True"
+                            BorderThickness="0"
+                            ColumnWidth="*"
+                            >
+                            <DataGrid.Columns>
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding TicketClassName}"
+                                    Header="Tên hạng vé"
+                                   
+                                    CellStyle="{StaticResource DataGridCellCenter}"
+                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding TicketClassCoefficient}"
+                                    Header="Giá tiền" 
+                                  
+                                    CellStyle="{StaticResource DataGridCellCenter}"
+                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding Seats}"
+                                    Header="Số ghế"
+                                 
+                                    CellStyle="{StaticResource DataGridCellCenter}"
+                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                         <!--Nút thêm sửa xóa-->
                         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right">
                             <!--Nút xóa-->
@@ -354,10 +348,16 @@
                 </Border>
 
                 <!--Nút nhận lịch chuyến bay/ Hủy-->
-                <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                    <Button Margin="0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource Regular}" Content="Hủy" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                <StackPanel Grid.Row="6" Grid.Column="2" 
+                            Margin="0 0 30 0"
+                            Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Button Margin="0" Height="auto" Background="{StaticResource RedBrush}"  
+                            FontSize="{StaticResource Small}" Content="Hủy" BorderThickness="0,0,0,0" 
+                            materialDesign:ButtonAssist.CornerRadius="7"/>
 
-                    <Button Margin="20 0 0 0" Height="auto" Background="{StaticResource GreenBrush}"  FontSize="{StaticResource Regular}" Content="Nhận lịch bay" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                    <Button Margin="20 0 0 0" Height="auto" Background="{StaticResource GreenBrush}"  
+                            FontSize="{StaticResource Small}" Content="Nhận lịch bay" 
+                            BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
 
                 </StackPanel>
 
