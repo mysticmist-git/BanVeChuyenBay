@@ -9,16 +9,11 @@
         xmlns:attachedProperties="clr-namespace:FlightTicketSell.AttachedProperties" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Height="600" Width="535.5"
-        Loaded="Window_Loaded">
+        Background="{StaticResource LightGrayBrush}"
+        >
     <UserControl.DataContext>
         <vm:ReportPrintViewModel />
     </UserControl.DataContext>
-
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
@@ -121,14 +116,17 @@
                                FontSize="{StaticResource Small}" FontFamily="{StaticResource RobotoBlack}" 
                                Margin="0 0 0 5"/>
 
-                        <Border Grid.Row="1" BorderBrush="{StaticResource LightGrayBrush}" BorderThickness="1">
+                        <Border Grid.Row="1" BorderBrush="{StaticResource LightGrayBrush}" BorderThickness="1" CornerRadius="10" Background="White">
                             <DataGrid x:Name="reportDataGrid"
-                              Background="White"
-                              ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
-                              CellStyle="{StaticResource DataGridCellCenter}"
-                              ItemsSource="{Binding ReportViewModel.Report, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:ReportTypeConverter}}"
-                              ColumnWidth="*"
-                              attachedProperties:ReportTypeProperty.Value="{Binding ReportViewModel.CurrentReportType, Source={x:Static vm:ViewModelLocator.Instance}}" />
+                                      AutoGenerateColumns="False"
+                                  Background="Transparent"
+                                  Grid.Row="1"
+                                  ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                                  CellStyle="{StaticResource DataGridCellCenter}"
+                                  ItemsSource="{Binding Report}"
+                                  d:ItemsSource="{d:SampleData ItemCount=3}"
+                                  ColumnWidth="*"
+                                  attachedProperties:ReportTypeProperty.Value="{Binding CurrentReportType}"  />
                         </Border>
                     </Grid>
 

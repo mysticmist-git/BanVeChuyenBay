@@ -4,6 +4,7 @@ using FlightTicketSell.Views.Helper;
 using System.Globalization;
 using FlightTicketSell.Views.SearchViewMore;
 using FlightTicketSell.ViewModels;
+using FlightTicketSell.Helpers;
 
 namespace FlightTicketSell.ViewModels.Search
 {
@@ -44,7 +45,7 @@ namespace FlightTicketSell.ViewModels.Search
         /// <summary>
         /// The display price of the ticket
         /// </summary>
-        public string DisplayTicketPrice { get => ReportHelper.VietnamCurrencyConvert(GiaTien) + " VNĐ"; }
+        public string DisplayTicketPrice { get => FormatHelper.VietnamCurrencyFormat(GiaTien) + " VNĐ"; }
 
         /// <summary>
         /// Customer name 

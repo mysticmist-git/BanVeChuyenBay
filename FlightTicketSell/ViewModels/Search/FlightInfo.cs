@@ -1,4 +1,5 @@
-﻿using FlightTicketSell.Models.SearchRelated;
+﻿using FlightTicketSell.Helpers;
+using FlightTicketSell.Models.SearchRelated;
 using FlightTicketSell.ViewModels;
 using FlightTicketSell.Views.Helper;
 using System.Globalization;
@@ -26,7 +27,7 @@ namespace FlightTicketSell.Models
         /// <summary>
         /// The standard price the flight ticket
         /// </summary>
-        public string DisplayPrice { get => ReportHelper.VietnamCurrencyConvert(GiaVe) + " VNĐ"; }
+        public string DisplayPrice { get => FormatHelper.VietnamCurrencyFormat(GiaVe) + " VNĐ"; }
 
         #endregion
 

@@ -1,5 +1,7 @@
-﻿using FlightTicketSell.Models.Enums;
+﻿using FlightTicketSell.Interface.Report;
+using FlightTicketSell.Models.Enums;
 using System;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +12,17 @@ namespace FlightTicketSell.ViewModels
     public class ReportPrintViewModel : BaseViewModel
     {
         #region Public Properties
-        
+
+        /// <summary>
+        /// The type of the current report
+        /// </summary>
+        public ReportType CurrentReportType { get => IoC.IoC.Get<ReportViewModel>().CurrentReportType; }
+
+        /// <summary>
+        /// The report
+        /// </summary>
+        public ObservableCollection<object> Report { get => IoC.IoC.Get<ReportViewModel>().Report; }
+
         /// <summary>
         /// The text that indicate which period of time this report takes
         /// </summary>
@@ -24,14 +36,14 @@ namespace FlightTicketSell.ViewModels
                 switch (reportVM.CurrentReportType)
                 {
                     case ReportType.FlightsOfOneMonth:
-                        return string.Format($"Trong tháng {reportVM.Month}, năm {reportVM.Year}");
+                        return string.Format($"Trong tháng {reportVM.CurrentMonth}, năm {reportVM.CurrentYear}");
                     case ReportType.MonthsOfOneYear:
-                        return string.Format($"Trong năm {reportVM.Year}");
+                        return string.Format($"Trong năm {reportVM.CurrentYear}");
                     case ReportType.OneMonthOfAllYears:
                         return
                             reportVM.Years[1] == reportVM.Years[reportVM.Years.Count - 1] ?
-                            string.Format($"Trong tháng {reportVM.Month} của năm {reportVM.Years[1]}") :
-                            string.Format($"Trong tháng {reportVM.Month} từ năm {reportVM.Years[1]} tới năm {reportVM.Years[reportVM.Years.Count - 1]}");
+                            string.Format($"Trong tháng {reportVM.CurrentMonth} của năm {reportVM.Years[1]}") :
+                            string.Format($"Trong tháng {reportVM.CurrentMonth} từ năm {reportVM.Years[1]} tới năm {reportVM.Years[reportVM.Years.Count - 1]}");
                     case ReportType.AllYears:
                         return
                             reportVM.Years[1] == reportVM.Years[reportVM.Years.Count - 1] ?
@@ -51,20 +63,6 @@ namespace FlightTicketSell.ViewModels
 
         #endregion
 
-        #region Commands
-
-        /// <summary>
-        /// Return to the report view
-        /// </summary>
-        public ICommand ReturnCommand { get; set; }
-
-        /// <summary>
-        /// The command executed when user control load
-        /// </summary>
-        public ICommand LoadCommand { get; set; }
-
-        #endregion
-
         #region Constructor
 
         /// <summary>
@@ -72,11 +70,6 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ReportPrintViewModel()
         {
-            // Create commands
-            ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.Report );
-
-            // TODO: rất tà đạo, nên sửa nếu có thời gian
-            LoadCommand = new RelayCommand<object>((p) => true, (p) =>  IoC.IoC.Get<ReportViewModel>().LoadCommand.Execute(null) );
         }
 
         #endregion

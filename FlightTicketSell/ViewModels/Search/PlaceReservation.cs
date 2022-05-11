@@ -7,6 +7,7 @@ using FlightTicketSell.ViewModels;
 using FlightTicketSell.Models.Enums;
 using System.Windows;
 using FlightTicketSell.Models;
+using FlightTicketSell.Helpers;
 
 namespace FlightTicketSell.ViewModels.Search
 {
@@ -62,7 +63,7 @@ namespace FlightTicketSell.ViewModels.Search
         /// <summary>
         /// The display price of the ticket
         /// </summary>
-        public string DisplayTicketPrice { get => ReportHelper.VietnamCurrencyConvert(GiaTien_Ve) + " VNĐ"; }
+        public string DisplayTicketPrice { get => FormatHelper.VietnamCurrencyFormat(GiaTien_Ve) + " VNĐ"; }
 
         /// <summary>
         /// The total price of the reservation
@@ -72,7 +73,7 @@ namespace FlightTicketSell.ViewModels.Search
         /// <summary>
         /// The display total price of the reservation
         /// </summary>
-        public string DislayBookingPrice { get => ReportHelper.VietnamCurrencyConvert(TongTien) + " VNĐ"; }
+        public string DislayBookingPrice { get => FormatHelper.VietnamCurrencyFormat(TongTien) + " VNĐ"; }
 
         /// <summary>
         /// The state of this reservation

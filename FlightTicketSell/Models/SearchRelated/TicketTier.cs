@@ -1,4 +1,5 @@
-﻿using FlightTicketSell.Views.Helper;
+﻿using FlightTicketSell.Helpers;
+using FlightTicketSell.Views.Helper;
 using System;
 
 namespace FlightTicketSell.Models.SearchRelated
@@ -18,7 +19,7 @@ namespace FlightTicketSell.Models.SearchRelated
         /// <summary>
         /// The display of the price of the ticket tier for a specific flight
         /// </summary>
-        public string DisplayTicketPrice { get => ReportHelper.VietnamCurrencyConvert(GiaTien) + " VNĐ"; }
+        public string DisplayTicketPrice { get => FormatHelper.VietnamCurrencyFormat(GiaTien) + " VNĐ"; }
 
         /// <summary>
         /// Empty sits of this ticket tier of a specific flight

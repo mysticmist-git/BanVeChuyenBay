@@ -1,11 +1,9 @@
 ﻿using FlightTicketSell.AttachedProperties;
 using FlightTicketSell.Interface.Report;
 using FlightTicketSell.Models.Enums;
-using FlightTicketSell.Views.ReportViewRelated;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -17,41 +15,57 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FlightTicketSell.Views
+namespace FlightTicketSell.Views.ReportViewRelated
 {
     /// <summary>
-    /// Interaction logic for ReportView.xaml
+    /// Interaction logic for PrintPreviewWindow.xaml
     /// </summary>
-    public partial class ReportView : UserControl, IReport
+    public partial class ReportPrintPreviewWindow : UserControl, IReportPrintPreview
     {
-        public ReportView()
+        public ReportPrintPreviewWindow()
         {
             InitializeComponent();
         }
 
         /// <summary>
-        /// Task to do when user control loaded
-        /// </summary>-
+        /// Print report
+        /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void Print_Confirm(object sender, RoutedEventArgs e)
         {
-            var dpd = DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, typeof(DataGrid));
-            if (dpd != null)
+            try
             {
-                dpd.AddValueChanged(reportDataGrid, OnItemSourceChanged);
+                // Disable button so it won't be clicked many times
+                this.IsEnabled = false;
+
+                var printDialog = new PrintDialog();
+
+                if (printDialog.ShowDialog() == true)
+                {
+                    printDialog.PrintVisual(print, "Invoice");
+                }
+            }
+            catch (Exception ex) { }
+            finally
+            {
+                this.IsEnabled = true;
             }
         }
 
         /// <summary>
-        /// This is called when item source is changed
+        /// Cancel print and close window
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnItemSourceChanged(object sender, EventArgs e)
+        private void Cancel_Print(object sender, RoutedEventArgs e)
+        {
+            DialogHost.CloseDialogCommand.Execute(null, null);
+        }
+
+        public void UpdateColumns()
         {
             // Get report type
             var reportType = reportDataGrid.GetValue(ReportTypeProperty.ValueProperty);
@@ -63,32 +77,32 @@ namespace FlightTicketSell.Views
             switch (reportType)
             {
                 case ReportType.FlightsOfOneMonth:
-                    (sender as DataGrid).Columns.Clear();
-                    (sender as DataGrid).Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
+                    reportDataGrid.Columns.Clear();
+                    reportDataGrid.Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
                     {
                         Header = "Mã chuyến bay",
                         Binding = new Binding("DisplayFlightCode") { Mode = BindingMode.OneTime }
                     });
 
-                    (sender as DataGrid).Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
+                    reportDataGrid.Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
                     {
                         Header = "Khởi hành",
                         Binding = new Binding("DisplayDepartDate") { Mode = BindingMode.OneTime }
                     });
 
-                    (sender as DataGrid).Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
+                    reportDataGrid.Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
                     {
                         Header = "Vé đã bán",
                         Binding = new Binding("TicketCount") { Mode = BindingMode.OneTime }
                     });
 
-                    (sender as DataGrid).Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
+                    reportDataGrid.Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
                     {
                         Header = "Doanh thu",
                         Binding = new Binding("DisplayRevenue") { Mode = BindingMode.OneTime }
                     });
 
-                    (sender as DataGrid).Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
+                    reportDataGrid.Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
                     {
                         Header = "Tỉ lệ",
                         Binding = new Binding("DisplayRatio") { Mode = BindingMode.OneTime }
@@ -96,26 +110,26 @@ namespace FlightTicketSell.Views
 
                     break;
                 case ReportType.MonthsOfOneYear:
-                    (sender as DataGrid).Columns.Clear();
-                    (sender as DataGrid).Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
+                    reportDataGrid.Columns.Clear();
+                    reportDataGrid.Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
                     {
                         Header = "Tháng",
                         Binding = new Binding("Month") { Mode = BindingMode.OneTime }
                     });
 
-                    (sender as DataGrid).Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
+                    reportDataGrid.Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
                     {
                         Header = "Số chuyến bay",
                         Binding = new Binding("FlightCount") { Mode = BindingMode.OneTime }
                     });
 
-                    (sender as DataGrid).Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
+                    reportDataGrid.Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
                     {
                         Header = "Doanh thu",
                         Binding = new Binding("DisplayRevenue") { Mode = BindingMode.OneTime }
                     });
 
-                    (sender as DataGrid).Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
+                    reportDataGrid.Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
                     {
                         Header = "Tỉ lệ",
                         Binding = new Binding("DisplayRatio") { Mode = BindingMode.OneTime }
@@ -124,26 +138,26 @@ namespace FlightTicketSell.Views
                     break;
                 case ReportType.OneMonthOfAllYears:
                 case ReportType.AllYears:
-                    (sender as DataGrid).Columns.Clear();
-                    (sender as DataGrid).Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
+                    reportDataGrid.Columns.Clear();
+                    reportDataGrid.Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
                     {
                         Header = "Năm",
                         Binding = new Binding("Year") { Mode = BindingMode.OneTime }
                     });
 
-                    (sender as DataGrid).Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
+                    reportDataGrid.Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
                     {
                         Header = "Số chuyến bay",
                         Binding = new Binding("FlightCount") { Mode = BindingMode.OneTime }
                     });
 
-                    (sender as DataGrid).Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
+                    reportDataGrid.Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
                     {
                         Header = "Doanh thu",
                         Binding = new Binding("DisplayRevenue") { Mode = BindingMode.OneTime }
                     });
 
-                    (sender as DataGrid).Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
+                    reportDataGrid.Columns.Add(new MaterialDesignThemes.Wpf.DataGridTextColumn
                     {
                         Header = "Tỉ lệ",
                         Binding = new Binding("DisplayRatio") { Mode = BindingMode.OneTime }
@@ -151,19 +165,6 @@ namespace FlightTicketSell.Views
 
                     break;
             }
-
-        }
-
-        /// <summary>
-        /// Open the dialog host
-        /// </summary>
-        public async Task OpenPrintPreview()
-        {
-            var view = new ReportPrintPreviewWindow();
-
-            view.UpdateColumns();
-
-            await DialogHost.Show(view, "RootDialog");
         }
     }
 }

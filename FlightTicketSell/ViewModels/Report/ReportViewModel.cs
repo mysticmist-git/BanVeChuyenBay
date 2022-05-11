@@ -1,16 +1,15 @@
 ﻿using FlightTicketSell.Models;
-using FlightTicketSell.ViewModels;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows.Input;
-using System;
 using FlightTicketSell.Models.Enums;
 using FlightTicketSell.Views.Helper;
 using System.Windows;
 using System.Data.Entity.Core;
-using FlightTicketSell.Views.ReportViewRelated;
-using MaterialDesignThemes.Wpf;
+using System.Threading.Tasks;
+using FlightTicketSell.Helpers;
+using FlightTicketSell.Interface.Report;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -18,91 +17,98 @@ namespace FlightTicketSell.ViewModels
     {
         #region Private Members
 
-        /// <summary>
-        /// Indicate if the view is first loaded
-        /// </summary>
-        private bool _firstLoad = true;
+        #region Constants
 
         /// <summary>
-        /// Indicate that it is report loadable
+        /// The "All" text in months and years itemsources
         /// </summary>
-        private bool _reportLoadAllow = true;
+        private const string _all = "Tất cả";
+
+        #endregion
 
         #endregion
 
         #region Public Properties
 
         /// <summary>
-        /// The years that have report
+        /// The year list
         /// </summary>
         public ObservableCollection<string> Years { get; set; }
 
         /// <summary>
-        /// The months that have report of the current year
+        /// The month list
         /// </summary>
         public ObservableCollection<string> Months { get; set; }
 
         /// <summary>
-        /// Current selected year
+        /// The current year selected
         /// </summary>
-        public int Year { get { if (YearIndex <= 0) return 0; else return Convert.ToInt32(Years[YearIndex]); } }
+        public string CurrentYear { get; set; }
 
         /// <summary>
-        /// The index of the year combobox
+        /// The current month selected
         /// </summary>
-        public int YearIndex { get; set; }
+        public string CurrentMonth { get; set; }
 
         /// <summary>
-        /// Current selected month
+        /// The totla revenue
         /// </summary>
-        public int Month { get { if (MonthIndex <= 0) return 0; else return Convert.ToInt32(Months[MonthIndex]); } }
+        public decimal TotalRevenue { get; set; }
 
         /// <summary>
-        /// The index of the month combobox
-        /// </summary
-        public int MonthIndex { get; set; }
+        /// The display total revenue
+        /// </summary>
+        public string DisplayTotalRevenue { get => FormatHelper.VietnamCurrencyFormat(TotalRevenue) + " VN"; }
 
         /// <summary>
-        /// Total revenue
+        /// The type of the current report
         /// </summary>
-        public string TotalRevenue { get { return ReportHelper.VietnamCurrencyConvert(ReportHelper.CalculateTotalRevenue(Report)) + " VNĐ"; } set { } }
+        public ReportType CurrentReportType
+        {
+            get
+            {
+                if (CurrentMonth == _all && CurrentYear == _all)
+                    return ReportType.AllYears;
+
+                if (CurrentMonth != _all && CurrentYear == _all)
+                    return ReportType.OneMonthOfAllYears;
+
+                if (CurrentMonth == _all && CurrentYear != _all)
+                    return ReportType.MonthsOfOneYear;
+
+                if (CurrentMonth != _all && CurrentYear != _all)
+                    return ReportType.FlightsOfOneMonth;
+
+                return ReportType.AllYears;
+            }
+        }
 
         /// <summary>
-        ///  Indicate current report type
+        /// The report
         /// </summary>
-        public ReportType CurrentReportType { get { if (Report is null) return ReportType.None; return Report.Type; } }
-
-        /// <summary>
-        /// The flight revenue report
-        /// </summary>
-        public Report<object> Report { get; set; }
+        public ObservableCollection<object> Report { get; set; } = new ObservableCollection<object>();
 
         #endregion
 
         #region Commands
 
         /// <summary>
-        /// Execute when view load
+        /// Executes on view load
         /// </summary>
         public ICommand LoadCommand { get; set; }
 
         /// <summary>
-        /// Command to query new report when month, years changes
-        /// </summary>
-        public ICommand MonthYearChangedCommand { get; set; }
-
-        /// <summary>
-        /// Query new report
+        /// Executes on selected month changed
         /// </summary>
         public ICommand MonthChangedCommand { get; set; }
 
         /// <summary>
-        /// Get new month collection, query new report
+        /// Executes on selected year changed
         /// </summary>
         public ICommand YearChangedCommand { get; set; }
 
         /// <summary>
-        /// Switch to the print report view
+        /// The print command, open print preview
         /// </summary>
         public ICommand PrintCommand { get; set; }
 
@@ -112,120 +118,120 @@ namespace FlightTicketSell.ViewModels
 
         /// <summary>
         /// Default constructor
-        /// </summary>%
+        /// </summary>
         public ReportViewModel()
         {
-            LoadCommand = new RelayCommand<object>((p) => true, (p) => 
+            // Create commands
+            LoadCommand = new RelayCommand<object>(p => true, async p =>
             {
-                // Init everything when viewmodel first load
-                if (_firstLoad) Init();
-                
-                // Do this to run column formating on report datagrid
-                OnPropertyChanged(nameof(Report));
-            });
-            
-            MonthChangedCommand = new RelayCommand<object>((p) => true, async (p) =>
-            {
-                // Don't execute on first load view model
-                if (_firstLoad || !_reportLoadAllow) return;
+                // Load months, years itemsources
+                Months = new ObservableCollection<string> { _all, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
 
-                // Check if any flight departed to add a report if needed
-                await ReportHelper.ReportExistGuarantee();
-
-                // Update report
-                Report = await ReportHelper.GetReportAsync(Month, Year);
-            });
-
-            YearChangedCommand = new RelayCommand<object>((p) => true, async (p) =>
-            {
-                // Don't execute on first load view model
-                if (_firstLoad) return;
-
-                // Only allow load report when everything is done
-                _reportLoadAllow = false;
-
-                // A buffer to store current month value selected
-                var month = Month;
-
-                // Load months
-                using (var context = new FlightTicketSellEntities())
-                {
-                    // Get months
-                    if (Year == 0)
-                        Months = new ObservableCollection<string> { "Tất cả", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
-                    else
-                    {
-                        var yearReport = await context.DOANHTHUNAMs.Where(year => year.Nam == Year).FirstOrDefaultAsync();
-                        var latestMonth = yearReport.DOANHTHUTHANGs.Max(thang => thang.Thang);
-
-                        Months = new ObservableCollection<string> { "Tất cả" };
-                        for (int i = 1; i <= latestMonth; i++)
-                            Months.Add(i.ToString());
-                    }
-                }
-
-                // Allow report load
-                _reportLoadAllow = true;
-
-                // Reload previous month if another year also have it
-                if (Months.Contains(month.ToString()))
-                    MonthIndex = Months.IndexOf(month.ToString());
-                else
-                    MonthIndex = 0;
-
-                // Check if any flight departed to add a report if needed
-                await ReportHelper.ReportExistGuarantee();
-
-                // Update report
-                Report = await ReportHelper.GetReportAsync(Month, Year);
-            });
-
-            PrintCommand = new RelayCommand<object>((p) => true, async (p) =>
-            {
-                // Create a view
-                var view = new ReportPrintPreviewWindow();
-
-                await DialogHost.Show(view, "RootDialog");
-            });
-        }
-
-        /// <summary>
-        ///  Load years, months and report
-        /// </summary>
-        private async void Init()
-        {
-            // Get months, years available
-            using (var context = new FlightTicketSellEntities())
-            {
                 try
                 {
-                    // Check if any flight departed to add a report if needed
-                    await ReportHelper.ReportExistGuarantee();
-
-                    // Get years
-                    Years = new ObservableCollection<string>(await context.DOANHTHUNAMs.Select(x => x.Nam.ToString()).ToListAsync());
-                    Years.Insert(0, "Tất cả");
-
-                    // Set default index for year
-                    YearIndex = 0;
-
-                    // Get months
-                    Months = new ObservableCollection<string> { "Tất cả", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
-
-                    // Set default index for month
-                    MonthIndex = 0;
+                    using (var context = new FlightTicketSellEntities())
+                    {
+                        var yearList = await context.DOANHTHUNAMs.Select(dtn => dtn.Nam.ToString()).ToListAsync();
+                        yearList.Insert(0, _all);
+                        Years = new ObservableCollection<string>(yearList);
+                    }
                 }
                 catch (EntityException e)
                 {
                     MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
 
-            // Get report
-            Report = await ReportHelper.GetReportAsync(Month, Year);
+                // Default current month, year
+                CurrentMonth = _all;
+                CurrentYear = _all;
 
-            // No longer first load
-            _firstLoad = false;
+                await RefreshReport();
+            });
+
+            MonthChangedCommand = new RelayCommand<object>(p => true, async p =>
+            {
+                await RefreshReport();
+            });
+
+            YearChangedCommand = new RelayCommand<object>(p => true, async p =>
+            {
+
+                var yearInt = ReportHelper.MonthYearToIntConverter(CurrentYear, _all);
+
+                try
+                {
+                    using (var context = new FlightTicketSellEntities())
+                    {
+                        // Load new month list and refresh report
+                        if (CurrentYear == _all)
+                        {
+                            Months = new ObservableCollection<string> { _all, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
+
+                        }
+                        else
+                        {
+
+                            // Load new month list
+                            var maxMonth = await context.DOANHTHUTHANGs.Where(dtt => dtt.DOANHTHUNAM.Nam == yearInt).MaxAsync(dtt => dtt.Thang);
+
+                            var monthList = new ObservableCollection<string> { _all };
+                            for (int i = 1; i <= maxMonth; i++)
+                                monthList.Add(i.ToString());
+
+                            Months = new ObservableCollection<string>(monthList);
+                        }
+
+                        // Get new report
+                        await RefreshReport();
+                    }
+                }
+                catch (EntityException e)
+                {
+                    MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+
+            PrintCommand = new RelayCommand<object>(p => true, async p =>
+            {
+                await (p as IReport).OpenPrintPreview();
+            });
+        }
+
+        /// <summary>
+        /// Refresh report data
+        /// </summary>
+        /// <returns></returns>
+        private async Task RefreshReport()
+        {
+            if (CurrentReportType == ReportType.AllYears)
+                Report = await ReportHelper.GetAllYearReport();
+
+            if (CurrentReportType == ReportType.OneMonthOfAllYears)
+                Report = await ReportHelper.GetOneMonthOfAllYear(ReportHelper.MonthYearToIntConverter(CurrentMonth, _all));
+
+            if (CurrentReportType == ReportType.MonthsOfOneYear)
+                Report = await ReportHelper.GetMonthsOfOneYearReport(ReportHelper.MonthYearToIntConverter(CurrentYear, _all));
+
+            if (CurrentReportType == ReportType.FlightsOfOneMonth)
+                Report = await ReportHelper.GetFlighsOfOneMonthReport(
+                    ReportHelper.MonthYearToIntConverter(CurrentMonth, _all),
+                    ReportHelper.MonthYearToIntConverter(CurrentYear, _all)
+                    );
+
+            TotalRevenue = ReportHelper.CalculateTotalRevenue(Report, CurrentReportType);
+
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Notify view to update datagrid columns for report
+        /// </summary>
+        public void NotifyReport()
+        {
+            OnPropertyChanged(nameof(Report));
         }
 
         #endregion
