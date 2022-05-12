@@ -10,9 +10,16 @@ namespace FlightTicketSell.ViewModels
     /// <summary>
     /// A specialized version of <see cref="KHACHHANG"/> for book view
     /// </summary>
-    public class Customer : KHACHHANG
+    public class Customer : BaseViewModel
     {
         #region Public Properties
+
+        public int MaKhachHang { get; set; }
+        public string HoTen { get; set; }
+        public string CMND { get; set; }
+        public string SDT { get; set; }
+        public string Email { get; set; }
+
 
         /// <summary>
         /// The index of the customer in the list
@@ -87,9 +94,6 @@ namespace FlightTicketSell.ViewModels
             CMND = khachHang.CMND;
             SDT = khachHang.SDT;
             Email = khachHang.Email;
-            CHITIETDATCHOes = khachHang.CHITIETDATCHOes;
-            DATCHOes = khachHang.DATCHOes;
-            VEs = khachHang.VEs;
         }
 
         /// <summary>

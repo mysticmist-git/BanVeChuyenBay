@@ -16,7 +16,7 @@ namespace FlightTicketSell.ValueConverters
                 case AppView.Customer:
                     return new[] { AppView.Customer }.Any(x => x == (AppView)value);
                 case AppView.Book:
-                    return new[] { AppView.Book, AppView.BookDetail, AppView.ReservePay }.Any(x => x == (AppView)value);
+                    return new[] { AppView.Book, AppView.BookDetail, AppView.BookPay }.Any(x => x == (AppView)value);
                 case AppView.Sell:
                     return new[] { AppView.Sell, AppView.SellPay, AppView.TicketInfoFilling, AppView.ChangeTicket }.Any(x => x == (AppView)value);
                 case AppView.Schedule:

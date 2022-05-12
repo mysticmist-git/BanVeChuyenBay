@@ -10,11 +10,11 @@
              d:Background="{StaticResource LightGrayBrush}"
              DataContext="{Binding BookDetailViewModel, Source={x:Static vm:ViewModelLocator.Instance}}">
 
-    <!--<i:Interaction.Triggers>
+    <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
         </i:EventTrigger>
-    </i:Interaction.Triggers>-->
+    </i:Interaction.Triggers>
 
     <materialDesign:DialogHost Identifier="RootDialog" >
         <Grid>
@@ -27,14 +27,14 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="5*"/>
-                <RowDefinition Height="1*"/>
                 <RowDefinition Height="3*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="0.5*"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="0.5*"/>
             </Grid.RowDefinitions>
 
             <!-- Return button -->
@@ -91,27 +91,27 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Mã chuyến bay</TextBlock>
-                                <TextBox>TSNNB-8</TextBox>
+                                <TextBox Text="{Binding FlightInfo.DisplayFlightCode , Mode=OneWay}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Sân bay đi</TextBlock>
-                                <TextBox>Tân Sơn Nhất</TextBox>
+                                <TextBox Text="{Binding FlightInfo.SanBayDi , Mode=OneWay}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Sân bay đến</TextBlock>
-                                <TextBox>Nội Bài</TextBox>
+                                <TextBox Text="{Binding FlightInfo.SanBayDen , Mode=OneWay}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Ngày giờ bay</TextBlock>
-                                <TextBox>15:00 31/2/2022</TextBox>
+                                <TextBox Text="{Binding FlightInfo.DisplayDepartDate , Mode=OneWay}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="9" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Số điểm dừng</TextBlock>
-                                <TextBox>0</TextBox>
+                                <TextBox Text="{Binding FlightInfo.SoDiemDung , Mode=OneWay}"/>
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -134,50 +134,53 @@
 
                     <StackPanel Width="200" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock FontWeight="Bold">Họ Tên</TextBlock>
-                        <TextBox>Đoàn Gia Bảo</TextBox>
-                        <TextBlock FontWeight="Bold">Số điện thoại</TextBlock>
-                        <TextBox>0834002706</TextBox>
-                    </StackPanel>
 
+                        <TextBox Text="{Binding BookInfo.ThongTinNguoiDat.HoTen}"></TextBox>
+                        <TextBlock FontWeight="Bold">Số điện thoại</TextBlock>
+                        <TextBox Text="{Binding BookInfo.ThongTinNguoiDat.SDT}"></TextBox>
+                    </StackPanel>
                     <StackPanel Width="200" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock FontWeight="Bold">CMND/CCCD</TextBlock>
-                        <TextBox>312602950</TextBox>
+                        <TextBox Text="{Binding BookInfo.ThongTinNguoiDat.CMND}"></TextBox>
                         <TextBlock FontWeight="Bold">Email</TextBlock>
-                        <TextBox>doangiabao276@gmail.com</TextBox>
+                        <TextBox Text="{Binding BookInfo.ThongTinNguoiDat.Email}" ></TextBox>
                     </StackPanel>
                 </Grid>
             </Border>
 
             <!--Hạng vé-->
-            <Border Grid.Row="5" Grid.Column="1"  Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+            <Border Padding="20" Grid.Row="5" Grid.Column="1"  Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"></RowDefinition>
-                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.ColumnSpan="2" Padding="20,5,0,0" FontSize="20" VerticalAlignment="Center" Grid.Row="0"  FontWeight="Bold"> Hạng vé</TextBlock>
+                    <!-- Heading -->
+                    <TextBlock FontSize="20" VerticalAlignment="Center" Grid.Row="0" FontWeight="Bold"> Hạng vé</TextBlock>
 
-                    <ComboBox Width="200" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top"
-                                            materialDesign:HintAssist.Hint="Hạng vé"
-                                            ItemsSource="{Binding LongListToTestComboVirtualization}"
-                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                        <ComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel/>
-                            </ItemsPanelTemplate>
-                        </ComboBox.ItemsPanel>
-                    </ComboBox>
-
-                    <Grid Width="200" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="top">
-                        <TextBox                               
-                                materialDesign:HintAssist.Hint="Giá tiền"
-                                Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    </Grid>
+                    <DataGrid x:Name="dgTicketTier" Grid.Row="1" Grid.RowSpan="5"
+                                      Background="Transparent"
+                                      ItemsSource="{Binding TicketTiers, Mode=OneWay}"
+                                      d:ItemsSource="{d:SampleData ItemCount=3}"
+                                      SelectedItem="{Binding CurrentTicketTier}"
+                                      AutoGenerateColumns="False"
+                                      RowHeight="50"
+                                      ColumnWidth="*" 
+                                      SelectionMode="Single"
+                                      SelectionUnit="FullRow"
+                                      IsReadOnly="True"
+                                      ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                                      CellStyle="{StaticResource DataGridCellCenter}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Tên hạng vé" Binding="{Binding TenHangVe}" />
+                            <DataGridTextColumn Header="Giá vé" Binding="{Binding DisplayTicketPrice}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </Border>
 
@@ -267,8 +270,8 @@
             <Button 
                 Content="Tiếp tục"
                 Grid.Row="7"
-            Grid.Column="1"
-            Grid.ColumnSpan="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="10"
                 BorderThickness="0"
                 Background="OrangeRed"
                 Command="{Binding ContinueCommand}"
@@ -280,9 +283,6 @@
                 VerticalAlignment="Center"
                 materialDesign:ShadowAssist.Darken="True">
             </Button>
-
-
-
         </Grid>
     </materialDesign:DialogHost>
 </UserControl>

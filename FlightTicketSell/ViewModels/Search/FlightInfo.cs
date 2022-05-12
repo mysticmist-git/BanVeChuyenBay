@@ -22,7 +22,7 @@ namespace FlightTicketSell.Models
         /// <summary>
         /// The depart date
         /// </summary>
-        public string DisplayDepartDate { get => NgayGio.ToString("HH:mm dd/mm/yyyy", new CultureInfo("vi-VN")); }
+        public string DisplayDepartDate { get => NgayGio.ToString("HH:mm dd/MM/yyyy", new CultureInfo("vi-VN")); }
 
         /// <summary>
         /// The standard price the flight ticket

@@ -32,7 +32,7 @@
         /// <summary>
         /// The reserve pay view
         /// </summary>
-        ReservePay,
+        BookPay,
         /// <summary>
         /// The ticket sell view
         /// </summary>

@@ -1,6 +1,8 @@
 ﻿using FlightTicketSell.Models;
+using FlightTicketSell.Models.SearchRelated;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Linq;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -30,8 +32,15 @@ namespace FlightTicketSell.ViewModels
 
         #endregion
 
-        #region Public Properties
+        #region Public Properties        
+        public FlightInfo FlightInfo { get => IoC.IoC.Get<FlightDetailViewModel>().FlightInfo; }    
 
+        public ObservableCollection<TicketTier> TicketTiers { get => IoC.IoC.Get<FlightDetailViewModel>().TicketTier; }
+
+        public TicketTier CurrentTicketTier { get; set; }
+
+        public Book BookInfo { get; set; } = new Book();
+ 
         /// <summary>
         /// The customer list that we'll fill information
         /// </summary>
@@ -43,8 +52,22 @@ namespace FlightTicketSell.ViewModels
 
         public BookDetailViewModel()
         {
-            // Create command
-            ContinueCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.ReservePay);
+            LoadCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                if (CurrentTicketTier is null)
+                    CurrentTicketTier = TicketTiers.ElementAt(0);
+            });
+
+           // Create command
+           ContinueCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.BookPay;
+
+                // Update Book Information (SoVeDat)
+                BookInfo.SoVeDat = Customers.Count;
+                BookInfo.GiaTien = Customers.Count * CurrentTicketTier.GiaTien;
+            });
+
             ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightDetail);
 
             AddCustomerCommand = new RelayCommand<object>((p) => true, (p) => 

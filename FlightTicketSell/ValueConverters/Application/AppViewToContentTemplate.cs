@@ -30,7 +30,7 @@ namespace FlightTicketSell.ValueConverters
                     return new BookView();
                 case AppView.BookDetail:
                     return new BookDetailView();
-                case AppView.ReservePay:
+                case AppView.BookPay:
                     return new BookPayView();
                 // Sell related
                 case AppView.Sell:

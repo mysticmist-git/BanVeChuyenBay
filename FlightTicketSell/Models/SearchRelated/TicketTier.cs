@@ -1,11 +1,17 @@
 ﻿using FlightTicketSell.Helpers;
+using FlightTicketSell.ViewModels;
 using FlightTicketSell.Views.Helper;
 using System;
 
 namespace FlightTicketSell.Models.SearchRelated
 {
-    public class TicketTier : HANGVE
+    public class TicketTier : BaseViewModel
     {
+        public int MaHangVe { get; set; }
+        public string TenHangVe { get; set; }
+        public decimal HeSo { get; set; }
+        public bool TrangThai { get; set; }
+
         /// <summary>
         /// The display ticket tier coefficient
         /// </summary>

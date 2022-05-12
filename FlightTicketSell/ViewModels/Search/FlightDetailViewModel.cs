@@ -55,9 +55,6 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand TicketBuyCommand { get; set; }
 
-        
-
-
         /// <summary>
         /// Navigate to <see cref="AppView.TicketSoldOrBooked"/> View
         /// </summary>

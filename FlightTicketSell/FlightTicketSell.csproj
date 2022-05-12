@@ -115,6 +115,7 @@
     <Compile Include="Interface\ITicketInfoFilling.cs" />
     <Compile Include="Interface\Report\IReport.cs" />
     <Compile Include="Interface\Report\IReportPrintPreview.cs" />
+    <Compile Include="Models\Book\Book.cs" />
     <Compile Include="Models\CHITIETDATCHO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -219,7 +220,7 @@
     <Compile Include="ViewModels\NavigationBarViewModel.cs" />
     <Compile Include="ViewModels\Report\ReportViewModel.cs" />
     <Compile Include="ViewModels\Report\ReportPrintViewModel.cs" />
-    <Compile Include="ViewModels\Book\ReservePayViewModel.cs" />
+    <Compile Include="ViewModels\Book\BookPayViewModel.cs" />
     <Compile Include="ViewModels\ScheduleViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\Sell\CustomerExistedViewModel.cs" />

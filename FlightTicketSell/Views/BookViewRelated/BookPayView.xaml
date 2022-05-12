@@ -11,10 +11,10 @@
              d:Background="{StaticResource LightGrayBrush}"
              d:DesignHeight="760" d:DesignWidth="1366"
              x:Name="UserControl">
+
     <UserControl.DataContext>
-        <vm:ReservePayViewModel />
+        <vm:BookPayViewModel />
     </UserControl.DataContext>
-    
     <Grid>
         <!-- Return button -->
         <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
@@ -81,30 +81,30 @@
                                 <ColumnDefinition Width="3*"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            
+
                             <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Mã chuyến bay</TextBlock>
-                                <TextBox>TSNNB-8</TextBox>
+                                <TextBox Text="{Binding FlightInfo.DisplayFlightCode , Mode=OneWay}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Sân bay đi</TextBlock>
-                                <TextBox>Tân Sơn Nhất</TextBox>
+                                <TextBox Text="{Binding FlightInfo.SanBayDi , Mode=OneWay}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Sân bay đến</TextBlock>
-                                <TextBox>Nội Bài</TextBox>
+                                <TextBox Text="{Binding FlightInfo.SanBayDen , Mode=OneWay}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Ngày giờ bay</TextBlock>
-                                <TextBox>15:00 31/2/2022</TextBox>
+                                <TextBox Text="{Binding FlightInfo.DisplayDepartDate , Mode=OneWay}"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="9" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Số điểm dừng</TextBlock>
-                                <TextBox>0</TextBox>
+                                <TextBox Text="{Binding FlightInfo.SoDiemDung , Mode=OneWay}"/>
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -148,7 +148,8 @@
                                    HorizontalAlignment="Right"
                                    VerticalAlignment="Center"
                                    Grid.Column="1"
-                                   Text="{Binding LatestTicketChange, FallbackValue=15:00 30/02/2022}"                               
+                                   Text="{Binding DisplayCancelDeadline}"                               
+                                   
                                    FontFamily="{StaticResource Roboto}"                               
                                    FontWeight="Bold"                               
                                    FontSize="{StaticResource Large}"                                
@@ -162,11 +163,11 @@
                     <!-- Spacing -->
                     <ColumnDefinition Width="1*" />
                     <!-- Overlay airport -->
-                    <ColumnDefinition Width="10*" />
-                    <!-- Customer -->
-                    <ColumnDefinition Width="6*" />
-                    <!-- Bill and total price -->
                     <ColumnDefinition Width="8*" />
+                    <!-- Customer -->
+                    <ColumnDefinition Width="8*" />
+                    <!-- Bill and total price -->
+                    <ColumnDefinition Width="6*" />
                     <!-- Spacing -->
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
@@ -187,8 +188,11 @@
                         <TextBlock Text="Sân bay trung gian" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" />
 
                         <DataGrid Grid.Row="1"
-                                  ItemsSource="{Binding OverlayAirports}"
+                                  ItemsSource="{Binding OverlayAirport}"
+                                  IsReadOnly="True"
+                                  CanUserAddRows="False"
                                   Background="Transparent"
+                                  AutoGenerateColumns="False"
                                   d:ItemsSource="{d:SampleData ItemCount=5}"
                                   RowHeight="50"
                                   Margin="0 10 0 0"
@@ -196,10 +200,10 @@
                                   CellStyle="{StaticResource DataGridCellCenter}"
                                   ColumnWidth="*">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Thứ tự" Binding="{Binding Order}" />
-                                <DataGridTextColumn Header="Tên sân bay" Binding="{Binding Name}" />
-                                <DataGridTextColumn Header="Thời gian dừng" Binding="{Binding OverlayTime}" />
-                                <DataGridTextColumn Header="Ghi chú" Binding="{Binding Note}" />
+                                <DataGridTextColumn Header="Thứ tự" Binding="{Binding ThuTu}" />
+                                <DataGridTextColumn Header="Tên sân bay" Binding="{Binding TenSanBay}" />
+                                <DataGridTextColumn Header="Thời gian dừng" Binding="{Binding ThoiGianDung}" />
+                                <DataGridTextColumn Header="Ghi chú" Binding="{Binding GhiChu}" />
                             </DataGrid.Columns>
                         </DataGrid>
 
@@ -224,6 +228,9 @@
                         <!-- Customers table -->
                         <DataGrid Grid.Row="1"
                                   ItemsSource="{Binding Customers}"
+                                  IsReadOnly="True"
+                                  CanUserAddRows="False"
+                                  AutoGenerateColumns="False"
                                   d:ItemsSource="{d:SampleData ItemCount=5}"
                                   Background="Transparent"
                                   RowHeight="50"
@@ -232,12 +239,12 @@
                                   CellStyle="{StaticResource DataGridCellCenter}"
                                   ColumnWidth="*">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Thứ tự" Binding="{Binding Order}" />
-                                <DataGridTextColumn Header="Tên khách hàng" Binding="{Binding Name}" />
+                                <DataGridTextColumn Header="Thứ tự" Binding="{Binding Index}" />
+                                <DataGridTextColumn Header="Tên khách hàng" Binding="{Binding HoTen}" />
                             </DataGrid.Columns>
                         </DataGrid>
 
-                    </Grid>
+                    </Grid> 
                 </Border>
 
                 <!-- Bill and total price and pay button-->
@@ -284,7 +291,7 @@
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="Hạng vé" Grid.Column="0" />
-                                        <TextBlock Text="{Binding TicketTier}" d:Text="Phổ thông" Grid.Column="1" HorizontalAlignment="Right" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding CurrentTicketTier.TenHangVe}" d:Text="Phổ thông" Grid.Column="1" HorizontalAlignment="Right" FontWeight="Bold"/>
                                     </Grid>
                                 </Grid>
 
@@ -295,17 +302,17 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="Giá vé" Grid.Column="0" />
-                                    <TextBlock Text="{Binding TicketPrice}" d:Text="920.000 VNĐ" Grid.Column="1" HorizontalAlignment="Right" />
+                                    <TextBlock Text="{Binding CurrentTicketTier.DisplayTicketPrice}" d:Text="920.000 VNĐ" Grid.Column="1" HorizontalAlignment="Right" />
                                 </Grid>
 
-                                <!-- Customer paid -->
+                                <!-- Customer count -->
                                 <Grid Grid.Row="2" VerticalAlignment="Center">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="Số lượng chỗ" Grid.Column="0" />
-                                    <TextBlock Text="{Binding PlaceReserved}" d:Text="3" Grid.Column="1" HorizontalAlignment="Right" />
+                                    <TextBlock Text="{Binding BookInfo.SoVeDat}" d:Text="3" Grid.Column="1" HorizontalAlignment="Right" />
                                 </Grid>
 
                                 <!-- Customer paid -->
@@ -315,7 +322,7 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="Người thanh toán" Grid.Column="0" />
-                                    <TextBlock Text="{Binding CustomerPaid}" d:Text="Nguyễn Văn A" Grid.Column="1" HorizontalAlignment="Right" />
+                                    <TextBlock Text="{Binding BookInfo.ThongTinNguoiDat.HoTen}" d:Text="Nguyễn Văn A" Grid.Column="1" HorizontalAlignment="Right" />
                                 </Grid>
 
                             </Grid>
@@ -337,7 +344,7 @@
                             <!-- Heading -->
                             <TextBlock Text="Thành tiền" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" Margin="0,-2,0,2" />
                             <!-- Heading -->
-                            <TextBlock Text="{Binding TotalPrice}"
+                            <TextBlock Text="{Binding BookInfo.DisplayTotalPrice}"
                                        d:Text="2.760.000 VNĐ"
                                        Grid.Row="1"
                                        HorizontalAlignment="Right"
@@ -357,7 +364,7 @@
                         <Button Grid.Column="1"   
                         VerticalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch"
-                        Command="{Binding PayCommand}"                
+                        Command="{Binding BookPay}"                
                         Background="{StaticResource GreenBrush}"                 
                         BorderThickness="0"                
                         materialDesign:ButtonAssist.CornerRadius="5"
