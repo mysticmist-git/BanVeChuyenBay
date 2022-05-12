@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
         xmlns:local="clr-namespace:FlightTicketSell.Views" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d"
-        Height="400" Width="350"
+        Height="400" Width="400"
         >
     
     <UserControl.DataContext>
@@ -26,7 +26,7 @@
         <Grid >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="8*"/>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="8*"/>
                 <ColumnDefinition Width="1*"/>
@@ -37,7 +37,7 @@
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="11*" />
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="4*" />
+                <RowDefinition Height="4.5*" />
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="2*" />
                 <RowDefinition Height="1*" />
@@ -132,7 +132,8 @@
                       materialDesign:HintAssist.Hint="Số ghế trống" 
                       Style="{StaticResource CustomTextbox}" 
                       VerticalAlignment="Center" 
-                       Text="{Binding EnterTicketClass_Seats}"/>
+                       Text="{Binding EnterTicketClass_Seats}"
+                    PreviewTextInput="PreviewTextInput"/>
             </Border>
 
             <!--Nút hủy, nút lưu-->

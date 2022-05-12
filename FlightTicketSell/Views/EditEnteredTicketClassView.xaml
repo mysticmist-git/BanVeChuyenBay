@@ -1,0 +1,161 @@
+﻿<UserControl x:Class="FlightTicketSell.Views.EditEnteredTicketClassView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FlightTicketSell.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
+        mc:Ignorable="d"
+        Height="350" Width="400">
+    <UserControl.DataContext>
+        <vm:ScheduleViewModel/>
+    </UserControl.DataContext>
+    <Grid Background="{StaticResource LightGrayBrush}" >
+        <Border CornerRadius="0 0 12 12" Height="100" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
+
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="6.5*" />
+                <RowDefinition Height="1.5*" />
+            </Grid.RowDefinitions>
+
+            <!--Sân bay-->
+            <Border Grid.Row="1" Grid.Column="1" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="6.5*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        <ColumnDefinition Width="7*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*" ></RowDefinition>
+                        <RowDefinition Height="5*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <!--Tựa-->
+                    <TextBlock 
+                        Grid.Row="0" 
+                        Grid.ColumnSpan="5" 
+                        VerticalAlignment="Center"  
+                        FontFamily="{StaticResource RobotoBlack}" 
+                        HorizontalAlignment="Center"
+                        FontSize="{StaticResource Small}" >Chỉnh sửa số ghế</TextBlock>
+
+                    <!--Thông tin sân bay-->
+                    <Border Grid.Row="1" Grid.Column="1" 
+                            Grid.RowSpan="3"
+                            Background="{StaticResource LightGrayBrush}"
+                            CornerRadius="5" Style="{StaticResource ResourceKey=DropShadow}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="15*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" ></RowDefinition>
+                                <RowDefinition Height="4*"></RowDefinition>
+                                <RowDefinition Height="1*" ></RowDefinition>
+                                <RowDefinition Height="4*"></RowDefinition>
+                                <RowDefinition Height="1*"></RowDefinition>
+                                <RowDefinition Height="4*"></RowDefinition>
+                                <RowDefinition Height="1*"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <!--Tên hạng vé-->
+                            <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Tên hạng vé" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                                      IsReadOnly="True"
+                                      Focusable="False"
+                                      Text="{Binding List_TicketClass_SelectedItem.TicketClassName}"
+                                      />
+                            <!--Giá tiền-->
+                            <TextBox Grid.Row="3" Grid.Column="1" 
+                                     materialDesign:HintAssist.Hint="Giá tiền" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                                     IsReadOnly="True" 
+                                     Focusable="False"
+                                     Text="{Binding List_TicketClass_SelectedItem.TicketClassCoefficient}"
+                                     materialDesign:TextFieldAssist.SuffixText="VNĐ"
+                                     />
+                            <!--Số ghế-->
+                            <TextBox  Grid.Row="5" Grid.Column="1"
+                                      materialDesign:HintAssist.Hint="Số ghế" Style="{StaticResource CustomTextbox}" 
+                                      VerticalAlignment="Center" 
+                                      IsReadOnly="True"
+                                      Focusable="False"
+                                      Text="{Binding List_TicketClass_SelectedItem.Seats}"
+                                      />
+                        </Grid>
+                    </Border>
+
+                    <!--Thông tin mới-->
+                    <Grid Grid.Row="1"
+                          Grid.Column="3"
+                          Grid.RowSpan="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="15*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" ></RowDefinition>
+                            <RowDefinition Height="4*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="8*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!--Số ghế mới-->
+                        <TextBox
+                                  materialDesign:HintAssist.Hint="Số ghế mới" 
+                                  Style="{StaticResource CustomTextbox}" 
+                             Text="{Binding EditTicketClass_Seats}"
+                            PreviewTextInput="PreviewTextInput"
+                             Grid.ColumnSpan="2" Margin="9,12,0,0" Grid.RowSpan="2"
+                              />
+                    </Grid>
+
+                </Grid>
+            </Border>
+
+            <!--Nút nhận lịch chuyến bay/ Hủy-->
+            <StackPanel Grid.Row="2" 
+                        Grid.Column="1" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Center"
+                        Height="35">
+                <!--Nút hủy-->
+                <Button Margin="0" 
+                        Height="auto" 
+                        Background="{StaticResource RedBrush}"  
+                        FontSize="{StaticResource Small}" 
+                        Content="Hủy" BorderThickness="0,0,0,0" 
+                        materialDesign:ButtonAssist.CornerRadius="7"
+                        Command="{Binding EditTicketClass_Cancel_Command}"/>
+                <!--Nút lưu-->
+                <Button Margin="20 0 0 0" 
+                        Height="auto" 
+                        Background="{StaticResource GreenBrush}"  
+                        FontSize="{StaticResource Small}" Content="Lưu" 
+                        BorderThickness="0,0,0,0" 
+                        materialDesign:ButtonAssist.CornerRadius="7"
+                        Command="{Binding EditTicketClass_Save_Command}"/>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</UserControl>

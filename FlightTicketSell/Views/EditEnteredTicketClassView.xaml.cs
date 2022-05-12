@@ -16,15 +16,14 @@ using System.Windows.Shapes;
 namespace FlightTicketSell.Views
 {
     /// <summary>
-    /// Interaction logic for EnterTicketClassView.xaml
+    /// Interaction logic for EditEnteredTicketClassView.xaml
     /// </summary>
-    public partial class EnterTicketClassView : UserControl
+    public partial class EditEnteredTicketClassView : UserControl
     {
-        public EnterTicketClassView()
+        public EditEnteredTicketClassView()
         {
             InitializeComponent();
         }
-
         //Không cho nhập chữ
         private new void PreviewTextInput(object sender, TextCompositionEventArgs e)
         {

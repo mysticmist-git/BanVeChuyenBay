@@ -109,6 +109,22 @@ namespace FlightTicketSell.ViewModels
         /// Nút hủy khi thêm hạng vé
         /// </summary>
         public ICommand EnterTicketClass_Cancel_Command { get; set; }
+        /// <summary>
+        /// Sửa hạng vé
+        /// </summary>
+        public ICommand Open_Window_EditTicketClass_Command { get; set; }
+        /// <summary>
+        /// Nút lưu trong sửa hạng vé
+        /// </summary>
+        public ICommand EditTicketClass_Save_Command { get; set; }
+        /// <summary>
+        /// Nút hủy trong sửa hạng vé
+        /// </summary>
+        public ICommand EditTicketClass_Cancel_Command { get; set; }
+        /// <summary>
+        /// Nút xóa hạng vé
+        /// </summary>
+        public ICommand Delete_EnteredTicketClass_Command { get; set; }
         #endregion
 
         #region Properties
@@ -116,7 +132,10 @@ namespace FlightTicketSell.ViewModels
         /// Danh sách hạng vé
         /// </summary>
         public ObservableCollection<TicketClassDetail> List_TicketClass { get; set; } = new ObservableCollection<TicketClassDetail>();
-
+        /// <summary>
+        /// Hạng vé được chọn trong danh sách hạng vé
+        /// </summary>
+        public TicketClassDetail List_TicketClass_SelectedItem { get; set; }
         /// <summary>
         /// Danh sách hạng vé trong Thêm Hạng vé
         /// </summary>
@@ -129,6 +148,10 @@ namespace FlightTicketSell.ViewModels
         /// Số ghế trống trong thêm hạng vé
         /// </summary>
         public string EnterTicketClass_Seats { get; set; }
+        /// <summary>
+        /// Số ghế trống mới trong Sửa hạng vé
+        /// </summary>
+        public string EditTicketClass_Seats { get; set ; }
         #endregion
 
         #endregion
@@ -159,6 +182,10 @@ namespace FlightTicketSell.ViewModels
         /// Nút chọn trong Chọn sân bay
         /// </summary>
         public ICommand ChooseAirportButton_Command { get; set; }
+        /// <summary>
+        /// Nút Hủy trong Chọn sân bay
+        /// </summary>
+        public ICommand Cancel_ChooseAirportButton_Command { get; set; }
         #endregion
 
         #region Main Properties
@@ -388,7 +415,11 @@ namespace FlightTicketSell.ViewModels
              (p) =>
             {
                 if (string.IsNullOrEmpty(OpenChooseAirport) || ChooseAirport_SelectedItem==null)
+                {
+                    MessageBox.Show("Hãy chọn sân bay!", "Cảnh báo");
                     return;
+                }
+                   
                 if (OpenChooseAirport=="Departure")
                 {
                     DepartureAirport.Id = ChooseAirport_SelectedItem.Id;
@@ -409,10 +440,16 @@ namespace FlightTicketSell.ViewModels
                 DialogHost.CloseDialogCommand.Execute(null, null);
             }
           );
-            #endregion
+            Cancel_ChooseAirportButton_Command = new RelayCommand<object>((p) => { return true; },
+             (p) =>
+             {
+                 // Close dialog
+                 DialogHost.CloseDialogCommand.Execute(null, null);
+             });
+                 #endregion
 
-            #region LayoverAirport
-            Open_Window_EnterLayoverAirport_Command = new RelayCommand<object>((p) => { return true; },
+                 #region LayoverAirport
+                 Open_Window_EnterLayoverAirport_Command = new RelayCommand<object>((p) => { return true; },
              async (p) =>
                {
                    LayoverAirport_StopTime = null;
@@ -585,6 +622,7 @@ namespace FlightTicketSell.ViewModels
             Open_Window_EnterTicketClass_Command = new RelayCommand<object>((p) => { return true; },
                async (p) =>
                {
+                   EnterTicketClass_Seats = null;
                    EnterTicketClassView enterTicketClassView = new EnterTicketClassView { DataContext = this };
                    var result = await DialogHost.Show(enterTicketClassView, "RootDialog");
                }
@@ -629,17 +667,17 @@ namespace FlightTicketSell.ViewModels
             EnterTicketClass_Save_Command = new RelayCommand<object>((p) => { return true; },
                 (p) =>
                 {
+                    if (EnterTicketClass_TicketClass_SelectedItem == null)
+                    {
+                        MessageBox.Show("Bạn chưa chọn hạng vé!", "Cảnh báo");
+                        return;
+                    }
                     if (string.IsNullOrEmpty(EnterTicketClass_Seats))
                     {
                         MessageBox.Show("Bạn chưa nhập số ghế!", "Cảnh báo");
                         return;
                     }
 
-                    if (EnterTicketClass_TicketClass_SelectedItem==null)
-                    {
-                        MessageBox.Show("Bạn chưa chọn hạng vé!", "Cảnh báo");
-                        return;
-                    }
                     List_TicketClass.Add
                     (
                         new TicketClassDetail
@@ -661,6 +699,52 @@ namespace FlightTicketSell.ViewModels
                    // Close dialog
                    DialogHost.CloseDialogCommand.Execute(null, null);
                }
+           );
+            Open_Window_EditTicketClass_Command = new RelayCommand<object>((p) => { return true; },
+               async (p) =>
+               {
+                   if (List_TicketClass_SelectedItem==null)
+                   {
+                       MessageBox.Show("Hãy chọn hạng vé muốn chỉnh sửa!", "Cảnh báo");
+                       return;
+                   }
+                   EditTicketClass_Seats = null;
+                   EditEnteredTicketClassView editEnteredTicketClassView = new EditEnteredTicketClassView { DataContext = this };
+                   var result = await DialogHost.Show(editEnteredTicketClassView, "RootDialog");
+               }
+           );
+            EditTicketClass_Save_Command = new RelayCommand<object>((p) => { return true; },
+                (p) =>
+               {
+                   if (string.IsNullOrEmpty(EditTicketClass_Seats))
+                   {
+                       MessageBox.Show("Hãy nhập số ghế mới!", "Cảnh báo");
+                       return;
+                   }
+                   List_TicketClass.Where(h => h.Id_TicketClass == List_TicketClass_SelectedItem.Id_TicketClass).ToList().FirstOrDefault().Seats=int.Parse(EditTicketClass_Seats);
+                   // Close dialog
+                   DialogHost.CloseDialogCommand.Execute(null, null);
+               }
+           );
+            EditTicketClass_Cancel_Command = new RelayCommand<object>((p) => { return true; },
+                (p) =>
+               {
+                   // Close dialog
+                   DialogHost.CloseDialogCommand.Execute(null, null);
+               }
+           );
+            Delete_EnteredTicketClass_Command = new RelayCommand<object>((p) => { return true; },
+                (p) =>
+                {
+                    if (List_TicketClass_SelectedItem==null)
+                    {
+                        MessageBox.Show("Hãy chọn hạng vé muốn xóa!", "Cảnh báo");
+                        return;
+                    }
+                    var temp = List_TicketClass.Where(h => h.Id_TicketClass == List_TicketClass_SelectedItem.Id_TicketClass).ToList().FirstOrDefault();
+                    List_TicketClass.Remove(temp);
+                    MessageBox.Show("Xóa hạng vé thành công!", "Cảnh báo");
+                }
            );
             #endregion
         }

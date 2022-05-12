@@ -250,6 +250,9 @@
     <Compile Include="Views\ChooseAirportView.xaml.cs">
       <DependentUpon>ChooseAirportView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditEnteredTicketClassView.xaml.cs">
+      <DependentUpon>EditEnteredTicketClassView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ScheduleViewRelated\EditLayoverAirportView.xaml.cs">
       <DependentUpon>EditLayoverAirportView.xaml</DependentUpon>
     </Compile>
@@ -366,6 +369,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ChooseAirportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditEnteredTicketClassView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
