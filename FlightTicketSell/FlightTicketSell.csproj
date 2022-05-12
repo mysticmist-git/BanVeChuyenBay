@@ -371,9 +371,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ChooseAirportView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\ScheduleViewRelated\ChooseAirportView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ScheduleViewRelated\EditEnteredTicketClassView.xaml">
       <Generator>MSBuild:Compile</Generator>
