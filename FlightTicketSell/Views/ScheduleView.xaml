@@ -23,7 +23,7 @@
     <materialDesign:DialogHost CloseOnClickAway="True" Identifier="RootDialog">
         <Grid>
 
-            <Grid Margin="20 30 20 10">
+            <Grid Margin="50 30 50 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="8*"/>
                     <ColumnDefinition Width="0.5*"/>
@@ -31,11 +31,11 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="8*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="3*"/>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="4*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1.5*"/>
                 </Grid.RowDefinitions>
@@ -45,6 +45,8 @@
                         Grid.ColumnSpan="3"
                         Background="White" 
                         CornerRadius="10" 
+                        Width="800"
+                        HorizontalAlignment="Center"
                         Style="{StaticResource ResourceKey=DropShadow}" >
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -62,9 +64,7 @@
                             <RowDefinition Height="3*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="3*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="3*"/>
-                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="2*"/>
                         </Grid.RowDefinitions>
 
                         <!--Tựa-->
@@ -124,21 +124,30 @@
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="5*"/>
                             </Grid.ColumnDefinitions>
-                            
-                             <!--Giá vé-->
+
+                            <!--Giá vé-->
                             <TextBox Grid.Column="0" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="VNĐ"
-                                 Text="{Binding Airfares}"
+                                 Text="{Binding Airfares, StringFormat='$#,##0.0000;$(#,##0.0000)'}"
                                  PreviewTextInput="PreviewTextInput">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                         <TextBlock Text="Giá vé" />
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
+                                <!--Command-->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="LostFocus">
+                                        <i:InvokeCommandAction Command="{Binding FormatStringToMoney}"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="GotFocus">
+                                        <i:InvokeCommandAction Command="{Binding FormatMoneyToString}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </TextBox>
 
                             <!--Thời gian bay-->
                             <TextBox Grid.Column="2" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="phút"
-                                 Text="{Binding FlightTime, Converter={valueConverters:StringFlightTimeToIntFlightTimeConverter}}"
+                                 Text="{Binding FlightTime}"
                                  PreviewTextInput="PreviewTextInput">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
@@ -153,7 +162,7 @@
                                         HorizontalAlignment="Stretch"
                                         materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource BlueBrush}"
                                         materialDesign:HintAssist.Foreground="{StaticResource BlueBrush}"
-                                        
+                                        Focusable="False"
                                         >
                                 <DatePicker.Resources>
                                     <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
@@ -183,22 +192,62 @@
                                 Grid.Column="6 " Style="{StaticResource MaterialDesignFloatingHintTimePicker}" Is24Hours="True" materialDesign:HintAssist.Hint="Giờ bay" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black" 
                                 SelectedTime="{Binding TimeFlight, Mode=OneWay, Converter={valueConverters:TimePickerUI_To_TimePickerConverter}}"
                                 HorizontalAlignment="Stretch"
-                                    />
+                                Focusable="False"/>
                         </Grid>
-                        
-                        <!--Mã chuyến bay-->
-                        <TextBox  Grid.Row="5" Grid.Column="1"
-                                  Grid.ColumnSpan="5"
-                                  materialDesign:HintAssist.Hint="Mã chuyến bay" 
-                                  Style="{StaticResource CustomTextbox}" 
-                                  VerticalAlignment="Center" 
-                              Text="{Binding FlightCode}"/>
-
                     </Grid>
                 </Border>
 
+
+                <!--Mã chuyến bay-->
+                <Border  Grid.Row="1" Grid.Column="0"
+                         Grid.ColumnSpan="5"
+                        Background="{StaticResource BlueBrush}" 
+                        CornerRadius="10" 
+                         Width="300"
+                        Height="65"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                        Style="{StaticResource ResourceKey=DropShadow}" >
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock Grid.Row="0" Grid.ColumnSpan="4" 
+                                   VerticalAlignment="Center"  
+                                   FontFamily="{StaticResource Roboto}" 
+                                   FontSize="{StaticResource Small}" 
+                                   FontWeight="Regular"
+                                   Text="Mã chuyến bay: "
+                                   Foreground="White"/>
+                        <TextBox 
+                           Margin="10 0 0 0"
+                            FontFamily="{StaticResource Roboto}"
+                            materialDesign:HintAssist.Hint="*********"
+                            TextWrapping="WrapWithOverflow"
+                            FontSize="{StaticResource Regular}"
+                            VerticalAlignment="Center" 
+                            Text="{Binding FlightCode}"
+                            materialDesign:TextFieldAssist.UnderlineBrush="White"
+                            materialDesign:HintAssist.Foreground="White"
+                            CaretBrush="White"
+                            Foreground="White"
+                            BorderBrush="White"
+                            FontWeight="Bold"
+                            TextAlignment="Center"
+                            Focusable="False"
+                            >
+
+                        </TextBox>
+                    </StackPanel>
+                </Border>
+               
+
                 <!--Sân bay trung gian-->
-                <Border Grid.Row="2" Grid.Column="2" Grid.RowSpan="3" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                <Border Grid.Row="2" 
+                        Grid.Column="2" 
+                        Grid.RowSpan="3"
+                        Background="White" 
+                        CornerRadius="10" 
+                        Style="{StaticResource ResourceKey=DropShadow}" >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
@@ -330,7 +379,7 @@
                                     HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
                                 <materialDesign:DataGridTextColumn
                                     Binding="{Binding TicketClassCoefficient}"
-                                    Header="Giá tiền" 
+                                    Header="Hệ số" 
                                   
                                     CellStyle="{StaticResource DataGridCellCenter}"
                                     HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
@@ -377,7 +426,8 @@
 
                     <Button Margin="20 0 0 0" Height="auto" Background="{StaticResource GreenBrush}"  
                             FontSize="{StaticResource Small}" Content="Nhận lịch bay" 
-                            BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                            BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                            Command="{Binding ScheduleAFlight_Command}"/>
 
                 </StackPanel>
 

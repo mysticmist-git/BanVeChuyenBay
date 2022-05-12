@@ -81,13 +81,12 @@
                                       Focusable="False"
                                       Text="{Binding List_TicketClass_SelectedItem.TicketClassName}"
                                       />
-                            <!--Giá tiền-->
+                            <!--Hệ số-->
                             <TextBox Grid.Row="3" Grid.Column="1" 
-                                     materialDesign:HintAssist.Hint="Giá tiền" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                                     materialDesign:HintAssist.Hint="Hệ số" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
                                      IsReadOnly="True" 
                                      Focusable="False"
                                      Text="{Binding List_TicketClass_SelectedItem.TicketClassCoefficient}"
-                                     materialDesign:TextFieldAssist.SuffixText="VNĐ"
                                      />
                             <!--Số ghế-->
                             <TextBox  Grid.Row="5" Grid.Column="1"

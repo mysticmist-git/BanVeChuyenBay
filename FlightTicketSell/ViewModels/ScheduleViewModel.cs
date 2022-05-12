@@ -7,6 +7,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Data.Entity.Core;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -125,6 +126,18 @@ namespace FlightTicketSell.ViewModels
         /// Nút xóa hạng vé
         /// </summary>
         public ICommand Delete_EnteredTicketClass_Command { get; set; }
+        /// <summary>
+        /// Format lại chuỗi tiền vé
+        /// </summary>
+        public ICommand FormatStringToMoney { get; set; }
+        /// <summary>
+        /// Format ngược chuỗi tiền vé
+        /// </summary>
+        public ICommand FormatMoneyToString { get; set; }
+        /// <summary>
+        /// Nút nhận lịch bay
+        /// </summary>
+        public ICommand ScheduleAFlight_Command { get; set; }
         #endregion
 
         #region Properties
@@ -202,7 +215,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Thời gian bay
         /// </summary>
-        public int FlightTime { get; set; }
+        public string FlightTime { get; set; }
 
         /// <summary>
         /// Ngày bay
@@ -281,7 +294,12 @@ namespace FlightTicketSell.ViewModels
                     DateFlight = DateTime.Now;
                     // Gán ngày hiện tại cho datepicker lúc mở 
                     TimeFlight = DateTime.Now;
-
+                   DepartureAirport = null;
+                   LandingAirport = null;
+                   Airfares = null;
+                   FlightTime = null;
+                   List_TicketClass = null;
+                   List_LayoverAirport = null;
                     //Danh sách sân bay trung gian
                     using (var context = new FlightTicketSellEntities())
                     {
@@ -318,14 +336,16 @@ namespace FlightTicketSell.ViewModels
 
                               }).Where(k => k.Status!=false).ToList()
                               );
-                           if (!string.IsNullOrEmpty(LandingAirport.Name))
+                           if (LandingAirport!=null && !string.IsNullOrEmpty(LandingAirport.Name))
                            {
                                RemoveAirportItem(LayoverAirport_List_Airport, LandingAirport);
                            }
-                           if (!string.IsNullOrEmpty(DepartureAirport.Name))
+                           if (DepartureAirport!=null && !string.IsNullOrEmpty(DepartureAirport.Name))
                            {
                                RemoveAirportItem(LayoverAirport_List_Airport, DepartureAirport);
                            }
+                           if (List_LayoverAirport == null)
+                               List_LayoverAirport = new ObservableCollection<LayoverAirport>();
                            if (List_LayoverAirport.Count > 0)
                            {
                                 foreach (var h in List_LayoverAirport)
@@ -347,6 +367,23 @@ namespace FlightTicketSell.ViewModels
                (p) =>
                {
                    (LandingAirport, DepartureAirport) = (DepartureAirport, LandingAirport);
+                   if (DepartureAirport != null && LandingAirport != null)
+                   {
+                       if (string.IsNullOrEmpty(DepartureAirport.Name) || string.IsNullOrEmpty(LandingAirport.Name))
+                           return;
+                       try
+                       {
+                           using (var context = new FlightTicketSellEntities())
+                           {
+                               var temp = context.CHUYENBAYs.ToList().Count + 1;
+                               FlightCode = DepartureAirport.Code + LandingAirport.Code + "-" + temp.ToString();
+                           }
+                       }
+                       catch (System.Data.Entity.Core.EntityException e)
+                       {
+                           MessageBox.Show($"Exception: {e.Message}");
+                       }
+                   }
                }
            );
             ChooseDepartureAirport_Command = new RelayCommand<object>((p) => { return true; },
@@ -356,6 +393,25 @@ namespace FlightTicketSell.ViewModels
                 ChooseAirportView chooseAirportView = new ChooseAirportView { DataContext=this };
                  OpenChooseAirport = "Departure";
                  var result = await DialogHost.Show(chooseAirportView, "RootDialog");
+
+                 if (DepartureAirport!=null && LandingAirport!=null)
+                 {
+                     if (string.IsNullOrEmpty(DepartureAirport.Name) || string.IsNullOrEmpty(LandingAirport.Name))
+                         return;
+                     try
+                     {
+                         using (var context = new FlightTicketSellEntities())
+                         {
+                             var temp = context.CHUYENBAYs.ToList().Count + 1 ;
+                             FlightCode = DepartureAirport.Code + LandingAirport.Code + "-" + temp.ToString();
+                         }
+                     }
+                     catch (System.Data.Entity.Core.EntityException e)
+                     {
+                         MessageBox.Show($"Exception: {e.Message}");
+                     }
+                 }
+
              }
            );
             ChooseLandingAirport_Command = new RelayCommand<object>((p) => { return true; },
@@ -365,7 +421,25 @@ namespace FlightTicketSell.ViewModels
                  ChooseAirportView chooseAirportView = new ChooseAirportView { DataContext=this};
                  OpenChooseAirport = "Landing";
                  var result = await DialogHost.Show(chooseAirportView, "RootDialog");
-                 
+
+                 if (DepartureAirport != null && LandingAirport != null)
+                 {
+                     if (string.IsNullOrEmpty(DepartureAirport.Name) || string.IsNullOrEmpty(LandingAirport.Name))
+                         return;
+                     try
+                     {
+                         using (var context = new FlightTicketSellEntities())
+                         {
+                             var temp = context.CHUYENBAYs.ToList().Count + 1;
+                             FlightCode = DepartureAirport.Code + LandingAirport.Code + "-" + temp.ToString();
+                         }
+                     }
+                     catch (System.Data.Entity.Core.EntityException e)
+                     {
+                         MessageBox.Show($"Exception: {e.Message}");
+                     }
+                 }
+
              }
            );
             ChooseAirport_LoadCommand = new RelayCommand<object>((p) => { return true; },
@@ -386,15 +460,15 @@ namespace FlightTicketSell.ViewModels
                               if (item.TrangThai )
                                   ChooseAirport_List.Add(new Airport() { Id = item.MaSanBay, Code = item.VietTat, Name = item.TenSanBay, Province = item.TinhThanh, Status = item.TrangThai });
                           }
-                          if (!string.IsNullOrEmpty(LandingAirport.Name) )
+                          if (LandingAirport!=null && !string.IsNullOrEmpty(LandingAirport.Name) )
                           {
                               RemoveAirportItem(ChooseAirport_List, LandingAirport);
                           }
-                          if (!string.IsNullOrEmpty(DepartureAirport.Name))
+                          if (DepartureAirport!=null &&!string.IsNullOrEmpty(DepartureAirport.Name))
                           {
                               RemoveAirportItem(ChooseAirport_List, DepartureAirport);
                           }
-                          if (List_LayoverAirport.Count>0)
+                          if (List_LayoverAirport!=null && List_LayoverAirport.Count>0)
                           {
                             foreach (var h in List_LayoverAirport)
                             {
@@ -422,19 +496,25 @@ namespace FlightTicketSell.ViewModels
                    
                 if (OpenChooseAirport=="Departure")
                 {
-                    DepartureAirport.Id = ChooseAirport_SelectedItem.Id;
-                    DepartureAirport.Name = ChooseAirport_SelectedItem.Name;
-                    DepartureAirport.Province = ChooseAirport_SelectedItem.Province;
-                    DepartureAirport.Code = ChooseAirport_SelectedItem.Code;
-                    DepartureAirport.Status = ChooseAirport_SelectedItem.Status;
+                        DepartureAirport = new Airport()
+                        {
+                            Id = ChooseAirport_SelectedItem.Id,
+                        Name = ChooseAirport_SelectedItem.Name,
+                        Province = ChooseAirport_SelectedItem.Province,
+                        Code = ChooseAirport_SelectedItem.Code,
+                        Status = ChooseAirport_SelectedItem.Status
+                    };
                 }
                 if (OpenChooseAirport=="Landing")
                 {
-                    LandingAirport.Id = ChooseAirport_SelectedItem.Id;
-                    LandingAirport.Name = ChooseAirport_SelectedItem.Name;
-                    LandingAirport.Province = ChooseAirport_SelectedItem.Province;
-                    LandingAirport.Code = ChooseAirport_SelectedItem.Code;
-                    LandingAirport.Status = ChooseAirport_SelectedItem.Status;
+                    LandingAirport = new Airport()
+                    {
+                        Id = ChooseAirport_SelectedItem.Id,
+                        Name = ChooseAirport_SelectedItem.Name,
+                        Province = ChooseAirport_SelectedItem.Province,
+                        Code = ChooseAirport_SelectedItem.Code,
+                        Status = ChooseAirport_SelectedItem.Status
+                    };
                 }
                 // Close dialog
                 DialogHost.CloseDialogCommand.Execute(null, null);
@@ -446,10 +526,137 @@ namespace FlightTicketSell.ViewModels
                  // Close dialog
                  DialogHost.CloseDialogCommand.Execute(null, null);
              });
-                 #endregion
+            FormatStringToMoney = new RelayCommand<object>((p) => { return true; },
+             (p) =>
+             {
+                 if (double.TryParse(Airfares, out double value))
+                     Airfares = string.Format("{0:0,0}", value);
+                 else
+                     Airfares = string.Empty;
+             });
+            FormatMoneyToString = new RelayCommand<object>((p) => { return true; },
+             (p) =>
+             {
+                 if (string.IsNullOrEmpty(Airfares))
+                     return;
+                 Airfares= Regex.Replace(Airfares, @"[^a-zA-Z0-9]", string.Empty);
+             });
+            ScheduleAFlight_Command = new RelayCommand<object>((p) => { return true; },
+             (p) =>
+             {
+                 if (DepartureAirport == null || LandingAirport == null || string.IsNullOrEmpty(DepartureAirport.Name)||string.IsNullOrEmpty(LandingAirport.Name))
+                 {
+                     MessageBox.Show("Vui lòng chọn đủ sân bay đi và sân bay đến!", "Cảnh báo");
+                     return;
+                 }
+                 if (string.IsNullOrEmpty(Airfares))
+                 {
+                     MessageBox.Show("Vui lòng nhập giá vé!", "Cảnh báo");
+                     return;
+                 }
+                 if (string.IsNullOrEmpty(FlightTime))
+                 {
+                     MessageBox.Show("Vui lòng nhập thời gian bay!", "Cảnh báo");
+                     return;
+                 }
+                 if (DateFlight==null)
+                 {
+                     MessageBox.Show("Vui lòng chọn ngày bay!", "Cảnh báo");
+                     return;
+                 }
+                 if (TimeFlight == null)
+                 {
+                     MessageBox.Show("Vui lòng chọn giờ bay!", "Cảnh báo");
+                     return;
+                 }
+                 if(List_TicketClass==null|| List_TicketClass.Count<1)
+                 {
+                     MessageBox.Show("Vui lòng chọn ít nhất một hạng vé!", "Cảnh báo");
+                     return;
+                 }
 
-                 #region LayoverAirport
-                 Open_Window_EnterLayoverAirport_Command = new RelayCommand<object>((p) => { return true; },
+                 try
+                 {
+                     using (var context = new FlightTicketSellEntities())
+                     {
+                         //Thêm đường bay nếu chưa có sẵn
+                         int thoigianbay = int.Parse(FlightTime);
+                         DUONGBAY dUONGBAY = context.DUONGBAYs.Where
+                         (
+                             h => h.MaSanBayDi == DepartureAirport.Id
+                             && h.MaSanBayDen == LandingAirport.Id
+                             && h.ThoiGianBay == thoigianbay
+                         ).ToList().FirstOrDefault();
+                         if (dUONGBAY == null)
+                         {
+                             dUONGBAY = new DUONGBAY()
+                             {
+                                 MaSanBayDi = DepartureAirport.Id,
+                                 MaSanBayDen = LandingAirport.Id,
+                                 ThoiGianBay = int.Parse(FlightTime)
+                             };
+                             context.DUONGBAYs.Add(dUONGBAY);
+                             context.SaveChanges();
+                             dUONGBAY = context.DUONGBAYs.ToList().LastOrDefault();
+                         }
+
+                         //Thêm các sân bay trung gian nếu có
+                         if (List_LayoverAirport!=null && List_LayoverAirport.Count>0)
+                         {
+                             foreach (var item in List_LayoverAirport)
+                             {
+                                 SANBAYTG sANBAYTG = new SANBAYTG()
+                                 {
+                                     MaDuongBay=dUONGBAY.MaDuongBay,
+                                     MaSanBay=item.Id_Airport,
+                                     ThuTu=item.Order,
+                                     ThoiGianDung=item.StopTime,
+                                     GhiChu=item.Note
+                                 };
+                                 context.SANBAYTGs.Add(sANBAYTG);
+                             }
+                             context.SaveChanges();
+                         }
+
+                         //Thêm chuyến bay
+                         CHUYENBAY cHUYENBAY = new CHUYENBAY()
+                         {
+                             MaDuongBay = dUONGBAY.MaDuongBay,
+                             GiaVe=int.Parse(Regex.Replace(Airfares, @"[^a-zA-Z0-9]", string.Empty)),
+                             NgayGio=new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day,TimeFlight.Hour,TimeFlight.Minute,TimeFlight.Second),
+                             DaKhoiHanh=false
+                         };
+                         context.CHUYENBAYs.Add(cHUYENBAY);
+                         context.SaveChanges();
+                         cHUYENBAY = context.CHUYENBAYs.ToList().LastOrDefault();
+
+                         //Thêm hạng vé cho chuyến bay
+                         foreach (var item in List_TicketClass)
+                         {
+                             CHITIETHANGVE cHITIETHANGVE = new CHITIETHANGVE()
+                             {
+                                 MaHangVe=item.Id_TicketClass,
+                                 MaChuyenBay=cHUYENBAY.MaChuyenBay,
+                                 SoGhe=item.Seats
+                             };
+                             context.CHITIETHANGVEs.Add(cHITIETHANGVE);
+                         }
+
+                         context.SaveChanges();
+                         MessageBox.Show("Thêm chuyến bay thành công!", "Cảnh báo");
+                         LoadCommand.Execute(null);
+                     }
+                 }
+                 catch (System.Data.Entity.Core.EntityException e)
+                 {
+                     MessageBox.Show($"Exception: {e.Message}");
+                 }
+
+             });
+            #endregion
+
+            #region LayoverAirport
+            Open_Window_EnterLayoverAirport_Command = new RelayCommand<object>((p) => { return true; },
              async (p) =>
                {
                    LayoverAirport_StopTime = null;
@@ -645,7 +852,8 @@ namespace FlightTicketSell.ViewModels
 
                                }).Where(k => k.Status != false).ToList()
                            );
-
+                           if (List_TicketClass == null)
+                               List_TicketClass = new ObservableCollection<TicketClassDetail>();
                            if (List_TicketClass.Count>0)
                            {
                                foreach (var item in List_TicketClass)

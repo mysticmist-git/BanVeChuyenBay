@@ -248,10 +248,10 @@
     <Compile Include="Views\BookViewRelated\CustomerInfoDialog.xaml.cs">
       <DependentUpon>CustomerInfoDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ChooseAirportView.xaml.cs">
+    <Compile Include="Views\ScheduleViewRelated\ChooseAirportView.xaml.cs">
       <DependentUpon>ChooseAirportView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EditEnteredTicketClassView.xaml.cs">
+    <Compile Include="Views\ScheduleViewRelated\EditEnteredTicketClassView.xaml.cs">
       <DependentUpon>EditEnteredTicketClassView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ScheduleViewRelated\EditLayoverAirportView.xaml.cs">
@@ -369,11 +369,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ChooseAirportView.xaml">
+    <Page Include="Views\ScheduleViewRelated\ChooseAirportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\EditEnteredTicketClassView.xaml">
+    <Page Include="Views\ScheduleViewRelated\EditEnteredTicketClassView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

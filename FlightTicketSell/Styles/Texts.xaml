@@ -39,10 +39,6 @@
         <Setter Property="FontFamily" Value="{StaticResource Roboto}" />
         <Setter Property="FontSize" Value="{StaticResource Small}"/>
         <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="materialDesign:TextFieldAssist.UnderlineBrush" Value="{StaticResource BlueBrush}"/>
-        <Setter Property="materialDesign:HintAssist.Foreground" Value="{StaticResource BlueBrush}"/>
-        <Setter Property="CaretBrush" Value="{StaticResource BlueBrush}"/>
-
     </Style>
 
     <!--GridViewColumn.Header-->
