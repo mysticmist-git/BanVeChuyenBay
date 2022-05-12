@@ -95,6 +95,7 @@
                             </StackPanel>
 
                             <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock FontWeight="Bold">Sân bay đi</TextBlock>
                                 <TextBox Text="{Binding FlightInfo.SanBayDi, Mode=OneWay}" />
 
                             </StackPanel>
