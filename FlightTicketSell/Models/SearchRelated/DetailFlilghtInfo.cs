@@ -27,7 +27,24 @@ namespace FlightTicketSell.Models.SearchRelated
         /// <summary>
         /// Copy constructor
         /// </summary>
-        public DetailFlilghtInfo(FlightInfo f) : base(f) { }
+        public DetailFlilghtInfo(FlightInfo flight)
+        {
+            // Copy information
+            MaChuyenBay = flight.MaChuyenBay;
+            MaSanBayDi = flight.MaSanBayDi;
+            MaSanBayDen = flight.MaSanBayDen;
+            SanBayDi = flight.SanBayDi;
+            SanBayDen = flight.SanBayDen;
+            SanBayDiVietTat = flight.SanBayDiVietTat;
+            SanBayDenVietTat = flight.SanBayDenVietTat;
+            NgayGio = flight.NgayGio;
+            SoDiemDung = flight.SoDiemDung;
+            SoHangVe = flight.SoHangVe;
+            SoHangVe = flight.SoHangVe;
+            GiaVe = flight.GiaVe;
+            GheTrong = flight.GheTrong;
+            DaKhoiHanh = flight.DaKhoiHanh;
+        }
 
         /// <summary>
         /// Default constructor

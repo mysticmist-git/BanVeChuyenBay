@@ -143,6 +143,9 @@
     <Compile Include="Models\Enums\Search\CustomerDetailType.cs" />
     <Compile Include="Models\Enums\Report\ReportType.cs" />
     <Compile Include="Models\Enums\Search\BookingState.cs" />
+    <Compile Include="Models\GetFlightData_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Model.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -150,9 +153,6 @@
     </Compile>
     <Compile Include="Models\Report\FlightReport.cs" />
     <Compile Include="Models\GetBookedCustomers_Result.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GetFlightData_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HANGVE.cs">
@@ -187,7 +187,9 @@
     <Compile Include="ValidateRules\StringNotEmptyRule.cs" />
     <Compile Include="ValueConverters\Book\CustomerNameDisplayConverter.cs" />
     <Compile Include="ValueConverters\Report\ReportTypeConverter.cs" />
+    <Compile Include="ValueConverters\Search\FlightStateToColorConverter.cs" />
     <Compile Include="ValueConverters\Search\BookingStateToColorConverter.cs" />
+    <Compile Include="ValueConverters\Search\FlightStateToStringConverter.cs" />
     <Compile Include="ValueConverters\Search\BookingStateToStringConverter.cs" />
     <Compile Include="ValueConverters\Application\ViewToInterfaceConverter.cs" />
     <Compile Include="ViewModels\Schedule\LayoverAirport.cs" />
@@ -281,7 +283,7 @@
     <Compile Include="Views\SearchViewRelated\FlightTicketAndReservation.xaml.cs">
       <DependentUpon>FlightTicketAndReservation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SellViewRelated\ChangeTicketView.xaml.cs">
+    <Compile Include="Views\BookViewRelated\ChangeTicketView.xaml.cs">
       <DependentUpon>ChangeTicketView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SellViewRelated\TicketInfoFillingView.xaml.cs">
@@ -303,7 +305,7 @@
     <Compile Include="Views\ReportViewRelated\ReportView.xaml.cs">
       <DependentUpon>ReportView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ScheduleView.xaml.cs">
+    <Compile Include="Views\ScheduleViewRelated\ScheduleView.xaml.cs">
       <DependentUpon>ScheduleView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SearchViewRelated\SearchView.xaml.cs">
@@ -312,7 +314,7 @@
     <Compile Include="Views\SellViewRelated\SellView.xaml.cs">
       <DependentUpon>SellView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingView.xaml.cs">
+    <Compile Include="Views\SettingViewRelated\SettingView.xaml.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SellViewRelated\SellPayView.cs">
@@ -413,7 +415,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SellViewRelated\ChangeTicketView.xaml">
+    <Page Include="Views\BookViewRelated\ChangeTicketView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -441,7 +443,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ScheduleView.xaml">
+    <Page Include="Views\ScheduleViewRelated\ScheduleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -453,7 +455,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingView.xaml">
+    <Page Include="Views\SettingViewRelated\SettingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

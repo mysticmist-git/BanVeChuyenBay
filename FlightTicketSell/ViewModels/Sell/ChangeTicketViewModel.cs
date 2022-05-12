@@ -31,7 +31,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The command to continue
         /// </summary>
-        public ICommand PrintTicketCommand { get; set; }
+        public ICommand ChangeForTicketCommand { get; set; }
 
         /// <summary>
         /// The command to cancel current booking
@@ -116,6 +116,26 @@ namespace FlightTicketSell.ViewModels
                         Customers = new ObservableCollection<Customer>();
                         for (int i = 1; i <= result.Count(); i++)
                             Customers.Add(new Customer(result.ElementAt(i - 1)) { Index = i });
+                    }
+                    catch (EntityException)
+                    {
+                        // TODO: messagebox vo
+                        return;
+                    }
+                }
+            });
+
+            CancelTicketCommand = new RelayCommand<object>(p => true, async p =>
+            {
+                using (var context = new FlightTicketSellEntities())
+                {
+                    try
+                    {
+                        var datCho = await context.DATCHOes
+                            .Where(dc => dc.MaDatCho == BookingInfo.MaDatCho)
+                            .FirstOrDefaultAsync();
+
+                        datCho.TrangThai = ""
                     }
                     catch (EntityException)
                     {

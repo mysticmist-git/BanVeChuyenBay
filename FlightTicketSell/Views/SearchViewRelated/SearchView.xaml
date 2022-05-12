@@ -21,10 +21,6 @@
 
 
     <Grid Background="{StaticResource LightGrayBrush}">
-        <Border Height="90" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" >
-
-
-        </Border>
         <Grid Margin="50,20,50,20">
 
             <Grid.RowDefinitions>
@@ -50,77 +46,82 @@
                     <Border Grid.Column="1"
                             Background="White"
                             CornerRadius="8"
-                            Padding="40 10"
+                            Padding="20"
                             Style="{StaticResource DropShadow}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="6*"/>
-                                <ColumnDefinition Width="341*"/>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="5*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="4*"></RowDefinition>
-
-                                <RowDefinition Height="10*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="3*"></RowDefinition>
                             </Grid.RowDefinitions>
 
                             <!--Header-->
-                            <TextBlock Margin="21,0,0,0" Grid.Row="0" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Column="2" >Tiêu chuẩn tra cứu</TextBlock>
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="0" Grid.ColumnSpan="6"
+                                       VerticalAlignment="Bottom" 
+                                       FontFamily="{StaticResource RobotoBlack}" 
+                                       FontSize="{StaticResource Small}"
+                                       >Tiêu chuẩn tra cứu</TextBlock>
 
-                            <!--Sân bay đi và sân bay đến-->
-                            <Grid Background="#fff" Grid.ColumnSpan="3" Margin="0,23,0,0" Grid.RowSpan="2" >
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="6*"></ColumnDefinition>
-                                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                                    <ColumnDefinition Width="6*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <ComboBox
-                                    Grid.Column="0"
-                                    materialDesign:HintAssist.Hint="Sân bay đi"
-                                    Margin="10,0,0,0"
-                                    ItemsSource="{Binding Airports}"
-                                    DisplayMemberPath="Name"
-                                    SelectedItem="{Binding SanBayDii, Mode=OneWayToSource}"
-                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                    IsEnabled="{Binding IsLoadFinished}"
-                                    >
-                                    <!-- Command -->
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding ParamsChangedCommand}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </ComboBox>
-                                <!--Nút chuyển giữa sân bay đi và sân bay đến-->
-                                <Button  Grid.Column="1" Grid.ColumnSpan="2" Padding="0" Width="22" Height="22" Margin="0" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                             Command="{Binding Change_Departure_Landing_Airport_Command}">
-                                    <Button.Content>
-                                        <materialDesign:PackIcon Kind="MenuSwap" Margin="0"  Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" RenderTransformOrigin="0.5,0.5" >
-                                            <materialDesign:PackIcon.RenderTransform>
-                                                <RotateTransform Angle="90"/>
-                                            </materialDesign:PackIcon.RenderTransform>
-                                        </materialDesign:PackIcon>
-                                    </Button.Content>
-                                </Button>
+                            <!--Sân bay đi -->
+                            <ComboBox Grid.Column="0" Grid.Row="1"
+                                      materialDesign:HintAssist.Hint="Sân bay đi"
+                                      Margin="10,0,0,0"
+                                      ItemsSource="{Binding Airports}"
+                                      DisplayMemberPath="Name"
+                                      SelectedItem="{Binding SanBayDii, Mode=OneWayToSource}"
+                                      Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                      IsEnabled="{Binding IsLoadFinished}">
+                                <!-- Command -->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding ParamsChangedCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
 
-                                <ComboBox
-                                    Grid.Column="3"
-                                    materialDesign:HintAssist.Hint="Sân bay đến"
-                                    Margin="10,0,10,0"
-                                    ItemsSource="{Binding Airports}"
-                                    DisplayMemberPath="Name"
-                                    SelectedItem="{Binding SanBayDenn, Mode=OneWayToSource}"
-                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                    IsEnabled="{Binding IsLoadFinished}">
-                                    <!-- Command -->
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding ParamsChangedCommand}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </ComboBox>
-                            </Grid>
+                            <!--Nút chuyển giữa sân bay đi và sân bay đến-->
+                            <Button  Grid.Column="1" Grid.Row="1"
+                                     Padding="0"
+                                     Width="22" 
+                                     Height="22" 
+                                     Margin="0" 
+                                     Background="{StaticResource LightBlueBrush}"
+                                     BorderThickness="0,0,0,0"
+                                     VerticalAlignment="Center" 
+                                     HorizontalAlignment="Center" 
+                                     Command="{Binding Change_Departure_Landing_Airport_Command}">
+                                <Button.Content>
+                                    <materialDesign:PackIcon Kind="MenuSwap" Margin="0"  Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" RenderTransformOrigin="0.5,0.5" >
+                                        <materialDesign:PackIcon.RenderTransform>
+                                            <RotateTransform Angle="90"/>
+                                        </materialDesign:PackIcon.RenderTransform>
+                                    </materialDesign:PackIcon>
+                                </Button.Content>
+                            </Button>
+
+                            <!-- Sân bay đi -->
+                            <ComboBox
+                                Grid.Column="2"
+                                Grid.Row="1"
+                                materialDesign:HintAssist.Hint="Sân bay đến"
+                                Margin="10,0,10,0"
+                                ItemsSource="{Binding Airports}"
+                                DisplayMemberPath="Name"
+                                SelectedItem="{Binding SanBayDenn, Mode=OneWayToSource}"
+                                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                IsEnabled="{Binding IsLoadFinished}">
+                                <!-- Command -->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding ParamsChangedCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
                         </Grid>
                     </Border>
 
@@ -154,8 +155,71 @@
                     Background="White"
                     Padding="30 15"
                     Style="{StaticResource DropShadow}">
-                <DataGrid
-                    ItemsSource="{Binding Flights}"
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    
+
+                    <!-- Table name  -->
+                    <Grid Grid.Row="0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Table name -->
+                        <TextBlock Grid.Column="0" Grid.ColumnSpan="6"
+                               Text="Bảng các chuyến bay"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="25"
+                               FontWeight="Bold"
+                               />
+
+                        <!-- Display flight departed button -->
+                        <StackPanel Grid.Column="6" VerticalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock Text="Hiện đã cất cánh"
+                                       FontSize="{StaticResource Small}"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center" />
+
+                            <ToggleButton IsChecked="{Binding IsDisplayDeparted}" Margin="10 0 0 0">
+                                <ToggleButton.Style>
+                                    <Style TargetType="{x:Type ToggleButton}"
+                                       BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="ToolTip" Value="Hiển thị chuyến bay đã cất cánh" />
+                                            </Trigger>
+
+                                            <Trigger Property="IsChecked" Value="False">
+                                                <Setter Property="ToolTip" Value="Chỉ hiển thị chuyến bay chưa cất cánh" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ToggleButton.Style>
+                            </ToggleButton>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Flight table-->
+                    <DataGrid Grid.Row="1" Grid.RowSpan="7"
+                    ItemsSource="{Binding ProcessedFlights}"
                     d:ItemsSource="{d:SampleData ItemCount=5}"
                     Background="Transparent"
                     ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
@@ -168,70 +232,81 @@
                     materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                     materialDesign:DataGridAssist.ColumnHeaderPadding="8">
 
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Loaded">
-                            <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                    <DataGrid.Columns>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Loaded">
+                                <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.Columns>
 
-                        <DataGridTemplateColumn Header="Mã chuyến bay" Width="200">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        
-                                        <!-- Flight code -->
-                                        <TextBlock Grid.Column="0"
+                            <DataGridTemplateColumn Header="Mã chuyến bay" Width="200">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Flight code -->
+                                            <TextBlock Grid.Column="0"
                                                    Text="{Binding DisplayFlightCode}"
                                                    VerticalAlignment="Center"
                                                    HorizontalAlignment="Left"/>
-                                        
-                                        <!-- Detail button -->
-                                        <Button Content="Chi tiết"
+
+                                            <!-- Detail button -->
+                                            <Button Content="Chi tiết"
                                                 Grid.Column="1"
                                                 Style="{StaticResource FlightDetailButton}"
                                                 Command="{Binding Open_Window_DescriptionTicketFlight_Command}"
                                                 />
-                                    </Grid>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
 
-                        <!--<DataGridTextColumn
+                            <!--<DataGridTextColumn
                             Width="100"
                             Binding="{Binding MaChuyenBay}"
                             Header="Mã chuyến bay"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />-->
 
-                        <materialDesign:DataGridTextColumn
+                            <materialDesign:DataGridTextColumn
                             Binding="{Binding SanBayDi}"
                             Header="Sân bay đi" />
-                        <!-- set a max length to get an indicator in the editor -->
-                        <materialDesign:DataGridTextColumn
+                            <!-- set a max length to get an indicator in the editor -->
+                            <materialDesign:DataGridTextColumn
                             Width="100"
                             Binding="{Binding SanBayDen}"
                             Header="Sân bay đến" />
-                        <materialDesign:DataGridTextColumn
+                            <materialDesign:DataGridTextColumn
                             Binding="{Binding DisplayDepartDate}"
                             Header="Khởi hành" />
-                        <materialDesign:DataGridTextColumn
+                            <materialDesign:DataGridTextColumn
                             Binding="{Binding SoDiemDung}"
                             Header="Số điểm dừng" />
-                        <materialDesign:DataGridTextColumn
+                            <materialDesign:DataGridTextColumn
                             Binding="{Binding SoHangVe}"
                             Header="Số hạng vé" />
-                        <materialDesign:DataGridTextColumn
+                            <materialDesign:DataGridTextColumn
                             Binding="{Binding DisplayPrice}"
                             Header="Giá cơ bản" />
-                        <materialDesign:DataGridTextColumn
+                            <materialDesign:DataGridTextColumn
                             Binding="{Binding GheTrong}"
                             Header="Ghế trống" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                            <DataGridTemplateColumn Header="Trạng thái">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding DaKhoiHanh, Converter={valueConverters:FlightStateToStringConverter}}"
+                                                   Foreground="{Binding DaKhoiHanh,Converter={valueConverters:FlightStateToColorConverter}}"
+                                                   FontWeight="Bold"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </Border>
         </Grid>
     </Grid>

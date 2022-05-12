@@ -27,14 +27,14 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="5*"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
             <!-- Return button -->
@@ -91,27 +91,30 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Mã chuyến bay</TextBlock>
-                                <TextBox Text="{Binding FlightInfo.DisplayFlightCode , Mode=OneWay}"/>
+                                <TextBox Text="{Binding FlightInfo.DisplayFlightCode,Mode=OneWay}" />
                             </StackPanel>
 
                             <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock FontWeight="Bold">Sân bay đi</TextBlock>
-                                <TextBox Text="{Binding FlightInfo.SanBayDi , Mode=OneWay}"/>
+                                <TextBox Text="{Binding FlightInfo.SanBayDi, Mode=OneWay}" />
+
                             </StackPanel>
 
                             <StackPanel Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Sân bay đến</TextBlock>
-                                <TextBox Text="{Binding FlightInfo.SanBayDen , Mode=OneWay}"/>
+                                <TextBox Text="{Binding FlightInfo.SanBayDen, Mode=OneWay}" />
+
                             </StackPanel>
 
                             <StackPanel Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Ngày giờ bay</TextBlock>
-                                <TextBox Text="{Binding FlightInfo.DisplayDepartDate , Mode=OneWay}"/>
+                                <TextBox Text="{Binding FlightInfo.DisplayDepartDate, Mode=OneWay}" />
+
                             </StackPanel>
 
                             <StackPanel Grid.Column="9" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock FontWeight="Bold">Số điểm dừng</TextBlock>
-                                <TextBox Text="{Binding FlightInfo.SoDiemDung , Mode=OneWay}"/>
+                                <TextBox Text="{Binding FlightInfo.SoDiemDung, Mode=OneWay}" />
+
                             </StackPanel>
                         </Grid>
                     </Grid>

@@ -394,6 +394,7 @@
                                                     <TextBlock Grid.Column="0"
                                                                Text="{Binding BookingState, Mode=OneWay, Converter={valueConverters:BookingStateToStringConverter}}"
                                                                Foreground="{Binding BookingState, Mode=OneWay, Converter={valueConverters:BookingStateToColorConverter}}"
+                                                               FontWeight="Bold"
                                                                VerticalAlignment="Center"
                                                                HorizontalAlignment="Left"/>
 
