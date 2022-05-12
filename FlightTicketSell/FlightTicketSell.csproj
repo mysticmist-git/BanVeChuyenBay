@@ -192,10 +192,11 @@
     <Compile Include="ValueConverters\Search\FlightStateToStringConverter.cs" />
     <Compile Include="ValueConverters\Search\BookingStateToStringConverter.cs" />
     <Compile Include="ValueConverters\Application\ViewToInterfaceConverter.cs" />
+    <Compile Include="ViewModels\Book\BookPayViewModel.cs" />
     <Compile Include="ViewModels\Schedule\LayoverAirport.cs" />
     <Compile Include="ViewModels\Schedule\TicketClassDetail.cs" />
     <Compile Include="ViewModels\Search\CustomersDetailViewModel.cs" />
-    <Compile Include="ViewModels\Search\FlightInfo.cs" />
+    <Compile Include="Models\SearchRelated\FlightInfo.cs" />
     <Compile Include="Models\THAMSO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -211,36 +212,35 @@
     <Compile Include="ValueConverters\StringFlightTimeToIntFlightTimeConverter.cs" />
     <Compile Include="ValueConverters\StringToIntConverter.cs" />
     <Compile Include="ValueConverters\TimePickerUI_To_TimePickerConverter.cs" />
-    <Compile Include="ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Book\Customer.cs" />
     <Compile Include="Models\SearchRelated\Airport_Search.cs" />
-    <Compile Include="ViewModels\Search\PlaceReservation.cs" />
+    <Compile Include="ViewModels\Search\BookSearchVariant.cs" />
     <Compile Include="ViewModels\Search\FlightDetailViewModel.cs" />
     <Compile Include="Models\SearchRelated\OverlayAirport_Search.cs" />
-    <Compile Include="ViewModels\Search\FlightTicketAndReservationViewModel.cs" />
+    <Compile Include="ViewModels\Search\FlightTicketAndBookViewModel.cs" />
     <Compile Include="Models\SearchRelated\TicketTier.cs" />
     <Compile Include="ViewModels\Search\Ticket.cs" />
-    <Compile Include="ViewModels\Sell\ChangeTicketViewModel.cs" />
+    <Compile Include="ViewModels\Book\ChangeTicketViewModel.cs" />
     <Compile Include="ViewModels\Book\BookDetailViewModel.cs" />
     <Compile Include="ViewModels\Book\BookViewModel.cs" />
-    <Compile Include="ViewModels\NavigationBarViewModel.cs" />
+    <Compile Include="ViewModels\Application\NavigationBarViewModel.cs" />
     <Compile Include="ViewModels\Report\ReportViewModel.cs" />
     <Compile Include="ViewModels\Report\ReportPrintViewModel.cs" />
-    <Compile Include="ViewModels\Book\BookPayViewModel.cs" />
-    <Compile Include="ViewModels\ScheduleViewModel.cs" />
-    <Compile Include="ViewModels\SearchViewModel.cs" />
+    <Compile Include="ViewModels\Schedule\ScheduleViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchViewModel.cs" />
     <Compile Include="ViewModels\Sell\CustomerExistedViewModel.cs" />
     <Compile Include="ViewModels\Sell\Locations_List.cs" />
     <Compile Include="ViewModels\Sell\SellPayViewModel.cs" />
     <Compile Include="ViewModels\Sell\SellViewModel.cs" />
     <Compile Include="ViewModels\Sell\TicketClass.cs" />
-    <Compile Include="ViewModels\SettingViewModel.cs" />
+    <Compile Include="ViewModels\Setting\SettingViewModel.cs" />
     <Compile Include="ViewModels\Setting\Airport.cs" />
     <Compile Include="ViewModels\Setting\TicketClass.cs" />
     <Compile Include="ViewModels\Sell\TicketInfoFillingViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="ViewModels\Application\ViewModelLocator.cs" />
     <Compile Include="Views\BookViewRelated\BookDetailView.xaml.cs">
       <DependentUpon>BookDetailView.xaml</DependentUpon>
     </Compile>
@@ -253,7 +253,7 @@
     <Compile Include="Views\ChooseAirportView.xaml.cs">
       <DependentUpon>ChooseAirportView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EditEnteredTicketClassView.xaml.cs">
+    <Compile Include="Views\ScheduleViewRelated\EditEnteredTicketClassView.xaml.cs">
       <DependentUpon>EditEnteredTicketClassView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ScheduleViewRelated\EditLayoverAirportView.xaml.cs">
@@ -280,7 +280,7 @@
     <Compile Include="Views\SearchViewRelated\FlightDetail.xaml.cs">
       <DependentUpon>FlightDetail.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SearchViewRelated\FlightTicketAndReservation.xaml.cs">
+    <Compile Include="Views\SearchViewRelated\FlightTicketAndBookView.cs">
       <DependentUpon>FlightTicketAndReservation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BookViewRelated\ChangeTicketView.xaml.cs">
@@ -375,9 +375,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\EditEnteredTicketClassView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\ScheduleViewRelated\EditEnteredTicketClassView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ScheduleViewRelated\EditLayoverAirportView.xaml">
       <SubType>Designer</SubType>

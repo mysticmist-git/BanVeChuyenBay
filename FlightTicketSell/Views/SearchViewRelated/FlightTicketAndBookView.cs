@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FlightTicketSell.Views.SearchViewMore
+namespace FlightTicketSell.Views
 {
     /// <summary>
     /// Interaction logic for TicketSoldBooked.xaml
     /// </summary>
-    public partial class TicketSoldBooked : UserControl
+    public partial class FlightTicketAndBookView : UserControl
     {
-        public TicketSoldBooked()
+        public FlightTicketAndBookView()
         {
             InitializeComponent();
         }

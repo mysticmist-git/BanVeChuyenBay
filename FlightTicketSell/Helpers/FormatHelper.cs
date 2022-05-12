@@ -17,7 +17,7 @@ namespace FlightTicketSell.Helpers
         /// </summary>
         /// <param name="money">The money needed to be converted</param>
         /// <returns></returns>
-        public static string VietnamCurrencyFormat(decimal money) => string.Format(new CultureInfo("vi-VN"), "{0:#,##0.00}", money);
+        public static string VietnamCurrencyFormat(decimal money) => string.Format(new CultureInfo("vi-VN"), "{0:#,##0}", money);
 
         /// <summary>
         /// Convert decimal to percent

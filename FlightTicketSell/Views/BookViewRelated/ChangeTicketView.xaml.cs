@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FlightTicketSell.Views.BookRelated
+namespace FlightTicketSell.Views
 {
     /// <summary>
     /// Interaction logic for ChangeTicketView.xaml

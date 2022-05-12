@@ -6,6 +6,7 @@ using System.Linq;
 using System.Data.Entity;
 using System.Collections.ObjectModel;
 using FlightTicketSell.Models.SearchRelated;
+using System.Windows;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -47,7 +48,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The display deadline for canceling the booking
         /// </summary>
-        public string DisplayCancelDeadline { get => HanChotHuyVe.ToString("HH:mm dd/mm/yyyy", new System.Globalization.CultureInfo("vi-VN")); }
+        public string DisplayCancelDeadline { get => HanChotHuyVe.ToString("HH:mm dd/MM/yyyy", new System.Globalization.CultureInfo("vi-VN")); }
 
         public Book BookInfo { get => IoC.IoC.Get<BookDetailViewModel>().BookInfo; }
 
@@ -67,10 +68,9 @@ namespace FlightTicketSell.ViewModels
                         var thoiGianHuyDatVe = await context.THAMSOes.Where(ts => ts.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefaultAsync();
                         _cancelDays = thoiGianHuyDatVe.GiaTri;
                     }
-                    catch (EntityException)
+                    catch (EntityException e)
                     {
-                        // TODO: messagebox vo
-                        return;
+                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             });
@@ -144,12 +144,9 @@ namespace FlightTicketSell.ViewModels
                             await context.SaveChangesAsync();
                         }
                     }
-
-
-                    catch (EntityException)
+                    catch (EntityException e)
                     {
-                        // TODO: messagebox vo
-                        return;
+                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             });

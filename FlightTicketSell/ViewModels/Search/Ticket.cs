@@ -2,9 +2,9 @@
 using System.Windows.Input;
 using FlightTicketSell.Views.Helper;
 using System.Globalization;
-using FlightTicketSell.Views.SearchViewMore;
 using FlightTicketSell.ViewModels;
 using FlightTicketSell.Helpers;
+using FlightTicketSell.Views;
 
 namespace FlightTicketSell.ViewModels.Search
 {
@@ -35,7 +35,7 @@ namespace FlightTicketSell.ViewModels.Search
         /// <summary>
         /// The display pay date
         /// </summary>
-        public string DisplayPayDate { get => NgayThanhToan.ToString("HH:mm dd/mm/yyyy", new CultureInfo("vi-VN")); }
+        public string DisplayPayDate { get => NgayThanhToan.ToString("HH:mm dd/MM/yyyy", new CultureInfo("vi-VN")); }
 
         /// <summary>
         /// Ticket price

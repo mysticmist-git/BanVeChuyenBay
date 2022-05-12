@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="FlightTicketSell.Views.SearchViewMore.TicketSoldBooked"
+﻿<UserControl x:Class="FlightTicketSell.Views.FlightTicketAndBookView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,7 +11,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1366"
              d:Background="{StaticResource LightGrayBrush}"
-             DataContext="{Binding TickedSoldBooked_Search, Source={x:Static vm:ViewModelLocator.Instance}}"
+             DataContext="{Binding FlightTicketAndBookViewModel, Source={x:Static vm:ViewModelLocator.Instance}}"
              >
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -308,7 +308,7 @@
                                   Background="Transparent"
                                   Margin="20 8 20 0"
                                   Grid.Row="1"
-                                  ItemsSource="{Binding PlaceReservations}"
+                                  ItemsSource="{Binding Books}"
                                   d:ItemsSource="{d:SampleData ItemCount=5}"
                                   ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                                   CellStyle="{StaticResource DataGridCellCenter}"
@@ -355,7 +355,7 @@
                                     <!-- set a max length to get an indicator in the editor -->
                                     <materialDesign:DataGridTextColumn IsReadOnly="True"
                                     Width="100"
-                                    Binding="{Binding SoCho}"
+                                    Binding="{Binding SoVeDat}"
                                     Header="Số chỗ"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                                     
@@ -390,7 +390,7 @@
                                                         <ColumnDefinition Width="Auto" />
                                                     </Grid.ColumnDefinitions>
 
-                                                    <!-- Flight code -->
+                                                    <!-- Trạng thái đặt chỗ -->
                                                     <TextBlock Grid.Column="0"
                                                                Text="{Binding BookingState, Mode=OneWay, Converter={valueConverters:BookingStateToStringConverter}}"
                                                                Foreground="{Binding BookingState, Mode=OneWay, Converter={valueConverters:BookingStateToColorConverter}}"

@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using FlightTicketSell.ViewModels.Setting;
 using System.Data.Entity.Core;
 using System.Windows;
-using FlightTicketSell.Views.SettingViewRelated;
 using MaterialDesignThemes.Wpf;
 
 namespace FlightTicketSell.ViewModels

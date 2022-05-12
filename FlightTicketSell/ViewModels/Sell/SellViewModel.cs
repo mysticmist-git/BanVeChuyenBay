@@ -2,7 +2,6 @@
 using FlightTicketSell.Models;
 using FlightTicketSell.ViewModels.Search;
 using FlightTicketSell.ViewModels.Sell;
-using FlightTicketSell.Views.SearchViewMore;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Linq;
@@ -85,10 +84,9 @@ namespace FlightTicketSell.ViewModels
 
 
                     }
-                    catch (EntityException)
+                    catch (EntityException e)
                     {
-                        // TODO: messagebox vo
-                        return;
+                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             });

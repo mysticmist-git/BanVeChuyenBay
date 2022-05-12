@@ -2,7 +2,6 @@
 using FlightTicketSell.Models;
 using FlightTicketSell.ViewModels.Sell;
 using FlightTicketSell.ViewModels.Search;
-using FlightTicketSell.Views.SearchViewMore;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Linq;
@@ -12,6 +11,7 @@ using System;
 using FlightTicketSell.Models.SearchRelated;
 using System.Data.Entity;
 using System.Globalization;
+using FlightTicketSell.Models.Enums;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -68,17 +68,17 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Stores booking information
         /// </summary>
-        public PlaceReservation BookingInfo { get; set; }
+        public BookSearchVariant BookingInfo { get; set; }
 
         /// <summary>
         /// The deadline for canceling the booking
         /// </summary>
-        public DateTime HanChotHuyVe { get => FlightInfo.NgayGio.AddDays(_cancelDays); }
+        public DateTime HanChotHuyVe { get => FlightInfo.NgayGio.AddDays(-_cancelDays); }
 
         /// <summary>
         /// The display deadline for canceling the booking
         /// </summary>
-        public string DisplayCancelDeadline { get => HanChotHuyVe.ToString("HH:mm dd/mm/yyyy", new CultureInfo("vi-VN")); }
+        public string DisplayCancelDeadline { get => HanChotHuyVe.ToString("HH:mm dd/MM/yyyy", new CultureInfo("vi-VN")); }
 
         #region Constructor
 
@@ -103,6 +103,7 @@ namespace FlightTicketSell.ViewModels
                     {
                         // Get deadline to cancel the booking
                         _cancelDays = context.THAMSOes.Where(ts => ts.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri;
+                        OnPropertyChanged(nameof(DisplayCancelDeadline));
 
                         // Get KHACHAHNG
                         var result = await context.DATCHOes
@@ -117,10 +118,9 @@ namespace FlightTicketSell.ViewModels
                         for (int i = 1; i <= result.Count(); i++)
                             Customers.Add(new Customer(result.ElementAt(i - 1)) { Index = i });
                     }
-                    catch (EntityException)
+                    catch (EntityException e)
                     {
-                        // TODO: messagebox vo
-                        return;
+                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             });
@@ -131,22 +131,45 @@ namespace FlightTicketSell.ViewModels
                 {
                     try
                     {
+                        // Update database                        
                         var datCho = await context.DATCHOes
                             .Where(dc => dc.MaDatCho == BookingInfo.MaDatCho)
                             .FirstOrDefaultAsync();
+                        
+                        datCho.TrangThai = BookingStateToString(BookingState.Cancel);
+                        await context.SaveChangesAsync();
 
-                        datCho.TrangThai = ""
+                        // Update client
+                        BookingInfo.BookingState = BookingState.Cancel;
                     }
-                    catch (EntityException)
+                    catch (EntityException e)
                     {
-                        // TODO: messagebox vo
-                        return;
+                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             });
 
         }
 
+        #endregion
+
+        #region Helpers
+
+        public string BookingStateToString(BookingState state)
+        {
+            switch (state)
+            {
+                case BookingState.NotChanged:
+                    return "ChuaDoi";
+                case BookingState.Changed:
+                    return "DaDoi";
+                case BookingState.Cancel:
+                    return "DaHuy";
+                default:
+                    return null;
+
+            }
+        }
 
         #endregion
 

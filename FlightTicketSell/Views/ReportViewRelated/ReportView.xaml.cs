@@ -1,7 +1,6 @@
 ﻿using FlightTicketSell.AttachedProperties;
 using FlightTicketSell.Interface.Report;
 using FlightTicketSell.Models.Enums;
-using FlightTicketSell.Views.ReportViewRelated;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;

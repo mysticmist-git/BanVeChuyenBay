@@ -1,6 +1,5 @@
 ﻿using FlightTicketSell.Views;
 using FlightTicketSell.Models;
-using FlightTicketSell.Views.SearchViewMore;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Linq;
@@ -12,7 +11,7 @@ using System;
 
 namespace FlightTicketSell.ViewModels
 {
-    public class FlightTicketAndReservationViewModel : BaseViewModel
+    public class FlightTicketAndBookViewModel : BaseViewModel
     {
         #region Public Properties
 
@@ -34,7 +33,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The places reserved
         /// </summary>
-        public ObservableCollection<PlaceReservation> PlaceReservations { get; set; }
+        public ObservableCollection<BookSearchVariant> Books { get; set; }
 
         /// <summary>
         /// Contains information for 
@@ -63,7 +62,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Default constructor
         /// </summary>
-        public FlightTicketAndReservationViewModel()
+        public FlightTicketAndBookViewModel()
         {
             ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightDetail);
 
@@ -88,16 +87,19 @@ namespace FlightTicketSell.ViewModels
                                                                 }).ToList()
                                                            );
 
-                        PlaceReservations = new ObservableCollection<PlaceReservation>(
+                        Books = new ObservableCollection<BookSearchVariant>(
                                                                 context.DATCHOes
                                                                 .Where(result => result.MaChuyenBay == MaChuyenBay)
-                                                                .Select(result => new PlaceReservation
+                                                                .Select(result => new BookSearchVariant
                                                                 {
                                                                     MaDatCho = result.MaDatCho,
-                                                                    TenKhachDat = context.KHACHHANGs.Where(x => x.MaKhachHang == result.MaNguoiDat).FirstOrDefault().HoTen,
-                                                                    SoCho = result.SoVeDat,
+                                                                    ThongTinNguoiDat = new Customer
+                                                                    {
+                                                                        HoTen = context.KHACHHANGs.Where(x => x.MaKhachHang == result.MaNguoiDat).FirstOrDefault().HoTen
+                                                                    },
+                                                                    SoVeDat = result.SoVeDat,
                                                                     TenHangVe = context.HANGVEs.Where(x => x.MaHangVe == result.MaHangVe).FirstOrDefault().TenHangVe,
-                                                                    NgayDatVe = result.NgayGioDat,
+                                                                    NgayGioDat = result.NgayGioDat,
                                                                     GiaTien_Ve = result.HANGVE.HeSo * result.CHUYENBAY.GiaVe,
                                                                     TrangThai = result.TrangThai
                                                                 }).ToList()

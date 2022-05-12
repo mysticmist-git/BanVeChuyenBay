@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace FlightTicketSell.Views.SettingViewRelated
+namespace FlightTicketSell.Views
 {
     /// <summary>
     /// Interaction logic for EditAirportView.xaml

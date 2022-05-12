@@ -12,7 +12,8 @@
              mc:Ignorable="d" 
              x:Uid="SV"
              d:DesignHeight="720" d:DesignWidth="1366"
-             DataContext="{Binding SearchViewModel, Source={x:Static vm:ViewModelLocator.Instance}}">
+             DataContext="{Binding SearchViewModel, Source={x:Static vm:ViewModelLocator.Instance}}"
+             d:Background="{StaticResource LightGrayBrush}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
@@ -20,7 +21,7 @@
     </i:Interaction.Triggers>
 
 
-    <Grid Background="{StaticResource LightGrayBrush}">
+    <Grid>
         <Grid Margin="50,20,50,20">
 
             <Grid.RowDefinitions>

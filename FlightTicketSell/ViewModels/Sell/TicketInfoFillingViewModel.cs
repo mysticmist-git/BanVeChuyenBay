@@ -6,10 +6,10 @@ using System.Data.Entity.Core;
 using FlightTicketSell.Models.SearchRelated;
 using System.Collections.ObjectModel;
 using FlightTicketSell.Interface;
-using FlightTicketSell.Views.SellViewRelated;
 using System.Data.Entity;
 using MaterialDesignThemes.Wpf;
 using System;
+using FlightTicketSell.Views;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -86,7 +86,6 @@ namespace FlightTicketSell.ViewModels
                 }
 
                 // Check if customer existed
-                // TODO: Implement check customer existed
                 using (var context = new FlightTicketSellEntities())
                 {
                     try
