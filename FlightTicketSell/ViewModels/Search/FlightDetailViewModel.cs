@@ -5,7 +5,6 @@ using System.Windows.Input;
 using System.Windows;
 using System.Data.Entity.Core;
 using FlightTicketSell.Models.SearchRelated;
-using FlightTicketSell.Views.SearchViewMore;
 
 namespace FlightTicketSell.ViewModels
 {

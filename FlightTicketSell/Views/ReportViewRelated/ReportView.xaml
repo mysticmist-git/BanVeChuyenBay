@@ -156,10 +156,13 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
-                            <!-- Table name  -->
-                            <TextBlock Text="Bảng báo cáo doanh thu" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Center" />
+                        <!-- Table name -->
+                        <TextBlock Text="Bảng báo cáo doanh thu" 
+                                       Grid.Row="0"
+                                       Style="{StaticResource FieldLabelText}" 
+                                       HorizontalAlignment="Center" />
 
-                            <!-- Report table -->
+                        <!-- Report table -->
                             <DataGrid x:Name="reportDataGrid"
                                   AutoGenerateColumns="False"
                                   Background="Transparent"

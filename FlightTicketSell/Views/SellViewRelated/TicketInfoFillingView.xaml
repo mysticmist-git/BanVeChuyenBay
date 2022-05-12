@@ -1,10 +1,10 @@
 ﻿<UserControl x:Name="uc"
-             x:Class="FlightTicketSell.Views.SellViewRelated.TicketInfoFillingView"
+             x:Class="FlightTicketSell.Views.TicketInfoFillingView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FlightTicketSell.Views.SellViewRelated"
+             xmlns:local="clr-namespace:FlightTicketSell.Views"
              xmlns:valueConverter="clr-namespace:FlightTicketSell.ValueConverters"
              xmlns:validationRules="clr-namespace:FlightTicketSell.ValidateRules"
              xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -44,7 +44,7 @@
             </Button>
 
             <!-- Main -->
-            <Grid>
+            <Grid Margin="50,20,50,20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
@@ -58,281 +58,318 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
                 <!-- Flight detail -->
-                <Grid Grid.Row="1" Grid.RowSpan="2" >
-
+                <Border Grid.Column="1" Grid.ColumnSpan="8"
+                    Grid.Row="0" Grid.RowSpan="2"
+                    Background="White" CornerRadius="8" Style="{StaticResource ResourceKey=DropShadow}">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <!-- Spacing -->
-                            <ColumnDefinition Width="1.5*" />
-                            <!-- Content -->
-                            <ColumnDefinition Width="7*" />
-                            <!-- Spacing -->
-                            <ColumnDefinition Width="1.5*" />
-                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"></RowDefinition>
+                            <RowDefinition Height="10*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                        </Grid.RowDefinitions>
 
-                        <!-- Content -->
-                        <Border Grid.Column="1" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
-                            <Grid>
+                        <!--Header-->
+                        <TextBlock Margin="21,0,0,0" Grid.Row="0" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Column="2" Grid.ColumnSpan="2" >Chi tiết chuyến bay</TextBlock>
 
+                        <!--Sân bay đi và sân bay đến-->
+                        <Grid Background="#fff" Margin="0,1,0,0" Grid.Row="1" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="4*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
-                                    <!-- Heading -->
-                                    <RowDefinition Height="1*" ></RowDefinition>
-                                    <!-- Flight infos -->
                                     <RowDefinition Height="3*"></RowDefinition>
+                                    <RowDefinition Height="4*"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <TextBlock Padding="20,5,0,0" FontSize="20" VerticalAlignment="Center" Grid.Row="0"  FontWeight="Bold"> Chi tiết chuyến bay</TextBlock>
 
-                                <Grid Grid.Row="1">
-
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-
-                                    <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <TextBlock FontWeight="Bold">Mã chuyến bay</TextBlock>
-                                        <TextBox  IsReadOnly="True"
-                                              Text="{Binding FlightInfo.DisplayFlightCode, Mode=OneWay}"></TextBox>
-                                    </StackPanel>
-
-                                    <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <TextBlock FontWeight="Bold">Sân bay đi</TextBlock>
-                                        <TextBox IsReadOnly="True"
-                                              Text="{Binding FlightInfo.SanBayDi, Mode=OneWay}"></TextBox>
-                                    </StackPanel>
-
-                                    <StackPanel Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <TextBlock FontWeight="Bold">Sân bay đến</TextBlock>
-                                        <TextBox  IsReadOnly="True"
-                                              Text="{Binding FlightInfo.SanBayDen, Mode=OneWay}"></TextBox>
-                                    </StackPanel>
-
-                                    <StackPanel Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <TextBlock FontWeight="Bold">Ngày giờ bay</TextBlock>
-                                        <TextBox  IsReadOnly="True"
-                                              Text="{Binding FlightInfo.NgayGio, Mode=OneWay}"></TextBox>
-                                    </StackPanel>
-
-                                    <StackPanel Grid.Column="9" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <TextBlock FontWeight="Bold">Số điểm dừng</TextBlock>
-                                        <TextBox  IsReadOnly="True"
-                                              Text="{Binding FlightInfo.SoDiemDung, Mode=OneWay}"></TextBox>
-                                    </StackPanel>
-
-                                </Grid>
-
+                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Mã chuyến bay</TextBlock>
+                                <TextBox  IsReadOnly="True"
+                                              Text="{Binding FlightInfo.DisplayFlightCode, Mode=OneWay}"
+                                              Grid.Row="1" 
+                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                              VerticalAlignment="Top">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                                            <TextBlock/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </TextBox>
                             </Grid>
-                        </Border>
 
-                    </Grid>
+                            <Grid Grid.Column="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="3*"></RowDefinition>
+                                    <RowDefinition Height="4*"></RowDefinition>
+                                </Grid.RowDefinitions>
 
+                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đi</TextBlock>
+                                <TextBox IsReadOnly="True" 
+                                             Text="{Binding FlightInfo.SanBayDi, Mode=OneWay}"
+                                             Grid.Row="1"
+                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                                             VerticalAlignment="Top">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                                            <TextBlock/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </TextBox>
+                            </Grid>
 
-                </Grid>
+                            <Grid Grid.Column="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="3*"></RowDefinition>
+                                    <RowDefinition Height="4*"></RowDefinition>
+                                </Grid.RowDefinitions>
 
-                <!-- Customer info and ticket tiers selector -->
-                <Grid Grid.Row="3" Grid.RowSpan="4" Margin="0 20 0 0">
+                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đến</TextBlock>
+                                <TextBox IsReadOnly="True" 
+                                             Text="{Binding FlightInfo.SanBayDen, Mode=OneWay}" 
+                                             Grid.Row="1" 
+                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                             VerticalAlignment="Top">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel Orientation="Horizontal"  Margin="-2 0 0 0">
+                                            <TextBlock/>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </TextBox>
+                            </Grid>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="7">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="3*"></RowDefinition>
+                                    <RowDefinition Height="4*"></RowDefinition>
+                                </Grid.RowDefinitions>
 
-                    <!-- Customer info -->
-                    <Grid Grid.Column="1" Grid.ColumnSpan="7">
-                        <Grid>
-                            <!-- Content -->
-                            <Border Padding="20"  Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
-                                <Grid>
+                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Ngày giờ bay</TextBlock>
+                                <Grid Grid.Row="1">
+                                    <TextBox IsReadOnly="True" 
+                                                 Text="{Binding FlightInfo.NgayGio, Mode=OneWay}"
+                                                 Grid.Row="1"
+                                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                                                 VerticalAlignment="Top">
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel Orientation="Horizontal"  Margin="-2 0 0 0">
+                                                <TextBlock/>
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+                                    </TextBox>
+                                </Grid>
+                            </Grid>
+
+                            <Grid Grid.Column="9">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="3*"></RowDefinition>
+                                        <RowDefinition Height="4*"></RowDefinition>
                                     </Grid.RowDefinitions>
 
-                                    <!-- Heading -->
-                                    <TextBlock Grid.Row="0" FontSize="20" VerticalAlignment="Center" FontWeight="Bold"> Khách hàng</TextBlock>
-
-                                    <!-- Customer information filling fields -->
-                                    <Grid Grid.Row="1" Grid.RowSpan="5">
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="6*" />
-                                            <!-- Spacing -->
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="6*" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="5*" />
-                                            <!-- Spacing -->
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="5*" />
-                                        </Grid.RowDefinitions>
-
-                                        <!-- Name -->
-                                        <TextBox x:Name="tbCustomerName"
-                                         VerticalAlignment="Center"
-                                         LostFocus="TextBox_LostFocus"
-                                         Grid.Column="0" Grid.Row="0"
-                                         materialDesign:HintAssist.Hint="Họ và tên"
-                                         materialDesign:HintAssist.HelperText="VD: Nguyễn Văn A"
-                                         Style="{StaticResource CustomTextbox}">
-                                            <TextBox.Text>
-                                                <Binding Path="Customer.HoTen" UpdateSourceTrigger="PropertyChanged">
-                                                    <Binding.ValidationRules>
-                                                        <validationRules:StringNotEmptyRule />
-                                                    </Binding.ValidationRules>
-                                                </Binding>
-                                            </TextBox.Text>
-                                        </TextBox>
-
-                                        <!-- CMND -->
-                                        <TextBox x:Name="tbCustomerID"
-                                                 PreviewTextInput="PreviewTextInput"
-                                                 VerticalAlignment="Center"
-                                                 Grid.Column="2" Grid.Row="0"
-                                                 LostFocus="TextBox_LostFocus"
-                                                 materialDesign:HintAssist.Hint="CMND"
-                                                 materialDesign:HintAssist.HelperText="VD: 312509001"
-                                                 Style="{StaticResource CustomTextbox}">
-                                            <TextBox.Text>
-                                                <Binding Path="Customer.CMND" UpdateSourceTrigger="PropertyChanged">
-                                                    <Binding.ValidationRules>
-                                                        <validationRules:StringNotEmptyRule />
-                                                    </Binding.ValidationRules>
-                                                </Binding>
-                                            </TextBox.Text>
-                                        </TextBox>
-
-                                        <!-- Phone number -->
-                                        <TextBox x:Name="tbCustomerPhoneNumber"
-                                                 PreviewTextInput="PreviewTextInput"
-                                                 VerticalAlignment="Center"
-                                                 Grid.Column="0" Grid.Row="2"
-                                                 materialDesign:HintAssist.Hint="Số điện thoại"
-                                                 materialDesign:HintAssist.HelperText="VD: 0359723000"
-                                                 Style="{StaticResource CustomTextbox}">
-                                            <TextBox.Text>
-                                                <Binding Path="Customer.SDT" UpdateSourceTrigger="PropertyChanged" />
-                                            </TextBox.Text>
-                                        </TextBox>
-
-                                        <!-- Email -->
-                                        <TextBox x:Name="tbCustomerEmail"
-                                         VerticalAlignment="Center"
-                                         Grid.Column="2" Grid.Row="2"
-                                         materialDesign:HintAssist.Hint="Email" 
-                                         materialDesign:HintAssist.HelperText="VD: nguyenvana@gmail.com"
-                                         Style="{StaticResource CustomTextbox}">
-                                            <TextBox.Text>
-                                                <Binding Path="Customer.Email" UpdateSourceTrigger="PropertyChanged">
-                                                    <Binding.ValidationRules>
-                                                        <validationRules:MailFormatRule />
-                                                    </Binding.ValidationRules>
-                                                </Binding>
-                                            </TextBox.Text>
-                                        </TextBox>
-
-                                    </Grid>
-
+                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Số điểm dừng</TextBlock>
+                                    <TextBox IsReadOnly="True"
+                                             Text="{Binding FlightInfo.SoDiemDung, Mode=OneWay}"
+                                             Grid.Row="1"
+                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Center"
+                                             materialDesign:TextFieldAssist.SuffixText="phút">
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                                                <TextBlock/>
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+                                    </TextBox>
                                 </Grid>
-                            </Border>
                         </Grid>
+
                     </Grid>
+                </Border>
+                
+                <!-- Customer info -->
+                <Border Grid.Column="2" Grid.ColumnSpan="6"
+                                Grid.Row="2" Grid.RowSpan="3"
+                                Margin="0 20 0 0" Padding="25"
+                                Background="White"
+                                CornerRadius="10"
+                                Style="{StaticResource ResourceKey=DropShadow}" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
-                    <!-- Ticket tier -->
-                    <Grid Grid.Column="8" Grid.ColumnSpan="5" Margin="40 0 0 0">
-                        <Border Padding="20"
-                            Background="White" 
-                            CornerRadius="10"
-                            Style="{StaticResource ResourceKey=DropShadow}" >
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
+                        <!-- Heading -->
+                        <TextBlock Grid.Row="0" FontSize="20" VerticalAlignment="Center" FontWeight="Bold"> Khách hàng</TextBlock>
 
-                                <!-- Heading -->
-                                <TextBlock FontSize="20" VerticalAlignment="Center" Grid.Row="0" FontWeight="Bold"> Hạng vé</TextBlock>
+                        <!-- Customer information filling fields -->
+                        <Grid Grid.Row="1" Grid.RowSpan="5">
 
-                                <DataGrid x:Name="dgTicketTier" Grid.Row="1" Grid.RowSpan="5"
-                                      Background="Transparent"
-                                      ItemsSource="{Binding TicketTiers, Mode=OneWay}"
-                                      d:ItemsSource="{d:SampleData ItemCount=3}"
-                                      SelectedItem="{Binding CurrentTicketTier}"
-                                      AutoGenerateColumns="False"
-                                      RowHeight="50"
-                                      ColumnWidth="*" 
-                                      SelectionMode="Single"
-                                      SelectionUnit="FullRow"
-                                      IsReadOnly="True"
-                                      ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
-                                      CellStyle="{StaticResource DataGridCellCenter}">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Tên hạng vé" Binding="{Binding TenHangVe}" />
-                                        <DataGridTextColumn Header="Giá vé" Binding="{Binding DisplayTicketPrice}" />
-                                    </DataGrid.Columns>
-                                </DataGrid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="6*" />
+                                <!-- Spacing -->
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="6*" />
+                            </Grid.ColumnDefinitions>
 
-                            </Grid>
-                        </Border>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5*" />
+                                <!-- Spacing -->
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="5*" />
+                            </Grid.RowDefinitions>
+
+                            <!-- Name -->
+                            <TextBox x:Name="tbCustomerName"
+                                        VerticalAlignment="Center"
+                                        LostFocus="TextBox_LostFocus"
+                                        Grid.Column="0" Grid.Row="0"
+                                        materialDesign:HintAssist.Hint="Họ và tên"
+                                        materialDesign:HintAssist.HelperText="VD: Nguyễn Văn A"
+                                        Style="{StaticResource CustomTextbox}">
+                                <TextBox.Text>
+                                    <Binding Path="Customer.HoTen" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:StringNotEmptyRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+
+                            <!-- CMND -->
+                            <TextBox x:Name="tbCustomerID"
+                                                PreviewTextInput="PreviewTextInput"
+                                                VerticalAlignment="Center"
+                                                Grid.Column="2" Grid.Row="0"
+                                                LostFocus="TextBox_LostFocus"
+                                                materialDesign:HintAssist.Hint="CMND"
+                                                materialDesign:HintAssist.HelperText="VD: 312509001"
+                                                Style="{StaticResource CustomTextbox}">
+                                <TextBox.Text>
+                                    <Binding Path="Customer.CMND" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:StringNotEmptyRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+
+                            <!-- Phone number -->
+                            <TextBox x:Name="tbCustomerPhoneNumber"
+                                                PreviewTextInput="PreviewTextInput"
+                                                VerticalAlignment="Center"
+                                                Grid.Column="0" Grid.Row="2"
+                                                materialDesign:HintAssist.Hint="Số điện thoại"
+                                                materialDesign:HintAssist.HelperText="VD: 0359723000"
+                                                Style="{StaticResource CustomTextbox}">
+                                <TextBox.Text>
+                                    <Binding Path="Customer.SDT" UpdateSourceTrigger="PropertyChanged" />
+                                </TextBox.Text>
+                            </TextBox>
+
+                            <!-- Email -->
+                            <TextBox x:Name="tbCustomerEmail"
+                                        VerticalAlignment="Center"
+                                        Grid.Column="2" Grid.Row="2"
+                                        materialDesign:HintAssist.Hint="Email" 
+                                        materialDesign:HintAssist.HelperText="VD: nguyenvana@gmail.com"
+                                        Style="{StaticResource CustomTextbox}">
+                                <TextBox.Text>
+                                    <Binding Path="Customer.Email" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validationRules:MailFormatRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+
+                        </Grid>
+
                     </Grid>
-                </Grid>
-                <!-- Continue button -->
-                <Grid Grid.Row="7" Margin="0 20 0 0">
+                </Border>
 
-                    <Grid.ColumnDefinitions>
-                        <!-- Spacing -->
-                        <ColumnDefinition Width="1*" />
-                        <!-- Content -->
-                        <ColumnDefinition Width="8*" />
-                        <!-- Spacing -->
-                        <ColumnDefinition Width="1*" />
-                    </Grid.ColumnDefinitions>
 
-                    <Button Width="150" 
-                    Grid.Column="1"
-                    Command="{Binding ContinueCommand}" 
-                    CommandParameter="{Binding ElementName=uc, Converter={valueConverter:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverter:ViewInterface.TicketInfoFilling}}"
-                    HorizontalAlignment="Right" 
-                    VerticalAlignment="Center" 
-                    Height="50"
-                    Background="{StaticResource OrangeBrush}"
-                    FontSize="{StaticResource Regular}"
-                    Content="Tiếp tục"
-                    BorderThickness="0,0,0,0" 
-                    materialDesign:ButtonAssist.CornerRadius="7"/>
-                </Grid>
+                <!-- Ticket tier -->
+                <Border Grid.Column="2" Grid.ColumnSpan="6"
+                        Grid.Row="5" Grid.RowSpan="4" 
+                        Margin="0 20 0 0"
+                        Padding="30"
+                        Background="White" 
+                        CornerRadius="10"
+                        Style="{StaticResource ResourceKey=DropShadow}" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
+                        <!-- Heading -->
+                        <TextBlock FontSize="20" VerticalAlignment="Center" Grid.Row="0" FontWeight="Bold"> Hạng vé</TextBlock>
+
+                        <DataGrid x:Name="dgTicketTier" Grid.Row="1" Grid.RowSpan="5"
+                                Background="Transparent"
+                                ItemsSource="{Binding TicketTiers, Mode=OneWay}"
+                                d:ItemsSource="{d:SampleData ItemCount=3}"
+                                SelectedItem="{Binding CurrentTicketTier}"
+                                AutoGenerateColumns="False"
+                                RowHeight="50"
+                                ColumnWidth="*" 
+                                SelectionMode="Single"
+                                SelectionUnit="FullRow"
+                                IsReadOnly="True"
+                                ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                                CellStyle="{StaticResource DataGridCellCenter}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Tên hạng vé" Binding="{Binding TenHangVe}" />
+                                <DataGridTextColumn Header="Giá vé" Binding="{Binding DisplayTicketPrice}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </Grid>
+                </Border>
+
+                <Button Grid.Row="9"
+                        Grid.Column="7" Grid.ColumnSpan="2"
+                        Height="50"
+                        Padding="50 0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding ContinueCommand}" 
+                        CommandParameter="{Binding ElementName=uc, Converter={valueConverter:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverter:ViewInterface.TicketInfoFilling}}"
+                        Background="{StaticResource OrangeBrush}"
+                        FontSize="{StaticResource Regular}"
+                        Content="Tiếp tục"
+                        BorderThickness="0"
+                        materialDesign:ButtonAssist.CornerRadius="7"/>
             </Grid>
         </Grid>
     </materialDesign:DialogHost>

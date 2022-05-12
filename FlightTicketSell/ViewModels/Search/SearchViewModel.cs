@@ -1,6 +1,4 @@
-﻿using FlightTicketSell.Views;
-using FlightTicketSell.Models;
-using FlightTicketSell.Views.SearchViewMore;
+﻿using FlightTicketSell.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Linq;
@@ -30,9 +28,31 @@ namespace FlightTicketSell.ViewModels
         public ObservableCollection<Airport_Search> Airports { get; set; }
 
         /// <summary>
+        /// Indicates if we'll show departed flights
+        /// </summary>
+        public bool IsDisplayDeparted { get; set; } = true;
+
+        /// <summary>
         /// Flight list
         /// </summary>
         public ObservableCollection<FlightInfo> Flights { get; set; }
+
+        /// <summary>
+        /// The processed flight list
+        /// </summary>
+        public ObservableCollection<FlightInfo> ProcessedFlights
+        {
+            get
+            {
+                if (Flights is null)
+                    return null;
+                
+                ObservableCollection<FlightInfo> flightInfos = (IsDisplayDeparted ?
+                                Flights :
+                                new ObservableCollection<FlightInfo>(Flights.Where(f => f.DaKhoiHanh == false).ToList()));
+                return flightInfos;
+            }
+        }
 
         /// <summary>
         /// Start airport param
@@ -103,7 +123,7 @@ namespace FlightTicketSell.ViewModels
                         Airports = new ObservableCollection<Airport_Search>(await context.SANBAYs.Select(s => new Airport_Search { ID = s.MaSanBay, Name = s.TenSanBay }).ToListAsync());
 
                         // Load flights list on first load
-                        var result = await context.Database.SqlQuery<FlightInfo>("EXEC GetFlightData").ToListAsync();
+                        var result = await context.Database.SqlQuery<GetFlightData_Result>("EXEC GetFlightData").ToListAsync();
                         Flights = new ObservableCollection<FlightInfo>(result.Select(f => new FlightInfo(f)));
                     }
                     catch (EntityException e)
@@ -129,7 +149,7 @@ namespace FlightTicketSell.ViewModels
                     try
                     {
                         // Get flights
-                        var result = await context.Database.SqlQuery<FlightInfo>("EXEC GetFlightData").ToListAsync();
+                        var result = await context.Database.SqlQuery<GetFlightData_Result>("EXEC GetFlightData").ToListAsync();
                         //var result = context.GetFlightData().ToList();
 
                         // Apply Start airport param if there is

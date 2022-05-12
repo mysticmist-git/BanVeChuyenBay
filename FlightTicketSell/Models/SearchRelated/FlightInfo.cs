@@ -2,6 +2,7 @@
 using FlightTicketSell.Models.SearchRelated;
 using FlightTicketSell.ViewModels;
 using FlightTicketSell.Views.Helper;
+using System;
 using System.Globalization;
 using System.Windows.Input;
 
@@ -10,10 +11,75 @@ namespace FlightTicketSell.Models
     /// <summary>
     /// The model stores flight information
     /// </summary>
-    public class FlightInfo : GetFlightData_Result
+    public class FlightInfo : BaseViewModel
     {
         #region Public Properties
-        
+
+        /// <summary>
+        /// The flight code
+        /// </summary>
+        public int MaChuyenBay { get; set; }
+
+        /// <summary>
+        /// The depart airport code
+        /// </summary>
+        public int MaSanBayDi { get; set; }
+
+        /// <summary>
+        /// The destination airport code
+        /// </summary>
+        public int MaSanBayDen { get; set; }
+
+        /// <summary>
+        /// The depart airport name
+        /// </summary>
+        public string SanBayDi { get; set; }
+
+        /// <summary>
+        /// The destination airport name
+        /// </summary>
+        public string SanBayDen { get; set; }
+
+        /// <summary>
+        /// The depart airport short-name
+        /// </summary>
+        public string SanBayDiVietTat { get; set; }
+
+        /// <summary>
+        /// The destination airport short-name
+        /// </summary>
+        public string SanBayDenVietTat { get; set; }
+
+        /// <summary>
+        /// The depart date
+        /// </summary>
+        public System.DateTime NgayGio { get; set; }
+
+        /// <summary>
+        /// The number of overlay airport this flight have
+        /// </summary>
+        public Nullable<int> SoDiemDung { get; set; }
+
+        /// <summary>
+        /// The number of ticket tier this flight have
+        /// </summary>
+        public Nullable<int> SoHangVe { get; set; }
+
+        /// <summary>
+        /// The standard price of this flight ticket
+        /// </summary>
+        public decimal GiaVe { get; set; }
+
+        /// <summary>
+        /// The number seat left
+        /// </summary>
+        public Nullable<int> GheTrong { get; set; }
+
+        /// <summary>
+        /// Indicates of this flight has already departed or not
+        /// </summary>
+        public bool DaKhoiHanh { get; set; }
+
         /// <summary>
         /// The flight code
         /// </summary>
@@ -61,6 +127,7 @@ namespace FlightTicketSell.Models
             SoHangVe = result.SoHangVe;
             GiaVe= result.GiaVe;
             GheTrong = result.GheTrong;
+            DaKhoiHanh = result.DaKhoiHanh;
         }
 
         /// <summary>

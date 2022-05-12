@@ -8,9 +8,9 @@ using System.Data.Entity.Core;
 using System.Data.Entity;
 using FlightTicketSell.Models.SearchRelated;
 using System.Collections.ObjectModel;
-using System.Windows.Forms;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -132,10 +132,9 @@ namespace FlightTicketSell.ViewModels
                         await SendMail();
 
                 }
-                catch (EntityException)
+                catch (EntityException e)
                 {
-                    // TODO: messagebox vo
-                    return;
+                    System.Windows.MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

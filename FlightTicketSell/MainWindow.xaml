@@ -23,59 +23,14 @@
             <Setter Property="Content" Value="{Binding ApplicationViewModel.CurrentView,
                                                Source={x:Static viewmodels:ViewModelLocator.Instance},
                                                Converter={valueConverters:AppViewToContentTemplate}}" />
-            <!--<Style.Triggers>
-                
-                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
-                             Value="{x:Static models:AppView.Search}">
-                    <Setter Property="ContentTemplate" Value="{StaticResource SearchViewTemplate}"/>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
-                             Value="{x:Static models:AppView.Book}">
-                    <Setter Property="ContentTemplate" Value="{StaticResource BookViewTemplate}"/>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
-                             Value="{x:Static models:AppView.BookDetail}">
-                    <Setter Property="ContentTemplate" Value="{StaticResource BookDetailViewTemplate}"/>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
-                             Value="{x:Static models:AppView.ReservePay}">
-                    <Setter Property="ContentTemplate" Value="{StaticResource ReservePayViewTemplate}"/>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
-                             Value="{x:Static models:AppView.Sell}">
-                    <Setter Property="ContentTemplate" Value="{StaticResource SellViewTemplate}"/>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
-                             Value="{x:Static models:AppView.Schedule}">
-                    <Setter Property="ContentTemplate" Value="{StaticResource ScheduleViewTemplate}"/>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
-                             Value="{x:Static models:AppView.Report}">
-                    <Setter Property="ContentTemplate" Value="{StaticResource ReportViewTemplate}"/>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
-                             Value="{x:Static models:AppView.ReportPrint}">
-                    <Setter Property="ContentTemplate" Value="{StaticResource ReportPrintViewTemplate}"/>
-                </DataTrigger>
-
-                <DataTrigger Binding="{Binding ApplicationViewModel.CurrentView, Source={x:Static viewmodels:ViewModelLocator.Instance}}"
-                             Value="{x:Static models:AppView.Setting}">
-                    <Setter Property="ContentTemplate" Value="{StaticResource SettingViewTemplate}"/>
-                </DataTrigger>
-
-            </Style.Triggers>-->
         </Style>
     </Window.Resources>
 
     <Grid Background="{StaticResource LightGrayBrush}">
-        <Border CornerRadius="12" Height="160" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
+        <Border CornerRadius="12"
+                Height="160"
+                VerticalAlignment="Top"
+                Background="{StaticResource BlueBrush}" />
         <Grid >
             <Grid.RowDefinitions>
                 <!--Navigation Bar-->

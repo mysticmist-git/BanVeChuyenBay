@@ -42,11 +42,6 @@ namespace FlightTicketSell.Models
         public virtual DbSet<THAMSO> THAMSOes { get; set; }
         public virtual DbSet<VE> VEs { get; set; }
     
-        public virtual ObjectResult<GetFlightData_Result> GetFlightData()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFlightData_Result>("GetFlightData");
-        }
-    
         public virtual ObjectResult<GetBookedCustomers_Result> GetBookedCustomers(Nullable<int> maDatCho, Nullable<int> maChuyenBay)
         {
             var maDatChoParameter = maDatCho.HasValue ?
@@ -58,6 +53,11 @@ namespace FlightTicketSell.Models
                 new ObjectParameter("MaChuyenBay", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetBookedCustomers_Result>("GetBookedCustomers", maDatChoParameter, maChuyenBayParameter);
+        }
+    
+        public virtual ObjectResult<GetFlightData_Result> GetFlightData()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFlightData_Result>("GetFlightData");
         }
     }
 }

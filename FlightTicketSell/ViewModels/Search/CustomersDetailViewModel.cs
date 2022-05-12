@@ -75,7 +75,7 @@ namespace FlightTicketSell.ViewModels
                         else
                         {
                             // Get reservation info
-                            var reservationInfo = (Info as PlaceReservation);
+                            var reservationInfo = (Info as BookSearchVariant);
 
                             // Get KHACHHANG
                             var result = await context.DATCHOes

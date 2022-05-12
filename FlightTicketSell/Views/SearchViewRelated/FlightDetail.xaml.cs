@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FlightTicketSell.Views.SearchViewMore
+namespace FlightTicketSell.Views
 {
     /// <summary>
     /// Interaction logic for DescriptionTicketFlight.xaml

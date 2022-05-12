@@ -65,7 +65,7 @@ namespace FlightTicketSell.ViewModels
 
                 // Update Book Information (SoVeDat)
                 BookInfo.SoVeDat = Customers.Count;
-                BookInfo.GiaTien = Customers.Count * CurrentTicketTier.GiaTien;
+                BookInfo.GiaTien_Ve = CurrentTicketTier.GiaTien;
             });
 
             ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightDetail);
