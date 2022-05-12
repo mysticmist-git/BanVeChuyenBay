@@ -23,7 +23,7 @@
     <materialDesign:DialogHost CloseOnClickAway="True" Identifier="RootDialog">
         <Grid>
 
-            <Grid Margin="30 30 30 30">
+            <Grid Margin="20 30 20 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="8*"/>
                     <ColumnDefinition Width="0.5*"/>
@@ -31,15 +31,21 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="8*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1.5*"/>
                 </Grid.RowDefinitions>
 
                 <!--Thông tin chuyến bay-->
-                <Border Grid.Row="0" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                <Border Grid.Row="0" 
+                        Grid.ColumnSpan="3"
+                        Background="White" 
+                        CornerRadius="10" 
+                        Style="{StaticResource ResourceKey=DropShadow}" >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
@@ -64,44 +70,86 @@
                         <!--Tựa-->
                         <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Thông tin chuyến bay</TextBlock>
 
-                        <!--Mã chuyến bay-->
-                        <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Mã chuyến bay" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-                              Text="{Binding FlightCode}"/>
-
-                        <!--Giá vé-->
-                        <TextBox Grid.Row="1" Grid.Column="5" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="VND"
-                             Text="{Binding Airfares}"
-                             PreviewTextInput="PreviewTextInput">
-                            <materialDesign:HintAssist.Hint>
-                                <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
-                                    <TextBlock Text="Giá vé" />
-                                </StackPanel>
-                            </materialDesign:HintAssist.Hint>
+                        <!--Sân bay đi-->
+                        <TextBox   Grid.Row="1" Grid.Column="1" 
+                                   materialDesign:HintAssist.Hint="Sân bay đi" 
+                                   Style="{StaticResource CustomTextbox}" 
+                                   VerticalAlignment="Center" 
+                                   Text="{Binding DepartureAirport.Name, UpdateSourceTrigger=PropertyChanged}"
+                                   >
+                             
+                        <!--Command-->
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseDown">
+                                    <i:InvokeCommandAction Command="{Binding ChooseDepartureAirport_Command}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </TextBox>
 
-                        <!--Thời gian bay-->
-                        <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="phút"
-                             Text="{Binding FlightTime, Converter={valueConverters:StringFlightTimeToIntFlightTimeConverter}}"
-                             PreviewTextInput="PreviewTextInput">
-                            <materialDesign:HintAssist.Hint>
-                                <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
-                                    <TextBlock Text="Thời gian bay" />
-                                </StackPanel>
-                            </materialDesign:HintAssist.Hint>
+                        <!--Nút chuyển giữa sân bay đi và sân bay đến-->
+                        <Button  Grid.Row="1" Grid.Column="3" Padding="0" Width="22" Height="22" Margin="0" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                             Command="{Binding Change_Departure_Landing_Airport_Command}">
+                            <Button.Content>
+                                <materialDesign:PackIcon Kind="MenuSwap" Margin="0"  Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" RenderTransformOrigin="0.5,0.5" >
+                                    <materialDesign:PackIcon.RenderTransform>
+                                        <RotateTransform Angle="90"/>
+                                    </materialDesign:PackIcon.RenderTransform>
+                                </materialDesign:PackIcon>
+                            </Button.Content>
+                        </Button>
+
+                        <!--Sân bay đến-->
+                        <TextBox   Grid.Row="1" Grid.Column="5" 
+                                   materialDesign:HintAssist.Hint="Sân bay đến" 
+                                   Style="{StaticResource CustomTextbox}" 
+                                   VerticalAlignment="Center" 
+                                    Text="{Binding LandingAirport.Name, UpdateSourceTrigger=PropertyChanged}">
+                            
+                         <!--Command--> 
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseDown">
+                                    <i:InvokeCommandAction Command="{Binding ChooseLandingAirport_Command}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </TextBox>
 
-                        <!--Thời gian bay, Ngày giờ bay-->
-                        <Grid Grid.Row="3" Grid.Column="5">
+                        <Grid Grid.Row="3" Grid.Column="1"
+                              Grid.ColumnSpan="5">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="6*"/>
-                                <ColumnDefinition Width="0.2*"/>
-                                <ColumnDefinition Width="4.5*"/>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="5*"/>
                             </Grid.ColumnDefinitions>
+                            
+                             <!--Giá vé-->
+                            <TextBox Grid.Column="0" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="VNĐ"
+                                 Text="{Binding Airfares}"
+                                 PreviewTextInput="PreviewTextInput">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                                        <TextBlock Text="Giá vé" />
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
+
+                            <!--Thời gian bay-->
+                            <TextBox Grid.Column="2" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="phút"
+                                 Text="{Binding FlightTime, Converter={valueConverters:StringFlightTimeToIntFlightTimeConverter}}"
+                                 PreviewTextInput="PreviewTextInput">
+                                <materialDesign:HintAssist.Hint>
+                                    <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                                        <TextBlock Text="Thời gian bay" />
+                                    </StackPanel>
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
 
                             <!--Ngày bay-->
-                            <DatePicker Grid.Column="0" materialDesign:HintAssist.Hint="Ngày bay" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black" 
-                                        SelectedDate="{Binding DateFlight,StringFormat={}{0:dd-MM-yyyy}, Converter={valueConverters:DatePickerUI_To_DatePickerConverter}}"   
-                                        Grid.ColumnSpan="2"
+                            <DatePicker Grid.Column="4" materialDesign:HintAssist.Hint="Ngày bay" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black" 
+                                        SelectedDate="{Binding DateFlight,StringFormat={}{0:dd-MM-yyyy}}"   
                                         HorizontalAlignment="Stretch"
                                         materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource BlueBrush}"
                                         materialDesign:HintAssist.Foreground="{StaticResource BlueBrush}"
@@ -131,62 +179,26 @@
                             </DatePicker>
 
                             <!--Giờ bay-->
-                            <materialDesign:TimePicker Grid.Column="2 " Style="{StaticResource MaterialDesignFloatingHintTimePicker}" Is24Hours="True" materialDesign:HintAssist.Hint="Giờ bay" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black" 
-                                                   SelectedTime="{Binding TimeFlight, Mode=OneWay, Converter={valueConverters:TimePickerUI_To_TimePickerConverter}}"
-                                                   HorizontalAlignment="Stretch"
-                                                   Margin="5 0 0 0"
-                                                       />
-
-
-
+                            <materialDesign:TimePicker 
+                                Grid.Column="6 " Style="{StaticResource MaterialDesignFloatingHintTimePicker}" Is24Hours="True" materialDesign:HintAssist.Hint="Giờ bay" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black" 
+                                SelectedTime="{Binding TimeFlight, Mode=OneWay, Converter={valueConverters:TimePickerUI_To_TimePickerConverter}}"
+                                HorizontalAlignment="Stretch"
+                                    />
                         </Grid>
+                        
+                        <!--Mã chuyến bay-->
+                        <TextBox  Grid.Row="5" Grid.Column="1"
+                                  Grid.ColumnSpan="5"
+                                  materialDesign:HintAssist.Hint="Mã chuyến bay" 
+                                  Style="{StaticResource CustomTextbox}" 
+                                  VerticalAlignment="Center" 
+                              Text="{Binding FlightCode}"/>
 
-                        <!--Sân bay đi-->
-                        <TextBox   Grid.Row="5" Grid.Column="1" 
-                                   materialDesign:HintAssist.Hint="Sân bay đi" 
-                                   Style="{StaticResource CustomTextbox}" 
-                                   VerticalAlignment="Center" 
-                                   Text="{Binding DepartureAirport.Name, UpdateSourceTrigger=PropertyChanged}"
-
-                                   >
-                             <!--Command--> 
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewMouseDown">
-                                    <i:InvokeCommandAction Command="{Binding ChooseDepartureAirport_Command}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </TextBox>
-                       
-                        <!--Nút chuyển giữa sân bay đi và sân bay đến-->
-                        <Button  Grid.Row="5" Grid.Column="3" Padding="0" Width="22" Height="22" Margin="0" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                             Command="{Binding Change_Departure_Landing_Airport_Command}">
-                            <Button.Content>
-                                <materialDesign:PackIcon Kind="MenuSwap" Margin="0"  Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" RenderTransformOrigin="0.5,0.5" >
-                                    <materialDesign:PackIcon.RenderTransform>
-                                        <RotateTransform Angle="90"/>
-                                    </materialDesign:PackIcon.RenderTransform>
-                                </materialDesign:PackIcon>
-                            </Button.Content>
-                        </Button>
-
-                        <!--Sân bay đến-->
-                        <TextBox   Grid.Row="5" Grid.Column="5" 
-                                   materialDesign:HintAssist.Hint="Sân bay đến" 
-                                   Style="{StaticResource CustomTextbox}" 
-                                   VerticalAlignment="Center" 
-                                    Text="{Binding LandingAirport.Name, UpdateSourceTrigger=PropertyChanged}">
-                            <!-- Command -->
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewMouseDown">
-                                    <i:InvokeCommandAction Command="{Binding ChooseLandingAirport_Command}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </TextBox>
                     </Grid>
                 </Border>
 
                 <!--Sân bay trung gian-->
-                <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="3" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                <Border Grid.Row="2" Grid.Column="2" Grid.RowSpan="3" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
@@ -196,7 +208,7 @@
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="2*"/>
-                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="8*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="2*"/>
                             <RowDefinition Height="1*"/>
@@ -205,7 +217,7 @@
                         <!--Tựa-->
                         <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Sân bay trung gian</TextBlock>
 
-                        <!--Danh sách hạng vé-->
+                        <!--Danh sách sân bay trung gian-->
                         <DataGrid
                             ItemsSource="{Binding List_LayoverAirport}"
                             d:ItemsSource="{d:SampleData ItemCount=5}"
@@ -245,16 +257,18 @@
                                      HeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                                     Header="Ghi chú" 
                                     Width="2*"/>
-
-
-
                             </DataGrid.Columns>
                         </DataGrid>
            
                         <!--Nút thêm sửa xóa-->
-                        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal"
+                                    Grid.Row="3" Grid.Column="1"
+                                    Grid.ColumnSpan="2" 
+                                    HorizontalAlignment="Right"
+                                    Height="35">
                             <!--Nút xóa-->
-                            <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                            <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                                    Command="{Binding Delete_LayoverAirport_Command}"/>
 
                             <!--Nút sửa-->
                             <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
@@ -281,68 +295,67 @@
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="2*"/>
-                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="8*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="2*"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
 
                         <!--Tựa-->
-                        <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Hạng vé</TextBlock>
+                        <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Hạng vé</TextBlock>
 
                         <!--Danh sách hạng vé-->
-                        <ListView Grid.Row="1" Grid.Column="1"
-                              ItemsSource="{Binding List_TicketClass}">
-                            <ListView.View>
-                                <GridView>
-
-                                    <!--Tên hạng vé-->
-                                    <GridViewColumn >
-                                        <GridViewColumn.Header>
-                                            <TextBlock Text="Tên hạng vé" Style="{StaticResource Custom_GridviewHeader}"/>
-                                        </GridViewColumn.Header>
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Code}"  Style="{StaticResource Custom_GridviewCell}"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-
-                                    <!--Giá tiền-->
-                                    <GridViewColumn >
-                                        <GridViewColumn.Header>
-                                            <TextBlock Text="Giá tiền" Style="{StaticResource Custom_GridviewHeader}"/>
-                                        </GridViewColumn.Header>
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Code}"  Style="{StaticResource Custom_GridviewCell}"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-
-                                    <!--Số ghế-->
-                                    <GridViewColumn >
-                                        <GridViewColumn.Header>
-                                            <TextBlock Text="Số ghế" Style="{StaticResource Custom_GridviewHeader}"/>
-                                        </GridViewColumn.Header>
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Code}"  Style="{StaticResource Custom_GridviewCell}"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-
+                        <DataGrid
+                            ItemsSource="{Binding List_TicketClass}"
+                            SelectedItem="{Binding List_TicketClass_SelectedItem}"
+                             d:ItemsSource="{d:SampleData ItemCount=5}"
+                             Background="Transparent"
+                            RowHeight="40"
+                            CanUserSortColumns="True"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            Grid.ColumnSpan="3"
+                            Grid.Row="1" Grid.Column="0"
+                            Margin="15 0 15 0"
+                            IsReadOnly="True"
+                            BorderThickness="0"
+                            ColumnWidth="*"
+                            >
+                            <DataGrid.Columns>
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding TicketClassName}"
+                                    Header="Tên hạng vé"
+                                   
+                                    CellStyle="{StaticResource DataGridCellCenter}"
+                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding TicketClassCoefficient}"
+                                    Header="Giá tiền" 
+                                  
+                                    CellStyle="{StaticResource DataGridCellCenter}"
+                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                                <materialDesign:DataGridTextColumn
+                                    Binding="{Binding Seats}"
+                                    Header="Số ghế"
+                                 
+                                    CellStyle="{StaticResource DataGridCellCenter}"
+                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                         <!--Nút thêm sửa xóa-->
-                        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+                        <StackPanel Orientation="Horizontal" 
+                                    Grid.Row="3" Grid.Column="1" 
+                                    Grid.ColumnSpan="2" 
+                                    HorizontalAlignment="Right"
+                                    Height="35">
                             <!--Nút xóa-->
-                            <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                            <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                                    Command="{Binding Delete_EnteredTicketClass_Command}"/>
 
                             <!--Nút sửa-->
-                            <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                            <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                                    Command="{Binding Open_Window_EditTicketClass_Command}"
+                                    materialDesign:ShadowAssist.Darken="True"/>
 
                             <!--Nút thêm-->
                             <Button Margin="7 0 20 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
@@ -354,10 +367,17 @@
                 </Border>
 
                 <!--Nút nhận lịch chuyến bay/ Hủy-->
-                <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                    <Button Margin="0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource Regular}" Content="Hủy" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                <StackPanel Grid.Row="6" Grid.Column="2" 
+                            Height="35"
+                            Margin="0 0 30 0"
+                            Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Button Margin="0" Height="auto" Background="{StaticResource RedBrush}"  
+                            FontSize="{StaticResource Small}" Content="Hủy" BorderThickness="0,0,0,0" 
+                            materialDesign:ButtonAssist.CornerRadius="7"/>
 
-                    <Button Margin="20 0 0 0" Height="auto" Background="{StaticResource GreenBrush}"  FontSize="{StaticResource Regular}" Content="Nhận lịch bay" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
+                    <Button Margin="20 0 0 0" Height="auto" Background="{StaticResource GreenBrush}"  
+                            FontSize="{StaticResource Small}" Content="Nhận lịch bay" 
+                            BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"/>
 
                 </StackPanel>
 

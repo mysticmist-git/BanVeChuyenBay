@@ -28,7 +28,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="20*"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
@@ -135,6 +135,8 @@
             Grid.Column="1"
             Orientation="Horizontal"
             HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Height="35"
             >
             
             <!--Nút hủy-->
@@ -144,6 +146,7 @@
                 Content="Hủy" BorderThickness="0,0,0,0" 
                  Margin="20 10 0 0"
                 materialDesign:ButtonAssist.CornerRadius="7"
+                Command="{Binding Cancel_ChooseAirportButton_Command}"
                 >
                 
             </Button>

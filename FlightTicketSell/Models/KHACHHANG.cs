@@ -9,7 +9,6 @@
 
 namespace FlightTicketSell.Models
 {
-    using FlightTicketSell.ViewModels;
     using System;
     using System.Collections.Generic;
     
