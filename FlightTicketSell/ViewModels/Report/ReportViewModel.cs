@@ -124,6 +124,9 @@ namespace FlightTicketSell.ViewModels
             // Create commands
             LoadCommand = new RelayCommand<object>(p => true, async p =>
             {
+                // Refresh flight to update departed flight
+                await FlightHelper.FlightDepartedRefresh();
+                
                 // Load months, years itemsources
                 Months = new ObservableCollection<string> { _all, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
 
@@ -150,11 +153,16 @@ namespace FlightTicketSell.ViewModels
 
             MonthChangedCommand = new RelayCommand<object>(p => true, async p =>
             {
+                // Refresh flight to update departed flight
+                await FlightHelper.FlightDepartedRefresh();
+
                 await RefreshReport();
             });
 
             YearChangedCommand = new RelayCommand<object>(p => true, async p =>
             {
+                // Refresh flight to update departed flight
+                await FlightHelper.FlightDepartedRefresh();
 
                 var yearInt = ReportHelper.MonthYearToIntConverter(CurrentYear, _all);
 
