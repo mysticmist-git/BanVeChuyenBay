@@ -127,5 +127,32 @@
         </Style.Triggers>
        
     </Style>
-    
+
+    <!-- Hover button -->
+    <Style x:Key="HoverButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
+        <Setter Property="BorderThickness" Value="3" />
+        <Setter Property="FontFamily" Value="{StaticResource Roboto}" />
+        <Setter Property="FontWeight" Value="UltraBold"/>
+        <Setter Property="FontSize" Value="{StaticResource Small}" />
+        <Setter Property="Height" Value="auto" />
+        <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="7"/>
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth0" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+
+                <Setter Property="Background" Value="{Binding BorderBrush,RelativeSource={RelativeSource Mode=Self}}"/>
+                <Setter Property="Foreground"  Value="White"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Foreground" Value="{Binding BorderBrush,RelativeSource={RelativeSource Mode=Self}}"/>
+                <Setter Property="Background"  Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="3"/>
+                <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth0" />
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+
 </ResourceDictionary>
