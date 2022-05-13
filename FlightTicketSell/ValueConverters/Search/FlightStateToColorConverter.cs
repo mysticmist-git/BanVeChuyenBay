@@ -1,5 +1,6 @@
 ﻿using FlightTicketSell.Models.Enums;
 using System;
+using System.Drawing;
 using System.Globalization;
 using System.Windows.Media;
 
@@ -9,14 +10,15 @@ namespace FlightTicketSell.ValueConverters
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            var converter = new BrushConverter();
             switch (value)
             {
                 case true:
-                    return Brushes.Crimson;
+                    return (System.Windows.Media.Brush)converter.ConvertFromString("#C7282A");
                 case false:
-                    return Brushes.SpringGreen;
+                    return (System.Windows.Media.Brush)converter.ConvertFromString("#24B44C");
                 default:
-                    return Brushes.DeepPink;
+                    return System.Drawing.Brushes.DeepPink;
             }
         }
 
