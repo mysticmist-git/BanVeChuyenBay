@@ -955,12 +955,12 @@
         </Association>
         <ComplexType Name="GetFlightData_Result">
           <Property Type="Int32" Name="MaChuyenBay" Nullable="false" />
-          <Property Type="Int32" Name="MaSanBayDi" Nullable="false" />
-          <Property Type="Int32" Name="MaSanBayDen" Nullable="false" />
-          <Property Type="String" Name="SanBayDi" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="SanBayDen" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="SanBayDiVietTat" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="SanBayDenVietTat" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="MaSanBayDi" Nullable="true" />
+          <Property Type="Int32" Name="MaSanBayDen" Nullable="true" />
+          <Property Type="String" Name="SanBayDi" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="SanBayDen" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="SanBayDiVietTat" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SanBayDenVietTat" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="NgayGio" Nullable="false" Precision="23" />
           <Property Type="Int32" Name="SoDiemDung" Nullable="true" />
           <Property Type="Int32" Name="SoHangVe" Nullable="true" />

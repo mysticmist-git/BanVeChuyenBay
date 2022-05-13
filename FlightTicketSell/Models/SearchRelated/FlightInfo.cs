@@ -115,8 +115,8 @@ namespace FlightTicketSell.Models
         {
             // Copy information
             MaChuyenBay = result.MaChuyenBay;
-            MaSanBayDi = result.MaSanBayDi;
-            MaSanBayDen = result.MaSanBayDen;
+            MaSanBayDi = (int)result.MaSanBayDi;
+            MaSanBayDen = (int)result.MaSanBayDen;
             SanBayDi = result.SanBayDi;
             SanBayDen = result.SanBayDen;
             SanBayDiVietTat = result.SanBayDiVietTat;

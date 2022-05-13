@@ -14,8 +14,8 @@ namespace FlightTicketSell.Models
     public partial class GetFlightData_Result
     {
         public int MaChuyenBay { get; set; }
-        public int MaSanBayDi { get; set; }
-        public int MaSanBayDen { get; set; }
+        public Nullable<int> MaSanBayDi { get; set; }
+        public Nullable<int> MaSanBayDen { get; set; }
         public string SanBayDi { get; set; }
         public string SanBayDen { get; set; }
         public string SanBayDiVietTat { get; set; }
