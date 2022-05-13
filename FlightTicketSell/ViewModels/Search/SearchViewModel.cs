@@ -6,6 +6,7 @@ using System.Data.Entity.Core;
 using System.Windows;
 using System.Data.Entity;
 using FlightTicketSell.Models.SearchRelated;
+using FlightTicketSell.Helpers;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -30,7 +31,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Indicates if we'll show departed flights
         /// </summary>
-        public bool IsDisplayDeparted { get; set; } = true;
+        public bool IsDisplayDeparted { get; set; } = false;
 
         /// <summary>
         /// Flight list
@@ -114,6 +115,9 @@ namespace FlightTicketSell.ViewModels
                 // Loading
                 IsLoadFinished = false;
 
+                // Refresh flight to update departed flight
+                await FlightHelper.FlightDepartedRefresh();
+
                 // Get airports for combobox and initialize flight table
                 using (var context = new FlightTicketSellEntities())
                 {
@@ -142,6 +146,9 @@ namespace FlightTicketSell.ViewModels
             {
                 // Loading
                 IsLoadFinished = false;
+
+                // Refresh flight to update departed flight
+                await FlightHelper.FlightDepartedRefresh();
 
                 // Load new flight table
                 using (var context = new FlightTicketSellEntities())
