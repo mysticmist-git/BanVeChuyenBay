@@ -68,9 +68,31 @@
             </Border>
 
             <!--Nút lưu-->
-            <Button Grid.Row="2" Grid.Column="1"  Margin="10 0 10 0" Background="{StaticResource GreenBrush}"  FontSize="{StaticResource Small}" Content="Lưu" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                    Command="{Binding MoreTicketClass_Save_Button_Command}"/>
+            <StackPanel
+                Grid.Row="2"
+                Grid.Column="1"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center">
 
+                <!--Nút hủy-->
+                <Button
+                    Style="{StaticResource HoverButton}"
+                    BorderBrush="{StaticResource RedBrush}"
+                    Content="Hủy"
+                    Command="{Binding MoreTicketClass_Cancel_Button_Command}"
+                />
+                <!--Nút lưu-->
+                <Button
+                    Margin="20 0"
+                    Content="Lưu"
+                    Command="{Binding MoreTicketClass_Save_Button_Command}"
+                    Style="{StaticResource HoverButton}"
+                    BorderBrush="{StaticResource GreenBrush}"
+                    />
+
+
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

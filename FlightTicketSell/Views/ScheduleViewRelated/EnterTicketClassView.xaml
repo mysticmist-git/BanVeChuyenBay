@@ -39,7 +39,7 @@
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="4.5*" />
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="2.5*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
 
@@ -108,7 +108,7 @@
                             <materialDesign:DataGridTextColumn
                                     Binding="{Binding Name}"
                                     Header="Tên hạng vé"
-                                Width="110"
+                                Width="180"
                                 />
                             <materialDesign:DataGridTextColumn
                                     Binding="{Binding Coefficient}"
@@ -137,28 +137,26 @@
             </Border>
 
             <!--Nút hủy, nút lưu-->
-            <StackPanel Grid.Row="7"
+            <StackPanel Orientation="Horizontal" 
+                                    Grid.Row="7"
                         Grid.Column="1"
                         Grid.ColumnSpan="3"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Stretch">
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Stretch">
+                <!--Nút xóa-->
+                <Button Margin="7 0 0 0" 
+                                    Content="Hủy" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource RedBrush}"
+                                    Command="{Binding EnterTicketClass_Cancel_Command}"/>
 
-                <!--Nút hủy-->
-                <Button  Margin="10 0 10 0" 
-                         Background="{StaticResource RedBrush}"  
-                         FontSize="{StaticResource Small}" 
-                         Content="Hủy" BorderThickness="0,0,0,0" 
-                         materialDesign:ButtonAssist.CornerRadius="7"
-                         Command="{Binding EnterTicketClass_Cancel_Command}"
-                         />
-                <!--Nút lưu-->
-                <Button  Margin="10 0 10 0" 
-                         Background="{StaticResource GreenBrush}"  
-                         FontSize="{StaticResource Small}" 
-                         Content="Lưu" BorderThickness="0,0,0,0" 
-                         materialDesign:ButtonAssist.CornerRadius="7"
-                         Command="{Binding EnterTicketClass_Save_Command}"/>
+                <!--Nút thêm-->
+                <Button Margin="7 0 10 0" Content="Chọn" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource GreenBrush}"
+                                Command="{Binding EnterTicketClass_Save_Command}"
+                                materialDesign:ShadowAssist.Darken="True"
+                                    />
             </StackPanel>
 
         </Grid>

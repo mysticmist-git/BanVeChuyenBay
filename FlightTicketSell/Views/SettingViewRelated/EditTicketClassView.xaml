@@ -95,9 +95,25 @@
                 </Grid>
             </Border>
 
-            <!--Nút lưu-->
-            <Button Grid.Row="2" Grid.Column="1"  Margin="10 0 10 0" Background="{StaticResource GreenBrush}"  FontSize="{StaticResource Small}" Content="Lưu" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                    Command="{Binding EditTicketClass_Save_Button_Command}"/>
+          
+            <StackPanel Orientation="Horizontal" 
+                                    Grid.Row="2" Grid.Column="1" 
+                                    HorizontalAlignment="Right">
+                <!--Nút hủy-->
+                <Button Margin="7 0 0 0" 
+                                    Content="Hủy" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource RedBrush}"
+                                Command="{Binding EditTicketClass_Cancel_Button_Command}"/>
+
+                <!--Nút lưu-->
+                <Button Margin="7 0 10 0" Content="Lưu" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource GreenBrush}"
+                                Command="{Binding EditTicketClass_Save_Button_Command}"
+                                materialDesign:ShadowAssist.Darken="True"
+                                    />
+            </StackPanel>
 
         </Grid>
     </Grid>

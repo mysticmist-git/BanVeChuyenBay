@@ -26,8 +26,6 @@ namespace FlightTicketSell.ViewModels
         #endregion
 
         #region Main Public Properties
-
-
         /// <summary>
         /// Số sân bay trung gian tối đa
         /// </summary>
@@ -93,6 +91,10 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand EditAirport_Save_Button_Command { get; set; }
         /// <summary>
+        /// Hủy khi sửa sân bay
+        /// </summary>
+        public ICommand EditAirport_Cancel_Button_Command { get; set; }
+        /// <summary>
         /// Xóa sân bay
         /// </summary>
         public ICommand DeleteAirport_Command { get; set; }
@@ -130,17 +132,25 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand MoreTicketClass_Command { get; set; }
         /// <summary>
-        /// Lưu khi sửa sân bay
+        /// Lưu khi thêm hạng vé
         /// </summary>
         public ICommand MoreTicketClass_Save_Button_Command { get; set; }
+        /// <summary>
+        /// Hủy khi thêm hạng vé
+        /// </summary>
+        public ICommand MoreTicketClass_Cancel_Button_Command { get; set; }
         /// <summary>
         /// Sửa hạng vé
         /// </summary>
         public ICommand EditTicketClass_Command { get; set; }
         /// <summary>
-        /// Lưu khi sửa sân bay
+        /// Lưu khi sửa hạng vé
         /// </summary>
         public ICommand EditTicketClass_Save_Button_Command { get; set; }
+        /// <summary>
+        /// Lưu khi sửa hạng vé
+        /// </summary>
+        public ICommand EditTicketClass_Cancel_Button_Command { get; set; }
         /// <summary>
         /// Xóa hạng vé
         /// </summary>
@@ -395,17 +405,8 @@ namespace FlightTicketSell.ViewModels
                (p) => { return true; },
                (p) =>
                {
-
-                   if (!string.IsNullOrEmpty(MoreAirport_Name) || !string.IsNullOrEmpty(MoreAirport_Code) || !string.IsNullOrEmpty(MoreAirport_Province))
-                   {
-                       MessageBoxResult temp = MessageBox.Show("Bạn muốn hủy?!", "Cảnh báo", MessageBoxButton.YesNo);
-                       if (temp == MessageBoxResult.No)
-                           return;
-                       //Close dialog
-                       DialogHost.CloseDialogCommand.Execute(null, null);
-                   }
-
-
+                //Close dialog
+                    DialogHost.CloseDialogCommand.Execute(null, null);
                }
            );
 
@@ -466,7 +467,19 @@ namespace FlightTicketSell.ViewModels
 
               }
           );
+            EditAirport_Cancel_Button_Command = new RelayCommand<object>(
+              (p) => { return true; },
+              (p) =>
+              {
 
+                  
+                //Close dialog
+                DialogHost.CloseDialogCommand.Execute(null, null);
+                  
+
+
+              }
+          );
             DeleteAirport_Command = new RelayCommand<object>(
             (p) => { return true; },
             (p) =>
@@ -555,6 +568,14 @@ namespace FlightTicketSell.ViewModels
                        }
                    }
                });
+            MoreTicketClass_Cancel_Button_Command = new RelayCommand<object>(
+              (p) => { return true; },
+              (p) =>
+              {
+                    //Close dialog
+                    DialogHost.CloseDialogCommand.Execute(null, null);
+              }
+          );
 
             EditTicketClass_Command = new RelayCommand<object>(
              (p) => { return true; },
@@ -609,7 +630,14 @@ namespace FlightTicketSell.ViewModels
                        }
                    }
                });
-
+            EditTicketClass_Cancel_Button_Command = new RelayCommand<object>(
+              (p) => { return true; },
+              (p) =>
+              {
+                    //Close dialog
+                    DialogHost.CloseDialogCommand.Execute(null, null);
+              }
+          );
 
             DeleteTicketClass_Command = new RelayCommand<object>(
              (p) => { return true; },

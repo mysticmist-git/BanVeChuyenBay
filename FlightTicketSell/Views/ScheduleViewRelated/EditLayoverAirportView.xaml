@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FlightTicketSell.Views" xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Height="400" Width="550">
+        Height="410" Width="550">
     <UserControl.DataContext>
         <vm:ScheduleViewModel/>
     </UserControl.DataContext>
@@ -22,7 +22,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="20" />
                 <RowDefinition Height="6.5*" />
-                <RowDefinition Height="1*" />
+                <RowDefinition Height="1.2*" />
             </Grid.RowDefinitions>
 
             <!--Sân bay-->
@@ -143,25 +143,26 @@
             </Border>
 
             <!--Nút nhận lịch chuyến bay/ Hủy-->
-            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <!--Nút lưu-->
-                <Button Margin="0" 
-                        Height="auto" 
-                        Background="{StaticResource RedBrush}"  
-                        FontSize="{StaticResource Small}" 
-                        Content="Hủy" BorderThickness="0,0,0,0" 
-                        materialDesign:ButtonAssist.CornerRadius="7"
-                        Command="{Binding EditLayoverAirport_Cancel_Command}"/>
-                <!--Nút hủy-->
-                <Button Margin="20 0 0 0" 
-                        Height="auto" 
-                        Background="{StaticResource GreenBrush}"  
-                        FontSize="{StaticResource Small}" Content="Lưu" 
-                        BorderThickness="0,0,0,0" 
-                        materialDesign:ButtonAssist.CornerRadius="7"
-                        Command="{Binding EditLayoverAirport_Save_Command}"/>
+            <StackPanel Orientation="Horizontal" 
+                                    Grid.Row="2" Grid.Column="1" 
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Stretch">
+                <!--Nút xóa-->
+                <Button Margin="7 0 0 0" 
+                                    Content="Hủy" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource RedBrush}"
+                                    Command="{Binding EditLayoverAirport_Cancel_Command}"/>
+
+                <!--Nút thêm-->
+                <Button Margin="7 0 10 0" Content="Lưu" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource GreenBrush}"
+                                Command="{Binding EditLayoverAirport_Save_Command}"
+                                materialDesign:ShadowAssist.Darken="True"
+                                    />
             </StackPanel>
-            
+
         </Grid>
     </Grid>
 

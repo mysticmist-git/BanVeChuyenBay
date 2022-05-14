@@ -72,19 +72,25 @@
                 </Grid>
             </Border>
 
-            <!--Nút lưu-->
-            <Button Grid.Row="2" Grid.Column="2"  Margin="-30 0 30 0" Background="{StaticResource GreenBrush}"  FontSize="{StaticResource Small}" Content="Lưu" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                    Command="{Binding MoreAirport_Save_Button_Command}" 
-                    >
+                <StackPanel Orientation="Horizontal" 
+                                    Grid.Row="2" Grid.Column="2"
+                                    HorizontalAlignment="Right">
+                    <!--Nút hủy-->
+                    <Button Margin="7 0 0 0" 
+                                    Content="Hủy" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource RedBrush}"
+                                Command="{Binding MoreAirport_Cancel_Button_Command}"/>
 
-            </Button>
+                    <!--Nút lưu-->
+                    <Button Margin="7 0 10 0" Content="Lưu" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource GreenBrush}"
+                                Command="{Binding MoreAirport_Save_Button_Command}"
+                                materialDesign:ShadowAssist.Darken="True"
+                                    />
+                </StackPanel>
 
-            <!--Nút hủy-->
-            <Button Grid.Row="2" Grid.Column="1"  Margin="30 0 50 0" Background="{StaticResource RedBrush}"  FontSize="{StaticResource Small}" Content="Hủy" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                    Command="{Binding MoreAirport_Cancel_Button_Command}" 
-                    >
-
-            </Button>
         </Grid>
     </Grid>
 </UserControl>

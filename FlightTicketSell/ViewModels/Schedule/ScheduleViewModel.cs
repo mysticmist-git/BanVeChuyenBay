@@ -138,6 +138,10 @@ namespace FlightTicketSell.ViewModels
         /// Nút nhận lịch bay
         /// </summary>
         public ICommand ScheduleAFlight_Command { get; set; }
+        /// <summary>
+        /// Hủy nhận lịch bay
+        /// </summary>
+        public ICommand CancelScheduleAFlight_Command { get; set; }
         #endregion
 
         #region Properties
@@ -653,6 +657,12 @@ namespace FlightTicketSell.ViewModels
                  }
 
              });
+
+            CancelScheduleAFlight_Command = new RelayCommand<object>((p) => { return true; }, 
+                (p) => 
+                {
+                    LoadCommand.Execute(null);
+                });
             #endregion
 
             #region LayoverAirport

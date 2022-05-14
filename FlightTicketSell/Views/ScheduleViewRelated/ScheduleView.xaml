@@ -310,26 +310,34 @@
                         </DataGrid>
            
                         <!--Nút thêm sửa xóa-->
-                        <StackPanel Orientation="Horizontal"
-                                    Grid.Row="3" Grid.Column="1"
+                        <StackPanel Orientation="Horizontal" 
+                                     Grid.Row="3" Grid.Column="1"
                                     Grid.ColumnSpan="2" 
-                                    HorizontalAlignment="Right"
-                                    Height="35">
+                                    HorizontalAlignment="Right">
                             <!--Nút xóa-->
-                            <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                                    Command="{Binding Delete_LayoverAirport_Command}"/>
+                            <Button Margin="7 0 0 0" 
+                                    Content="Xóa" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource RedBrush}"
+                                Command="{Binding Delete_LayoverAirport_Command}"/>
 
                             <!--Nút sửa-->
-                            <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                            <Button Margin="7 0 0 0" 
+                                    Content="Sửa" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource OrangeBrush}"
                                     Command="{Binding Open_Window_EditLayoverAirport_Command}"
-                                    materialDesign:ShadowAssist.Darken="True"/>
+                                materialDesign:ShadowAssist.Darken="True"
+                                   />
 
                             <!--Nút thêm-->
-                            <Button Margin="7 0 20 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                            <Button Margin="7 0 10 0" Content="Thêm" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource BlueBrush}"
                                 Command="{Binding Open_Window_EnterLayoverAirport_Command}"
-                                materialDesign:ShadowAssist.Darken="True"/>
+                                materialDesign:ShadowAssist.Darken="True"
+                                    />
                         </StackPanel>
-
                     </Grid>
                 </Border>
 
@@ -393,44 +401,55 @@
                         </DataGrid>
                         <!--Nút thêm sửa xóa-->
                         <StackPanel Orientation="Horizontal" 
-                                    Grid.Row="3" Grid.Column="1" 
-                                    Grid.ColumnSpan="2" 
-                                    HorizontalAlignment="Right"
-                                    Height="35">
+                                     Grid.Row="3" Grid.Column="1" 
+                                    HorizontalAlignment="Right">
                             <!--Nút xóa-->
-                            <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource RedBrush}"  FontSize="{StaticResource RealSmall}" Content="Xóa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                                    Command="{Binding Delete_EnteredTicketClass_Command}"/>
+                            <Button Margin="7 0 0 0" 
+                                    Content="Xóa" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource RedBrush}"
+                                Command="{Binding Delete_EnteredTicketClass_Command}"/>
 
                             <!--Nút sửa-->
-                            <Button Margin="7 0 0 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Sửa" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                            <Button Margin="7 0 0 0" 
+                                    Content="Sửa" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource OrangeBrush}"
                                     Command="{Binding Open_Window_EditTicketClass_Command}"
-                                    materialDesign:ShadowAssist.Darken="True"/>
+                                materialDesign:ShadowAssist.Darken="True"
+                                   />
 
                             <!--Nút thêm-->
-                            <Button Margin="7 0 20 0" Height="auto" Background="{StaticResource BlueBrush}" FontSize="{StaticResource RealSmall}" Content="Thêm" BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
+                            <Button Margin="7 0 10 0" Content="Thêm" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource BlueBrush}"
                                 Command="{Binding Open_Window_EnterTicketClass_Command}"
-                                materialDesign:ShadowAssist.Darken="True"/>
+                                materialDesign:ShadowAssist.Darken="True"
+                                    />
                         </StackPanel>
 
                     </Grid>
                 </Border>
 
                 <!--Nút nhận lịch chuyến bay/ Hủy-->
-                <StackPanel Grid.Row="6" Grid.Column="2" 
-                            Height="35"
-                            Margin="0 0 30 0"
-                            Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <Button Margin="0" Height="auto" Background="{StaticResource RedBrush}"  
-                            FontSize="{StaticResource Small}" Content="Hủy" BorderThickness="0,0,0,0" 
-                            materialDesign:ButtonAssist.CornerRadius="7"/>
+                <StackPanel Orientation="Horizontal" 
+                                     Grid.Row="6" Grid.Column="2" 
+                                    HorizontalAlignment="Right">
+                    <!--Nút xóa-->
+                    <Button Margin="7 0 0 0" 
+                                    Content="Hủy" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource RedBrush}"
+                                    Command="{Binding CancelScheduleAFlight_Command}"/>
 
-                    <Button Margin="20 0 0 0" Height="auto" Background="{StaticResource GreenBrush}"  
-                            FontSize="{StaticResource Small}" Content="Nhận lịch bay" 
-                            BorderThickness="0,0,0,0" materialDesign:ButtonAssist.CornerRadius="7"
-                            Command="{Binding ScheduleAFlight_Command}"/>
-
+                    <!--Nút thêm-->
+                    <Button Margin="7 0 10 0" Content="Nhận lịch bay" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource GreenBrush}"
+                                Command="{Binding ScheduleAFlight_Command}"
+                                materialDesign:ShadowAssist.Darken="True"
+                                    />
                 </StackPanel>
-
             </Grid>
 
         </Grid>
