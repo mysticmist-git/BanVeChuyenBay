@@ -8,23 +8,35 @@ using System.Windows.Input;
 namespace FlightTicketSell.ViewModels
 {
     /// <summary>
-    /// A specialized version of <see cref="KHACHHANG"/> for book view
+    /// A customer used in book view, which has some buffers, and commands
     /// </summary>
-    public class Customer : BaseViewModel
+    public class CustomerBookVariant : CustomerWithIndex
     {
         #region Public Properties
 
-        public int MaKhachHang { get; set; }
-        public string HoTen { get; set; }
-        public string CMND { get; set; }
-        public string SDT { get; set; }
-        public string Email { get; set; }
-
-
         /// <summary>
-        /// The index of the customer in the list
+        /// Indicates if this customer can be remove from this list
         /// </summary>
-        public int Index { get; set; }
+        public bool IsBookingCustomer { get; set; } = false;
+        
+        /// <summary>
+        /// Indicates if all info is filled orn ot 
+        /// </summary>
+        public bool IsNoInfoFilled
+        {
+            get =>
+                string.IsNullOrEmpty(HoTen) &&
+                string.IsNullOrEmpty(CMND) &&
+                string.IsNullOrEmpty(SDT) &&
+                string.IsNullOrEmpty(Email);
+        }
+
+        public bool IsEssensialInfoNoFilled
+         {
+            get =>
+                string.IsNullOrEmpty(HoTen) ||
+                string.IsNullOrEmpty(CMND);
+        }
 
         /// <summary>
         /// The display index of the customer
@@ -49,7 +61,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The email buffer
         /// </summary>
-        public string EmailBuffer { get; set; }
+        public string EmailBuffer { get; set; } 
 
         #endregion
 
@@ -59,7 +71,7 @@ namespace FlightTicketSell.ViewModels
         /// Save customer information
         /// </summary>
         public ICommand SaveCustomerCommand { get; set; }
-        
+
         /// <summary>
         /// Execute when dialog load
         /// </summary>
@@ -83,23 +95,21 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Copy constructor
         /// </summary>
-        public Customer(KHACHHANG khachHang) : this()
-        {
-            if (khachHang is null)
-                return;
-
-            // Copy information from a base instance
-            MaKhachHang = khachHang.MaKhachHang;
-            HoTen = khachHang.HoTen;
-            CMND = khachHang.CMND;
-            SDT = khachHang.SDT;
-            Email = khachHang.Email;
-        }
+        public CustomerBookVariant(KHACHHANG kh) : base(kh) => InitializeCommands();
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public Customer()
+        public CustomerBookVariant() => InitializeCommands();
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// The method to initialize commands of this view model
+        /// </summary>
+        private void InitializeCommands()
         {
             // Create commands
             OpenCustomerInfoCommand = new RelayCommand<object>((p) => true, async (p) =>
@@ -113,7 +123,7 @@ namespace FlightTicketSell.ViewModels
                 NameBuffer = HoTen;
                 IDBuffer = CMND;
                 PhoneNumBuffer = SDT;
-                EmailBuffer = Email;    
+                EmailBuffer = Email;
 
                 await DialogHost.Show(view, "RootDialog", ClosingEventHandler);
             });
@@ -121,12 +131,15 @@ namespace FlightTicketSell.ViewModels
             // Command to remove customer info
             RemoveCustomerInfoCommand = new RelayCommand<object>((p) => true, (p) =>
             {
-                // Safe guarantee
-                var result = MessageBox.Show("Bạn có chắc muốn xóa khách hàng này?", "Xóa khách hàng", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (!IsNoInfoFilled)
+                {
+                    // Safe guarantee
+                    var result = MessageBox.Show("Bạn có chắc muốn xóa khách hàng này?", "Xóa khách hàng", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-                // Return if it say no
-                if (result == MessageBoxResult.No)
-                    return;
+                    // Return if it say no
+                    if (result == MessageBoxResult.No)
+                        return;
+                }
 
                 // Update index of every one after this removing customer info
                 for (int i = Index; i < IoC.IoC.Get<BookDetailViewModel>().Customers.Count; i++)
@@ -147,8 +160,14 @@ namespace FlightTicketSell.ViewModels
 
                 // Close dialog
                 DialogHost.CloseDialogCommand.Execute(1, null);
+
+                OnPropertyChanged(nameof(IsEssensialInfoNoFilled));
             });
         }
+
+        #endregion
+
+        #region Handlers
 
         /// <summary>
         /// What to do when dialog closing
@@ -160,8 +179,8 @@ namespace FlightTicketSell.ViewModels
             if (
                 Convert.ToInt32(eventArgs.Parameter) == 1 ||
                 (
-                    NameBuffer==HoTen &&
-                    IDBuffer ==CMND &&
+                    NameBuffer == HoTen &&
+                    IDBuffer == CMND &&
                     PhoneNumBuffer == SDT &&
                     EmailBuffer == Email
                 )

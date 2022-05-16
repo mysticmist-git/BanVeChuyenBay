@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FlightTicketSell.Views" xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
+             xmlns:attachedProperties="clr-namespace:FlightTicketSell.AttachedProperties"
              xmlns:validationRules="clr-namespace:FlightTicketSell.ValidateRules"
              mc:Ignorable="d"             
+             x:Name="uc"
              d:DesignHeight="760" d:DesignWidth="1366"
              d:Background="{StaticResource LightGrayBrush}"
              DataContext="{Binding BookDetailViewModel, Source={x:Static vm:ViewModelLocator.Instance}}">
@@ -244,12 +246,13 @@
 
                             <!-- Name -->
                             <TextBox x:Name="tbCustomerName"
-                                        VerticalAlignment="Center"
-                                        LostFocus="TextBox_LostFocus"
-                                        Grid.Column="0" Grid.Row="0"
-                                        materialDesign:HintAssist.Hint="Họ và tên"
-                                        materialDesign:HintAssist.HelperText="VD: Nguyễn Văn A"
-                                        Style="{StaticResource CustomTextbox}">
+                                    VerticalAlignment="Center"
+                                    LostFocus="TextBox_LostFocus"
+                                    TextChanged="BookingCustomerInfo_Changed"
+                                    Grid.Column="0" Grid.Row="0"
+                                    materialDesign:HintAssist.Hint="Họ và tên"
+                                    materialDesign:HintAssist.HelperText="VD: Nguyễn Văn A"
+                                    Style="{StaticResource CustomTextbox}">
                                 <TextBox.Text>
                                     <Binding Path="BookInfo.ThongTinNguoiDat.HoTen" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -261,6 +264,7 @@
 
                             <!-- CMND -->
                             <TextBox x:Name="tbCustomerID"
+                                     TextChanged="BookingCustomerInfo_Changed"
                                         PreviewTextInput="PreviewTextInput"
                                         VerticalAlignment="Center"
                                         Grid.Column="2" Grid.Row="0"
@@ -279,6 +283,7 @@
 
                             <!-- Phone number -->
                             <TextBox x:Name="tbCustomerPhoneNumber"
+                                     TextChanged="BookingCustomerInfo_Changed"
                                                 PreviewTextInput="PreviewTextInput"
                                                 VerticalAlignment="Center"
                                                 Grid.Column="0" Grid.Row="2"
@@ -292,6 +297,7 @@
 
                             <!-- Email -->
                             <TextBox x:Name="tbCustomerEmail"
+                                     TextChanged="BookingCustomerInfo_Changed"
                                         VerticalAlignment="Center"
                                         Grid.Column="2" Grid.Row="2"
                                         materialDesign:HintAssist.Hint="Email" 
@@ -364,16 +370,16 @@
                         Style="{StaticResource ResourceKey=DropShadow}">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="5.5*"></RowDefinition>
-                            <RowDefinition Height="1.5*"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
 
                         <!-- Heading -->
                         <TextBlock Text="Khách hàng thụ hưởng vé" Grid.Row="0" FontSize="20" VerticalAlignment="Center" FontWeight="Bold" />
 
                         <!-- Customer info list-->
-                        <ListView ItemsSource="{Binding Customers}" Grid.Row="1" Margin="0,10,0,0" d:ItemsSource="{d:SampleData ItemCount=5}">
+                        <ListView x:Name="lvCustomers" ItemsSource="{Binding Customers}" Grid.Row="1" Margin="0,10,0,0" d:ItemsSource="{d:SampleData ItemCount=5}">
 
                             <!-- Item Container style -->
                             <ListView.ItemContainerStyle>
@@ -385,8 +391,28 @@
                             <!-- Item template -->
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid HorizontalAlignment="Stretch">
+                                    <Grid HorizontalAlignment="Stretch" attachedProperties:IsValidProperty.Value="{Binding IsEssensialInfoNoFilled, Converter={valueConverters:BooleanInvertConverter}}">
 
+                                        <Grid.Style>
+                                            <Style TargetType="{x:Type Grid}">
+                                                <Style.Triggers>
+                                                    
+                                                    <Trigger Property="attachedProperties:IsValidProperty.Value" Value="False">
+                                                        <Setter Property="Background">
+                                                            <Setter.Value>
+                                                                <SolidColorBrush Color="PaleVioletRed" Opacity="0.3" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Trigger>
+
+                                                    <Trigger Property="attachedProperties:IsValidProperty.Value" Value="True">
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                    </Trigger>
+
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Grid.Style>
+                                        
                                         <Grid.ColumnDefinitions>
                                             <!-- Customer info -->
                                             <ColumnDefinition Width="*" />
@@ -412,6 +438,7 @@
                                             Command="{Binding OpenCustomerInfoCommand}" 
                                             Background="{StaticResource GreenBrush}"
                                             Style="{StaticResource CustomerInfoButton}"
+                                            Visibility="{Binding IsBookingCustomer, Mode=OneWay, Converter={valueConverters:BooleanToVisibilityConverter}, ConverterParameter=Inverted}"
                                             />
 
                                         <!-- Remove button -->
@@ -419,7 +446,17 @@
                                             Grid.Column="2"
                                             Command="{Binding RemoveCustomerInfoCommand}" 
                                             Background="{StaticResource OrangeBrush}"
-                                            Style="{StaticResource CustomerInfoButton}" />
+                                            Style="{StaticResource CustomerInfoButton}"
+                                            Visibility="{Binding IsBookingCustomer, Mode=OneWay, Converter={valueConverters:BooleanToVisibilityConverter}, ConverterParameter=Inverted}" />
+
+                                        <TextBox Text="(Người đặt)"
+                                                 Grid.Column="1"
+                                                 Grid.ColumnSpan="2"
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Bottom"
+                                                 FontWeight="Bold"
+                                                 Visibility="{Binding IsBookingCustomer, Mode=OneWay, Converter={valueConverters:BooleanToVisibilityConverter}}"
+                                                 />
 
                                     </Grid>
                                 </DataTemplate>
@@ -436,6 +473,33 @@
                             VerticalAlignment="Bottom" 
                             Style="{StaticResource AddButton}" 
                             FontSize="{StaticResource Small}"/>
+
+                        <!-- Attach booking customer toggle button -->
+                        <StackPanel Grid.Row="2"
+                                    VerticalAlignment="Center" 
+                                    Orientation="Horizontal">
+                            <TextBlock Text="Kèm người đặt"
+                                       FontSize="{StaticResource Small}"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center" />
+
+                            <ToggleButton IsChecked="{Binding IsBookingCustomerIncluded}" Margin="10 0 0 0">
+                                <ToggleButton.Style>
+                                    <Style TargetType="{x:Type ToggleButton}"
+                                       BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="ToolTip" Value="Không kèm người đặt vào trong danh sách" />
+                                            </Trigger>
+
+                                            <Trigger Property="IsChecked" Value="False">
+                                                <Setter Property="ToolTip" Value="Có kèm người đặt vào trong danh sách" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ToggleButton.Style>
+                            </ToggleButton>
+                        </StackPanel>
                     </Grid>
 
 
@@ -446,14 +510,17 @@
                         Grid.Column="7" Grid.ColumnSpan="2"
                         Height="50"
                         Padding="50 0"
+                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         Command="{Binding ContinueCommand}" 
+                        CommandParameter="{Binding ElementName=uc, Converter={valueConverters:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverters:ViewInterface.BookDetail}}"
                         Background="{StaticResource OrangeBrush}"
                         FontSize="{StaticResource Regular}"
                         Content="Tiếp tục"
                         BorderThickness="0"
-                        materialDesign:ButtonAssist.CornerRadius="7"/>
+                        materialDesign:ButtonAssist.CornerRadius="7"
+                        />
             </Grid>
         </Grid>
     </materialDesign:DialogHost>

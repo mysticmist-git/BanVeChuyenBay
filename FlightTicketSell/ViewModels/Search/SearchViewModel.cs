@@ -129,7 +129,7 @@ namespace FlightTicketSell.ViewModels
                         // Load flights list on first load
                         var result = await context.Database.SqlQuery<GetFlightData_Result>("EXEC GetFlightData").ToListAsync();
                         Flights = new ObservableCollection<FlightInfo>(result.Select(f => new FlightInfo(f)));
-                    }
+                    }   
                     catch (EntityException e)
                     {
                         MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);

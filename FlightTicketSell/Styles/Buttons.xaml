@@ -93,7 +93,6 @@
         <Setter Property="FontSize" Value="10" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Margin" Value="10 0 0 0" />
-        <Setter Property="VerticalAlignment" Value="Bottom" />
         <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth3" />
     </Style>
     

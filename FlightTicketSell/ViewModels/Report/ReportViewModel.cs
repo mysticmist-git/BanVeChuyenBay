@@ -9,7 +9,7 @@ using System.Windows;
 using System.Data.Entity.Core;
 using System.Threading.Tasks;
 using FlightTicketSell.Helpers;
-using FlightTicketSell.Interface.Report;
+using FlightTicketSell.Interface;
 
 namespace FlightTicketSell.ViewModels
 {

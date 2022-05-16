@@ -138,7 +138,7 @@ namespace FlightTicketSell.ViewModels
 
             ReturnCommand = new RelayCommand<object>((p) => true, (p) =>
             {
-                this.ClearData();
+                IoC.IoC.Rebind<TicketInfoFillingView>();
                 
                 IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightDetail;
             });

@@ -1,26 +1,18 @@
-﻿using FlightTicketSell.ValidateRules;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using FlightTicketSell.Interface;
+using FlightTicketSell.ValidateRules;
+using FlightTicketSell.ViewModels;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace FlightTicketSell.Views
 {
     /// <summary>
     /// Interaction logic for BookDetailView.xaml
     /// </summary>
-    public partial class BookDetailView : UserControl
+    public partial class BookDetailView : UserControl, IBookDetail
     {
         public BookDetailView()
         {
@@ -35,17 +27,22 @@ namespace FlightTicketSell.Views
             get
             {
                 if (
-                   // Essential fields is null or empty
+                   // ====== Check book person infomation
+
+                   // Essensial fields
                    string.IsNullOrEmpty(tbCustomerName.Text) ||
                    string.IsNullOrEmpty(tbCustomerID.Text) ||
-
                    // Email in incorrect format
-                   !(string.IsNullOrEmpty(tbCustomerEmail.Text) || new MailFormatRule().Validate(tbCustomerEmail.Text, null).IsValid) ||
-
-                   // Ticket tier is not selected
-                   dgTicketTier.SelectedItem is null
+                   !(string.IsNullOrEmpty(tbCustomerEmail.Text) || new MailFormatRule().Validate(tbCustomerEmail.Text, null).IsValid)
                 )
                     return false;
+
+                // ====== Check customer list information
+                foreach (var customer in (DataContext as BookDetailViewModel).Customers)
+                {
+                    if (customer.IsEssensialInfoNoFilled)
+                        return false;
+                }
 
                 return true;
             }
@@ -58,7 +55,6 @@ namespace FlightTicketSell.Views
         {
             tbCustomerName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             tbCustomerID.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            dgTicketTier.GetBindingExpression(DataGrid.SelectedItemProperty).UpdateSource();
         }
 
         /// <summary>
@@ -92,5 +88,30 @@ namespace FlightTicketSell.Views
 
             return !_regex.IsMatch(text);
         }
+
+        #region Booking customer binding 
+
+        // TODO: Weird, really gross
+
+        /// <summary>
+        /// Update the name of the booking customer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BookingCustomerInfo_Changed(object sender, TextChangedEventArgs e)
+        {
+            if ((DataContext as BookDetailViewModel).IsBookingCustomerIncluded)
+            {
+                (DataContext as BookDetailViewModel).Customers[0].HoTen = tbCustomerName?.Text;
+                (DataContext as BookDetailViewModel).Customers[0].CMND = tbCustomerID?.Text;
+                (DataContext as BookDetailViewModel).Customers[0].SDT = tbCustomerPhoneNumber?.Text;
+                (DataContext as BookDetailViewModel).Customers[0].Email = tbCustomerEmail?.Text;
+
+                // TODO: Rất tà đạo
+                (DataContext as BookDetailViewModel).Customers[0].OnPropertyChanged("IsEssensialInfoNoFilled");
+            }
+        } 
+
+        #endregion
     }
 }

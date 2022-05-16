@@ -10,6 +10,7 @@
              mc:Ignorable="d" 
              d:Background="{StaticResource LightGrayBrush}"
              d:DesignHeight="450" d:DesignWidth="800">
+    
     <UserControl.DataContext>
         <vm:ScheduleViewModel />
     </UserControl.DataContext>
