@@ -9,11 +9,11 @@
              xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
              mc:Ignorable="d" 
              d:Background="{StaticResource LightGrayBrush}"
-             d:DesignHeight="450" d:DesignWidth="800">
-    
-    <UserControl.DataContext>
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding ScheduleViewModel, Source={x:Static vm:ViewModelLocator.Instance}}">
+    <!--<UserControl.DataContext>
         <vm:ScheduleViewModel />
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">

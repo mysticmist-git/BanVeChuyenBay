@@ -260,11 +260,8 @@ namespace FlightTicketSell.ViewModels
         /// Sân bay trung gian được chọn để edit
         /// </summary>
         public LayoverAirport List_LayoverAirport_SelectedItem { get; set; }
-        /// <summary>
-        /// Danh sách hạng vé
-        /// </summary>
-        //public ObservableCollection<TicketClass> List_TicketClass { get; set; } = new ObservableCollection<TicketClass>();
 
+        private bool FirstLoad { get; set; } = true;
         #endregion
 
         #region Main Method
@@ -294,17 +291,16 @@ namespace FlightTicketSell.ViewModels
             LoadCommand = new RelayCommand<object>((p) => { return true; },
                (p) =>
                {
-                    // Gán ngày hiện tại cho datepicker lúc mở 
-                    DateFlight = DateTime.Now;
-                    // Gán ngày hiện tại cho datepicker lúc mở 
-                    TimeFlight = DateTime.Now;
-                   DepartureAirport = null;
-                   LandingAirport = null;
-                   Airfares = null;
-                   FlightTime = null;
-                   List_TicketClass = null;
-                   List_LayoverAirport = null;
-                    //Danh sách sân bay trung gian
+                  
+                   if ( FirstLoad)
+                   {
+                       // Gán ngày hiện tại cho datepicker lúc mở 
+                       DateFlight = DateTime.Now;
+                       // Gán ngày hiện tại cho datepicker lúc mở 
+                       TimeFlight = DateTime.Now;
+                       FirstLoad = false;
+                   }
+                      
                     using (var context = new FlightTicketSellEntities())
                     {
                         try
@@ -360,7 +356,7 @@ namespace FlightTicketSell.ViewModels
                            }
                        }
                    }
-                   catch (System.Data.Entity.Core.EntityException e)
+                   catch (EntityException e)
                    {
                        MessageBox.Show($"Exception: {e.Message}");
                    }
@@ -383,7 +379,7 @@ namespace FlightTicketSell.ViewModels
                                FlightCode = DepartureAirport.Code + LandingAirport.Code + "-" + temp.ToString();
                            }
                        }
-                       catch (System.Data.Entity.Core.EntityException e)
+                       catch (EntityException e)
                        {
                            MessageBox.Show($"Exception: {e.Message}");
                        }
@@ -410,7 +406,7 @@ namespace FlightTicketSell.ViewModels
                              FlightCode = DepartureAirport.Code + LandingAirport.Code + "-" + temp.ToString();
                          }
                      }
-                     catch (System.Data.Entity.Core.EntityException e)
+                     catch (EntityException e)
                      {
                          MessageBox.Show($"Exception: {e.Message}");
                      }
@@ -438,7 +434,7 @@ namespace FlightTicketSell.ViewModels
                              FlightCode = DepartureAirport.Code + LandingAirport.Code + "-" + temp.ToString();
                          }
                      }
-                     catch (System.Data.Entity.Core.EntityException e)
+                     catch (EntityException e)
                      {
                          MessageBox.Show($"Exception: {e.Message}");
                      }
@@ -651,7 +647,7 @@ namespace FlightTicketSell.ViewModels
                          LoadCommand.Execute(null);
                      }
                  }
-                 catch (System.Data.Entity.Core.EntityException e)
+                 catch (EntityException e)
                  {
                      MessageBox.Show($"Exception: {e.Message}");
                  }
@@ -661,7 +657,15 @@ namespace FlightTicketSell.ViewModels
             CancelScheduleAFlight_Command = new RelayCommand<object>((p) => { return true; }, 
                 (p) => 
                 {
-                    LoadCommand.Execute(null);
+                    //Đổi thành rebind nha
+                    DateFlight = DateTime.Now;
+                    TimeFlight = DateTime.Now;
+                    DepartureAirport = null;
+                    LandingAirport = null;
+                    Airfares = null;
+                    FlightTime = null;
+                    List_TicketClass = null;
+                    List_LayoverAirport = null;
                 });
             #endregion
 
