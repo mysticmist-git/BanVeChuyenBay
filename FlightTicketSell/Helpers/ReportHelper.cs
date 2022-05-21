@@ -141,7 +141,7 @@ namespace FlightTicketSell.Views.Helper
                             Year = dt.Nam,
                             FlightCount = dt.SoChuyenBay,
                             Revenue = dt.DoanhThu,
-                            Ratio = dt.DoanhThu / totalRevenue
+                            Ratio = totalRevenue == (decimal)0.0 ? (decimal)0.0 : dt.DoanhThu / totalRevenue
                         })
                         .ToListAsync();
 

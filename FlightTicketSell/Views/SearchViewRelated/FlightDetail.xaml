@@ -396,6 +396,7 @@
                     Command="{Binding TickedSoldBookedCommand}"
                     ToolTip="Xem vé đã bán, chỗ đã đặt"
                     materialDesign:RippleAssist.Feedback="#DD000000" />
+            
         </Grid>
     </Grid>
 </UserControl>

@@ -272,6 +272,13 @@
                                         materialDesign:HintAssist.Hint="CMND"
                                         materialDesign:HintAssist.HelperText="VD: 312509001"
                                         Style="{StaticResource CustomTextbox}">
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="LostFocus">
+                                        <i:InvokeCommandAction Command="{Binding CustomerIDCheck}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+
                                 <TextBox.Text>
                                     <Binding Path="BookInfo.ThongTinNguoiDat.CMND" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>

@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace FlightTicketSell.ViewModels
 {
-    public class SellPayViewModel : BaseViewModel 
+    public class SellPayViewModel : BaseViewModel
     {
         #region Commands
 
@@ -41,7 +41,7 @@ namespace FlightTicketSell.ViewModels
         /// Indicates if the customer filled is already in database or not
         /// </summary>
         public bool IsCustomerNew { get => IoC.IoC.Get<TicketInfoFillingViewModel>().IsCustomerNew; }
-        
+
         /// <summary>
         /// Stores flight information
         /// </summary>
@@ -55,7 +55,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Stores customer information
         /// </summary>
-        public KHACHHANG Customer { get => IoC.IoC.Get<TicketInfoFillingViewModel>().Customer; }
+        public Customer Customer { get => IoC.IoC.Get<TicketInfoFillingViewModel>().Customer; }
 
         /// <summary>
         /// Stores current selected ticket tier
@@ -103,7 +103,13 @@ namespace FlightTicketSell.ViewModels
                     // Add new customer to database
                     if (IsCustomerNew)
                     {
-                        context.KHACHHANGs.Add(Customer);
+                        context.KHACHHANGs.Add(new KHACHHANG()
+                        {
+                            HoTen = Customer.HoTen,
+                            CMND = Customer.CMND,
+                            SDT = Customer.SDT,
+                            Email = Customer.Email
+                        });
 
                         await context.SaveChangesAsync();
                     }

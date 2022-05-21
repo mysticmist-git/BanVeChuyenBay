@@ -58,7 +58,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The display total revenue
         /// </summary>
-        public string DisplayTotalRevenue { get => FormatHelper.VietnamCurrencyFormat(TotalRevenue) + " VN"; }
+        public string DisplayTotalRevenue { get => FormatHelper.VietnamCurrencyFormat(TotalRevenue) + " VNĐ"; }
 
         /// <summary>
         /// The type of the current report

@@ -4,6 +4,9 @@ using MaterialDesignThemes.Wpf;
 using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Linq;
+using System.Data.Entity;
+using System.Data.Entity.Core;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -18,7 +21,7 @@ namespace FlightTicketSell.ViewModels
         /// Indicates if this customer can be remove from this list
         /// </summary>
         public bool IsBookingCustomer { get; set; } = false;
-        
+
         /// <summary>
         /// Indicates if all info is filled orn ot 
         /// </summary>
@@ -32,7 +35,7 @@ namespace FlightTicketSell.ViewModels
         }
 
         public bool IsEssensialInfoNoFilled
-         {
+        {
             get =>
                 string.IsNullOrEmpty(HoTen) ||
                 string.IsNullOrEmpty(CMND);
@@ -61,7 +64,22 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The email buffer
         /// </summary>
-        public string EmailBuffer { get; set; } 
+        public string EmailBuffer { get; set; }
+
+        #region Duplicated Customer
+
+        /// <summary>
+        /// Indicates if the customer filled is already in database or not
+        /// </summary>
+        public bool IsCustomerNew { get; set; }
+
+
+        /// <summary>
+        /// The duplicated customer (if there is)
+        /// </summary>
+        public Customer DuplicatedCustomer { get; set; }
+
+        #endregion
 
         #endregion
 
@@ -87,6 +105,10 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand RemoveCustomerInfoCommand { get; set; }
 
+        /// <summary>
+        /// Check the customer ID if it is already existed
+        /// </summary>
+        public ICommand CustomerIDCheck { get; set; }
 
         #endregion
 
@@ -150,8 +172,104 @@ namespace FlightTicketSell.ViewModels
 
             });
 
-            SaveCustomerCommand = new RelayCommand<object>((p) => true, (p) =>
+            SaveCustomerCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
+                /**
+                 * Check customer info if it is existed in the either the customer list or in the database (its CMND / ID)
+                 */
+
+                // Check if it already existed in the client customer list
+                DuplicatedCustomer = IoC.IoC.Get<BookDetailViewModel>().IsCustomerExisted(IDBuffer);
+
+                if (DuplicatedCustomer != null)
+                {
+                    // Show dialog yêu cầu có hành động đối với CMND trùng
+                    do
+                    {
+                        // It's ok if all fields is dupped
+                        if (
+                            DuplicatedCustomer.HoTen == NameBuffer &&
+                            DuplicatedCustomer.SDT == PhoneNumBuffer &&
+                            DuplicatedCustomer.Email == EmailBuffer
+                            )
+                            break;
+
+                        MessageBox.Show(
+                            "CMND bạn vừa nhập đã trùng với khách hàng này trong danh sách đặt chỗ, xin nhập lại!\n" +
+                            $"Họ và tên: " + DuplicatedCustomer.HoTen + "\n" +
+                            $"CMND: " + DuplicatedCustomer.CMND + "\n" +
+                            $"Số điện thoại: " + DuplicatedCustomer.SDT + "\n" +
+                            $"Email: " + DuplicatedCustomer.HoTen + "\n"
+                            ,
+
+                            "Trùng khách hàng", MessageBoxButton.OK, MessageBoxImage.Question);
+
+                        return;
+
+                    } while (false);
+                }
+
+                // Check if customer existed in database
+                using (var context = new FlightTicketSellEntities())
+                {
+                    try
+                    {
+                        IsCustomerNew = !(await context.KHACHHANGs.Where(kh => kh.CMND == IDBuffer).CountAsync() > 0);
+                    }
+                    catch (EntityException e)
+                    {
+                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+
+
+                do
+                {
+                    if (!IsCustomerNew)
+                    {
+                        // Get existed customer
+                        using (var context = new FlightTicketSellEntities())
+                        {
+                            var customer = await context.KHACHHANGs.Where(kh => kh.CMND == IDBuffer).FirstOrDefaultAsync();
+                            DuplicatedCustomer = new Customer
+                            {
+                                HoTen = customer.HoTen,
+                                SDT = customer.SDT,
+                                CMND = customer.CMND,
+                                Email = customer.Email
+                            };
+                        }
+
+                        // It's ok if all fields is dupped
+                        if (
+                            DuplicatedCustomer.HoTen == NameBuffer &&
+                            DuplicatedCustomer.SDT == PhoneNumBuffer &&
+                            DuplicatedCustomer.Email == EmailBuffer
+                            )
+                            break;
+
+                        var result = MessageBox.Show(
+                            "CMND bạn vừa nhập đã trùng với khách hàng này trong hệ thống, bạn có muốn dùng lại thông tin của khách hàng này?\n" +
+                            $"Họ và tên: " + DuplicatedCustomer.HoTen + "\n" +
+                            $"CMND: " + DuplicatedCustomer.CMND + "\n" +
+                            $"Số điện thoại: " + DuplicatedCustomer.SDT + "\n" +
+                            $"Email: " + DuplicatedCustomer.HoTen + "\n"
+                            ,
+
+                            "Trùng khách hàng", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            NameBuffer = DuplicatedCustomer.HoTen;
+                            IDBuffer = DuplicatedCustomer.CMND;
+                            PhoneNumBuffer = DuplicatedCustomer.SDT;
+                            EmailBuffer = DuplicatedCustomer.Email;
+                        }
+                        else
+                            return;
+                    }
+                } while (false);
+
                 // Update information
                 HoTen = NameBuffer;
                 CMND = IDBuffer;
@@ -163,7 +281,107 @@ namespace FlightTicketSell.ViewModels
 
                 OnPropertyChanged(nameof(IsEssensialInfoNoFilled));
             });
+
+            CustomerIDCheck = new RelayCommand<object>((p) => true, async (p) =>
+            {
+                /**
+                 * Check customer info if it is existed in the either the customer list or in the database (its CMND / ID)
+                 */
+
+                // Check if it already existed in the client customer list
+                DuplicatedCustomer = IoC.IoC.Get<BookDetailViewModel>().IsCustomerExisted(IDBuffer);
+
+                if (DuplicatedCustomer != null)
+                {
+                    // Show dialog yêu cầu có hành động đối với CMND trùng
+                    do
+                    {
+                        // It's ok if all fields is dupped
+                        if (
+                            DuplicatedCustomer.HoTen == NameBuffer &&
+                            DuplicatedCustomer.SDT == PhoneNumBuffer &&
+                            DuplicatedCustomer.Email == EmailBuffer
+                            )
+                            break;
+
+                        MessageBox.Show(
+                            "CMND bạn vừa nhập đã trùng với khách hàng này trong danh sách đặt chỗ, xin nhập lại!\n" +
+                            $"Họ và tên: " + DuplicatedCustomer.HoTen + "\n" +
+                            $"CMND: " + DuplicatedCustomer.CMND + "\n" +
+                            $"Số điện thoại: " + DuplicatedCustomer.SDT + "\n" +
+                            $"Email: " + DuplicatedCustomer.HoTen + "\n"
+                            ,
+
+                            "Trùng khách hàng", MessageBoxButton.OK, MessageBoxImage.Question);
+
+                        return;
+
+                    } while (false);
+                }
+
+                // Check if customer existed in database
+                using (var context = new FlightTicketSellEntities())
+                {
+                    try
+                    {
+                        IsCustomerNew = !(await context.KHACHHANGs.Where(kh => kh.CMND == IDBuffer).CountAsync() > 0);
+                    }
+                    catch (EntityException e)
+                    {
+                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+
+
+                do
+                {
+                    if (!IsCustomerNew)
+                    {
+                        // Get existed customer
+                        using (var context = new FlightTicketSellEntities())
+                        {
+                            var customer = await context.KHACHHANGs.Where(kh => kh.CMND == IDBuffer).FirstOrDefaultAsync();
+                            DuplicatedCustomer = new Customer
+                            {
+                                HoTen = customer.HoTen,
+                                SDT = customer.SDT,
+                                CMND = customer.CMND,
+                                Email = customer.Email
+                            };
+                        }
+
+                        // It's ok if all fields is dupped
+                        if (
+                            DuplicatedCustomer.HoTen == NameBuffer &&
+                            DuplicatedCustomer.SDT == PhoneNumBuffer &&
+                            DuplicatedCustomer.Email == EmailBuffer
+                            )
+                            break;
+
+                        var result = MessageBox.Show(
+                            "CMND bạn vừa nhập đã trùng với khách hàng này trong hệ thống, bạn có muốn dùng lại thông tin của khách hàng này?\n" +
+                            $"Họ và tên: " + DuplicatedCustomer.HoTen + "\n" +
+                            $"CMND: " + DuplicatedCustomer.CMND + "\n" +
+                            $"Số điện thoại: " + DuplicatedCustomer.SDT + "\n" +
+                            $"Email: " + DuplicatedCustomer.HoTen + "\n"
+                            ,
+
+                            "Trùng khách hàng", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            NameBuffer = DuplicatedCustomer.HoTen;
+                            IDBuffer = DuplicatedCustomer.CMND;
+                            PhoneNumBuffer = DuplicatedCustomer.SDT;
+                            EmailBuffer = DuplicatedCustomer.Email;
+                        }
+                        else
+                            return;
+                    }
+                } while (false);
+            });
         }
+
 
         #endregion
 

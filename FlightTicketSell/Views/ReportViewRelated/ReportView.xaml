@@ -125,12 +125,13 @@
                              MaxWidth="{Binding ElementName=revenueTbl, Path=ActualWidth}"
                              VerticalAlignment="Center">
                                 <TextBlock Foreground="White"                               
-                                   Text="{Binding DisplayTotalRevenue, FallbackValue=600.000.000 VNĐ}"                               
-                                   FontFamily="{StaticResource Roboto}"                               
-                                   FontWeight="Bold"                               
-                                   FontSize="{StaticResource Large}"                                
-                                   Margin="30 0 0 0"
-                                   x:Name="revenueTbl"
+                                           Text="{Binding DisplayTotalRevenue}"
+                                           d:Text="600.000.000 VNĐ"
+                                           FontFamily="{StaticResource Roboto}"                               
+                                           FontWeight="Bold"                               
+                                           FontSize="{StaticResource Large}"                                
+                                           Margin="30 0 0 0"
+                                           x:Name="revenueTbl"
                                />
                             </Viewbox>
 
