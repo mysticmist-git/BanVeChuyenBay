@@ -94,8 +94,7 @@
                                      Background="{StaticResource LightBlueBrush}"
                                      BorderThickness="0,0,0,0"
                                      VerticalAlignment="Center" 
-                                     HorizontalAlignment="Center" 
-                                     Command="{Binding Change_Departure_Landing_Airport_Command}">
+                                     HorizontalAlignment="Center">
                                 <Button.Content>
                                     <materialDesign:PackIcon Kind="MenuSwap" Margin="0"  Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" RenderTransformOrigin="0.5,0.5" >
                                         <materialDesign:PackIcon.RenderTransform>
@@ -103,6 +102,11 @@
                                         </materialDesign:PackIcon.RenderTransform>
                                     </materialDesign:PackIcon>
                                 </Button.Content>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewMouseDown">
+                                        <i:InvokeCommandAction Command="{Binding Change_Departure_Landing_Airport_Command}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </Button>
 
                             <!-- Sân bay đi -->
