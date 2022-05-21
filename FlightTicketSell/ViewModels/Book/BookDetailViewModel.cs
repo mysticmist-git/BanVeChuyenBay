@@ -217,6 +217,13 @@ namespace FlightTicketSell.ViewModels
 
             AddCustomerCommand = new RelayCommand<object>((p) => true, (p) =>
             {
+                // Check if there's enought seat left
+                if (FlightInfo.GheTrong == Customers.Count)
+                {
+                    MessageBox.Show("Đã hết ghế trống!", "Hết ghế trống", MessageBoxButton.OK);
+                    return;
+                }
+                
                 // Add a new customer
                 Customers.Add(new CustomerBookVariant { Index = Customers.Count + 1 });
             });
@@ -291,6 +298,14 @@ namespace FlightTicketSell.ViewModels
         {
             if (IsBookingCustomerIncluded)
             {
+                // Check if there's enought seat left
+                if (FlightInfo.GheTrong == Customers.Count)
+                {
+                    MessageBox.Show("Đã hết ghế trống!", "Hết ghế trống", MessageBoxButton.OK);
+                    IsBookingCustomerIncluded = false;
+                    return;
+                }
+
                 var bookingCustomer = new CustomerBookVariant()
                 {
                     Index = 1,
@@ -309,6 +324,9 @@ namespace FlightTicketSell.ViewModels
             }
             else
             {
+                if (Customers[0].IsBookingCustomer == false)
+                    return;
+                
                 Customers.RemoveAt(0);
 
                 // Re-Indexing

@@ -38,8 +38,8 @@ namespace FlightTicketSell.Views.Helper
                         .Select(dt => new FlightReport()
                         {
                             DisplayFlightCode =
-                                dt.CHUYENBAY.DUONGBAY.SANBAY.VietTat +
                                 dt.CHUYENBAY.DUONGBAY.SANBAY1.VietTat +
+                                dt.CHUYENBAY.DUONGBAY.SANBAY.VietTat +
                                 "-" +
                                 dt.CHUYENBAY.MaChuyenBay,
                             DepartDate = dt.CHUYENBAY.NgayGio,

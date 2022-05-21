@@ -121,8 +121,10 @@
     <Compile Include="Interface\Report\IReportPrintPreview.cs" />
     <Compile Include="Models\Book\Book.cs" />
     <Compile Include="Models\Enums\General\Parameter.cs" />
+    <Compile Include="ValueConverters\Base\BaseMultiValueConverter.cs" />
     <Compile Include="ValueConverters\BooleanInvertConverter.cs" />
     <Compile Include="ValueConverters\General\BooleanToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\Search\SellBookButtonEnableConverter.cs" />
     <Compile Include="ViewModels\Book\CustomerBookVariant.cs" />
     <Compile Include="Models\Book\CustomerWithIndex.cs" />
     <Compile Include="Models\CHITIETDATCHO.cs">
