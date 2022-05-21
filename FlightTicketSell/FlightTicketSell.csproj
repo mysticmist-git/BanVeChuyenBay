@@ -121,6 +121,7 @@
     <Compile Include="Interface\Report\IReportPrintPreview.cs" />
     <Compile Include="Models\Book\Book.cs" />
     <Compile Include="Models\Enums\General\Parameter.cs" />
+    <Compile Include="ValueConverters\Application\AppViewToDisplayTextConverter.cs" />
     <Compile Include="ValueConverters\Base\BaseMultiValueConverter.cs" />
     <Compile Include="ValueConverters\BooleanInvertConverter.cs" />
     <Compile Include="ValueConverters\General\BooleanToVisibilityConverter.cs" />
