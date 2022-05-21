@@ -65,6 +65,12 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public Airport_Search SanBayDenn { get; set; }
 
+        public Airport_Search LandingAirport { get; set; } = new Airport_Search();
+
+        public Airport_Search DepartureAirport { get; set; } = new Airport_Search();
+
+        public string FlightCode { get; set; }
+
         public System.DateTime? DateOfEntry
         {
             get
@@ -88,6 +94,8 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand LoadCommand { get; set; }
 
+        public ICommand Change_Departure_Landing_Airport_Command { get; set; }
+
         /// <summary>
         /// When params changed, use it to changes flight list
         /// </summary>
@@ -109,7 +117,6 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public SearchViewModel()
         {
-
             LoadCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
                 // Loading
@@ -139,6 +146,64 @@ namespace FlightTicketSell.ViewModels
                 // Load finish
                 IsLoadFinished = true;
             });
+
+            Change_Departure_Landing_Airport_Command = new RelayCommand<object>((p) => { return true; },
+               async (p) =>
+               {
+                   (SanBayDii, SanBayDenn) = (SanBayDenn, SanBayDii);
+                   if (SanBayDii != null && SanBayDenn != null)
+                   {
+                       if (string.IsNullOrEmpty(SanBayDenn.Name) || string.IsNullOrEmpty(SanBayDii.Name))
+                           return;
+                       try
+                       {
+                           string temp = SanBayDii.Name;
+                           SanBayDii.Name = SanBayDenn.Name;
+                           SanBayDenn.Name = temp;
+                       }
+                       catch (EntityException e)
+                       {
+                           MessageBox.Show($"Exception: {e.Message}");
+                       }
+                   }
+
+                   // Loading
+                   IsLoadFinished = false;
+
+                   // Refresh flight to update departed flight
+                   await FlightHelper.FlightDepartedRefresh();
+
+                   // Load new flight table
+                   using (var context = new FlightTicketSellEntities())
+                   {
+                       try
+                       {
+                           // Get flights
+                           var result = await context.Database.SqlQuery<GetFlightData_Result>("EXEC GetFlightData").ToListAsync();
+                           //var result = context.GetFlightData().ToList();
+
+                           // Apply Start airport param if there is
+                           if (SanBayDii != null)
+                               result = result.Where(f => f.MaSanBayDi == SanBayDii.ID).ToList();
+                           // Apply Destination airport param if there is
+                           if (SanBayDenn != null)
+                               result = result.Where(f => f.MaSanBayDen == SanBayDenn.ID).ToList();
+                           // Apply Date param if there is
+                           if (DateOfEntry != null)
+                               result = result.Where(f => f.NgayGio == DateOfEntry.Value).ToList();
+
+                           Flights = new ObservableCollection<FlightInfo>(result.Select(f => new FlightInfo(f)));
+                       }
+                       catch (EntityException e)
+                       {
+                           MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                       }
+                   }
+
+                   // Load finish
+                   IsLoadFinished = true;
+               }
+           );
 
             ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.Search);
 
