@@ -525,6 +525,14 @@ namespace FlightTicketSell.ViewModels
              {
                  // Close dialog
                  DialogHost.CloseDialogCommand.Execute(null, null);
+                 if (OpenChooseAirport == "Departure")
+                 {
+                     DepartureAirport = new Airport();
+                 }
+                 if (OpenChooseAirport == "Landing")
+                 {
+                     LandingAirport = new Airport();
+                 }
              });
             FormatStringToMoney = new RelayCommand<object>((p) => { return true; },
              (p) =>

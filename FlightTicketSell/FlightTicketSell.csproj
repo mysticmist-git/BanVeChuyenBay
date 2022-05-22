@@ -262,6 +262,9 @@
     <Compile Include="Views\BookViewRelated\CustomerInfoDialog.xaml.cs">
       <DependentUpon>CustomerInfoDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SearchViewRelated\ChooseAirportViewInSearchView.xaml.cs">
+      <DependentUpon>ChooseAirportViewInSearchView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ScheduleViewRelated\ChooseAirportView.xaml.cs">
       <DependentUpon>ChooseAirportView.xaml</DependentUpon>
     </Compile>
@@ -380,6 +383,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BookViewRelated\CustomerInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchViewRelated\ChooseAirportViewInSearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
