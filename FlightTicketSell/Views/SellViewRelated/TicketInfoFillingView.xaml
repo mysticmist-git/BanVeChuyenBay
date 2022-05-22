@@ -371,10 +371,10 @@
                         VerticalAlignment="Bottom"
                         Command="{Binding ContinueCommand}" 
                         CommandParameter="{Binding ElementName=uc, Converter={valueConverter:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverter:ViewInterface.TicketInfoFilling}}"
-                        Background="{StaticResource OrangeBrush}"
+                        BorderBrush="{StaticResource OrangeBrush}"
                         FontSize="{StaticResource Regular}"
                         Content="Tiếp tục"
-                        BorderThickness="0"
+                       Style="{StaticResource HoverButton}"
                         materialDesign:ButtonAssist.CornerRadius="7"/>
             </Grid>
         </Grid>

@@ -186,9 +186,8 @@
                     Grid.Row="3" 
                     HorizontalAlignment="Right" 
                     Width="150"
-                    Background="{StaticResource GreenBrush}" 
-                    materialDesign:ButtonAssist.CornerRadius="5"
-                    BorderThickness="0"
+                    BorderBrush="{StaticResource GreenBrush}" 
+                    Style="{StaticResource HoverButton}"
                     Margin="0 20 20 20"/>
                 </Grid>
             </materialDesign:DialogHost>

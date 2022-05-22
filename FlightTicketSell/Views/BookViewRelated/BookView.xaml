@@ -239,8 +239,8 @@
             <Button 
                 Content="Tiếp tục"
                 Grid.Row="4"
-                BorderThickness="0"
-                Background="OrangeRed"
+               Style="{StaticResource HoverButton}"
+                BorderBrush="{StaticResource OrangeBrush}"
                 Command="{Binding ContinueCommand}"
                 Width="120"
                 Height="40"

@@ -141,7 +141,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Hủy nhận lịch bay
         /// </summary>
-        public ICommand CancelScheduleAFlight_Command { get; set; }
+        public ICommand RefreshScheduleAFlight_Command { get; set; }
         #endregion
 
         #region Properties
@@ -652,7 +652,10 @@ namespace FlightTicketSell.ViewModels
 
                          context.SaveChanges();
                          MessageBox.Show("Thêm chuyến bay thành công!", "Cảnh báo");
-                         LoadCommand.Execute(null);
+
+                         //Load lại
+                         //IoC.IoC.Rebind<ScheduleViewModel>();
+                         RefreshScheduleAFlight_Command.Execute(null);
                      }
                  }
                  catch (EntityException e)
@@ -662,7 +665,7 @@ namespace FlightTicketSell.ViewModels
 
              });
 
-            CancelScheduleAFlight_Command = new RelayCommand<object>((p) => { return true; }, 
+            RefreshScheduleAFlight_Command = new RelayCommand<object>((p) => { return true; }, 
                 (p) => 
                 {
                     //Đổi thành rebind nha
@@ -674,6 +677,9 @@ namespace FlightTicketSell.ViewModels
                     FlightTime = null;
                     List_TicketClass = null;
                     List_LayoverAirport = null;
+                    //IoC.IoC.Rebind <ScheduleViewModel> ();
+
+                    //MessageBox.Show(DepartureAirport.Name);
                 });
             #endregion
 

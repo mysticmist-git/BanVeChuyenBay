@@ -26,6 +26,7 @@
                 Command="{Binding ReturnCommand}"
                 Grid.Column="0"
                 Grid.RowSpan="2"
+                    BorderThickness="0"
                 Width="50"
                 Height="50"
                 ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
@@ -46,16 +47,17 @@
             <!-- Main -->
             <Grid Margin="50,20,50,20">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition />
+                    <RowDefinition Height="71*"/>
+                    <RowDefinition Height="72*" />
+                    <RowDefinition Height="72*" />
+                    <RowDefinition Height="72*" />
+                    <RowDefinition Height="72*" />
+                    <RowDefinition Height="72*" />
+                    <RowDefinition Height="72*" />
+                    <RowDefinition Height="72*" />
+                    <RowDefinition Height="72*" />
+                    <RowDefinition Height="72*" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -73,7 +75,7 @@
 
                 <!-- Flight detail -->
                 <Border Grid.Column="1" Grid.ColumnSpan="8"
-                    Grid.Row="0" Grid.RowSpan="2"
+                    Grid.Row="0" Grid.RowSpan="3"
                     Background="White" CornerRadius="8" Style="{StaticResource ResourceKey=DropShadow}">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -208,9 +210,9 @@
                 </Border>
 
                 <!--Khách hàng đặt chỗ-->
-                <Border Grid.Column="1" Grid.ColumnSpan="5"
-                        Grid.Row="2" Grid.RowSpan="3"
-                        Margin="0 20 0 0" Padding="25"
+                <Border Grid.Column="1" Grid.ColumnSpan="6"
+                        Grid.Row="3" Grid.RowSpan="3"
+                        Margin="0,20,126,0" Padding="25"
                         Background="White"
                         CornerRadius="10"
                         Style="{StaticResource ResourceKey=DropShadow}" >
@@ -326,9 +328,9 @@
 
                 <!--Hạng vé-->
                 <Border Padding="20"
-                        Grid.Row="5" Grid.RowSpan="4"
-                        Grid.Column="1" Grid.ColumnSpan="5"
-                        Margin="0 20 0 0"
+                        Grid.Row="6" Grid.RowSpan="4"
+                        Grid.Column="1" Grid.ColumnSpan="6"
+                        Margin="0,20,126,0"
                         Background="White" 
                         CornerRadius="10" 
                         Style="{StaticResource ResourceKey=DropShadow}" >
@@ -369,7 +371,7 @@
 
                 <!--Khach hang thu huong-->
                 <Border Padding="20" 
-                        Grid.Row="2" Grid.RowSpan="7"
+                        Grid.Row="3" Grid.RowSpan="7"
                         Grid.Column="6" Grid.ColumnSpan="3"
                         Margin="20 20 0 0"
                         Background="White" 
@@ -403,7 +405,7 @@
                                         <Grid.Style>
                                             <Style TargetType="{x:Type Grid}">
                                                 <Style.Triggers>
-                                                    
+
                                                     <Trigger Property="attachedProperties:IsValidProperty.Value" Value="False">
                                                         <Setter Property="Background">
                                                             <Setter.Value>
@@ -419,7 +421,7 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </Grid.Style>
-                                        
+
                                         <Grid.ColumnDefinitions>
                                             <!-- Customer info -->
                                             <ColumnDefinition Width="*" />
@@ -513,19 +515,18 @@
                 </Border>
 
                 <!--Nut tiep tuc-->
-                <Button Grid.Row="9"
+                <Button Grid.Row="10"
                         Grid.Column="7" Grid.ColumnSpan="2"
                         Height="50"
                         Padding="50 0"
-                        materialDesign:ShadowAssist.ShadowDepth="Depth1"
+                        Style="{StaticResource HoverButton}"
+                        BorderBrush="{StaticResource OrangeBrush}"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         Command="{Binding ContinueCommand}" 
                         CommandParameter="{Binding ElementName=uc, Converter={valueConverters:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverters:ViewInterface.BookDetail}}"
-                        Background="{StaticResource OrangeBrush}"
                         FontSize="{StaticResource Regular}"
                         Content="Tiếp tục"
-                        BorderThickness="0"
                         materialDesign:ButtonAssist.CornerRadius="7"
                         />
             </Grid>
