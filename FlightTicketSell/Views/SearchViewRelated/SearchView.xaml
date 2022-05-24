@@ -40,7 +40,7 @@
                         <ColumnDefinition Width="2*"></ColumnDefinition>
                         <ColumnDefinition Width="6*"></ColumnDefinition>
                         <ColumnDefinition Width="0.3*"></ColumnDefinition>
-                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="2.5*"></ColumnDefinition>
                         <ColumnDefinition Width="2*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
@@ -74,7 +74,7 @@
                                    Style="{StaticResource CustomTextbox}" 
                                    VerticalAlignment="Center" 
                                    Text="{Binding SanBayDii.Name}"
-                                   >
+                                     materialDesign:TextFieldAssist.HasClearButton="True">
 
                                     <!--Command-->
                                     <i:Interaction.Triggers>
@@ -114,7 +114,8 @@
                                    materialDesign:HintAssist.Hint="Sân bay đến" 
                                    Style="{StaticResource CustomTextbox}" 
                                    VerticalAlignment="Center" 
-                                    Text="{Binding SanBayDenn.Name}">
+                                    Text="{Binding SanBayDenn.Name}"
+                                             materialDesign:TextFieldAssist.HasClearButton="True">
 
                                     <!--Command-->
                                     <i:Interaction.Triggers>
@@ -145,7 +146,8 @@
                                 SelectedDate="{Binding DateOfEntry}"
                                 Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                                 IsEnabled="{Binding IsLoadFinished}"
-                                >
+                                  materialDesign:TextFieldAssist.HasClearButton="True"
+                                    Focusable="False">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectedDateChanged">
                                             <i:InvokeCommandAction Command="{Binding ParamsChangedCommand}"/>

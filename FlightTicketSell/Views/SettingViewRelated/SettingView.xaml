@@ -62,7 +62,14 @@
                         <!--Số sân bay trung gian tối đa-->
                         <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Số sân bay trung gian tối đa" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
                               Text="{Binding Max_LayoverAirport}"
-                              PreviewTextInput="PreviewTextInput"/>
+                              PreviewTextInput="PreviewTextInput"
+                                 >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="LostFocus">
+                                    <i:InvokeCommandAction Command="{Binding LostFocusTextBox}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
 
                         <!--Thời gian bay tối thiểu-->
                         <TextBox Grid.Row="1" Grid.Column="3" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="phút"
@@ -73,6 +80,11 @@
                                     <TextBlock Text="Thời gian bay tối thiểu" />
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="LostFocus">
+                                    <i:InvokeCommandAction Command="{Binding LostFocusTextBox}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </TextBox>
 
                         <!--Thời gian dừng tối thiểu-->
@@ -84,6 +96,11 @@
                                     <TextBlock Text="Thời gian dừng tối thiểu" />
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="LostFocus">
+                                    <i:InvokeCommandAction Command="{Binding LostFocusTextBox}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </TextBox>
 
                         <!--Thời gian đặt vé chậm nhất -->
@@ -95,17 +112,28 @@
                                     <TextBlock Text="Thời gian đặt vé chậm nhất" />
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="LostFocus">
+                                    <i:InvokeCommandAction Command="{Binding LostFocusTextBox}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </TextBox>
 
                         <!--Thời gian hủy đặt chỗ-->
                         <TextBox Grid.Row="3" Grid.Column="3" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"   materialDesign:TextFieldAssist.SuffixText="ngày"
                              Text="{Binding Cancel_BookingTime}"
-                             PreviewTextInput="PreviewTextInput">
+                             PreviewTextInput="PreviewTextInput"
+                                 materialDesign:HintAssist.HelperText="So với ngày khởi hành">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
-                                    <TextBlock Text="Thời gian hủy đặt chỗ" />
+                                    <TextBlock Text="Thời gian hủy đặt chỗ trước" />
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="LostFocus">
+                                    <i:InvokeCommandAction Command="{Binding LostFocusTextBox}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </TextBox>
 
                         <!--Thời gian dừng tối đa-->
@@ -117,11 +145,14 @@
                                     <TextBlock Text="Thời gian dừng tối đa" />
                                 </StackPanel>
                             </materialDesign:HintAssist.Hint>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="LostFocus">
+                                    <i:InvokeCommandAction Command="{Binding LostFocusTextBox}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </TextBox>
 
                         <!--Nút lưu-->
-                        <!--<Button  Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="7" Height="35" Background="{StaticResource BlueBrush}" Margin="50 0 50 0"  FontSize="{StaticResource Small}" Content="Lưu" BorderThickness="0" materialDesign:ButtonAssist.CornerRadius="7" 
-                             Command="{Binding Save_FlightRegulations_Command}"/>-->
                         <Button
                             Grid.Row="5" Grid.Column="5"
                             HorizontalAlignment="Right"

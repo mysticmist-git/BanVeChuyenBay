@@ -77,7 +77,7 @@
                                    Style="{StaticResource CustomTextbox}" 
                                    VerticalAlignment="Center" 
                                    Text="{Binding DepartureAirport.Name}"
-                                   >
+                                     materialDesign:TextFieldAssist.HasClearButton="True">
                              
                         <!--Command-->
                             <i:Interaction.Triggers>
@@ -104,7 +104,8 @@
                                    materialDesign:HintAssist.Hint="Sân bay đến" 
                                    Style="{StaticResource CustomTextbox}" 
                                    VerticalAlignment="Center" 
-                                    Text="{Binding LandingAirport.Name}">
+                                    Text="{Binding LandingAirport.Name}"
+                                     materialDesign:TextFieldAssist.HasClearButton="True">
                             
                          <!--Command--> 
                             <i:Interaction.Triggers>

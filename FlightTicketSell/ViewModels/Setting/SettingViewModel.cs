@@ -18,7 +18,10 @@ namespace FlightTicketSell.ViewModels
         /// Lưu thông tin chuyến bay
         /// </summary>
         public ICommand Save_FlightRegulations_Command { get; set; }
-
+        /// <summary>
+        /// Hàm lostfocus các textbox quy định
+        /// </summary>
+        public ICommand LostFocusTextBox { get; set; }
         /// <summary>
         /// Load lớn cả giao diện
         /// </summary>
@@ -29,32 +32,32 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Số sân bay trung gian tối đa
         /// </summary>
-        public int Max_LayoverAirport { get; set; }
+        public string Max_LayoverAirport { get; set; }
 
         /// <summary>
         /// Thời gian bay tối thiểu
         /// </summary>
-        public int Min_FlightTime { get; set; }
+        public string Min_FlightTime { get; set; }
 
         /// <summary>
         /// Thời gian đặt vé chậm nhất
         /// </summary>
-        public int Latest_BookingTime { get; set; }
+        public string Latest_BookingTime { get; set; }
 
         /// <summary>
         /// Thời gian hủy đặt chỗ
         /// </summary>
-        public int Cancel_BookingTime { get; set; }
+        public string Cancel_BookingTime { get; set; }
 
         /// <summary>
         /// Thời gian dừng tối thiểu
         /// </summary>
-        public int Min_TimeStop { get; set; }
+        public string Min_TimeStop { get; set; }
 
         /// <summary>
         /// Thời gian dừng tối đa
         /// </summary>
-        public int Max_TimeStop { get; set; }
+        public string Max_TimeStop { get; set; }
 
         /// <summary>
         /// Danh sách sân bay
@@ -252,12 +255,12 @@ namespace FlightTicketSell.ViewModels
                         try
                         {
                             // Các quy định về chuyến bay
-                            Max_LayoverAirport = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri;
-                            Min_FlightTime = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianBayToiThieu").FirstOrDefault().GiaTri;
-                            Latest_BookingTime = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianDatVeChamNhat").FirstOrDefault().GiaTri;
-                            Cancel_BookingTime = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri;
-                            Min_TimeStop = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianDungToiThieu").FirstOrDefault().GiaTri;
-                            Max_TimeStop = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianDungToiDa").FirstOrDefault().GiaTri;
+                            Max_LayoverAirport = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri.ToString();
+                            Min_FlightTime = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianBayToiThieu").FirstOrDefault().GiaTri.ToString();
+                            Latest_BookingTime = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianDatVeChamNhat").FirstOrDefault().GiaTri.ToString();
+                            Cancel_BookingTime = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri.ToString();
+                            Min_TimeStop = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianDungToiThieu").FirstOrDefault().GiaTri.ToString();
+                            Max_TimeStop = (context.THAMSOes.ToList()).Where(h => h.TenThamSo == "ThoiGianDungToiDa").FirstOrDefault().GiaTri.ToString();
 
                             // Danh sách sân bay
                             if (List_Airport != null)
@@ -293,9 +296,6 @@ namespace FlightTicketSell.ViewModels
                 }
             );
 
-
-
-
             Save_FlightRegulations_Command = new RelayCommand<object>(
                (p) => { return true; },
                (p) =>
@@ -304,12 +304,54 @@ namespace FlightTicketSell.ViewModels
                    {
                        try
                        {
-                           context.THAMSOes.Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri = Max_LayoverAirport;
-                           context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianBayToiThieu").FirstOrDefault().GiaTri = Min_FlightTime;
-                           context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDungToiThieu").FirstOrDefault().GiaTri = Min_TimeStop;
-                           context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDungToiDa").FirstOrDefault().GiaTri = Max_TimeStop;
-                           context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDatVeChamNhat").FirstOrDefault().GiaTri = Latest_BookingTime;
-                           context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri = Cancel_BookingTime;
+                           if (string.IsNullOrEmpty(Max_LayoverAirport.ToString()))
+                           {
+                               MessageBox.Show("Số sân bay trung gian không được trống!", "Cảnh báo");
+                               Max_LayoverAirport = context.THAMSOes.Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri.ToString();
+                               return;
+                           }
+                           if (string.IsNullOrEmpty(Min_FlightTime.ToString()))
+                           {
+                               MessageBox.Show("Thời gian bay tối thiểu không được trống!", "Cảnh báo");
+                               Min_FlightTime = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianBayToiThieu").FirstOrDefault().GiaTri.ToString();
+                               return;
+                           }
+                           if (string.IsNullOrEmpty(Min_TimeStop.ToString()))
+                           {
+                               MessageBox.Show("Thời gian dừng tối thiểu không được trống!", "Cảnh báo");
+                               Min_TimeStop = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDungToiThieu").FirstOrDefault().GiaTri.ToString();
+                               return;
+                           }
+                           if (string.IsNullOrEmpty(Max_TimeStop.ToString()))
+                           {
+                               MessageBox.Show("Thời gian dừng tối đa không được trống!", "Cảnh báo");
+                               Max_TimeStop = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDungToiDa").FirstOrDefault().GiaTri.ToString();
+                               return;
+                           }
+                           if (string.IsNullOrEmpty(Latest_BookingTime.ToString()))
+                           {
+                               MessageBox.Show("Thời gian chậm nhất đặt vé không được trống!", "Cảnh báo");
+                               Latest_BookingTime = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDatVeChamNhat").FirstOrDefault().GiaTri.ToString();
+                               return;
+                           }
+                           if (string.IsNullOrEmpty(Cancel_BookingTime.ToString()))
+                           {
+                               MessageBox.Show("Thời gian hủy vé không được trống!", "Cảnh báo");
+                               Cancel_BookingTime = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri.ToString();
+                               return;
+                           }
+                           if (int.Parse(Max_LayoverAirport) == context.SANBAYs.ToList().Count() - 2)
+                           {
+                               MessageBox.Show("Số sân bay trung gian không vượt quá số sân bay trừ đi 2!", "Cảnh báo");
+                               Max_LayoverAirport = context.THAMSOes.Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri.ToString();
+                               return;
+                           }
+                           context.THAMSOes.Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri = int.Parse(Max_LayoverAirport);
+                           context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianBayToiThieu").FirstOrDefault().GiaTri = int.Parse(Min_FlightTime);
+                           context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDungToiThieu").FirstOrDefault().GiaTri = int.Parse(Min_TimeStop);
+                           context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDungToiDa").FirstOrDefault().GiaTri = int.Parse(Max_TimeStop);
+                           context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDatVeChamNhat").FirstOrDefault().GiaTri = int.Parse(Latest_BookingTime);
+                           context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri = int.Parse(Cancel_BookingTime);
                            context.SaveChanges();
                            if (context.SaveChanges() > 0)
                                MessageBox.Show("Lưu thành công!", "Cảnh báo");
@@ -324,7 +366,52 @@ namespace FlightTicketSell.ViewModels
                }
            );
 
-
+            LostFocusTextBox = new RelayCommand<object>(
+                (p) => { return true; },
+                (p) => 
+                {
+                using (var context = new FlightTicketSellEntities())
+                    {
+                        try
+                        {
+                            if (string.IsNullOrEmpty(Max_LayoverAirport.ToString()))
+                            {
+                                Max_LayoverAirport = context.THAMSOes.Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri.ToString();
+                                return;
+                            }
+                            if (string.IsNullOrEmpty(Min_FlightTime.ToString()))
+                            {
+                                Min_FlightTime = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianBayToiThieu").FirstOrDefault().GiaTri.ToString();
+                                return;
+                            }
+                            if (string.IsNullOrEmpty(Min_TimeStop.ToString()))
+                            {
+                                Min_TimeStop = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDungToiThieu").FirstOrDefault().GiaTri.ToString();
+                                return;
+                            }
+                            if (string.IsNullOrEmpty(Max_TimeStop.ToString()))
+                            {
+                                Max_TimeStop = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDungToiDa").FirstOrDefault().GiaTri.ToString();
+                                return;
+                            }
+                            if (string.IsNullOrEmpty(Latest_BookingTime.ToString()))
+                            {
+                                Latest_BookingTime = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDatVeChamNhat").FirstOrDefault().GiaTri.ToString();
+                                return;
+                            }
+                            if (string.IsNullOrEmpty(Cancel_BookingTime.ToString()))
+                            {
+                                Cancel_BookingTime = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri.ToString();
+                                return;
+                            }
+                        }
+                        catch (EntityException e)
+                        {
+                            MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                }
+                );
 
 
             #endregion
@@ -471,13 +558,8 @@ namespace FlightTicketSell.ViewModels
               (p) => { return true; },
               (p) =>
               {
-
-                  
                 //Close dialog
                 DialogHost.CloseDialogCommand.Execute(null, null);
-                  
-
-
               }
           );
             DeleteAirport_Command = new RelayCommand<object>(
