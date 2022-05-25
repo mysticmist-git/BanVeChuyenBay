@@ -26,6 +26,7 @@
 
         <!-- Return button -->
         <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                Name="Quay_Lai"
                 Command="{Binding ReturnCommand}"
                 Grid.Column="0"
                 Grid.RowSpan="2"
@@ -112,6 +113,7 @@
 
                             <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Mã chuyến bay</TextBlock>
                             <TextBox  IsReadOnly="True"
+                                        Name="Ma_Chuyen_Bay"
                                         Text="{Binding FlightInfo.DisplayFlightCode, Mode=OneWay}"
                                         Grid.Row="1" 
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -132,6 +134,7 @@
 
                             <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đi</TextBlock>
                             <TextBox IsReadOnly="True" 
+                                        Name="San_Bay_Di"
                                         Text="{Binding FlightInfo.SanBayDi, Mode=OneWay}"
                                         Grid.Row="1"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
@@ -152,6 +155,7 @@
 
                             <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đến</TextBlock>
                             <TextBox IsReadOnly="True" 
+                                        Name="San_Bay_Den"
                                         Text="{Binding FlightInfo.SanBayDen, Mode=OneWay}" 
                                         Grid.Row="1" 
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -173,6 +177,7 @@
                             <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Ngày giờ bay</TextBlock>
                             <Grid Grid.Row="1">
                                 <TextBox IsReadOnly="True" 
+                                            Name="Ngay_Gio_Bay"
                                             Text="{Binding FlightInfo.NgayGio, Mode=OneWay}"
                                             Grid.Row="1"
                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
@@ -194,6 +199,7 @@
 
                             <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Thời gian bay</TextBlock>
                             <TextBox IsReadOnly="True"
+                                        Name="Thoi_Gian_Bay"
                                         Text="{Binding FlightInfo.ThoiGianBay, Mode=OneWay}"
                                         Grid.Row="1"
                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Center"
@@ -236,6 +242,7 @@
                         <!-- Bảng sân bay trung gian -->
                         <Border Grid.Row="1" CornerRadius="0 0 7 7">
                             <DataGrid
+                                Name="San_Bay_Trung_Gian"
                                 ItemsSource="{Binding OverlayAirport}"
                                 d:ItemsSource="{d:SampleData ItemCount=10}"
                                 RowHeight="50"
@@ -310,6 +317,7 @@
 
                         <Border Grid.Row="1" Padding="30 15">
                             <DataGrid
+                                Name="Thong_Tin_Hang_Ve"
                                 Background="Transparent"
                                 ItemsSource="{Binding TicketTier}"
                                 d:ItemsSource="{d:SampleData ItemCount=3}"

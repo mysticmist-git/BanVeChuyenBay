@@ -32,6 +32,7 @@
 
             <!-- Return button -->
             <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                Name="Quay_Lai"
                 Command="{Binding ReturnCommand}"
                 Grid.Column="0"
                 Grid.RowSpan="2"
@@ -109,18 +110,20 @@
 
                                         <Grid.ColumnDefinitions>
                                             <!-- Search box -->
-                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="74*" />
+                                            <ColumnDefinition Width="97*"/>
                                             <!-- Search button -->
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
 
                                         <!-- Search box -->
                                         <TextBox Grid.Column="0"
+                                             Name="Ma_Ve"
                                              VerticalAlignment="Center"
                                              materialDesign:HintAssist.Hint="Mã vé"
                                              Text="{Binding Search_IDSold}"
                                              FontSize="{StaticResource RealSmall}"
-                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.ColumnSpan="2">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="TextChanged">
                                                     <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
@@ -129,7 +132,7 @@
                                         </TextBox>
 
                                         <!-- Search button -->
-                                        <Button Grid.Column="1"
+                                        <Button Grid.Column="2"
                                         VerticalAlignment="Center" 
                                         Background="Transparent" 
                                         Foreground="{StaticResource GrayBrush}" 
@@ -150,6 +153,7 @@
                             </Grid>
 
                             <DataGrid
+                                  Name="Ve_Da_Ban"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                                   Grid.Row="1"
                                   Background="Transparent"
@@ -269,6 +273,7 @@
 
                                         <!-- Search box -->
                                         <TextBox Grid.Column="0"
+                                             Name="Ma_Dat_Cho"
                                              VerticalAlignment="Center"
                                              materialDesign:HintAssist.Hint="Mã đặt chỗ"
                                              Text="{Binding Search_IDBooked}"
@@ -303,6 +308,7 @@
                             </Grid>
 
                             <DataGrid
+                                  Name="Cho_Da_Dat"
                                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                                   Background="Transparent"
@@ -318,7 +324,7 @@
                                   AutoGenerateColumns="False"
                                   RowHeight="50"
                                   materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                                  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                                  materialDesign:DataGridAssist.ColumnHeaderPadding="8" SelectionChanged="DataGrid_SelectionChanged">
                                 <DataGrid.Columns>
 
                                     <DataGridTextColumn IsReadOnly="True"
@@ -344,6 +350,7 @@
 
                                                     <!-- Detail button -->
                                                     <Button Content="Chi tiết"
+                                                            Name="Thong_Tin_Chi_Tiet_Khach_Hang"
                                                             Grid.Column="1"
                                                             Style="{StaticResource FlightDetailButton}"
                                                             Command="{Binding Open_Window_DescriptionCustomer_Command}" />
@@ -351,14 +358,14 @@
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
-                                    
+
                                     <!-- set a max length to get an indicator in the editor -->
                                     <materialDesign:DataGridTextColumn IsReadOnly="True"
                                     Width="100"
                                     Binding="{Binding SoVeDat}"
                                     Header="Số chỗ"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                                    
+
                                     <!-- Tên hạng vé -->
                                     <materialDesign:DataGridTextColumn IsReadOnly="True"
                                     Width="200"
@@ -400,6 +407,7 @@
 
                                                     <!-- Booking change button -->
                                                     <Button ToolTip="Đổi vé"
+                                                            Name="Chi_Tiet_Cho_Dat_Doi_Ve"
                                                             Grid.Column="1"
                                                             Background="{StaticResource GreenBrush}"
                                                             BorderThickness="0"
@@ -422,6 +430,6 @@
             </Grid>
 
         </Grid>
-        
+
     </Grid>
 </UserControl>

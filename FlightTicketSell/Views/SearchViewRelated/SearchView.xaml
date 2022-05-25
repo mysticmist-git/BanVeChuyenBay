@@ -72,6 +72,7 @@
                             <ComboBox Grid.Column="0" Grid.Row="1"
                                       materialDesign:HintAssist.Hint="Sân bay đi"
                                       Margin="10,0,0,0"
+                                      Name="San_Bay_Di"
                                       ItemsSource="{Binding Airports}"
                                       DisplayMemberPath="Name"
                                       SelectedItem="{Binding SanBayDii, Mode=OneWayToSource}"
@@ -113,6 +114,7 @@
                             <ComboBox
                                 Grid.Column="2"
                                 Grid.Row="1"
+                                Name="San_Bay_Den"
                                 materialDesign:HintAssist.Hint="Sân bay đến"
                                 Margin="10,0,10,0"
                                 ItemsSource="{Binding Airports}"
@@ -131,6 +133,7 @@
                     </Border>
 
                     <Border Grid.Column="3"
+                            Name="Khoi_Hanh"
                             Background="White" 
                             CornerRadius="8"
                             Padding="40 10"
@@ -203,7 +206,9 @@
                                        FontWeight="Bold"
                                        VerticalAlignment="Center" />
 
-                            <ToggleButton IsChecked="{Binding IsDisplayDeparted}" Margin="10 0 0 0"
+                            <ToggleButton 
+                                x:Name="An_Hien"
+                                IsChecked="{Binding IsDisplayDeparted}" Margin="10 0 0 0"
                                           Background="{StaticResource LightBlueBrush}">
                                 <ToggleButton.Style>
                                     <Style TargetType="{x:Type ToggleButton}"
@@ -224,7 +229,9 @@
                     </Grid>
 
                     <!-- Flight table-->
-                    <DataGrid Grid.Row="1" Grid.RowSpan="7"
+                    <DataGrid 
+                    Name="Bang_Cac_Chuyen_Bay"
+                    Grid.Row="1" Grid.RowSpan="7"
                     ItemsSource="{Binding ProcessedFlights}"
                     d:ItemsSource="{d:SampleData ItemCount=5}"
                     Background="Transparent"
@@ -262,7 +269,9 @@
                                                    HorizontalAlignment="Left"/>
 
                                             <!-- Detail button -->
-                                            <Button Content="Chi tiết"
+                                            <Button 
+                                                x:Name="Nut_Chi_Tiet"
+                                                Content="Chi tiết"
                                                 Grid.Column="1"
                                                 Style="{StaticResource FlightDetailButton}"
                                                 Command="{Binding Open_Window_DescriptionTicketFlight_Command}"

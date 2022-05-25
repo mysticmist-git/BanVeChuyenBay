@@ -104,25 +104,25 @@
                                     <!-- Name -->
                                     <StackPanel Grid.Row="0" Grid.Column="0">
                                         <TextBlock FontWeight="Bold">Họ Tên</TextBlock>
-                                        <TextBox Text="{Binding HoTen, Mode=OneWay}" materialDesign:HintAssist.Hint="Họ và tên" IsReadOnly="True" />
+                                        <TextBox Name="Ho_Ten"  Text="{Binding HoTen, Mode=OneWay}" materialDesign:HintAssist.Hint="Họ và tên" IsReadOnly="True" />
                                     </StackPanel>
 
                                     <!-- Phone number -->
                                     <StackPanel Grid.Row="2" Grid.Column="0">
                                         <TextBlock FontWeight="Bold">Số điện thoại</TextBlock>
-                                        <TextBox Text="{Binding SDT, Mode=OneWay}" materialDesign:HintAssist.Hint="Số điện thoại" IsReadOnly="True" />
+                                        <TextBox x:Name="SDT" Text="{Binding SDT, Mode=OneWay}" materialDesign:HintAssist.Hint="Số điện thoại" IsReadOnly="True" />
                                     </StackPanel>
 
                                     <!-- CMND -->
                                     <StackPanel Grid.Row="0" Grid.Column="2">
                                         <TextBlock FontWeight="Bold">CMND/CCCD</TextBlock>
-                                        <TextBox Text="{Binding CMND, Mode=OneWay}" materialDesign:HintAssist.Hint="CMND" IsReadOnly="True" />
+                                        <TextBox Name="CMND_CCCD" Text="{Binding CMND, Mode=OneWay}" materialDesign:HintAssist.Hint="CMND" IsReadOnly="True" />
                                     </StackPanel>
 
                                     <!-- Email -->
                                     <StackPanel Grid.Row="2" Grid.Column="2">
                                         <TextBlock FontWeight="Bold">Email</TextBlock>
-                                        <TextBox Text="{Binding Email, Mode=OneWay}" materialDesign:HintAssist.Hint="Email" IsReadOnly="True" />
+                                        <TextBox Name="Email" Text="{Binding Email, Mode=OneWay}" materialDesign:HintAssist.Hint="Email" IsReadOnly="True" />
                                     </StackPanel>
 
                                 </Grid>
