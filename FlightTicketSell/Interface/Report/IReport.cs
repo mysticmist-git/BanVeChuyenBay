@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
-namespace FlightTicketSell.Interface.Report
+namespace FlightTicketSell.Interface
 {
     public interface IReport
     {

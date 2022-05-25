@@ -6,74 +6,163 @@
              xmlns:local="clr-namespace:FlightTicketSell.Views"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:validationRules="clr-namespace:FlightTicketSell.ValidateRules"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Border Height="250"
                 Width="600" 
                 Background="White"
+                Padding="20"
                 CornerRadius="10" 
                 Style="{StaticResource ResourceKey=DropShadow}" >
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1.1*"></RowDefinition>
-                    <RowDefinition Height="3*"></RowDefinition>
-                    <RowDefinition Height="1.2*"></RowDefinition>
-                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
                 <!-- Heading -->
-                <TextBlock Grid.ColumnSpan="2"
+                <TextBlock Grid.ColumnSpan="6"
                            Grid.Row="0"
                            Text="{Binding Index, Converter={valueConverters:IndexToDisplayHeading}}"
                            d:Text="Khách hàng 1"
-                           Padding="20,5,0,0"
                            FontSize="20"
                            VerticalAlignment="Center"
                            FontWeight="Bold" />
 
-                <StackPanel Width="200" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock FontWeight="Bold">Họ Tên</TextBlock>
-                    <TextBox Text="{Binding NameBuffer, Mode=TwoWay}" materialDesign:HintAssist.Hint="Họ và tên" />
-                    <TextBlock FontWeight="Bold">Số điện thoại</TextBlock>
-                    <TextBox Text="{Binding PhoneNumBuffer, Mode=TwoWay}" materialDesign:HintAssist.Hint="Số điện thoại" />
-                </StackPanel>
+                <!-- Customer information filling fields -->
+                <Grid Grid.Row="1" Grid.RowSpan="5"
+                      Grid.Column="0" Grid.ColumnSpan="6"
+                      >
 
-                <StackPanel Width="200" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock FontWeight="Bold">CMND/CCCD</TextBlock>
-                    <TextBox Text="{Binding IDBuffer, Mode=TwoWay}" materialDesign:HintAssist.Hint="CMND" />
-                    <TextBlock FontWeight="Bold">Email</TextBlock>
-                    <TextBox Text="{Binding EmailBuffer, Mode=TwoWay}" materialDesign:HintAssist.Hint="Email" />
-                </StackPanel>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*" />
+                        <!-- Spacing -->
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="6*" />
+                    </Grid.ColumnDefinitions>
 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5*" />
+                        <!-- Spacing -->
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="5*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Name -->
+                    <TextBox x:Name="tbCustomerName"
+                                    VerticalAlignment="Center"
+                                    LostFocus="TextBox_LostFocus"
+                                    Grid.Column="0" Grid.Row="0"
+                                    materialDesign:HintAssist.Hint="Họ và tên"
+                                    materialDesign:HintAssist.HelperText="VD: Nguyễn Văn A"
+                                    Style="{StaticResource CustomTextbox}">
+                        <TextBox.Text>
+                            <Binding Path="NameBuffer" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationRules:StringNotEmptyRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <!-- CMND -->
+                    <TextBox x:Name="tbCustomerID"
+                                        PreviewTextInput="PreviewTextInput"
+                                        VerticalAlignment="Center"
+                                        Grid.Column="2" Grid.Row="0"
+                                        LostFocus="TextBox_LostFocus"
+                                        materialDesign:HintAssist.Hint="CMND"
+                                        materialDesign:HintAssist.HelperText="VD: 312509001"
+                                        Style="{StaticResource CustomTextbox}">
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="LostFocus">
+                                <i:InvokeCommandAction Command="{Binding CustomerIDCheck}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                        <TextBox.Text>
+                            <Binding Path="IDBuffer" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationRules:StringNotEmptyRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <!-- Phone number -->
+                    <TextBox x:Name="tbCustomerPhoneNumber"
+                                                PreviewTextInput="PreviewTextInput"
+                                                VerticalAlignment="Center"
+                                                Grid.Column="0" Grid.Row="2"
+                                                materialDesign:HintAssist.Hint="Số điện thoại"
+                                                materialDesign:HintAssist.HelperText="VD: 0359723000"
+                                                Style="{StaticResource CustomTextbox}">
+                        <TextBox.Text>
+                            <Binding Path="PhoneNumBuffer" UpdateSourceTrigger="PropertyChanged" />
+                        </TextBox.Text>
+                    </TextBox>
+
+                    <!-- Email -->
+                    <TextBox x:Name="tbCustomerEmail"
+                                        VerticalAlignment="Center"
+                                        Grid.Column="2" Grid.Row="2"
+                                        materialDesign:HintAssist.Hint="Email" 
+                                        materialDesign:HintAssist.HelperText="VD: nguyenvana@gmail.com"
+                                        Style="{StaticResource CustomTextbox}">
+                        <TextBox.Text>
+                            <Binding Path="EmailBuffer" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <validationRules:MailFormatRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
+                </Grid>
+                
+                <!-- Close button -->
+                <Button
+                    Grid.Column="0" Grid.ColumnSpan="2"
+                    Grid.Row="7" Grid.RowSpan="1"
+                    Style="{StaticResource HoverButton}"
+                    BorderBrush="{StaticResource RedBrush}"
+                    IsCancel="True"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    Content="Thoát"
+                    FontWeight="Bold">
+                </Button>
+                
+                <!-- Save button -->
                 <Button 
+                    Grid.Column="4" Grid.ColumnSpan="2"
+                    Grid.Row="7" Grid.RowSpan="1"
                     Content="Lưu"
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    BorderThickness="0"
-                    Background="OrangeRed"
+                   Style="{StaticResource HoverButton}"
+                    BorderBrush="{StaticResource GreenBrush}"
                     Command="{Binding SaveCustomerCommand}"
-                    Width="100"
                     Height="30"
                     FontSize="16"
                     FontWeight="Bold"
-                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     materialDesign:ShadowAssist.Darken="True">
-                </Button>
-                <Button
-                    Style="{StaticResource MaterialDesignFlatButton}"
-                    IsCancel="True"
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                    HorizontalAlignment="Center"
-                    Content="Thoát"
-                    FontWeight="Bold">
                 </Button>
             </Grid>
         </Border>

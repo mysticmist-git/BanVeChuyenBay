@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
         xmlns:local="clr-namespace:FlightTicketSell.Views" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d"
-        Height="400" Width="400"
+        Height="500" Width="400"
         >
     
     <UserControl.DataContext>
@@ -99,7 +99,6 @@
                             Grid.Row="1"
                             Grid.ColumnSpan="3"
                             IsReadOnly="True"
-                            Margin="20 0 10 0"
                             CellStyle="{StaticResource DataGridCellCenter}"
                             ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                         >

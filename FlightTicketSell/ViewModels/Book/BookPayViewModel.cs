@@ -33,11 +33,19 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public FlightInfo FlightInfo { get => IoC.IoC.Get<FlightDetailViewModel>().FlightInfo; }
 
-        public ObservableCollection<Customer> Customers { get => IoC.IoC.Get<BookDetailViewModel>().Customers; }
+        /// <summary>
+        /// The customer list we get from book detail view
+        /// </summary>
+        public ObservableCollection<CustomerBookVariant> Customers { get => IoC.IoC.Get<BookDetailViewModel>().Customers; }
 
+        /// <summary>
+        /// The current ticket tier
+        /// </summary>
         public TicketTier CurrentTicketTier { get => IoC.IoC.Get<BookDetailViewModel>().CurrentTicketTier; }
 
-
+        /// <summary>
+        /// The overlay airport
+        /// </summary>
         public ObservableCollection<OverlayAirport_Search> OverlayAirport { get => IoC.IoC.Get<FlightDetailViewModel>().OverlayAirport; }
 
         /// <summary>

@@ -11,7 +11,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The customer whose CMND duplicated
         /// </summary>
-        public KHACHHANG DuplicatedCustomer { get => IoC.IoC.Get<TicketInfoFillingViewModel>().DuplicatedCustomer; }
+        public Customer DuplicatedCustomer { get; set; }
 
         #endregion
 

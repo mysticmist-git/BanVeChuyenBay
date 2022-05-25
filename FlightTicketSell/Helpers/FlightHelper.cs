@@ -68,11 +68,14 @@ namespace FlightTicketSell.Helpers
                         await context.SaveChangesAsync();
 
                         // Add flight report
-                        var monthReportIDHolder = await context.DOANHTHUTHANGs.Where(p => p.Thang == item.NgayGio.Month && p.DOANHTHUNAM.Nam == item.NgayGio.Year).FirstOrDefaultAsync();
+                        var monthReportID = await context.DOANHTHUTHANGs
+                            .Where(p => p.Thang == item.NgayGio.Month && p.DOANHTHUNAM.Nam == item.NgayGio.Year)
+                            .Select(p => p.MaDoanhThuThang)
+                            .FirstOrDefaultAsync();
 
                         var newFlightReport = new DOANHTHUCHUYENBAY
                         {
-                            MaDoanhThuThang = monthReportIDHolder.MaDoanhThuThang,
+                            MaDoanhThuThang = monthReportID,
                             MaChuyenBay = item.MaChuyenBay,
                             SoVe = item.VEs.Count + item.DATCHOes.Sum(p => p.SoVeDat),
                             DoanhThu = Convert.ToInt32(
@@ -80,8 +83,28 @@ namespace FlightTicketSell.Helpers
                                 item.DATCHOes.Sum(p => p.GiaTien)
                             )
                         };
-                        context.DOANHTHUCHUYENBAYs.Add(newFlightReport);
 
+                        // Update month, year revenue
+                        var yearReport = await context.DOANHTHUNAMs
+                            .Where(dtn => dtn.Nam == item.NgayGio.Year)
+                            .FirstOrDefaultAsync();
+
+                        yearReport.DoanhThu += newFlightReport.DoanhThu;
+                        yearReport.SoChuyenBay++;
+
+                        var monthReport = await context.DOANHTHUTHANGs
+                            .Where(dtt => dtt.MaDoanhThuThang == monthReportID)
+                            .FirstOrDefaultAsync();
+
+                        monthReport.DoanhThu += newFlightReport.DoanhThu;
+                        monthReport.SoChuyenBay++;
+                        monthReport.TiLe = yearReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : monthReport.DoanhThu / yearReport.DoanhThu;
+
+                        newFlightReport.TiLe = monthReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : newFlightReport.DoanhThu / monthReport.DoanhThu;
+
+                        // Add new flight report
+                        context.DOANHTHUCHUYENBAYs.Add(newFlightReport);
+                        
                         /// Save changes down to database
                         await context.SaveChangesAsync();
                     }

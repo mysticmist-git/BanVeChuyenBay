@@ -196,7 +196,9 @@
                                                     <!-- Detail button -->
                                                     <Button Content="Chi tiết"
                                                             Grid.Column="1"
-                                                            Style="{StaticResource FlightDetailButton}"
+                                                            Style="{StaticResource HoverButton}"
+                                                            BorderBrush="{StaticResource LightBlueBrush}"
+                                                            Height="28"
                                                             Command="{Binding Open_Window_DescriptionCustomer_Command}" />
                                                 </Grid>
                                             </DataTemplate>
@@ -352,7 +354,9 @@
                                                     <Button Content="Chi tiết"
                                                             Name="Thong_Tin_Chi_Tiet_Khach_Hang"
                                                             Grid.Column="1"
-                                                            Style="{StaticResource FlightDetailButton}"
+                                                            Style="{StaticResource HoverButton}"
+                                                            BorderBrush="{StaticResource LightBlueBrush}"
+                                                            Height="28"
                                                             Command="{Binding Open_Window_DescriptionCustomer_Command}" />
                                                 </Grid>
                                             </DataTemplate>
@@ -409,8 +413,8 @@
                                                     <Button ToolTip="Đổi vé"
                                                             Name="Chi_Tiet_Cho_Dat_Doi_Ve"
                                                             Grid.Column="1"
-                                                            Background="{StaticResource GreenBrush}"
-                                                            BorderThickness="0"
+                                                           BorderBrush="{StaticResource GreenBrush}"
+                                                            Style="{StaticResource HoverButton}"
                                                             Command="{Binding ShowMoreCommand}">
                                                         <StackPanel Orientation="Horizontal">
                                                             <TextBlock Text="Xem " />

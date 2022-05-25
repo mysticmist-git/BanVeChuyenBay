@@ -111,13 +111,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AttachedProperties\Book\IsValidProperty.cs" />
     <Compile Include="AttachedProperties\ReportTypeProperty.cs" />
     <Compile Include="Helpers\FlightHelper.cs" />
     <Compile Include="Helpers\FormatHelper.cs" />
+    <Compile Include="Interface\Book\IBookDetail.cs" />
     <Compile Include="Interface\ITicketInfoFilling.cs" />
     <Compile Include="Interface\Report\IReport.cs" />
     <Compile Include="Interface\Report\IReportPrintPreview.cs" />
     <Compile Include="Models\Book\Book.cs" />
+    <Compile Include="Models\Enums\General\Parameter.cs" />
+    <Compile Include="ValueConverters\Application\AppViewToDisplayTextConverter.cs" />
+    <Compile Include="ValueConverters\Base\BaseMultiValueConverter.cs" />
+    <Compile Include="ValueConverters\BooleanInvertConverter.cs" />
+    <Compile Include="ValueConverters\General\BooleanToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\Search\SellBookButtonEnableConverter.cs" />
+    <Compile Include="ViewModels\Book\CustomerBookVariant.cs" />
+    <Compile Include="Models\Book\CustomerWithIndex.cs" />
     <Compile Include="Models\CHITIETDATCHO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -217,7 +227,7 @@
     <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
-    <Compile Include="ViewModels\Book\Customer.cs" />
+    <Compile Include="Models\General\Customer.cs" />
     <Compile Include="Models\SearchRelated\Airport_Search.cs" />
     <Compile Include="ViewModels\Search\BookSearchVariant.cs" />
     <Compile Include="ViewModels\Search\FlightDetailViewModel.cs" />
@@ -251,6 +261,9 @@
     </Compile>
     <Compile Include="Views\BookViewRelated\CustomerInfoDialog.xaml.cs">
       <DependentUpon>CustomerInfoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchViewRelated\ChooseAirportViewInSearchView.xaml.cs">
+      <DependentUpon>ChooseAirportViewInSearchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ScheduleViewRelated\ChooseAirportView.xaml.cs">
       <DependentUpon>ChooseAirportView.xaml</DependentUpon>
@@ -370,6 +383,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BookViewRelated\CustomerInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchViewRelated\ChooseAirportViewInSearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

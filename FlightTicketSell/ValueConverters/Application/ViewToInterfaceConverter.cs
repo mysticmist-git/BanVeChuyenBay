@@ -1,5 +1,4 @@
 ﻿using FlightTicketSell.Interface;
-using FlightTicketSell.Interface.Report;
 using System;
 using System.Globalization;
 
@@ -8,7 +7,8 @@ namespace FlightTicketSell.ValueConverters
     public enum ViewInterface
     {
         TicketInfoFilling,
-        Report
+        Report,
+        BookDetail
     }
     
     public class ViewToInterfaceConverter : BaseValueConverter<ViewToInterfaceConverter>
@@ -21,6 +21,8 @@ namespace FlightTicketSell.ValueConverters
                     return value as ITicketInfoFilling;
                 case ViewInterface.Report:
                     return value as IReport;
+                case ViewInterface.BookDetail:
+                    return value as IBookDetail;
             }
 
             return null;

@@ -125,12 +125,13 @@
                              MaxWidth="{Binding ElementName=revenueTbl, Path=ActualWidth}"
                              VerticalAlignment="Center">
                                 <TextBlock Foreground="White"                               
-                                   Text="{Binding DisplayTotalRevenue, FallbackValue=600.000.000 VNĐ}"                               
-                                   FontFamily="{StaticResource Roboto}"                               
-                                   FontWeight="Bold"                               
-                                   FontSize="{StaticResource Large}"                                
-                                   Margin="30 0 0 0"
-                                   x:Name="revenueTbl"
+                                           Text="{Binding DisplayTotalRevenue}"
+                                           d:Text="600.000.000 VNĐ"
+                                           FontFamily="{StaticResource Roboto}"                               
+                                           FontWeight="Bold"                               
+                                           FontSize="{StaticResource Large}"                                
+                                           Margin="30 0 0 0"
+                                           x:Name="revenueTbl"
                                />
                             </Viewbox>
 
@@ -185,9 +186,8 @@
                     Grid.Row="3" 
                     HorizontalAlignment="Right" 
                     Width="150"
-                    Background="{StaticResource GreenBrush}" 
-                    materialDesign:ButtonAssist.CornerRadius="5"
-                    BorderThickness="0"
+                    BorderBrush="{StaticResource GreenBrush}" 
+                    Style="{StaticResource HoverButton}"
                     Margin="0 20 20 20"/>
                 </Grid>
             </materialDesign:DialogHost>

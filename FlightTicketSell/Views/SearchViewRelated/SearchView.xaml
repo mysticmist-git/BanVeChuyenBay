@@ -20,8 +20,8 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-
-    <Grid>
+    <materialDesign:DialogHost CloseOnClickAway="True" Identifier="RootDialog">
+        <Grid>
         <Grid Margin="50,20,50,20">
 
             <Grid.RowDefinitions>
@@ -37,17 +37,17 @@
             <Border Grid.Row="0">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
                         <ColumnDefinition Width="6*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                        <ColumnDefinition Width="2.5*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
                     <Border Grid.Column="1"
                             Background="White"
                             CornerRadius="8"
-                            Padding="20"
+                            Padding="40 20 40 20"
                             Style="{StaticResource DropShadow}">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -61,13 +61,22 @@
                             </Grid.RowDefinitions>
 
                             <!--Header-->
-                            <TextBlock Grid.Row="0"
+                                <TextBlock Grid.Row="0"
                                        Grid.Column="0" Grid.ColumnSpan="6"
                                        VerticalAlignment="Bottom" 
                                        FontFamily="{StaticResource RobotoBlack}" 
                                        FontSize="{StaticResource Small}"
                                        >Tiêu chuẩn tra cứu</TextBlock>
+                            
+                                <!--Sân bay đi-->
+                                <TextBox   Grid.Column="0" Grid.Row="1"
+                                   materialDesign:HintAssist.Hint="Sân bay đi" 
+                                   Style="{StaticResource CustomTextbox}" 
+                                   VerticalAlignment="Center" 
+                                   Text="{Binding SanBayDii.Name}"
+                                     materialDesign:TextFieldAssist.HasClearButton="True">
 
+<<<<<<< HEAD
                             <!--Sân bay đi -->
                             <ComboBox Grid.Column="0" Grid.Row="1"
                                       materialDesign:HintAssist.Hint="Sân bay đi"
@@ -85,9 +94,18 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </ComboBox>
+=======
+                                    <!--Command-->
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseDown">
+                                            <i:InvokeCommandAction Command="{Binding ChooseDepartureAirport_Command}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+>>>>>>> 69748d09ce4fe3003226261c7e5fc8598b7c4a86
 
-                            <!--Nút chuyển giữa sân bay đi và sân bay đến-->
-                            <Button  Grid.Column="1" Grid.Row="1"
+                                <!--Nút chuyển giữa sân bay đi và sân bay đến-->
+                                <Button  Grid.Column="1" Grid.Row="1"
                                      Padding="0"
                                      Width="22" 
                                      Height="22" 
@@ -96,20 +114,21 @@
                                      BorderThickness="0,0,0,0"
                                      VerticalAlignment="Center" 
                                      HorizontalAlignment="Center">
-                                <Button.Content>
-                                    <materialDesign:PackIcon Kind="MenuSwap" Margin="0"  Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" RenderTransformOrigin="0.5,0.5" >
-                                        <materialDesign:PackIcon.RenderTransform>
-                                            <RotateTransform Angle="90"/>
-                                        </materialDesign:PackIcon.RenderTransform>
-                                    </materialDesign:PackIcon>
-                                </Button.Content>
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewMouseDown">
-                                        <i:InvokeCommandAction Command="{Binding Change_Departure_Landing_Airport_Command}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </Button>
+                                    <Button.Content>
+                                        <materialDesign:PackIcon Kind="MenuSwap" Margin="0"  Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" RenderTransformOrigin="0.5,0.5" >
+                                            <materialDesign:PackIcon.RenderTransform>
+                                                <RotateTransform Angle="90"/>
+                                            </materialDesign:PackIcon.RenderTransform>
+                                        </materialDesign:PackIcon>
+                                    </Button.Content>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseDown">
+                                            <i:InvokeCommandAction Command="{Binding Change_Departure_Landing_Airport_Command}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
 
+<<<<<<< HEAD
                             <!-- Sân bay đi -->
                             <ComboBox
                                 Grid.Column="2"
@@ -130,27 +149,58 @@
                                 </i:Interaction.Triggers>
                             </ComboBox>
                         </Grid>
+=======
+                                <!--Sân bay đến-->
+                                <TextBox   Grid.Column="2"
+                                        Grid.Row="1"
+                                   materialDesign:HintAssist.Hint="Sân bay đến" 
+                                   Style="{StaticResource CustomTextbox}" 
+                                   VerticalAlignment="Center" 
+                                    Text="{Binding SanBayDenn.Name}"
+                                             materialDesign:TextFieldAssist.HasClearButton="True">
+
+                                    <!--Command-->
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseDown">
+                                            <i:InvokeCommandAction Command="{Binding ChooseLandingAirport_Command}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+
+                            </Grid>
+>>>>>>> 69748d09ce4fe3003226261c7e5fc8598b7c4a86
                     </Border>
 
                     <Border Grid.Column="3"
                             Name="Khoi_Hanh"
                             Background="White" 
                             CornerRadius="8"
-                            Padding="40 10"
+                            Padding="40 20 40 20"
                             Style="{StaticResource ResourceKey=DropShadow}">
-                        <DatePicker x:Name="dp"
-                            Margin="10 0 10 0"
-                            materialDesign:HintAssist.Hint="Chọn ngày"
-                            SelectedDate="{Binding DateOfEntry}"
-                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
-                            IsEnabled="{Binding IsLoadFinished}"
-                            >
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectedDateChanged">
-                                    <i:InvokeCommandAction Command="{Binding ParamsChangedCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </DatePicker>
+                            <Grid>
+                                <Grid.RowDefinitions >
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="3*"/>
+                                </Grid.RowDefinitions>
+                                <DatePicker 
+                                    Grid.Row="1"
+                                    x:Name="dp"
+                                materialDesign:HintAssist.Hint="Chọn ngày"
+                                    FontSize="{StaticResource Small}"
+                                SelectedDate="{Binding DateOfEntry}"
+                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                IsEnabled="{Binding IsLoadFinished}"
+                                  materialDesign:TextFieldAssist.HasClearButton="True"
+                                    Focusable="False">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectedDateChanged">
+                                            <i:InvokeCommandAction Command="{Binding ParamsChangedCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    
+                                </DatePicker>
+                            </Grid>
+                       
 
                     </Border>
                 </Grid>
@@ -200,16 +250,24 @@
                                />
 
                         <!-- Display flight departed button -->
-                        <StackPanel Grid.Column="6" VerticalAlignment="Center" Orientation="Horizontal">
-                            <TextBlock Text="Hiện đã cất cánh"
-                                       FontSize="{StaticResource Small}"
+                        <StackPanel Grid.Column="6" VerticalAlignment="Center" Orientation="Vertical">
+                            <TextBlock Text="Đã khởi hành"
+                                       FontSize="{StaticResource RealSmall}"
                                        FontWeight="Bold"
-                                       VerticalAlignment="Center" />
+                                       VerticalAlignment="Center" 
+                                       TextAlignment="Right"
+                                       Foreground="{StaticResource LightBlueBrush}"/>
 
+<<<<<<< HEAD
                             <ToggleButton 
                                 x:Name="An_Hien"
                                 IsChecked="{Binding IsDisplayDeparted}" Margin="10 0 0 0"
                                           Background="{StaticResource LightBlueBrush}">
+=======
+                            <ToggleButton IsChecked="{Binding IsDisplayDeparted}" Margin="0 5 0 0"
+                                          Background="{StaticResource LightBlueBrush}"
+                                          HorizontalAlignment="Right" Height="17" Width="33">
+>>>>>>> 69748d09ce4fe3003226261c7e5fc8598b7c4a86
                                 <ToggleButton.Style>
                                     <Style TargetType="{x:Type ToggleButton}"
                                        BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
@@ -273,7 +331,10 @@
                                                 x:Name="Nut_Chi_Tiet"
                                                 Content="Chi tiết"
                                                 Grid.Column="1"
-                                                Style="{StaticResource FlightDetailButton}"
+                                                Style="{StaticResource HoverButton}"
+                                                BorderBrush="{StaticResource LightBlueBrush}"
+                                                    Height="28"
+                                                    FontSize="{StaticResource RealSmall}"
                                                 Command="{Binding Open_Window_DescriptionTicketFlight_Command}"
                                                 />
                                         </Grid>
@@ -326,4 +387,5 @@
             </Border>
         </Grid>
     </Grid>
+    </materialDesign:DialogHost>
 </UserControl>

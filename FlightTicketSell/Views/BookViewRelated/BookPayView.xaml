@@ -451,9 +451,9 @@
             <Button Grid.Row="9"
                     Grid.Column="8" Grid.ColumnSpan="2"
                     Command="{Binding BookPay}"                
-                    Background="{StaticResource GreenBrush}"  
+                    Style="{StaticResource HoverButton}"
                     VerticalAlignment="Bottom"
-                    BorderThickness="0"                
+                    BorderBrush="{StaticResource GreenBrush}"
                     materialDesign:ButtonAssist.CornerRadius="5"
                     Height="50">
                 <Grid>

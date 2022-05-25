@@ -77,7 +77,7 @@
                                    Style="{StaticResource CustomTextbox}" 
                                    VerticalAlignment="Center" 
                                    Text="{Binding DepartureAirport.Name}"
-                                   >
+                                     materialDesign:TextFieldAssist.HasClearButton="True">
                              
                         <!--Command-->
                             <i:Interaction.Triggers>
@@ -104,7 +104,8 @@
                                    materialDesign:HintAssist.Hint="Sân bay đến" 
                                    Style="{StaticResource CustomTextbox}" 
                                    VerticalAlignment="Center" 
-                                    Text="{Binding LandingAirport.Name}">
+                                    Text="{Binding LandingAirport.Name}"
+                                     materialDesign:TextFieldAssist.HasClearButton="True">
                             
                          <!--Command--> 
                             <i:Interaction.Triggers>
@@ -438,10 +439,10 @@
                                     HorizontalAlignment="Right">
                     <!--Nút xóa-->
                     <Button Margin="7 0 0 0" 
-                                    Content="Hủy" 
+                                    Content="Làm mới" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
-                                    Command="{Binding CancelScheduleAFlight_Command}"/>
+                                    Command="{Binding RefreshScheduleAFlight_Command}"/>
 
                     <!--Nút thêm-->
                     <Button Margin="7 0 10 0" Content="Nhận lịch bay" 

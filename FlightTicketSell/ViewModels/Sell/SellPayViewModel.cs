@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace FlightTicketSell.ViewModels
 {
-    public class SellPayViewModel : BaseViewModel 
+    public class SellPayViewModel : BaseViewModel
     {
         #region Commands
 
@@ -41,7 +41,7 @@ namespace FlightTicketSell.ViewModels
         /// Indicates if the customer filled is already in database or not
         /// </summary>
         public bool IsCustomerNew { get => IoC.IoC.Get<TicketInfoFillingViewModel>().IsCustomerNew; }
-        
+
         /// <summary>
         /// Stores flight information
         /// </summary>
@@ -55,7 +55,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Stores customer information
         /// </summary>
-        public KHACHHANG Customer { get => IoC.IoC.Get<TicketInfoFillingViewModel>().Customer; }
+        public Customer Customer { get => IoC.IoC.Get<TicketInfoFillingViewModel>().Customer; }
 
         /// <summary>
         /// Stores current selected ticket tier
@@ -79,11 +79,18 @@ namespace FlightTicketSell.ViewModels
                 // Save things
                 await SaveTicketInformation();
 
+                // Navigate back to flight detail view
+                IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.FlightDetail;
+
+                // Cache customer and flight info
+                var flightInfo = FlightInfo;
+                var customer = Customer;
+
                 // Clear view models
                 IoC.IoC.Get<TicketInfoFillingViewModel>().ClearData();
 
-                // Navigate back to flight detail view
-                IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.FlightDetail;
+                // Send mail
+                await SendMail(flightInfo, customer);
             });
         }
 
@@ -103,7 +110,13 @@ namespace FlightTicketSell.ViewModels
                     // Add new customer to database
                     if (IsCustomerNew)
                     {
-                        context.KHACHHANGs.Add(Customer);
+                        context.KHACHHANGs.Add(new KHACHHANG()
+                        {
+                            HoTen = Customer.HoTen,
+                            CMND = Customer.CMND,
+                            SDT = Customer.SDT,
+                            Email = Customer.Email
+                        });
 
                         await context.SaveChangesAsync();
                     }
@@ -126,11 +139,9 @@ namespace FlightTicketSell.ViewModels
                     await context.SaveChangesAsync();
 
                     // messagebox to notify sucessful payment
-                    DialogResult res = (DialogResult)System.Windows.MessageBox.Show("Mua ve thanh cong, quay lai trang chu", "He thong", MessageBoxButton.OK);
+                    System.Windows.MessageBox.Show("Mua ve thanh cong, quay lai trang chu", "He thong", MessageBoxButton.OK);
 
-                    if (res == DialogResult.OK)
-                        await SendMail();
-
+                    FlightInfo.GheTrong--;
                 }
                 catch (EntityException e)
                 {
@@ -139,10 +150,10 @@ namespace FlightTicketSell.ViewModels
             }
         }
 
-        private async Task SendMail()
+        private async Task SendMail(DetailFlilghtInfo flightInfo, Customer customer)
         {
             // Send email to user
-            string to = Customer.Email; //To address    
+            string to = customer.Email; //To address    
 
             // enter your email
             string from = "flightsystem53@gmail.com"; //From address    
@@ -152,10 +163,10 @@ namespace FlightTicketSell.ViewModels
             string mailbody =
                 "<body>" +
                 "<h2>Payment comfirmation</h2>" + Environment.NewLine +
-                "<a>Dear  </a>" + Customer.HoTen + Environment.NewLine +
+                "<a>Dear  </a>" + customer.HoTen + Environment.NewLine +
                 "<a>. Here are some information about the ticket</a>" + Environment.NewLine +
-                "<a>. Your flight code is </a>" + FlightInfo.DisplayFlightCode + Environment.NewLine +
-                "<a>. The flight will start at </a>" + FlightInfo.NgayGio + Environment.NewLine +
+                "<a>. Your flight code is </a>" + flightInfo.DisplayFlightCode + Environment.NewLine +
+                "<a>. The flight will start at </a>" + flightInfo.NgayGio + Environment.NewLine +
                 "<a>. Please take note the information above!!!  </a>" + Environment.NewLine +
                 "<a>. Hope you have a great flight !!! </a>" +
                 "</body>";
