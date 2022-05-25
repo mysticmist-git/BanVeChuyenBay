@@ -24,7 +24,7 @@ namespace FlightTicketSell.ViewModels
 
         #endregion
 
-        #region ChooseAirport Properties
+        #region ChooseAirport
         /// <summary>
         /// Nút đổi sân bay
         /// </summary>
@@ -51,6 +51,10 @@ namespace FlightTicketSell.ViewModels
         public ICommand ChooseLandingAirport_Command { get; set; }
         #endregion
 
+        #region ChooseDate
+        public ICommand SelectedDateChangedCommand { get; set; }
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -72,7 +76,7 @@ namespace FlightTicketSell.ViewModels
             {
                 if (Flights is null)
                     return null;
-                
+
                 ObservableCollection<FlightInfo> flightInfos = (IsDisplayDeparted ?
                                 Flights :
                                 new ObservableCollection<FlightInfo>(Flights.Where(f => f.DaKhoiHanh == false).ToList()));
@@ -122,7 +126,10 @@ namespace FlightTicketSell.ViewModels
         #endregion
 
         #region Commands
-
+        /// <summary>
+        /// Cập nhật Table khi các thành phần search đổi
+        /// </summary>
+        public ICommand ParamsChangedCommand { get; set; }
         /// <summary>
         /// Execute this first when view load
         /// </summary>
@@ -134,7 +141,7 @@ namespace FlightTicketSell.ViewModels
 
         public ICommand Open_Window_DescriptionTicketFlight_Command { get; set; }
 
-      
+
         #endregion
 
         #region Method
@@ -155,75 +162,6 @@ namespace FlightTicketSell.ViewModels
             }
             return false;
         }
-        public async Task ParamsChangedCommand() 
-        {
-            if (SanBayDii == null && SanBayDenn == null)
-            {
-                _ = FristLoadFlightTable();
-                return;
-            }
-            // Loading
-            IsLoadFinished = false;
-
-            // Refresh flight to update departed flight
-            await FlightHelper.FlightDepartedRefresh();
-
-            // Load new flight table
-            using (var context = new FlightTicketSellEntities())
-            {
-                try
-                {
-                    // Get flights
-                    var result = await context.Database.SqlQuery<GetFlightData_Result>("EXEC GetFlightData").ToListAsync();
-                    //var result = context.GetFlightData().ToList();
-
-                    // Apply Start airport param if there is
-                    if (SanBayDii != null)
-                        result = result.Where(f => f.MaSanBayDi == SanBayDii.ID).ToList();
-                    // Apply Destination airport param if there is
-                    if (SanBayDenn != null)
-                        result = result.Where(f => f.MaSanBayDen == SanBayDenn.ID).ToList();
-                    // Apply Date param if there is
-                    if (DateOfEntry != null)
-                        result = result.Where(f => f.NgayGio == DateOfEntry.Value).ToList();
-
-                    Flights = new ObservableCollection<FlightInfo>(result.Select(f => new FlightInfo(f)));
-                }
-                catch (EntityException e)
-                {
-                    MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-
-            // Load finish
-            IsLoadFinished = true;
-        }
-        public async Task FristLoadFlightTable()
-        {
-            // Loading
-            IsLoadFinished = false;
-
-            // Refresh flight to update departed flight
-            await FlightHelper.FlightDepartedRefresh();
-
-            // initialize flight table
-            using (var context = new FlightTicketSellEntities())
-            {
-                try
-                {
-                    // Load flights list on first load
-                    var result = await context.Database.SqlQuery<GetFlightData_Result>("EXEC GetFlightData").ToListAsync();
-                    Flights = new ObservableCollection<FlightInfo>(result.Select(f => new FlightInfo(f)));
-                }
-                catch (EntityException e)
-                {
-                    MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-
-            // Load finish
-            IsLoadFinished = true;
-        }
         #endregion
 
 
@@ -236,23 +174,105 @@ namespace FlightTicketSell.ViewModels
         {
             LoadCommand = new RelayCommand<object>((p) => true, (p) =>
             {
-                if (FirstLoad)
+                ParamsChangedCommand.Execute(null);
+            });
+
+            ParamsChangedCommand = new RelayCommand<object>((p) => true, async (p) =>
+               {
+
+                   //if (SanBayDii == null && SanBayDenn == null)
+                   //{
+                   //    _ = FristLoadFlightTable();
+                   //    return;
+                   //}
+                   // Loading
+                   if (SanBayDii != null && string.IsNullOrEmpty(SanBayDii.Name))
+                   {
+                       SanBayDii = null;
+                   }
+                   if (SanBayDenn != null && string.IsNullOrEmpty(SanBayDenn.Name))
+                   {
+                       SanBayDenn = null;
+                   }
+                   IsLoadFinished = false;
+
+                   // Refresh flight to update departed flight
+                   await FlightHelper.FlightDepartedRefresh();
+
+                   // Load new flight table
+                   using (var context = new FlightTicketSellEntities())
+                   {
+                       try
+                       {
+                           // Get flights
+                           var result = await context.Database.SqlQuery<GetFlightData_Result>("EXEC GetFlightData").ToListAsync();
+                           //var result = context.GetFlightData().ToList();
+
+                           // Apply Start airport param if there is
+                           if (SanBayDii != null && !string.IsNullOrEmpty(SanBayDii.Name))
+                               result = result.Where(f => f.MaSanBayDi == SanBayDii.ID).ToList();
+                           // Apply Destination airport param if there is
+                           if (SanBayDenn != null && !string.IsNullOrEmpty(SanBayDenn.Name))
+                               result = result.Where(f => f.MaSanBayDen == SanBayDenn.ID).ToList();
+                           // Apply Date param if there is
+                           if (DateOfEntry != null && !string.IsNullOrEmpty(DateOfEntry.Value.ToString()))
+                               result = result.Where(f => f.NgayGio.ToString("MM-dd-yyyy") == DateOfEntry.Value.ToString("MM-dd-yyyy")).ToList();
+                           Flights = new ObservableCollection<FlightInfo>(result.Select(f => new FlightInfo(f)));
+                       }
+                       catch (EntityException e)
+                       {
+                           MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                       }
+                   }
+
+                   // Load finish
+                   IsLoadFinished = true;
+               });
+
+            SelectedDateChangedCommand = new RelayCommand<object>((p) => true, async (p) =>
+            {
+                // Loading
+                IsLoadFinished = false;
+
+                // Refresh flight to update departed flight
+                await FlightHelper.FlightDepartedRefresh();
+
+                // Load new flight table
+                using (var context = new FlightTicketSellEntities())
                 {
-                    _ = FristLoadFlightTable();
-                    FirstLoad = false;
+                    try
+                    {
+                        // Get flights
+                        var result = await context.Database.SqlQuery<GetFlightData_Result>("EXEC GetFlightData").ToListAsync();
+                        //var result = context.GetFlightData().ToList();
+
+                        // Apply Start airport param if there is
+                        if (SanBayDii != null)
+                            result = result.Where(f => f.MaSanBayDi == SanBayDii.ID).ToList();
+                        // Apply Destination airport param if there is
+                        if (SanBayDenn != null)
+                            result = result.Where(f => f.MaSanBayDen == SanBayDenn.ID).ToList();
+                        // Apply Date param if there is
+                        if (DateOfEntry != null)
+                            result = result.Where(f => f.NgayGio == DateOfEntry.Value).ToList();
+
+                        Flights = new ObservableCollection<FlightInfo>(result.Select(f => new FlightInfo(f)));
+                    }
+                    catch (EntityException e)
+                    {
+                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
-                else
-                {
-                    _ = ParamsChangedCommand();
-                }
-               
+
+                // Load finish
+                IsLoadFinished = true;
             });
 
             Change_Departure_Landing_Airport_Command = new RelayCommand<object>((p) => { return true; },
                (p) =>
                {
                    (SanBayDii, SanBayDenn) = (SanBayDenn, SanBayDii);
-                   _ = ParamsChangedCommand();
+                   ParamsChangedCommand.Execute(null);
                }
            );
 
@@ -266,7 +286,6 @@ namespace FlightTicketSell.ViewModels
               ChooseAirportViewInSearchView chooseAirportViewInSearchView = new ChooseAirportViewInSearchView { DataContext = this };
               OpenChooseAirport = "Departure";
               var result = await DialogHost.Show(chooseAirportViewInSearchView, "RootDialog");
-              _ = ParamsChangedCommand();
           }
         );
             ChooseLandingAirport_Command = new RelayCommand<object>((p) => { return true; },
@@ -276,7 +295,6 @@ namespace FlightTicketSell.ViewModels
                  ChooseAirportViewInSearchView chooseAirportViewInSearchView = new ChooseAirportViewInSearchView { DataContext = this };
                  OpenChooseAirport = "Landing";
                  var result = await DialogHost.Show(chooseAirportViewInSearchView, "RootDialog");
-                 _ = ParamsChangedCommand();
 
              }
            );
@@ -288,15 +306,15 @@ namespace FlightTicketSell.ViewModels
                  {
                      try
                      {
-                          // Danh sách sân bay
-                          if (ChooseAirport_List != null)
+                         // Danh sách sân bay
+                         if (ChooseAirport_List != null)
                          {
                              ChooseAirport_List.Clear();
                          }
                          foreach (var item in context.SANBAYs.ToList())
                          {
-                              //Sân bay còn hoạt động mới thêm vào list
-                              if (item.TrangThai)
+                             //Sân bay còn hoạt động mới thêm vào list
+                             if (item.TrangThai)
                                  ChooseAirport_List.Add(new Airport_Search() { ID = item.MaSanBay, Code = item.VietTat, Name = item.TenSanBay, Province = item.TinhThanh, Status = item.TrangThai });
                          }
                          if (SanBayDenn != null && !string.IsNullOrEmpty(SanBayDenn.Name))
@@ -307,7 +325,7 @@ namespace FlightTicketSell.ViewModels
                          {
                              RemoveAirportItem(ChooseAirport_List, SanBayDii);
                          }
-                        
+
 
                      }
                      catch (EntityException e)
@@ -349,8 +367,8 @@ namespace FlightTicketSell.ViewModels
                        Status = ChooseAirport_SelectedItem.Status
                    };
                }
-                 // Close dialog
-                 DialogHost.CloseDialogCommand.Execute(null, null);
+               // Close dialog
+               DialogHost.CloseDialogCommand.Execute(null, null);
            }
         );
             Cancel_ChooseAirportButton_Command = new RelayCommand<object>((p) => { return true; },

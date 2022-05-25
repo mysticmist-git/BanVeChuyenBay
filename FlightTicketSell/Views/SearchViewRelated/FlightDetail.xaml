@@ -115,11 +115,8 @@
 
                             <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Mã chuyến bay</TextBlock>
                             <TextBox  IsReadOnly="True"
-<<<<<<< HEAD
                                         Name="Ma_Chuyen_Bay"
-=======
                                       Margin="0 -10 0 0"
->>>>>>> 69748d09ce4fe3003226261c7e5fc8598b7c4a86
                                         Text="{Binding FlightInfo.DisplayFlightCode, Mode=OneWay}"
                                         Grid.Row="1" 
                                         Style="{StaticResource CustomTextbox}"
@@ -140,11 +137,9 @@
 
                             <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đi</TextBlock>
                             <TextBox IsReadOnly="True" 
-<<<<<<< HEAD
                                         Name="San_Bay_Di"
-=======
+
                                       Margin="0 -10 0 0"
->>>>>>> 69748d09ce4fe3003226261c7e5fc8598b7c4a86
                                         Text="{Binding FlightInfo.SanBayDi, Mode=OneWay}"
                                         Grid.Row="1"
                                         Style="{StaticResource CustomTextbox}" 
@@ -165,11 +160,8 @@
 
                             <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đến</TextBlock>
                             <TextBox IsReadOnly="True" 
-<<<<<<< HEAD
                                         Name="San_Bay_Den"
-=======
                                       Margin="0 -10 0 0"
->>>>>>> 69748d09ce4fe3003226261c7e5fc8598b7c4a86
                                         Text="{Binding FlightInfo.SanBayDen, Mode=OneWay}" 
                                         Grid.Row="1" 
                                         Style="{StaticResource CustomTextbox}"
@@ -191,11 +183,8 @@
                             <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Ngày giờ bay</TextBlock>
                             <Grid Grid.Row="1">
                                 <TextBox IsReadOnly="True" 
-<<<<<<< HEAD
                                             Name="Ngay_Gio_Bay"
-=======
                                           Margin="0 -10 0 0"
->>>>>>> 69748d09ce4fe3003226261c7e5fc8598b7c4a86
                                             Text="{Binding FlightInfo.NgayGio, Mode=OneWay}"
                                             Grid.Row="1"
                                             Style="{StaticResource CustomTextbox}" 
@@ -217,11 +206,8 @@
 
                             <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Thời gian bay</TextBlock>
                             <TextBox IsReadOnly="True"
-<<<<<<< HEAD
                                         Name="Thoi_Gian_Bay"
-=======
                                       Margin="0 -10 0 0"
->>>>>>> 69748d09ce4fe3003226261c7e5fc8598b7c4a86
                                         Text="{Binding FlightInfo.ThoiGianBay, Mode=OneWay}"
                                         Grid.Row="1"
                                         Style="{StaticResource CustomTextbox}"   VerticalAlignment="Top"
@@ -261,16 +247,10 @@
                                        FontSize="{StaticResource Small}" />
                     </Border>
 
-<<<<<<< HEAD
-                        <!-- Bảng sân bay trung gian -->
-                        <Border Grid.Row="1" CornerRadius="0 0 7 7">
-                            <DataGrid
-                                Name="San_Bay_Trung_Gian"
-=======
                     <!-- Bảng sân bay trung gian -->
                     <Border Grid.Row="1" CornerRadius="0 0 7 7">
                         <DataGrid
->>>>>>> 69748d09ce4fe3003226261c7e5fc8598b7c4a86
+                                Name="San_Bay_Trung_Gian"
                                 ItemsSource="{Binding OverlayAirport}"
                                 d:ItemsSource="{d:SampleData ItemCount=10}"
                                 RowHeight="50"
@@ -423,14 +403,9 @@
                                        FontSize="{StaticResource Small}" />
                     </Border>
 
-<<<<<<< HEAD
                         <Border Grid.Row="1" Padding="30 15">
                             <DataGrid
                                 Name="Thong_Tin_Hang_Ve"
-=======
-                    <Border Grid.Row="1" Padding="30 15">
-                        <DataGrid
->>>>>>> 69748d09ce4fe3003226261c7e5fc8598b7c4a86
                                 Background="Transparent"
                                 ItemsSource="{Binding TicketTier}"
                                 d:ItemsSource="{d:SampleData ItemCount=3}"
@@ -450,15 +425,9 @@
                                     Binding="{Binding TenHangVe}"
                                     Header="Tên hạng vé"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-<<<<<<< HEAD
-                                    <!-- set a max length to get an indicator in the editor -->
+                                <!-- set a max length to get an indicator in the editor -->
                                     <materialDesign:DataGridTextColumn
                                     Width="Auto"
-                                    
-=======
-                                <!-- set a max length to get an indicator in the editor -->
-                                <materialDesign:DataGridTextColumn
->>>>>>> 69748d09ce4fe3003226261c7e5fc8598b7c4a86
                                     Binding="{Binding DisplayTicketPrice}"
                                     Header="Giá tiền"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
