@@ -28,13 +28,13 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="6*" ></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="5*" ></RowDefinition>
+                    <RowDefinition Height="0.3*"></RowDefinition>
                     <RowDefinition Height="6*"></RowDefinition>
                 </Grid.RowDefinitions>
 
                 <!--Quy định về chuyến bay-->
-                <Border Grid.Row="0" Grid.ColumnSpan="3" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                <Border Grid.Row="0" Grid.ColumnSpan="3" Margin="150 0" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -47,7 +47,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="2*" ></RowDefinition>
+                            <RowDefinition Height="3*" ></RowDefinition>
                             <RowDefinition Height="3*"></RowDefinition>
                             <RowDefinition Height="1*"></RowDefinition>
                             <RowDefinition Height="3*"></RowDefinition>
@@ -57,7 +57,7 @@
                         </Grid.RowDefinitions>
 
                         <!--Tựa-->
-                        <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" > Quy định về chuyến bay</TextBlock>
+                        <TextBlock Margin="30 0 0 5" Grid.Row="0" Grid.ColumnSpan="6" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" > Quy định về chuyến bay</TextBlock>
 
                         <!--Số sân bay trung gian tối đa-->
                         <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Số sân bay trung gian tối đa" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
