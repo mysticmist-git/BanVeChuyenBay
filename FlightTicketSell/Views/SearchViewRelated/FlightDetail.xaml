@@ -341,6 +341,7 @@
                                     <!-- set a max length to get an indicator in the editor -->
                                     <materialDesign:DataGridTextColumn
                                     Width="Auto"
+                                    
                                     Binding="{Binding DisplayTicketPrice}"
                                     Header="Giá tiền"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />

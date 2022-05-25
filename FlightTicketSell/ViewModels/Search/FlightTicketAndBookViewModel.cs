@@ -45,12 +45,40 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ObservableCollection<OverlayAirport_Search> OverlayAirport { get => IoC.IoC.Get<FlightDetailViewModel>().OverlayAirport; }
 
+        public string _search_id;
+        public string Search_IDBooked
+        {
+            get
+            {
+                return _search_id;
+            }
+            set
+            {
+                _search_id = value;
+            }
+        }
+
+        public string _search_id_sold;
+        public string Search_IDSold
+        {
+            get
+            {
+                return _search_id_sold;
+            }
+            set
+            {
+                _search_id_sold = value;
+            }
+        }
         #endregion
+
+
 
         #region Commands
 
         public ICommand ReturnCommand { get; set; }
         public ICommand LoadCommand { get; set; }
+        public ICommand LoadCommand1 { get; set; }
         public ICommand TicketSearchCommand { get; set; }
         public ICommand PlaceReservationSearchCommand { get; set; }
         public ICommand ShowMoreCommand { get; set; }
@@ -104,6 +132,57 @@ namespace FlightTicketSell.ViewModels
                                                                     TrangThai = result.TrangThai
                                                                 }).ToList()
                                                            );
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            });
+
+            LoadCommand1 = new RelayCommand<object>((p) => true, (p) =>
+            {
+                var MaChuyenBay = IoC.IoC.Get<FlightDetailViewModel>().FlightInfo.MaChuyenBay;
+                using (var context = new FlightTicketSellEntities())
+                {
+                    try
+                    {
+                        if (Search_IDSold != null)
+                        {
+                            Tickets = new ObservableCollection<Ticket>(
+                                                                context.VEs
+                                                                .Where(result => result.MaChuyenBay == MaChuyenBay && result.MaVe.ToString() == Search_IDSold)
+                                                                .Select(result => new Ticket
+                                                                {
+                                                                    MaVe = result.MaVe,
+                                                                    TenKhachHang = context.KHACHHANGs.Where(x => x.MaKhachHang == result.MaKhachHang).FirstOrDefault().HoTen,
+                                                                    TenHangVe = context.HANGVEs.Where(x => x.MaHangVe == result.MaHangVe).FirstOrDefault().TenHangVe,
+                                                                    NgayThanhToan = result.NgayThanhToan,
+                                                                    GiaTien = result.GiaTien
+                                                                }).ToList()
+                                                           );
+                        }
+
+                        if (Search_IDBooked != null)
+                        {
+                            Books = new ObservableCollection<BookSearchVariant>(
+                                                                context.DATCHOes
+                                                                .Where(result => result.MaChuyenBay == MaChuyenBay && result.MaDatCho.ToString() == Search_IDBooked)
+                                                                .Select(result => new BookSearchVariant
+                                                                {
+                                                                    MaDatCho = result.MaDatCho,
+                                                                    ThongTinNguoiDat = new Customer
+                                                                    {
+                                                                        HoTen = context.KHACHHANGs.Where(x => x.MaKhachHang == result.MaNguoiDat).FirstOrDefault().HoTen
+                                                                    },
+                                                                    SoVeDat = result.SoVeDat,
+                                                                    TenHangVe = context.HANGVEs.Where(x => x.MaHangVe == result.MaHangVe).FirstOrDefault().TenHangVe,
+                                                                    NgayGioDat = result.NgayGioDat,
+                                                                    GiaTien_Ve = result.HANGVE.HeSo * result.CHUYENBAY.GiaVe,
+                                                                    TrangThai = result.TrangThai
+                                                                }).ToList()
+                                                           );
+                        }
                     }
                     catch
                     {
