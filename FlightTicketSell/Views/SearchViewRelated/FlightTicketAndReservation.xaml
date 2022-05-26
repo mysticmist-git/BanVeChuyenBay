@@ -209,15 +209,17 @@
                                     <materialDesign:DataGridTextColumn
                                         IsReadOnly="True"
                                         Binding="{Binding TenHangVe}"
-                                        Header="Tên hạng vé"
+                                        Header="Tên hạng vé"                                        
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                                     <materialDesign:DataGridTextColumn
                                         Binding="{Binding DisplayPayDate}"
                                         Header="Ngày thanh toán"
+                                        IsReadOnly="True"
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                                     <materialDesign:DataGridTextColumn
                                         Binding="{Binding DisplayTicketPrice}"
                                         Header="Giá tiền"
+                                        IsReadOnly="True"
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
@@ -320,7 +322,7 @@
                                   d:ItemsSource="{d:SampleData ItemCount=5}"
                                   ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                                   CellStyle="{StaticResource DataGridCellCenter}"
-                                  ColumnWidth="Auto"
+                                  ColumnWidth="*"
                                   CanUserSortColumns="True"
                                   CanUserAddRows="False"
                                   AutoGenerateColumns="False"
@@ -346,7 +348,7 @@
 
                                                     <!-- Flight code -->
                                                     <TextBlock Grid.Column="0"
-                                                               Text="{Binding TenKhachDat}"
+                                                               Text="{Binding ThongTinNguoiDat.HoTen}"
                                                                VerticalAlignment="Center"
                                                                HorizontalAlignment="Left"/>
 
@@ -406,6 +408,7 @@
                                                                Text="{Binding BookingState, Mode=OneWay, Converter={valueConverters:BookingStateToStringConverter}}"
                                                                Foreground="{Binding BookingState, Mode=OneWay, Converter={valueConverters:BookingStateToColorConverter}}"
                                                                FontWeight="Bold"
+                                                               IsEnabled="False"
                                                                VerticalAlignment="Center"
                                                                HorizontalAlignment="Left"/>
 

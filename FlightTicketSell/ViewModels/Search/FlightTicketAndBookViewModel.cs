@@ -179,9 +179,9 @@ namespace FlightTicketSell.ViewModels
                                                                     TenHangVe = context.HANGVEs.Where(x => x.MaHangVe == result.MaHangVe).FirstOrDefault().TenHangVe,
                                                                     NgayGioDat = result.NgayGioDat,
                                                                     GiaTien_Ve = result.HANGVE.HeSo * result.CHUYENBAY.GiaVe,
-                                                                    TrangThai = result.TrangThai
+                                                                    TrangThai = result.TrangThai,
                                                                 }).ToList()
-                                                           );
+                                                           ) ;
                         }
                     }
                     catch
