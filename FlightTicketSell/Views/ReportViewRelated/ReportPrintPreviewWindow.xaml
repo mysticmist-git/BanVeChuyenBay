@@ -24,8 +24,8 @@
                 <!-- Print button -->
                 <Button 
                     HorizontalContentAlignment="Stretch"
-                    Background="{StaticResource GreenBrush}"                 
-                    BorderThickness="0"                
+                    BorderBrush="{StaticResource GreenBrush}"                 
+                    Style="{StaticResource HoverButton}"
                     materialDesign:ButtonAssist.CornerRadius="5"
                     Height="30"
                     Click="Print_Confirm">
@@ -41,8 +41,8 @@
 
                 <Button 
                     HorizontalContentAlignment="Stretch"
-                    Background="{StaticResource OrangeBrush}"                 
-                    BorderThickness="0"                
+                    BorderBrush="{StaticResource OrangeBrush}"                 
+                    Style="{StaticResource HoverButton}"             
                     materialDesign:ButtonAssist.CornerRadius="5"
                     Height="30"
                     Margin="10 0 0 0"

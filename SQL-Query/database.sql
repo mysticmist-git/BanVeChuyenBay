@@ -193,109 +193,109 @@ GO
 ALTER TABLE SANBAYTG ADD CONSTRAINT UNIQUE_SANBAYTG_MaSanBay UNIQUE(MaSanBay, MaDuongBay)
 GO
 
------- TRIGGER MaSanBay: Không trùng với SanBayDi, SanBayDen của DUONGBAY
-CREATE TRIGGER TG_SANBAYTG_MaSanBay ON SANBAYTG
-FOR INSERT, UPDATE
-AS
-BEGIN
-	-- Khai báo
-	DECLARE @maSanBayTG INT, @maSanBayDi INT, @maSanBayDen INT, @maDuongBay INT
+-------- TRIGGER MaSanBay: Không trùng với SanBayDi, SanBayDen của DUONGBAY
+--CREATE TRIGGER TG_SANBAYTG_MaSanBay ON SANBAYTG
+--FOR INSERT, UPDATE
+--AS
+--BEGIN
+--	-- Khai báo
+--	DECLARE @maSanBayTG INT, @maSanBayDi INT, @maSanBayDen INT, @maDuongBay INT
 	
-	-- Lấy mã sân bay trung gian vừa thêm
-	SELECT @maSanBayTG=MaSanBay, @maDuongBay=MaDuongBay
-	FROM INSERTED
+--	-- Lấy mã sân bay trung gian vừa thêm
+--	SELECT @maSanBayTG=MaSanBay, @maDuongBay=MaDuongBay
+--	FROM INSERTED
 
-	-- Lấy mã sân bay đi và sân bay đến của đường bay
-	SELECT @maSanBayDi=MaSanBayDi, @maSanBayDen=MaSanBayDen
-	FROM DUONGBAY
-	WHERE MaDuongBay=@maDuongBay
+--	-- Lấy mã sân bay đi và sân bay đến của đường bay
+--	SELECT @maSanBayDi=MaSanBayDi, @maSanBayDen=MaSanBayDen
+--	FROM DUONGBAY
+--	WHERE MaDuongBay=@maDuongBay
 
-	-- Kiểm tra xem có trùng không
-	IF (@maSanBayTG IN (@maSanBayDi, @maSanBayDen))
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'San bay trung gian trung san bay di hoac den'
-	END
-END
-GO
+--	-- Kiểm tra xem có trùng không
+--	IF (@maSanBayTG IN (@maSanBayDi, @maSanBayDen))
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'San bay trung gian trung san bay di hoac den'
+--	END
+--END
+--GO
 
------- TRIGGER ThuTu: ThuTu của cùng một đường bay không trùng nhau
-CREATE TRIGGER TG_SANBAYTG_ThuTu ON SANBAYTG
-FOR INSERT, UPDATE
-AS
-BEGIN
-	-- Khai báo
-	DECLARE @thuTu INT, @maDuongBay INT
-	-- Lấy thứ tự sân bay trung gian được thêm
-	SELECT @thuTu=ThuTu, @maDuongBay=MaDuongBay
-	FROM INSERTED
-	-- Nếu ThuTu của cùng một đường bay trùng nhau thì rollback tran
-	IF ((
-		SELECT COUNT(ThuTu)
-		FROM SANBAYTG
-		WHERE MaDuongBay=@maDuongBay AND ThuTu=@thuTu)>1)
-			BEGIN
-				ROLLBACK TRAN
-				PRINT 'ThuTu san bay trung gian trung nhau'
-			END
-END
-GO
+-------- TRIGGER ThuTu: ThuTu của cùng một đường bay không trùng nhau
+--CREATE TRIGGER TG_SANBAYTG_ThuTu ON SANBAYTG
+--FOR INSERT, UPDATE
+--AS
+--BEGIN
+--	-- Khai báo
+--	DECLARE @thuTu INT, @maDuongBay INT
+--	-- Lấy thứ tự sân bay trung gian được thêm
+--	SELECT @thuTu=ThuTu, @maDuongBay=MaDuongBay
+--	FROM INSERTED
+--	-- Nếu ThuTu của cùng một đường bay trùng nhau thì rollback tran
+--	IF ((
+--		SELECT COUNT(ThuTu)
+--		FROM SANBAYTG
+--		WHERE MaDuongBay=@maDuongBay AND ThuTu=@thuTu)>1)
+--			BEGIN
+--				ROLLBACK TRAN
+--				PRINT 'ThuTu san bay trung gian trung nhau'
+--			END
+--END
+--GO
 
 ------ TRIGGER ThoiGianDung: ThoiGianDung >= ThoiGianDungToiThieu && ThoiGianDung <= ThoiGianDungToiDa
-CREATE TRIGGER TG_SANBAYTG_ThoiGianDung ON SANBAYTG
-FOR INSERT, UPDATE
-AS
-BEGIN
-	-- Khai báo
-	DECLARE @thoiGianDung INT
-	-- Lấy thời gian dừng được thêm
-	SELECT @thoiGianDung=ThoiGianDung
-	FROM INSERTED
+--CREATE TRIGGER TG_SANBAYTG_ThoiGianDung ON SANBAYTG
+--FOR INSERT, UPDATE
+--AS
+--BEGIN
+--	-- Khai báo
+--	DECLARE @thoiGianDung INT
+--	-- Lấy thời gian dừng được thêm
+--	SELECT @thoiGianDung=ThoiGianDung
+--	FROM INSERTED
 
-	-- Khai báo Thời gian dừng tối thiểu và thời gian dừng tối đa
-	DECLARE @min INT, @max INT
-	-- Lấy Thời gian dừng tối thiểu và thời gian dừng tối đa
-	SELECT @min=GiaTri
-	FROM THAMSO
-	WHERE TenThamSo='ThoiGianDungToiThieu'
+--	-- Khai báo Thời gian dừng tối thiểu và thời gian dừng tối đa
+--	DECLARE @min INT, @max INT
+--	-- Lấy Thời gian dừng tối thiểu và thời gian dừng tối đa
+--	SELECT @min=GiaTri
+--	FROM THAMSO
+--	WHERE TenThamSo='ThoiGianDungToiThieu'
 
-	SELECT @max=GiaTri
-	FROM THAMSO
-	WHERE TenThamSo='ThoiGianDungToiDa'
+--	SELECT @max=GiaTri
+--	FROM THAMSO
+--	WHERE TenThamSo='ThoiGianDungToiDa'
 
-	-- Nếu Thời gian dừng không hợp lệ thì rollback tran
-	IF (@thoiGianDung<@min OR @thoiGianDung>@max)
-		BEGIN
-			ROLLBACK TRAN
-			PRINT 'ThoiGianBay khong hop le'
-		END
-END
-GO
+--	-- Nếu Thời gian dừng không hợp lệ thì rollback tran
+--	IF (@thoiGianDung<@min OR @thoiGianDung>@max)
+--		BEGIN
+--			ROLLBACK TRAN
+--			PRINT 'ThoiGianBay khong hop le'
+--		END
+--END
+--GO
 
------- TRIGGER: So san bay TG không vượt SanBayTrungGianToiDa
-CREATE TRIGGER TG_SANBAYTG_SanBayTrungGianToiDa ON SANBAYTG
-FOR INSERT
-AS
-BEGIN
-	DECLARE @sanBayTrungGianToiDa INT, @soSanBayTrungGianHienTai INT
-	-- Lấy Sân bay trung gian tối đa
-	SELECT @sanBayTrungGianToiDa=GiaTri
-	FROM THAMSO
-	WHERE TenThamSo='SoSanBayTrungGianToiDa'
+-------- TRIGGER: So san bay TG không vượt SanBayTrungGianToiDa
+--CREATE TRIGGER TG_SANBAYTG_SanBayTrungGianToiDa ON SANBAYTG
+--FOR INSERT
+--AS
+--BEGIN
+--	DECLARE @sanBayTrungGianToiDa INT, @soSanBayTrungGianHienTai INT
+--	-- Lấy Sân bay trung gian tối đa
+--	SELECT @sanBayTrungGianToiDa=GiaTri
+--	FROM THAMSO
+--	WHERE TenThamSo='SoSanBayTrungGianToiDa'
 
-	-- Lấy Số sân bay trung gian hiện tại
-	SELECT @soSanBayTrungGianHienTai=COUNT(*)
-	FROM SANBAYTG, INSERTED
-	WHERE SANBAYTG.MaDuongBay=INSERTED.MaDuongBay
+--	-- Lấy Số sân bay trung gian hiện tại
+--	SELECT @soSanBayTrungGianHienTai=COUNT(*)
+--	FROM SANBAYTG, INSERTED
+--	WHERE SANBAYTG.MaDuongBay=INSERTED.MaDuongBay
 
-	-- Nếu số sân bay trung gian vượt thì rollback tran
-	IF (@soSanBayTrungGianHienTai>@sanBayTrungGianToiDa)
-		BEGIN
-			ROLLBACK TRAN
-			PRINT 'So san bay trung gian vuot qua So san bay trung gian toi da'
-		END
-END
-GO
+--	-- Nếu số sân bay trung gian vượt thì rollback tran
+--	IF (@soSanBayTrungGianHienTai>@sanBayTrungGianToiDa)
+--		BEGIN
+--			ROLLBACK TRAN
+--			PRINT 'So san bay trung gian vuot qua So san bay trung gian toi da'
+--		END
+--END
+--GO
 
 --========================================= RÀNG BUỘC ĐƯỜNG BAY =========================================
 ------ Khóa ngoại Mã sân bay đi
@@ -304,31 +304,31 @@ GO
 ------ Khóa ngoại Mã sân bay đến
 ALTER TABLE DUONGBAY ADD CONSTRAINT FK_DUONGBAY_MaSanBayDen FOREIGN KEY (MaSanBayDen) REFERENCES SANBAY(MaSanBay)
 GO
------- Trigger ThoiGianBay: ThoiGianBay >= ThoiGianBayToiThieu
-CREATE TRIGGER TG_DUONGBAY_ThoiGianBay ON DUONGBAY
-FOR INSERT, UPDATE
-AS
-BEGIN
-	-- Khai báo
-	DECLARE @thoiGianBay INT
-	-- Lấy Thời gian bay được thêm
-	SELECT @thoiGianBay=ThoiGianBay
-	FROM INSERTED
+-------- Trigger ThoiGianBay: ThoiGianBay >= ThoiGianBayToiThieu
+--CREATE TRIGGER TG_DUONGBAY_ThoiGianBay ON DUONGBAY
+--FOR INSERT, UPDATE
+--AS
+--BEGIN
+--	-- Khai báo
+--	DECLARE @thoiGianBay INT
+--	-- Lấy Thời gian bay được thêm
+--	SELECT @thoiGianBay=ThoiGianBay
+--	FROM INSERTED
 
-	-- Khai báo Thời gian bay tối tối thiểu
-	DECLARE @min INT
-	-- Lấy Thời gian dừng tối thiểu và thời gian dừng tối đa
-	SELECT @min=GiaTri
-	FROM THAMSO
-	WHERE TenThamSo='ThoiGianBayToiThieu'
-	-- Nếu Thời gian bay không hợp lệ thì rollback tran
-	IF (@thoiGianBay<@min)
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'Thoi gian bay be hon Thoi gian bay toi thieu'
-	END
-END
-GO
+--	-- Khai báo Thời gian bay tối tối thiểu
+--	DECLARE @min INT
+--	-- Lấy Thời gian dừng tối thiểu và thời gian dừng tối đa
+--	SELECT @min=GiaTri
+--	FROM THAMSO
+--	WHERE TenThamSo='ThoiGianBayToiThieu'
+--	-- Nếu Thời gian bay không hợp lệ thì rollback tran
+--	IF (@thoiGianBay<@min)
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'Thoi gian bay be hon Thoi gian bay toi thieu'
+--	END
+--END
+--GO
 
 ----========================================= RÀNG BUỘC HẠNG VÉ --=========================================
 ------ HeSo: >= 0.0
@@ -369,29 +369,29 @@ GO
 --GO
 
 ------ GiaTien = CHUYENBAY.GiaVe*HANGVE.HeSo
-CREATE TRIGGER TRG_VE_TinhGiaTien ON VE
-FOR INSERT, UPDATE
-AS
-BEGIN
-	-- Khai báo
-	DECLARE @maVe INT, @giaVe MONEY, @heSo DECIMAL(5,2)
-	-- Lấy Mã vé, CHUYENBAY.GiaVe và HANGVE.HeSo
-	SELECT @maVe=MaVe
-	FROM INSERTED
+--CREATE TRIGGER TRG_VE_TinhGiaTien ON VE
+--FOR INSERT, UPDATE
+--AS
+--BEGIN
+--	-- Khai báo
+--	DECLARE @maVe INT, @giaVe MONEY, @heSo DECIMAL(5,2)
+--	-- Lấy Mã vé, CHUYENBAY.GiaVe và HANGVE.HeSo
+--	SELECT @maVe=MaVe
+--	FROM INSERTED
 
-	SELECT @giaVe=GiaVe
-	FROM CHUYENBAY, INSERTED
-	WHERE CHUYENBAY.MaChuyenBay=inserted.MaChuyenBay
+--	SELECT @giaVe=GiaVe
+--	FROM CHUYENBAY, INSERTED
+--	WHERE CHUYENBAY.MaChuyenBay=inserted.MaChuyenBay
 
-	SELECT @heSo=HeSo
-	FROM HANGVE, INSERTED
-	WHERE HANGVE.MaHangVe=INSERTED.MaHangVe
+--	SELECT @heSo=HeSo
+--	FROM HANGVE, INSERTED
+--	WHERE HANGVE.MaHangVe=INSERTED.MaHangVe
 
-	UPDATE VE
-	SET GiaTien=(@giaVe*@heSo)
-	WHERE VE.MaVe=@maVe
-END
-GO
+--	UPDATE VE
+--	SET GiaTien=(@giaVe*@heSo)
+--	WHERE VE.MaVe=@maVe
+--END
+--GO
 
 --========================================= RÀNG BUỘC ĐẶT CHỖ =========================================
 ------ Khóa ngoại Mã hạng vé
@@ -443,33 +443,33 @@ GO
 --GO
 
 ------ Trigger GiaTien: = HANGVE.HeSo * CHUYENBAY.GiaVe * SoVeDat
-CREATE TRIGGER TG_DATCHO_NgayGioDat ON DATCHO
-FOR INSERT, UPDATE
-AS
-BEGIN
-	-- Khai báo
-	DECLARE @maDatCho INT, @maHangVe INT, @maChuyenBay INT, @heSo DECIMAL(3,2), @giaVe MONEY
+--CREATE TRIGGER TG_DATCHO_NgayGioDat ON DATCHO
+--FOR INSERT, UPDATE
+--AS
+--BEGIN
+--	-- Khai báo
+--	DECLARE @maDatCho INT, @maHangVe INT, @maChuyenBay INT, @heSo DECIMAL(3,2), @giaVe MONEY
 
-	-- Lấy mã đặt chỗ
-	SELECT @maDatCho=MaDatCho, @maHangVe=MaHangVe, @maChuyenBay = MaChuyenBay
-	FROM INSERTED
+--	-- Lấy mã đặt chỗ
+--	SELECT @maDatCho=MaDatCho, @maHangVe=MaHangVe, @maChuyenBay = MaChuyenBay
+--	FROM INSERTED
 
-	-- Lấy hệ số hạng vé
-	SELECT @heSo=HeSo
-	FROM HANGVE
-	WHERE MaHangVe=@maHangVe
+--	-- Lấy hệ số hạng vé
+--	SELECT @heSo=HeSo
+--	FROM HANGVE
+--	WHERE MaHangVe=@maHangVe
 
-	-- Lấy giá vé
-	SELECT @giaVe=GiaVe
-	FROM CHUYENBAY
-	WHERE MaChuyenBay=@maChuyenBay
+--	-- Lấy giá vé
+--	SELECT @giaVe=GiaVe
+--	FROM CHUYENBAY
+--	WHERE MaChuyenBay=@maChuyenBay
 
-	-- Update giá tiền
-	UPDATE DATCHO
-	SET GiaTien=SoVeDat * @giaVe * @heSo
-	WHERE MaDatCho=@maDatCho
-END
-GO
+--	-- Update giá tiền
+--	UPDATE DATCHO
+--	SET GiaTien=SoVeDat * @giaVe * @heSo
+--	WHERE MaDatCho=@maDatCho
+--END
+--GO
 
 ------ TrangThai: ChuaDoi, DaDoi, DaHuy
 ALTER TABLE DATCHO ADD CONSTRAINT CK_DATCHO_TrangThai CHECK (TrangThai IN ('ChuaDoi','DaDoi','DaHuy'))
@@ -488,34 +488,34 @@ ALTER TABLE CHITIETDATCHO ADD CONSTRAINT FK_CHITIETDATCHO_MaKhachHang FOREIGN KE
 GO
 
 ------ TRIGGER: Số chi tiết đặt chỗ không lớn hơn số vé đã đặt
-CREATE TRIGGER TRG_CHITIETDATCHO_SoLuongVe ON CHITIETDATCHO
-FOR INSERT
-AS
-BEGIN
-	DECLARE @soVeDaDat INT, @soVeHienTai INT, @maDatCho INT
+--CREATE TRIGGER TRG_CHITIETDATCHO_SoLuongVe ON CHITIETDATCHO
+--FOR INSERT
+--AS
+--BEGIN
+--	DECLARE @soVeDaDat INT, @soVeHienTai INT, @maDatCho INT
 
-	-- Lấy mã đặt chỗ
-	SELECT @maDatCho=MaDatCho
-	FROM INSERTED
+--	-- Lấy mã đặt chỗ
+--	SELECT @maDatCho=MaDatCho
+--	FROM INSERTED
 
-	-- Lấy số vé hiện tại
-	SELECT @soVeHienTai = COUNT(*)
-	FROM CHITIETDATCHO
-	WHERE MaDatCho=@maDatCho
+--	-- Lấy số vé hiện tại
+--	SELECT @soVeHienTai = COUNT(*)
+--	FROM CHITIETDATCHO
+--	WHERE MaDatCho=@maDatCho
 
-	-- Lấy số vé đã đặt
-	SELECT @soVeDaDat = SoVeDat
-	FROM DATCHO
-	WHERE MaDatCho=@maDatCho
+--	-- Lấy số vé đã đặt
+--	SELECT @soVeDaDat = SoVeDat
+--	FROM DATCHO
+--	WHERE MaDatCho=@maDatCho
 
-	-- Kiểm tra số lượng vé
-	IF (@soVeHienTai > @soVeDaDat)
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'Da vuot qua so luong ve da dat cua DATCHO'
-	END
-END
-GO
+--	-- Kiểm tra số lượng vé
+--	IF (@soVeHienTai > @soVeDaDat)
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'Da vuot qua so luong ve da dat cua DATCHO'
+--	END
+--END
+--GO
 
 --========================================= RÀNG BUỘC BẢNG DOANH THU CHUYẾN BAY =========================================
 ------ Khóa ngoại Mã doanh thu tháng
@@ -547,52 +547,52 @@ ALTER TABLE DOANHTHUCHUYENBAY ADD CONSTRAINT DF_DOANHTHUCHUYENBAY_TiLe DEFAULT 0
 GO
 
 ------ Trigger: Cập nhật doanh thu tháng khi có thêm doanh thu chuyến bay
-CREATE TRIGGER TRG_DOANHTHUCHUYENBAY_CapNhat ON DOANHTHUCHUYENBAY
-FOR INSERT
-AS
-BEGIN
-	-- Khai báo
-	DECLARE @doanhThuThem MONEY, @maDoanhThuThang INT
+--CREATE TRIGGER TRG_DOANHTHUCHUYENBAY_CapNhat ON DOANHTHUCHUYENBAY
+--FOR INSERT
+--AS
+--BEGIN
+--	-- Khai báo
+--	DECLARE @doanhThuThem MONEY, @maDoanhThuThang INT
 
-	-- Lấy doanh thu vừa thêm và mã doanh thu năm
-	SELECT @doanhThuThem=DoanhThu, @maDoanhThuThang=MaDoanhThuThang
-	FROM INSERTED
+--	-- Lấy doanh thu vừa thêm và mã doanh thu năm
+--	SELECT @doanhThuThem=DoanhThu, @maDoanhThuThang=MaDoanhThuThang
+--	FROM INSERTED
 
-	-- Cập nhật doanh thu, số chuyến bay tháng
-	UPDATE DOANHTHUTHANG
-	SET DoanhThu=DoanhThu+@doanhThuThem, SoChuyenBay=SoChuyenBay+1
-	WHERE MaDoanhThuThang=@maDoanhThuThang
+--	-- Cập nhật doanh thu, số chuyến bay tháng
+--	UPDATE DOANHTHUTHANG
+--	SET DoanhThu=DoanhThu+@doanhThuThem, SoChuyenBay=SoChuyenBay+1
+--	WHERE MaDoanhThuThang=@maDoanhThuThang
 
-	-- Cập nhật tỉ lệ doanh thu chuyến bay
-	UPDATE DOANHTHUCHUYENBAY
-	SET TiLe=DoanhThu / (
-		SELECT DoanhThu
-		FROM DOANHTHUTHANG dtt
-		WHERE dtt.MaDoanhThuThang=@maDoanhThuThang
-	)
+--	-- Cập nhật tỉ lệ doanh thu chuyến bay
+--	UPDATE DOANHTHUCHUYENBAY
+--	SET TiLe=DoanhThu / (
+--		SELECT DoanhThu
+--		FROM DOANHTHUTHANG dtt
+--		WHERE dtt.MaDoanhThuThang=@maDoanhThuThang
+--	)
 
-	-- Cập nhật doanh thu, số chuyến bay năm
-	UPDATE DOANHTHUNAM
-	SET DoanhThu=DoanhThu+@doanhThuThem, SoChuyenBay=SoChuyenBay+1
-	WHERE MaDoanhThuNam= (
-		SELECT MaDoanhThuNam
-		FROM DOANHTHUTHANG
-		WHERE MaDoanhThuThang=@maDoanhThuThang
-	)
+--	-- Cập nhật doanh thu, số chuyến bay năm
+--	UPDATE DOANHTHUNAM
+--	SET DoanhThu=DoanhThu+@doanhThuThem, SoChuyenBay=SoChuyenBay+1
+--	WHERE MaDoanhThuNam= (
+--		SELECT MaDoanhThuNam
+--		FROM DOANHTHUTHANG
+--		WHERE MaDoanhThuThang=@maDoanhThuThang
+--	)
 
-	-- Cập nhật tỉ lệ doanh thu tháng
-	UPDATE DOANHTHUTHANG
-	SET TiLe=DoanhThu / (
-		SELECT DoanhThu
-		FROM DOANHTHUNAM
-		WHERE MaDoanhThuNam= (
-			SELECT MaDoanhThuNam
-			FROM DOANHTHUTHANG
-			WHERE MaDoanhThuThang=@maDoanhThuThang
-		)
-	)
-END
-GO
+--	-- Cập nhật tỉ lệ doanh thu tháng
+--	UPDATE DOANHTHUTHANG
+--	SET TiLe=DoanhThu / (
+--		SELECT DoanhThu
+--		FROM DOANHTHUNAM
+--		WHERE MaDoanhThuNam= (
+--			SELECT MaDoanhThuNam
+--			FROM DOANHTHUTHANG
+--			WHERE MaDoanhThuThang=@maDoanhThuThang
+--		)
+--	)
+--END
+--GO
 
 --========================================= RÀNG BUỘC BẢNG DOANH THU THÁNG =========================================
 ------ Khóa ngoại Mã doanh thu năm

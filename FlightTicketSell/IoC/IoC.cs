@@ -47,6 +47,7 @@ namespace FlightTicketSell.IoC
             Kernel.Bind<SearchViewModel>().ToConstant(new SearchViewModel());
             Kernel.Bind<FlightDetailViewModel>().ToConstant(new FlightDetailViewModel());
             Kernel.Bind<FlightTicketAndBookViewModel>().ToConstant(new FlightTicketAndBookViewModel());
+            Kernel.Bind<ScheduleViewModel>().ToConstant(new ScheduleViewModel());
         }
 
         #endregion
@@ -59,6 +60,15 @@ namespace FlightTicketSell.IoC
         public static T Get<T>()
         {
             return Kernel.Get<T>();
+        }
+
+        /// <summary>
+        /// Rebind
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public static void Rebind<T>() where T : class, new()
+        {
+            Kernel.Rebind<T>().ToConstant(new T());
         }
 
     }

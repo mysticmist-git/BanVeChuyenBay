@@ -11,6 +11,9 @@ using FlightTicketSell.ViewModels.Search;
 
 namespace FlightTicketSell.ViewModels
 {
+    /// <summary>
+    /// The view model for the window showing customers information of a ticket or booking
+    /// </summary>
     public class CustomersDetailViewModel : BaseViewModel
     {
         #region Public Properties
@@ -23,7 +26,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The customer list
         /// </summary>
-        public ObservableCollection<Customer> Customers { get; set; }
+        public ObservableCollection<CustomerWithIndex> Customers { get; set; }
 
         /// <summary>
         /// An enum to identify how this window load customer (single or multiple)
@@ -70,7 +73,7 @@ namespace FlightTicketSell.ViewModels
                                 .Select(ve => ve.KHACHHANG)
                                 .FirstOrDefaultAsync();
 
-                            Customers = new ObservableCollection<Customer>(new[] { new Customer(result) { Index = 1 } });
+                            Customers = new ObservableCollection<CustomerWithIndex>(new[] { new CustomerWithIndex(result) { Index = 1 } });
                         }
                         else
                         {
@@ -86,9 +89,9 @@ namespace FlightTicketSell.ViewModels
                                 .FirstOrDefaultAsync();
 
                             // Convert KHACHHANG to Customer and add it to Customers list
-                            Customers = new ObservableCollection<Customer>();
+                            Customers = new ObservableCollection<CustomerWithIndex>();
                             for (int i = 1; i <= result.Count(); i++)
-                                Customers.Add(new Customer(result.ElementAt(i - 1)) { Index = i });
+                                Customers.Add(new CustomerWithIndex(result.ElementAt(i - 1)) { Index = i });
                         }
 
                     }

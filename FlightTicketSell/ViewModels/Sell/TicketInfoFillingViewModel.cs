@@ -32,6 +32,11 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand LoadCommand { get; set; }
 
+        /// <summary>
+        /// Check the customer ID if it is already existed
+        /// </summary>
+        public ICommand CustomerIDCheck { get; set; }
+
         #endregion
 
         #region Public Properties
@@ -54,7 +59,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Stores customer information
         /// </summary>
-        public KHACHHANG Customer { get; set; } = new KHACHHANG();
+        public Customer Customer { get; set; } = new Customer();
 
         /// <summary>
         /// Indicates if the customer filled is already in database or not
@@ -64,7 +69,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The duplicated customer (if there is)
         /// </summary>
-        public KHACHHANG DuplicatedCustomer { get; set; }
+        public Customer DuplicatedCustomer { get; set; }
 
         #endregion
 
@@ -82,6 +87,7 @@ namespace FlightTicketSell.ViewModels
                 if (!p.IsValid)
                 {
                     p.ForceUpdateSource();
+                    MessageBox.Show("Vui lòng nhập đủ thông tin khách hàng!", "Thiếu thông tin", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
 
@@ -105,11 +111,23 @@ namespace FlightTicketSell.ViewModels
                     {
                         // Get existed customer
                         using (var context = new FlightTicketSellEntities())
-                            DuplicatedCustomer = await context.KHACHHANGs.Where(kh => kh.CMND == Customer.CMND).FirstOrDefaultAsync();
+                        {
+                            var customer = await context.KHACHHANGs.Where(kh => kh.CMND == Customer.CMND).FirstOrDefaultAsync();
+                            DuplicatedCustomer = new Customer
+                            {
+                                HoTen = customer.HoTen,
+                                SDT = customer.SDT,
+                                CMND = customer.CMND,
+                                Email = customer.Email
+                            };
+                        }
 
                         var view = new CustomerExistedDialog()
                         {
                             DataContext = new CustomerExistedViewModel()
+                            {
+                                DuplicatedCustomer = this.DuplicatedCustomer
+                            }
                         };
 
                         // It's ok if all fields is dupped
@@ -120,7 +138,8 @@ namespace FlightTicketSell.ViewModels
                             )
                             break;
 
-                        await DialogHost.Show(view, "RootDialog", ClosingEventHandler);
+                        if (!DialogHost.IsDialogOpen("RootDialog"))
+                            await DialogHost.Show(view, "RootDialog", ClosingEventHandler);
 
                         return;
                     } 
@@ -138,9 +157,67 @@ namespace FlightTicketSell.ViewModels
 
             ReturnCommand = new RelayCommand<object>((p) => true, (p) =>
             {
-                this.ClearData();
+                IoC.IoC.Rebind<TicketInfoFillingView>();
                 
                 IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.FlightDetail;
+            });
+
+            CustomerIDCheck = new RelayCommand<object>((p) => true, async (p) =>
+            {
+                // Check if customer existed
+                using (var context = new FlightTicketSellEntities())
+                {
+                    try
+                    {
+                        IsCustomerNew = !(await context.KHACHHANGs.Where(kh => kh.CMND == Customer.CMND).CountAsync() > 0);
+                    }
+                    catch (EntityException e)
+                    {
+                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+
+                // Show dialog yêu cầu có hành động đối với CMND trùng
+                do
+                {
+                    if (!IsCustomerNew)
+                    {
+                        // Get existed customer
+                        using (var context = new FlightTicketSellEntities())
+                        {
+                            var customer = await context.KHACHHANGs.Where(kh => kh.CMND == Customer.CMND).FirstOrDefaultAsync();
+                            DuplicatedCustomer = new Customer
+                            {
+                                HoTen = customer.HoTen,
+                                SDT = customer.SDT,
+                                CMND = customer.CMND,
+                                Email = customer.Email
+                            };
+
+                        }
+
+                        var view = new CustomerExistedDialog()
+                        {
+                            DataContext = new CustomerExistedViewModel()
+                            {
+                                DuplicatedCustomer = this.DuplicatedCustomer
+                            }
+                        };
+
+                        // It's ok if all fields is dupped
+                        if (
+                            DuplicatedCustomer.HoTen == Customer.HoTen &&
+                            DuplicatedCustomer.SDT == Customer.SDT &&
+                            DuplicatedCustomer.Email == Customer.Email
+                            )
+                            break;
+
+                        if (!DialogHost.IsDialogOpen("RootDialog"))
+                            await DialogHost.Show(view, "RootDialog", ClosingEventHandler);
+
+                        return;
+                    }
+                } while (false);
             });
         }
 
@@ -176,9 +253,7 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public void ClearData()
         {
-            Customer = new KHACHHANG();
-            DuplicatedCustomer = new KHACHHANG();
-            CurrentTicketTier = null;
+            IoC.IoC.Rebind<TicketInfoFillingViewModel>();
         }
 
         #endregion

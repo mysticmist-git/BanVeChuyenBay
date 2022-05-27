@@ -51,35 +51,6 @@
             CornerRadius="10"
             Background="White"
             >
-            <!--<DataGrid
-                    ItemsSource="{Binding ChooseAirport_List, UpdateSourceTrigger=PropertyChanged}"
-                    d:ItemsSource="{d:SampleData ItemCount=5}"
-                    
-                    ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
-                    CellStyle="{StaticResource DataGridCellCenter}"
-                    ColumnWidth="*"
-                    RowHeight="50"
-                    CanUserSortColumns="True"
-                    CanUserAddRows="False"
-                    AutoGenerateColumns="False"
-                    >
-                <DataGrid.Columns>
-
-                    <d:DataGridTextColumn
-                            Binding="{Binding Name}"
-                            Header="Tên sân bay" />
-
-                    <d:DataGridTextColumn
-                            Width="100"
-                            Binding="{Binding Code}"
-                            Header="Mã sân bay" />
-                    
-                    <d:DataGridTextColumn
-                            Binding="{Binding Province}"
-                            Header="Tỉnh thành" />
-                    
-                </DataGrid.Columns>
-            </DataGrid>-->
             <!--Danh sách sân bay-->
             <ListView ItemsSource="{Binding ChooseAirport_List}"
                               SelectedItem="{Binding ChooseAirport_SelectedItem}">

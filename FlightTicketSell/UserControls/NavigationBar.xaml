@@ -9,7 +9,9 @@
              xmlns:attachedProperties="clr-namespace:FlightTicketSell.AttachedProperties"
              xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
              xmlns:models="clr-namespace:FlightTicketSell.Models"
+             d:Width="1366"
              mc:Ignorable="d">
+    
     <UserControl.DataContext>
         <vm:NavigationBarViewModel />
     </UserControl.DataContext>
@@ -19,8 +21,10 @@
             <Grid.ColumnDefinitions>
                 <!-- Logo, App Name -->
                 <ColumnDefinition Width="Auto" />
-                <!-- Buttons -->
+                <!-- View indicator -->
                 <ColumnDefinition Width="*" />
+                <!-- Buttons -->
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <!-- Logo, App Name -->
@@ -45,16 +49,25 @@
                 </StackPanel>
             </Viewbox>
             
-            <!-- Buttons -->
+            <!-- View indicator -->
             <Viewbox Grid.Column="1"
+                     HorizontalAlignment="Center"
+                     MaxHeight="{Binding ElementName=buttons, Path=ActualHeight}"
+                     MaxWidth="{Binding ElementName=buttons, Path=ActualWidth}">
+                <TextBlock d:Text="ĐẶT VÉ" FontWeight="Bold" Text="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToDisplayTextConverter}}"/>
+            </Viewbox>
+            
+            
+            <!-- Buttons -->
+            <Viewbox Grid.Column="2"
                      HorizontalAlignment="Right"
                      MaxHeight="{Binding ElementName=buttons, Path=ActualHeight}"
                      MaxWidth="{Binding ElementName=buttons, Path=ActualWidth}">
                 <StackPanel x:Name="buttons" Orientation="Horizontal">
-                    <Button Content="Tra cứu" Command="{Binding SearchCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Search}}"/>
-                    <Button Content="Nhận lịch" Command="{Binding ScheduleCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Schedule}}"/>
-                    <Button Content="Doanh thu" Command="{Binding ReportCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Report}}"/>
-                    <Button Content="Cài đặt" Command="{Binding SettingCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}"/>
+                    <Button Content="TRA CỨU" Command="{Binding SearchCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Search}}"/>
+                    <Button Content="NHẬN LỊCH" Command="{Binding ScheduleCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Schedule}}"/>
+                    <Button Content="DOANH THU" Command="{Binding ReportCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Report}}"/>
+                    <Button Content="CÀI ĐẶT" Command="{Binding SettingCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}"/>
                 </StackPanel>
             </Viewbox>
         </Grid>

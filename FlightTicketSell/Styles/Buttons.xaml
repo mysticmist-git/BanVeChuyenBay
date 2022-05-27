@@ -45,6 +45,8 @@
                         <Storyboard>
                             <ColorAnimation Duration="0:0:0.2" To="{StaticResource LightBlue}" 
                                                             Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+                            <ColorAnimation Duration="0:0:0.2" To="{StaticResource VeryLightGray}" 
+                                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
                         </Storyboard>
                     </BeginStoryboard>
                 </MultiTrigger.EnterActions>
@@ -53,16 +55,21 @@
                         <Storyboard FillBehavior="Stop">
                             <ColorAnimation Duration="0:0:0.2" To="Black" 
                                                             Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+                            <ColorAnimation Duration="0:0:0.2" To="Transparent" 
+                                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
                         </Storyboard>
                     </BeginStoryboard>
                 </MultiTrigger.ExitActions>
             </MultiTrigger>
+            
             <Trigger Property="attachedProperties:IsButtonSelected.Value" Value="True">
                 <Trigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard>
                             <ColorAnimation Duration="0:0:0.2" To="{StaticResource LightBlue}" 
                                                             Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+                            <ColorAnimation Duration="0:0:0.2" To="{StaticResource VeryLightGray}" 
+                                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
@@ -71,6 +78,8 @@
                         <Storyboard FillBehavior="Stop">
                             <ColorAnimation Duration="0:0:0.2" To="Black" 
                                                             Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
+                            <ColorAnimation Duration="0:0:0.2" To="Transparent" 
+                                                            Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>
@@ -93,7 +102,6 @@
         <Setter Property="FontSize" Value="10" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Margin" Value="10 0 0 0" />
-        <Setter Property="VerticalAlignment" Value="Bottom" />
         <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth3" />
     </Style>
     

@@ -38,8 +38,8 @@ namespace FlightTicketSell.Views.Helper
                         .Select(dt => new FlightReport()
                         {
                             DisplayFlightCode =
-                                dt.CHUYENBAY.DUONGBAY.SANBAY.VietTat +
                                 dt.CHUYENBAY.DUONGBAY.SANBAY1.VietTat +
+                                dt.CHUYENBAY.DUONGBAY.SANBAY.VietTat +
                                 "-" +
                                 dt.CHUYENBAY.MaChuyenBay,
                             DepartDate = dt.CHUYENBAY.NgayGio,
@@ -141,7 +141,7 @@ namespace FlightTicketSell.Views.Helper
                             Year = dt.Nam,
                             FlightCount = dt.SoChuyenBay,
                             Revenue = dt.DoanhThu,
-                            Ratio = dt.DoanhThu / totalRevenue
+                            Ratio = totalRevenue == (decimal)0.0 ? (decimal)0.0 : dt.DoanhThu / totalRevenue
                         })
                         .ToListAsync();
 

@@ -79,7 +79,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Stores customers that this book contains
         /// </summary>
-        public ObservableCollection<Customer> Customers { get; set; }
+        public ObservableCollection<CustomerWithIndex> Customers { get; set; }
 
         /// <summary>
         /// Stores booking information
@@ -163,9 +163,16 @@ namespace FlightTicketSell.ViewModels
                                 .FirstOrDefaultAsync();
 
                         // Convert KHACHHANG to Customer and add it to Customers list
-                        Customers = new ObservableCollection<Customer>();
+                        Customers = new ObservableCollection<CustomerWithIndex>();
                         for (int i = 1; i <= result.Count(); i++)
-                            Customers.Add(new Customer(result.ElementAt(i - 1)) { Index = i });
+                            Customers.Add(new CustomerWithIndex() 
+                            {
+                                Index = i,
+                                HoTen = result.ElementAt(i - 1).HoTen,
+                                CMND = result.ElementAt(i - 1).CMND,
+                                SDT = result.ElementAt(i - 1).SDT,
+                                Email = result.ElementAt(i - 1).Email,
+                            });
                     }
                     catch (EntityException e)
                     {

@@ -455,8 +455,8 @@
                     VerticalAlignment="Stretch"
                     HorizontalContentAlignment="Stretch"
                     Command="{Binding PayCommand}"                
-                    Background="{StaticResource GreenBrush}"                 
-                    BorderThickness="0"                
+                    BorderBrush="{StaticResource GreenBrush}"                    
+                        Style="{StaticResource HoverButton}"
                     materialDesign:ButtonAssist.CornerRadius="5"
                             Height="50">
                     <Grid>
