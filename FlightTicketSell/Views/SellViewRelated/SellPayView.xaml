@@ -458,7 +458,7 @@
                     BorderBrush="{StaticResource GreenBrush}"                    
                         Style="{StaticResource HoverButton}"
                     materialDesign:ButtonAssist.CornerRadius="5"
-                            Height="50">
+                            Height="40">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />

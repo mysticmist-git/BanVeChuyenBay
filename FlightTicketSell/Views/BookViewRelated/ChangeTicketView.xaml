@@ -523,7 +523,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Thanh toán"  Grid.Column="0" FontSize="{StaticResource Regular}" TextAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="In vé"  Grid.Column="0" FontSize="{StaticResource Regular}" />
                     <materialDesign:PackIcon Kind="Ticket" Grid.Column="1" VerticalAlignment="Stretch" Width="35" Height="35" />
                 </Grid>
             </Button>
