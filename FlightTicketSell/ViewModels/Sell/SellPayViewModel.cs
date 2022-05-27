@@ -72,7 +72,11 @@ namespace FlightTicketSell.ViewModels
         public SellPayViewModel()
         {
             // Create commands
-            ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.TicketInfoFilling);
+            ReturnCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                IoC.IoC.Get<TicketInfoFillingViewModel>().ClearData();
+                IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.TicketInfoFilling;
+            }); 
 
             PayCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
@@ -87,7 +91,7 @@ namespace FlightTicketSell.ViewModels
                 var customer = Customer;
 
                 // Clear view models
-                IoC.IoC.Get<TicketInfoFillingViewModel>().ClearData();
+                
 
                 // Send mail
                 await SendMail(flightInfo, customer);
@@ -153,7 +157,9 @@ namespace FlightTicketSell.ViewModels
         private async Task SendMail(DetailFlilghtInfo flightInfo, Customer customer)
         {
             // Send email to user
-            string to = customer.Email; //To address    
+            string to = customer.Email; //To address
+            if (to == null)
+                return;
 
             // enter your email
             string from = "flightsystem53@gmail.com"; //From address    

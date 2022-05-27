@@ -203,7 +203,9 @@ namespace FlightTicketSell.ViewModels
                         MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
-            });
+                IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.Search;
+
+        });
 
         }
 
