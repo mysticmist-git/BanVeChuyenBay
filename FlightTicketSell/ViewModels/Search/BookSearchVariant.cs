@@ -25,6 +25,7 @@ namespace FlightTicketSell.ViewModels.Search
         /// </summary>
         public ICommand ShowMoreCommand { get; set; }
 
+
         #endregion
 
         #region Constructor
@@ -55,6 +56,7 @@ namespace FlightTicketSell.ViewModels.Search
                 IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.ChangeTicket;
 
                 IoC.IoC.Get<ChangeTicketViewModel>().BookingInfo = this;
+
             });
         } 
 

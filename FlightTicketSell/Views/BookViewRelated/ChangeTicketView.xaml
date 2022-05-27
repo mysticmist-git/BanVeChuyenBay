@@ -512,9 +512,10 @@
             <Button Grid.Row="9"
                     Grid.Column="8" Grid.ColumnSpan="2"
                     Command="{Binding BookPay}"                
-                    Background="{StaticResource GreenBrush}"  
+                    BorderBrush="{StaticResource GreenBrush}"
+                    Style="{StaticResource HoverButton}"
                     VerticalAlignment="Bottom"
-                    BorderThickness="0"                
+                               
                     materialDesign:ButtonAssist.CornerRadius="5"
                     Height="50">
                 <Grid>
@@ -537,8 +538,8 @@
                     FontSize="{StaticResource Regular}"
                     Content="Hủy đặt vé"     
                     Command="{Binding CancelTicketCommand}"
-                    Background="{StaticResource RedBrush}"                 
-                    BorderThickness="0"   
+                    BorderBrush="{StaticResource RedBrush}"
+                    Style="{StaticResource HoverButton}"
                     Height="50"
                     materialDesign:ButtonAssist.CornerRadius="5" />
         </Grid>

@@ -20,6 +20,16 @@ namespace FlightTicketSell.Models.SearchRelated
         /// </summary>
         public int MaDuongBay { get; set; }
 
+        /// <summary>
+        /// Indicates if flight has any seat left
+        /// </summary>
+        public bool AnySeatLeft { get => this.GheTrong != 0; }
+
+        /// <summary>
+        /// Indicates if it is able to sell and book
+        /// </summary>
+        public bool IsAbleToSellAndBook { get => AnySeatLeft && DaKhoiHanh == false; }
+
         #endregion
 
         #region Construcotr

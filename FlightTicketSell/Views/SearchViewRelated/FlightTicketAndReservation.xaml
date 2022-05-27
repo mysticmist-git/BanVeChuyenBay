@@ -32,6 +32,7 @@
 
             <!-- Return button -->
             <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                Name="Quay_Lai"
                 Command="{Binding ReturnCommand}"
                 Grid.Column="0"
                 Grid.RowSpan="2"
@@ -109,18 +110,20 @@
 
                                         <Grid.ColumnDefinitions>
                                             <!-- Search box -->
-                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="74*" />
+                                            <ColumnDefinition Width="97*"/>
                                             <!-- Search button -->
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
 
                                         <!-- Search box -->
                                         <TextBox Grid.Column="0"
+                                             Name="Ma_Ve"
                                              VerticalAlignment="Center"
                                              materialDesign:HintAssist.Hint="Mã vé"
                                              Text="{Binding Search_IDSold}"
                                              FontSize="{StaticResource RealSmall}"
-                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.ColumnSpan="2">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="TextChanged">
                                                     <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
@@ -129,7 +132,7 @@
                                         </TextBox>
 
                                         <!-- Search button -->
-                                        <Button Grid.Column="1"
+                                        <Button Grid.Column="2"
                                         VerticalAlignment="Center" 
                                         Background="Transparent" 
                                         Foreground="{StaticResource GrayBrush}" 
@@ -150,6 +153,7 @@
                             </Grid>
 
                             <DataGrid
+                                  Name="Ve_Da_Ban"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                                   Grid.Row="1"
                                   Background="Transparent"
@@ -192,7 +196,9 @@
                                                     <!-- Detail button -->
                                                     <Button Content="Chi tiết"
                                                             Grid.Column="1"
-                                                            Style="{StaticResource FlightDetailButton}"
+                                                            Style="{StaticResource HoverButton}"
+                                                            BorderBrush="{StaticResource LightBlueBrush}"
+                                                            Height="28"
                                                             Command="{Binding Open_Window_DescriptionCustomer_Command}" />
                                                 </Grid>
                                             </DataTemplate>
@@ -203,15 +209,17 @@
                                     <materialDesign:DataGridTextColumn
                                         IsReadOnly="True"
                                         Binding="{Binding TenHangVe}"
-                                        Header="Tên hạng vé"
+                                        Header="Tên hạng vé"                                        
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                                     <materialDesign:DataGridTextColumn
                                         Binding="{Binding DisplayPayDate}"
                                         Header="Ngày thanh toán"
+                                        IsReadOnly="True"
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                                     <materialDesign:DataGridTextColumn
                                         Binding="{Binding DisplayTicketPrice}"
                                         Header="Giá tiền"
+                                        IsReadOnly="True"
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
@@ -269,6 +277,7 @@
 
                                         <!-- Search box -->
                                         <TextBox Grid.Column="0"
+                                             Name="Ma_Dat_Cho"
                                              VerticalAlignment="Center"
                                              materialDesign:HintAssist.Hint="Mã đặt chỗ"
                                              Text="{Binding Search_IDBooked}"
@@ -303,6 +312,7 @@
                             </Grid>
 
                             <DataGrid
+                                  Name="Cho_Da_Dat"
                                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                                   Background="Transparent"
@@ -312,13 +322,13 @@
                                   d:ItemsSource="{d:SampleData ItemCount=5}"
                                   ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                                   CellStyle="{StaticResource DataGridCellCenter}"
-                                  ColumnWidth="Auto"
+                                  ColumnWidth="*"
                                   CanUserSortColumns="True"
                                   CanUserAddRows="False"
                                   AutoGenerateColumns="False"
                                   RowHeight="50"
                                   materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                                  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+                                  materialDesign:DataGridAssist.ColumnHeaderPadding="8" SelectionChanged="DataGrid_SelectionChanged">
                                 <DataGrid.Columns>
 
                                     <DataGridTextColumn IsReadOnly="True"
@@ -338,27 +348,30 @@
 
                                                     <!-- Flight code -->
                                                     <TextBlock Grid.Column="0"
-                                                               Text="{Binding TenKhachDat}"
+                                                               Text="{Binding ThongTinNguoiDat.HoTen}"
                                                                VerticalAlignment="Center"
                                                                HorizontalAlignment="Left"/>
 
                                                     <!-- Detail button -->
                                                     <Button Content="Chi tiết"
+                                                            Name="Thong_Tin_Chi_Tiet_Khach_Hang"
                                                             Grid.Column="1"
-                                                            Style="{StaticResource FlightDetailButton}"
+                                                            Style="{StaticResource HoverButton}"
+                                                            BorderBrush="{StaticResource LightBlueBrush}"
+                                                            Height="28"
                                                             Command="{Binding Open_Window_DescriptionCustomer_Command}" />
                                                 </Grid>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
-                                    
+
                                     <!-- set a max length to get an indicator in the editor -->
                                     <materialDesign:DataGridTextColumn IsReadOnly="True"
                                     Width="100"
                                     Binding="{Binding SoVeDat}"
                                     Header="Số chỗ"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                                    
+
                                     <!-- Tên hạng vé -->
                                     <materialDesign:DataGridTextColumn IsReadOnly="True"
                                     Width="200"
@@ -395,14 +408,16 @@
                                                                Text="{Binding BookingState, Mode=OneWay, Converter={valueConverters:BookingStateToStringConverter}}"
                                                                Foreground="{Binding BookingState, Mode=OneWay, Converter={valueConverters:BookingStateToColorConverter}}"
                                                                FontWeight="Bold"
+                                                               IsEnabled="False"
                                                                VerticalAlignment="Center"
                                                                HorizontalAlignment="Left"/>
 
                                                     <!-- Booking change button -->
                                                     <Button ToolTip="Đổi vé"
+                                                            Name="Chi_Tiet_Cho_Dat_Doi_Ve"
                                                             Grid.Column="1"
-                                                            Background="{StaticResource GreenBrush}"
-                                                            BorderThickness="0"
+                                                           BorderBrush="{StaticResource GreenBrush}"
+                                                            Style="{StaticResource HoverButton}"
                                                             Command="{Binding ShowMoreCommand}">
                                                         <StackPanel Orientation="Horizontal">
                                                             <TextBlock Text="Xem " />
@@ -422,6 +437,6 @@
             </Grid>
 
         </Grid>
-        
+
     </Grid>
 </UserControl>

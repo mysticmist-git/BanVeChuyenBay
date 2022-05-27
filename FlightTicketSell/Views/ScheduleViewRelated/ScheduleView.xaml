@@ -9,10 +9,11 @@
              xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
              mc:Ignorable="d" 
              d:Background="{StaticResource LightGrayBrush}"
-             d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding ScheduleViewModel, Source={x:Static vm:ViewModelLocator.Instance}}">
+    <!--<UserControl.DataContext>
         <vm:ScheduleViewModel />
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -75,8 +76,8 @@
                                    materialDesign:HintAssist.Hint="Sân bay đi" 
                                    Style="{StaticResource CustomTextbox}" 
                                    VerticalAlignment="Center" 
-                                   Text="{Binding DepartureAirport.Name, UpdateSourceTrigger=PropertyChanged}"
-                                   >
+                                   Text="{Binding DepartureAirport.Name}"
+                                     materialDesign:TextFieldAssist.HasClearButton="True">
                              
                         <!--Command-->
                             <i:Interaction.Triggers>
@@ -103,7 +104,8 @@
                                    materialDesign:HintAssist.Hint="Sân bay đến" 
                                    Style="{StaticResource CustomTextbox}" 
                                    VerticalAlignment="Center" 
-                                    Text="{Binding LandingAirport.Name, UpdateSourceTrigger=PropertyChanged}">
+                                    Text="{Binding LandingAirport.Name}"
+                                     materialDesign:TextFieldAssist.HasClearButton="True">
                             
                          <!--Command--> 
                             <i:Interaction.Triggers>
@@ -127,7 +129,7 @@
 
                             <!--Giá vé-->
                             <TextBox Grid.Column="0" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="VNĐ"
-                                 Text="{Binding Airfares, StringFormat='$#,##0.0000;$(#,##0.0000)'}"
+                                 Text="{Binding Airfares}"
                                  PreviewTextInput="PreviewTextInput">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
@@ -190,7 +192,7 @@
                             <!--Giờ bay-->
                             <materialDesign:TimePicker 
                                 Grid.Column="6 " Style="{StaticResource MaterialDesignFloatingHintTimePicker}" Is24Hours="True" materialDesign:HintAssist.Hint="Giờ bay" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black" 
-                                SelectedTime="{Binding TimeFlight, Mode=OneWay, Converter={valueConverters:TimePickerUI_To_TimePickerConverter}}"
+                                SelectedTime="{Binding TimeFlight}"
                                 HorizontalAlignment="Stretch"
                                 Focusable="False"/>
                         </Grid>
@@ -437,10 +439,10 @@
                                     HorizontalAlignment="Right">
                     <!--Nút xóa-->
                     <Button Margin="7 0 0 0" 
-                                    Content="Hủy" 
+                                    Content="Làm mới" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
-                                    Command="{Binding CancelScheduleAFlight_Command}"/>
+                                    Command="{Binding RefreshScheduleAFlight_Command}"/>
 
                     <!--Nút thêm-->
                     <Button Margin="7 0 10 0" Content="Nhận lịch bay" 
