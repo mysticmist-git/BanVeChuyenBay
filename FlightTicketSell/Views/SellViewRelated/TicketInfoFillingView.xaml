@@ -365,8 +365,8 @@
 
                 <Button Grid.Row="9"
                         Grid.Column="7" Grid.ColumnSpan="2"
-                        Height="50"
-                        Padding="50 0"
+                        Height="45"
+                        Padding="20 0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Bottom"
                         Command="{Binding ContinueCommand}" 
