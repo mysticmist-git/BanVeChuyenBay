@@ -8,6 +8,7 @@ using System.Windows;
 using FlightTicketSell.Models;
 using FlightTicketSell.Helpers;
 using FlightTicketSell.Views;
+using MaterialDesignThemes.Wpf;
 
 namespace FlightTicketSell.ViewModels.Search
 {
@@ -36,7 +37,7 @@ namespace FlightTicketSell.ViewModels.Search
         public BookSearchVariant()
         {
             // Create commands 
-            Open_Window_DescriptionCustomer_Command = new RelayCommand<object>((p) => true, (p) =>
+            Open_Window_DescriptionCustomer_Command = new RelayCommand<object>((p) => true, async (p) =>
             {
                 var view = new DetailCustomers()
                 {
@@ -46,8 +47,8 @@ namespace FlightTicketSell.ViewModels.Search
                         Info = (this as object)
                     }
                 };
+                var result = await DialogHost.Show(view, "RootDialog");
 
-                view.ShowDialog();
             });
 
             ShowMoreCommand = new RelayCommand<object>(p => true, p =>

@@ -17,7 +17,7 @@ namespace FlightTicketSell.Views
     /// <summary>
     /// Interaction logic for DetailCustomers.xaml
     /// </summary>
-    public partial class DetailCustomers : Window
+    public partial class DetailCustomers : UserControl
     {
         public DetailCustomers()
         {
