@@ -405,6 +405,7 @@
 
                         <Border Grid.Row="1" Padding="30 15">
                             <DataGrid
+                                IsReadOnly="True"
                                 Name="Thong_Tin_Hang_Ve"
                                 Background="Transparent"
                                 ItemsSource="{Binding TicketTier}"

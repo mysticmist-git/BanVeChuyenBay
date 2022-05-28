@@ -22,7 +22,7 @@
 
     <Border
                 Background="{StaticResource LightGrayBrush}"
-                CornerRadius="5" 
+                CornerRadius="10" 
                 Style="{StaticResource ResourceKey=DropShadow}" >
         <Grid>
             <Border CornerRadius="5 5  12 12"  Height="100" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
