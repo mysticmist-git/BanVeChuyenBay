@@ -13,20 +13,9 @@
         <vm:SettingViewModel/>
     </UserControl.DataContext>
 
-<<<<<<< Updated upstream
     <!--Sân bay-->
     <Border Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
         <Grid>
-=======
-    <Border
-                Background="{StaticResource LightGrayBrush}"
-                CornerRadius="5" 
-                Style="{StaticResource ResourceKey=DropShadow}" >
-        <Grid>
-            <Border CornerRadius="5 5  12 12"  Height="100" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
-
-            <Grid>
->>>>>>> Stashed changes
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="5*"></ColumnDefinition>
@@ -82,7 +71,6 @@
                                     BorderBrush="{StaticResource GreenBrush}"
                                 Command="{Binding MoreAirport_Save_Button_Command}"
                                 materialDesign:ShadowAssist.Darken="True"
-<<<<<<< Updated upstream
                         Height="30"
                         Width="100"            
                         />
@@ -92,11 +80,4 @@
     </Border>
 
 
-=======
-                                    />
-                </StackPanel>
-            </Grid>
-        </Grid>
-    </Border>
->>>>>>> Stashed changes
 </UserControl>

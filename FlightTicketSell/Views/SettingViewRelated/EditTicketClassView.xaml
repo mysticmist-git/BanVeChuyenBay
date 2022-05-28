@@ -11,7 +11,6 @@
     <UserControl.DataContext>
         <vm:SettingViewModel/>
     </UserControl.DataContext>
-<<<<<<< Updated upstream
     <!--Chỉnh hạng vé-->
     <Border Grid.Row="1" Grid.Column="1" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
         <Grid>
@@ -57,87 +56,17 @@
 
                     <!--Tên hạng vé-->
                     <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Tên hạng vé cũ" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-=======
-    <Border
-                Background="{StaticResource LightGrayBrush}"
-                CornerRadius="5" 
-                Style="{StaticResource ResourceKey=DropShadow}" >
-        <Grid>
-            <Border CornerRadius="5 5  12 12"  Height="100" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
-
-            <Grid >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="20" />
-                    <RowDefinition Height="4*" />
-                    <RowDefinition Height="1*" />
-                </Grid.RowDefinitions>
-
-                <!--Sân bay-->
-                <Border Grid.Row="1" Grid.Column="1" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="5*"></ColumnDefinition>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="5*"></ColumnDefinition>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*" ></RowDefinition>
-                            <RowDefinition Height="4*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="3*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                        </Grid.RowDefinitions>
-
-                        <!--Tựa-->
-                        <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" 
-                               Text="Chỉnh sửa hạng vé"/>
-
-                        <!--Thông tin sân bay-->
-                        <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Background="{StaticResource LightGrayBrush}"
-                            CornerRadius="5" Style="{StaticResource ResourceKey=DropShadow}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                                    <ColumnDefinition Width="15*"></ColumnDefinition>
-                                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                                    <ColumnDefinition Width="15*"></ColumnDefinition>
-                                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*" ></RowDefinition>
-                                    <RowDefinition Height="5*"></RowDefinition>
-                                    <RowDefinition Height="1*"></RowDefinition>
-                                </Grid.RowDefinitions>
-
-                                <!--Tên hạng vé-->
-                                <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Tên hạng vé cũ" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
->>>>>>> Stashed changes
                                       IsReadOnly="True"
                                       Focusable="False"
                                       Text="{Binding TicketClass_selecteditem.Name}"
                                       />
 
-<<<<<<< Updated upstream
                     <!--Hệ số cũ-->
                     <TextBox  Grid.Row="1" Grid.Column="3" materialDesign:HintAssist.Hint="Hệ số cũ" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-=======
-                                <!--Hệ số cũ-->
-                                <TextBox  Grid.Row="1" Grid.Column="3" materialDesign:HintAssist.Hint="Hệ số cũ" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
->>>>>>> Stashed changes
                                       IsReadOnly="True"
                                       Focusable="False"
                                       Text="{Binding TicketClass_selecteditem.Coefficient}"
                                       />
-<<<<<<< Updated upstream
                 </Grid>
             </Border>
 
@@ -159,29 +88,6 @@
             <!--Nút hủy-->
             
                 <Button Margin="0 0 10 0" 
-=======
-                            </Grid>
-                        </Border>
-
-                        <!--Tên mới-->
-                        <TextBox Margin="20 0 0 0" Grid.Row="3" Grid.Column="1" materialDesign:HintAssist.Hint="Tên mới" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-                             Text="{Binding EditTicketClass_Name}"
-                             materialDesign:HintAssist.HelperText="Để trống nếu giữ nguyên!"/>
-                        <!--Hệ số mới-->
-                        <TextBox Margin="0 0 20 0" Grid.Row="3" Grid.Column="3" materialDesign:HintAssist.Hint="Hệ số mới" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
-                             Text="{Binding EditTicketClass_Coefficien}"
-                             PreviewTextInput="TextBox_PreviewTextInput"
-                             materialDesign:HintAssist.HelperText="Để trống nếu giữ nguyên!"/>
-                    </Grid>
-                </Border>
-
-
-                <StackPanel Orientation="Horizontal" 
-                                    Grid.Row="2" Grid.Column="1" 
-                                    HorizontalAlignment="Right">
-                    <!--Nút hủy-->
-                    <Button Margin="7 0 0 0" 
->>>>>>> Stashed changes
                                     Content="Hủy" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
@@ -189,36 +95,22 @@
                         Height="30"
                         Width="100"/>
 
-<<<<<<< Updated upstream
                 
             <!--Nút lưu-->
             
                 <Button Margin="10 0 0 0" Content="Lưu" 
-=======
-                    <!--Nút lưu-->
-                    <Button Margin="7 0 10 0" Content="Lưu" 
->>>>>>> Stashed changes
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource GreenBrush}"
                                 Command="{Binding EditTicketClass_Save_Button_Command}"
                                 materialDesign:ShadowAssist.Darken="True"
-<<<<<<< Updated upstream
                                     
                         Height="30"
                         Width="100"/>
             </StackPanel>
-=======
-                                    />
-                </StackPanel>
->>>>>>> Stashed changes
 
-            </Grid>
         </Grid>
     </Border>
-<<<<<<< Updated upstream
 
 
    
-=======
->>>>>>> Stashed changes
 </UserControl>
