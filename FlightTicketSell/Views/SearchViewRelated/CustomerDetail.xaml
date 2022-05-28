@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightTicketSell.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" 
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Height="400" Width="470"
-        Background="{StaticResource LightGrayBrush}">
+             >
 
     <UserControl.DataContext>
         <vm:CustomersDetailViewModel />
@@ -20,88 +21,106 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid>
+    <Border CornerRadius="10"
+            Background="White">
+        <Grid Background="Transparent">
 
-        <Grid.ColumnDefinitions>
-            <!-- Spacing -->
-            <ColumnDefinition Width="1*" />
-            <!-- Content -->
-            <ColumnDefinition Width="15*" />
-            <!-- Spacing -->
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <!-- Spacing -->
+                <ColumnDefinition Width="1*" />
+                <!-- Content -->
+                <ColumnDefinition Width="15*" />
+                <!-- Spacing -->
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <!-- Spacing -->
-            <RowDefinition Height="40" />
-            <!-- Content -->
-            <RowDefinition Height="15*" />
-            <!-- Spacing -->
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <!-- Spacing -->
+                <RowDefinition Height="35" />
+                <!-- Content -->
+                <RowDefinition Height="15*" />
+                <!-- Spacing -->
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="0.2*" />
+            </Grid.RowDefinitions>
 
-        
 
-        <!-- The blue thingy in the top -->
-        <Border Grid.Column="0" Grid.ColumnSpan="3"
+
+            <!-- The blue thingy in the top -->
+            <Border Grid.Column="0" Grid.ColumnSpan="3"
                 Grid.Row="0" Grid.RowSpan="2"
                 CornerRadius="0 0 10 10"
                 Height="100"
                 VerticalAlignment="Top" 
                 Background="{StaticResource BlueBrush}" />
 
-        <TextBlock
+            <TextBlock
             Grid.Row="0"
             Grid.Column="1"
             Text="Chi Tiết Khách Hàng"
             Foreground="{StaticResource LightGrayBrush}"
-            FontSize="27"
-            VerticalAlignment="Bottom"
+            FontSize="20"
             Margin="0 0 0 -10"
+            VerticalAlignment="Center"
             HorizontalAlignment="Center"
             FontFamily="{StaticResource Roboto}"
             FontWeight="Black"
             
             />
-        
-        <!-- Customer info list-->
-        <ListView Grid.Column="1"
+
+            <Button
+            Grid.Column="1"
+            Grid.Row="3"
+            Style="{StaticResource HoverButton}"
+            BorderBrush="{StaticResource LightBlueBrush}"
+            Content="Đóng"
+            FontSize="15"
+            HorizontalAlignment="Stretch"
+            Width="230"
+            Height="30"
+            Command="{Binding CloseDialogCommand}"/>
+
+
+
+            <!-- Customer info list-->
+            <ListView Grid.Column="1"
                   Grid.Row="1"
                   ItemsSource="{Binding Customers}"
                   d:ItemsSource="{d:SampleData ItemCount=3}">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal"
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center"/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <!-- Item Container style -->
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <!-- Item Container style -->
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
 
-            <!-- Item template -->
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Border Background="White"
+                <!-- Item template -->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Border Background="{StaticResource LightGrayBrush}"
                                 CornerRadius="10"
                                 Padding="20"
                                 Height="280"
                                 Width="400"
                                 Style="{StaticResource DropShadow}">
-                            <Grid>
+                                <Grid>
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*" />
-                                    <RowDefinition Height="6*" />
-                                </Grid.RowDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="6*" />
+                                    </Grid.RowDefinitions>
 
-                                <!-- Heading -->
-                                <TextBlock Grid.Row="0"
+                                    <!-- Heading -->
+                                    <TextBlock Grid.Row="0"
                                            Text="{Binding DisplayIndex}"
                                            d:Text="Khách hàng 1"
                                            FontSize="20"
@@ -110,69 +129,71 @@
                                            FontWeight="Bold"
                                            Margin="0 0 0 10"/>
 
-                                <!-- Customer information fields -->
-                                <Grid Grid.Row="1" Margin="20 0">
+                                    <!-- Customer information fields -->
+                                    <Grid Grid.Row="1" Margin="20 0">
 
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="6*" />
-                                        <!-- Spacing -->
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="6*" />
-                                    </Grid.ColumnDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="6*" />
+                                            <!-- Spacing -->
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="6*" />
+                                        </Grid.ColumnDefinitions>
 
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="5*" />
-                                        <!-- Spacing -->
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="5*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="5*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="5*" />
-                                    </Grid.RowDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="5*" />
+                                            <!-- Spacing -->
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="5*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="5*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="5*" />
+                                        </Grid.RowDefinitions>
 
-                                    <Border Grid.Row="0" Grid.Column="0"
+                                        <Border Grid.Row="0" Grid.Column="0"
                                             Grid.RowSpan="7"
                                             Background="{StaticResource LightBlueBrush}"
                                             CornerRadius="10"
                                             Padding="20"
                                             Margin="-8 32 12 32">
-                                        <materialDesign:PackIcon Kind="Account" 
+                                            <materialDesign:PackIcon Kind="Account" 
                                                                  VerticalAlignment="Center" 
                                                                  HorizontalAlignment="Center" 
                                                                  Height="128" Width="128"
                                                                  Foreground="White"/>
-                                    </Border>
-                                    <!-- Name -->
-                                    <StackPanel Grid.Row="0" Grid.Column="2">
-                                        <TextBlock FontWeight="Bold">Họ Tên</TextBlock>
-                                        <TextBox Name="Ho_Ten"  Text="{Binding HoTen, Mode=OneWay}" materialDesign:HintAssist.Hint="Họ và tên" IsReadOnly="True" />
-                                    </StackPanel>
+                                        </Border>
+                                        <!-- Name -->
+                                        <StackPanel Grid.Row="0" Grid.Column="2">
+                                            <TextBlock FontWeight="Bold">Họ Tên</TextBlock>
+                                            <TextBox Name="Ho_Ten"  Text="{Binding HoTen, Mode=OneWay}" materialDesign:HintAssist.Hint="Họ và tên" IsReadOnly="True" />
+                                        </StackPanel>
 
-                                    <!-- Phone number -->
-                                    <StackPanel Grid.Row="4" Grid.Column="2">
-                                        <TextBlock FontWeight="Bold">Số điện thoại</TextBlock>
-                                        <TextBox x:Name="SDT" Text="{Binding SDT, Mode=OneWay}" materialDesign:HintAssist.Hint="Số điện thoại" IsReadOnly="True" />
-                                    </StackPanel>
+                                        <!-- Phone number -->
+                                        <StackPanel Grid.Row="4" Grid.Column="2">
+                                            <TextBlock FontWeight="Bold">Số điện thoại</TextBlock>
+                                            <TextBox x:Name="SDT" Text="{Binding SDT, Mode=OneWay}" materialDesign:HintAssist.Hint="Số điện thoại" IsReadOnly="True" />
+                                        </StackPanel>
 
-                                    <!-- CMND -->
-                                    <StackPanel Grid.Row="2" Grid.Column="2">
-                                        <TextBlock FontWeight="Bold">CMND/CCCD</TextBlock>
-                                        <TextBox Name="CMND_CCCD" Text="{Binding CMND, Mode=OneWay}" materialDesign:HintAssist.Hint="CMND" IsReadOnly="True" />
-                                    </StackPanel>
+                                        <!-- CMND -->
+                                        <StackPanel Grid.Row="2" Grid.Column="2">
+                                            <TextBlock FontWeight="Bold">CMND/CCCD</TextBlock>
+                                            <TextBox Name="CMND_CCCD" Text="{Binding CMND, Mode=OneWay}" materialDesign:HintAssist.Hint="CMND" IsReadOnly="True" />
+                                        </StackPanel>
 
-                                    <!-- Email -->
-                                    <StackPanel Grid.Row="6" Grid.Column="2">
-                                        <TextBlock FontWeight="Bold">Email</TextBlock>
-                                        <TextBox Name="Email" Text="{Binding Email, Mode=OneWay}" materialDesign:HintAssist.Hint="Email" IsReadOnly="True" />
-                                    </StackPanel>
+                                        <!-- Email -->
+                                        <StackPanel Grid.Row="6" Grid.Column="2">
+                                            <TextBlock FontWeight="Bold">Email</TextBlock>
+                                            <TextBox Name="Email" Text="{Binding Email, Mode=OneWay}" materialDesign:HintAssist.Hint="Email" IsReadOnly="True" />
+                                        </StackPanel>
 
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </Border>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </Grid>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Border>
+
 </UserControl>
