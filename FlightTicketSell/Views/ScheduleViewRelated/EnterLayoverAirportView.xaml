@@ -20,31 +20,35 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid Background="{StaticResource LightGrayBrush}">
-        <Border CornerRadius="0 0 12 12" Height="200" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
+    <Border
+                Background="{StaticResource LightGrayBrush}"
+                CornerRadius="5" 
+                Style="{StaticResource ResourceKey=DropShadow}" >
+        <Grid>
+            <Border CornerRadius="5 5  12 12"  Height="100" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
 
-        <Grid >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="10*"/>
-                <ColumnDefinition Width="0.5*" />
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="2*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="6*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="8*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="2*" />
-                <RowDefinition Height="1.2*" />
-            </Grid.RowDefinitions>
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="6*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="8*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="1.2*" />
+                </Grid.RowDefinitions>
 
-            <!--Title-->
-            <TextBlock Grid.Row="1"
+                <!--Title-->
+                <TextBlock Grid.Row="1"
                        Grid.Column="1"
                        Grid.ColumnSpan="3"
                        Text="THÊM SÂN BAY TRUNG GIAN"
@@ -53,40 +57,40 @@
                        FontSize="{StaticResource Regular}"
                        FontFamily="{StaticResource RobotoBlack}"
                        Foreground="{StaticResource LightGrayBrush}">
-                
-            </TextBlock>
-            
-            <!--Sân bay-->
-            <Border Grid.Row="3" 
+
+                </TextBlock>
+
+                <!--Sân bay-->
+                <Border Grid.Row="3" 
                     Grid.Column="1" 
                     Grid.RowSpan="3"
                     Background="White" 
                     CornerRadius="10" 
                     Style="{StaticResource ResourceKey=DropShadow}" >
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="10*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="10*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*" ></RowDefinition>
-                        <RowDefinition Height="10*"></RowDefinition>
-                        <RowDefinition Height="1*" ></RowDefinition>
-                    </Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" ></RowDefinition>
+                            <RowDefinition Height="10*"></RowDefinition>
+                            <RowDefinition Height="1*" ></RowDefinition>
+                        </Grid.RowDefinitions>
 
-                    <!--Tựa-->
-                    <TextBlock  
+                        <!--Tựa-->
+                        <TextBlock  
                         Grid.Row="0"
                         Grid.Column="1"
                         VerticalAlignment="Center"  
                         FontFamily="{StaticResource RobotoBlack}" 
                         FontSize="{StaticResource Small}" 
-                        Text="Chọn sân bay"/> 
+                        Text="Chọn sân bay"/>
 
-                    <!--Danh sách sân bay-->
-                    <DataGrid
+                        <!--Danh sách sân bay-->
+                        <DataGrid
                             ItemsSource="{Binding LayoverAirport_List_Airport}"
                             d:ItemsSource="{d:SampleData ItemCount=5}"
                             Background="Transparent"
@@ -103,44 +107,44 @@
                             CellStyle="{StaticResource DataGridCellCenter}"
                             ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}">
 
-                        <DataGrid.Columns>
-                            <materialDesign:DataGridTextColumn
+                            <DataGrid.Columns>
+                                <materialDesign:DataGridTextColumn
                                     Binding="{Binding Code}"
                                     Header="Mã"
                                     Width="60"   
                                 />
-                            <materialDesign:DataGridTextColumn
+                                <materialDesign:DataGridTextColumn
                                     Binding="{Binding Name}"
                                     Header="Tên sân bay" 
                                     Width="150"
                                     />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-            </Border>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
 
-            <!--Thời gian dừng-->
-            <Border Grid.Row="3" 
+                <!--Thời gian dừng-->
+                <Border Grid.Row="3" 
                     Grid.Column="3" 
                     Background="White" 
                     CornerRadius="10" 
                     Style="{StaticResource ResourceKey=DropShadow}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="10*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="10*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*" ></RowDefinition>
-                        <RowDefinition Height="9*"></RowDefinition>
-                        <RowDefinition Height="1*" ></RowDefinition>
-                        
-                    </Grid.RowDefinitions>
-                    
-                    <!--Thời gian dừng-->
-                    <TextBox 
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" ></RowDefinition>
+                            <RowDefinition Height="9*"></RowDefinition>
+                            <RowDefinition Height="1*" ></RowDefinition>
+
+                        </Grid.RowDefinitions>
+
+                        <!--Thời gian dừng-->
+                        <TextBox 
                         Grid.Row="1" 
                         Grid.Column="1" 
                         VerticalAlignment="Center" 
@@ -155,34 +159,34 @@
                         materialDesign:HintAssist.HelperText="{Binding LayoverAirport_MinMaxStopTime}"
                         MaxLines="1"
                         >
-                    </TextBox>
+                        </TextBox>
 
-                   
-                </Grid>
-            </Border>
-            
-            <!--Ghi chú-->
-            <Border Grid.Row="5" 
+
+                    </Grid>
+                </Border>
+
+                <!--Ghi chú-->
+                <Border Grid.Row="5" 
                     Grid.Column="3" 
                      Background="White" 
                     CornerRadius="10" 
                     Style="{StaticResource ResourceKey=DropShadow}"
                 >
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="10*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="10*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*" ></RowDefinition>
-                        <RowDefinition Height="9*"></RowDefinition>
-                        <RowDefinition Height="1*" ></RowDefinition>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" ></RowDefinition>
+                            <RowDefinition Height="9*"></RowDefinition>
+                            <RowDefinition Height="1*" ></RowDefinition>
 
-                    </Grid.RowDefinitions>
-                    <!--Ghi chú-->
-                    <TextBox 
+                        </Grid.RowDefinitions>
+                        <!--Ghi chú-->
+                        <TextBox 
                         Grid.Row="1" Grid.Column="1"
                         VerticalAlignment="Top" 
                         Style="{StaticResource CustomTextbox}"
@@ -195,33 +199,34 @@
                         FontSize="{StaticResource Small}"
                         Text="{Binding LayoverAirport_Note}"
                         materialDesign:HintAssist.HelperText="Có thể trống"/>
-                </Grid>
-                
-             
-            </Border>
-            <!--Nút hủy, nút lưu-->
+                    </Grid>
 
-            <StackPanel Orientation="Horizontal" 
+
+                </Border>
+                <!--Nút hủy, nút lưu-->
+
+                <StackPanel Orientation="Horizontal" 
                                    Grid.Row="7"
                                     Grid.Column="1"
                                     Grid.ColumnSpan="3"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Stretch">
-                <!--Nút xóa-->
-                <Button Margin="7 0 0 0" 
+                    <!--Nút xóa-->
+                    <Button Margin="7 0 0 0" 
                                     Content="Hủy" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
                                     Command="{Binding EnterLayoverAirport_Cancel_Command}"/>
 
-                <!--Nút thêm-->
-                <Button Margin="7 0 10 0" Content="Lưu" 
+                    <!--Nút thêm-->
+                    <Button Margin="7 0 10 0" Content="Lưu" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource GreenBrush}"
                                 Command="{Binding EnterLayoverAirport_Save_Command}"
                                 materialDesign:ShadowAssist.Darken="True"
                                     />
-            </StackPanel>
+                </StackPanel>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </UserControl>

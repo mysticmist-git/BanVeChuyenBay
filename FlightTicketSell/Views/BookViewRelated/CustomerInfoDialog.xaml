@@ -10,11 +10,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Border Height="250"
-                Width="600" 
+        <Border Height="330"
+                Width="700" 
                 Background="White"
                 Padding="20"
-                CornerRadius="10" 
+                CornerRadius="15" 
                 Style="{StaticResource ResourceKey=DropShadow}" >
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -147,6 +147,8 @@
                     IsCancel="True"
                     Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
                     Content="Thoát"
+                    Height="35"
+                    FontSize="16"
                     FontWeight="Bold">
                 </Button>
                 
@@ -158,7 +160,7 @@
                    Style="{StaticResource HoverButton}"
                     BorderBrush="{StaticResource GreenBrush}"
                     Command="{Binding SaveCustomerCommand}"
-                    Height="30"
+                    Height="35"
                     FontSize="16"
                     FontWeight="Bold"
                     VerticalAlignment="Center"

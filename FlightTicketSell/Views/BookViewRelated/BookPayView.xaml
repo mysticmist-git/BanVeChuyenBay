@@ -189,7 +189,7 @@
                             <TextBox IsReadOnly="True"
                                         Text="{Binding FlightInfo.ThoiGianBay, Mode=OneWay}"
                                         Grid.Row="1"
-                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Center"
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Top"
                                         materialDesign:TextFieldAssist.SuffixText="phút">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">

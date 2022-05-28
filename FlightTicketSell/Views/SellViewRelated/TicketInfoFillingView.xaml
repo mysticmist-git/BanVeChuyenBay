@@ -193,8 +193,8 @@
                                 <TextBox IsReadOnly="True"
                                              Text="{Binding FlightInfo.SoDiemDung, Mode=OneWay}"
                                              Grid.Row="1"
-                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Center"
-                                             materialDesign:TextFieldAssist.SuffixText="phút">
+                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Top"
+                                             >
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                             <TextBlock/>
