@@ -10,7 +10,7 @@ using FlightTicketSell.Helpers;
 using FlightTicketSell.Views;
 using MaterialDesignThemes.Wpf;
 
-namespace FlightTicketSell.ViewModels.Search
+namespace FlightTicketSell.ViewModels
 {
     public class BookSearchVariant : Book
     {
@@ -53,11 +53,10 @@ namespace FlightTicketSell.ViewModels.Search
 
             ShowMoreCommand = new RelayCommand<object>(p => true, p =>
             {
-                // Changes view
-                IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.ChangeTicket;
-
                 IoC.IoC.Get<ChangeTicketViewModel>().BookingInfo = this;
 
+                // Changes view
+                IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.ChangeTicket;
             });
         } 
 

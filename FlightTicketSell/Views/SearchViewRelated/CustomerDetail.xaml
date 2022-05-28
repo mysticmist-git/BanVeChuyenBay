@@ -7,9 +7,11 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" 
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
         mc:Ignorable="d"
-        Height="400" Width="470"
-             >
+        Height="470" Width="470"
+        x:Name="uc"
+        Background="{StaticResource LightGrayBrush}">
 
     <UserControl.DataContext>
         <vm:CustomersDetailViewModel />
@@ -21,7 +23,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Border Grid.Row="1" Grid.Column="1" Background="White" CornerRadius="5" Style="{StaticResource ResourceKey=DropShadow}" >
+    <Border Grid.Row="1" Grid.Column="1" Background="White" CornerRadius="5" Style="{StaticResource ResourceKey=DropShadow}">
         <Grid>
 
             <Grid.ColumnDefinitions>
@@ -44,8 +46,6 @@
                 <RowDefinition Height="0.2*" />
             </Grid.RowDefinitions>
 
-
-
             <!-- The blue thingy in the top -->
             <Border Grid.Column="0" Grid.ColumnSpan="3"
                 Grid.Row="0" Grid.RowSpan="2"
@@ -65,7 +65,6 @@
             HorizontalAlignment="Center"
             FontFamily="{StaticResource Roboto}"
             FontWeight="Black"
-            
             />
 
             <Button
@@ -78,9 +77,8 @@
             HorizontalAlignment="Stretch"
             Width="230"
             Height="30"
-            Command="{Binding CloseDialogCommand}"/>
-
-
+            Command="{Binding CloseCommand}"
+            CommandParameter="{Binding ElementName=uc, Converter={valueConverters:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverters:ViewInterface.CustomerDetail_Search}}"/>
 
             <!-- Customer info list-->
             <ListView Grid.Column="1"

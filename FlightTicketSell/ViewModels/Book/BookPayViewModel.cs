@@ -12,7 +12,12 @@ namespace FlightTicketSell.ViewModels
 {
     public class BookPayViewModel : BaseViewModel
     {
-        private int _cancelDays;
+        #region Private Members
+        
+        private int _cancelDays; 
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -23,7 +28,6 @@ namespace FlightTicketSell.ViewModels
         public ICommand LoadCommand { get; set; }
 
         public ICommand BookPay { get; set; } 
-
 
         #endregion
 
@@ -151,6 +155,10 @@ namespace FlightTicketSell.ViewModels
                             context.CHITIETDATCHOes.Add(chitietDatCho);
                             await context.SaveChangesAsync();
                         }
+
+                        MessageBox.Show("Thanh toán thành công", "Thành công", MessageBoxButton.OK);
+                        IoC.IoC.Rebind<BookDetailViewModel>();
+                        IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.FlightDetail;
                     }
                     catch (EntityException e)
                     {

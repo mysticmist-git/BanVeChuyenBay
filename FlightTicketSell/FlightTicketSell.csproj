@@ -176,6 +176,7 @@
     <Compile Include="Interface\ITicketInfoFilling.cs" />
     <Compile Include="Interface\Report\IReport.cs" />
     <Compile Include="Interface\Report\IReportPrintPreview.cs" />
+    <Compile Include="Interface\Search\ICustomerDetail.cs" />
     <Compile Include="Models\Book\Book.cs" />
     <Compile Include="Models\Enums\General\Parameter.cs" />
     <Compile Include="ValueConverters\Application\AppViewToDisplayTextConverter.cs" />

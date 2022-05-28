@@ -48,7 +48,11 @@ namespace FlightTicketSell.ViewModels
         public ICommand ChangeForTicketCommand { get; set; }
 
 
-        public ICommand BookPay{ get; set; }
+        /// <summary>
+        /// Print the booking's ticket
+        /// </summary>
+        public ICommand PrintCommand { get; set; }
+
         /// <summary>
         /// The command to cancel current booking
         /// </summary>
@@ -65,6 +69,8 @@ namespace FlightTicketSell.ViewModels
         public ICommand LoadCommand { get; set; }
 
         #endregion
+
+        #region Public Properties
 
         /// <summary>
         /// Contains flight information
@@ -96,6 +102,27 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public string DisplayCancelDeadline { get => HanChotHuyVe.ToString("HH:mm dd/MM/yyyy", new CultureInfo("vi-VN")); }
 
+        #region Boolean stuffs
+        
+        /// <summary>
+        /// Indicates if this booking is already changed for tickets
+        /// </summary>
+        public bool BookPrinted { get => BookingInfo.BookingState == BookingState.Changed; }
+
+        /// <summary>
+        /// Indicates if this booking is already canceled
+        /// </summary>
+        public bool BookCanceled { get => BookingInfo.BookingState == BookingState.Cancel; }
+
+        /// <summary>
+        /// Indicates if this booking can be interacted
+        /// </summary>
+        public bool IsInteractable { get => !BookCanceled && !BookPrinted; } 
+
+        #endregion
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
@@ -107,38 +134,34 @@ namespace FlightTicketSell.ViewModels
 
             ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.TicketSoldOrBooked);
 
-            BookPay = new RelayCommand<object>((p) => true, (p) =>
+            PrintCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
-                PdfWriter writer = new PdfWriter("demo.pdf");
-                PdfDocument pdf = new PdfDocument(writer);
-                Document document = new Document(pdf);
-          
+                PrintTicket();
+
+                // Stop if the booking has been already changed for tickets
+                if (BookingInfo.BookingState == BookingState.Changed)
+                    return;
                 
-                Paragraph header = new Paragraph("FLIGHT TICKET").SetBold()
-                   .SetFontSize(16).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                // Update booking's state
+                using (var context = new FlightTicketSellEntities())
+                {
+                    try
+                    {
+                        // Update book state in database
+                        var book = await context.DATCHOes.Where(dc => dc.MaDatCho == BookingInfo.MaDatCho).FirstOrDefaultAsync();
+                        book.TrangThai = BookingStateToString(BookingState.Changed);
+                        await context.SaveChangesAsync();
 
-                document.Add(header);
-                LineSeparator ls = new LineSeparator(new SolidLine());
+                        // Update book state in the app
+                        BookingInfo.BookingState = BookingState.Changed;
 
-                Paragraph NAME = new Paragraph($"BOOKER NAME:   {convertText(BookingInfo.ThongTinNguoiDat.HoTen)}                    BOOK ID: {BookingInfo.MaDatCho}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
-                Paragraph FROM = new Paragraph($"FROM:   {convertText(FlightInfo.SanBayDi)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
-                Paragraph TO = new Paragraph($"TO:   {convertText(FlightInfo.SanBayDen)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
-                Paragraph NUMBER_OF_SEATS = new Paragraph($"NUMBER OF SEATS:   {BookingInfo.SoVeDat}       ").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
-                document.Add(NAME);
-                document.Add(FROM);
-                document.Add(TO);
-                document.Add(NUMBER_OF_SEATS);
-
-                document.Add(ls);
-                Paragraph DETAIL_HEADER = new Paragraph("FLIGHT CODE              DATE              CLASS").SetBold().SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(14);
-                document.Add(DETAIL_HEADER);
-                Paragraph DETAIL = new Paragraph($"{FlightInfo.DisplayFlightCode}           {FlightInfo.DisplayDepartDate}           {convertText(BookingInfo.TenHangVe)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(14);
-                document.Add(DETAIL);
-        
-                document.Add(ls);
-                document.Close();
-                System.Diagnostics.Process.Start("demo.pdf");
-
+                        OnPropertyChanged(nameof(IsInteractable));
+                    }
+                    catch (EntityException e)
+                    {
+                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
             });
 
             //CancelTicketCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.);
@@ -197,13 +220,14 @@ namespace FlightTicketSell.ViewModels
 
                         // Update client
                         BookingInfo.BookingState = BookingState.Cancel;
+
+                        OnPropertyChanged(nameof(IsInteractable));
                     }
                     catch (EntityException e)
                     {
                         MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
-                IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.Search;
 
         });
 
@@ -211,10 +235,13 @@ namespace FlightTicketSell.ViewModels
 
         #endregion
 
-
-
         #region Helpers
 
+        /// <summary>
+        /// Convert a state frorm string to an enum and back
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public string BookingStateToString(BookingState state)
         {
             switch (state)
@@ -273,6 +300,43 @@ namespace FlightTicketSell.ViewModels
                     str = str.Replace(VietnameseSigns[i][j], VietnameseSigns[0][i - 1]);
             }
             return str;
+        }
+
+        /// <summary>
+        /// Print ticket
+        /// </summary>
+        private void PrintTicket()
+        {
+
+            PdfWriter writer = new PdfWriter("demo.pdf");
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+
+
+            Paragraph header = new Paragraph("FLIGHT TICKET").SetBold()
+               .SetFontSize(16).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+
+            document.Add(header);
+            LineSeparator ls = new LineSeparator(new SolidLine());
+
+            Paragraph NAME = new Paragraph($"BOOKER NAME:   {convertText(BookingInfo.ThongTinNguoiDat.HoTen)}                    BOOK ID: {BookingInfo.MaDatCho}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
+            Paragraph FROM = new Paragraph($"FROM:   {convertText(FlightInfo.SanBayDi)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
+            Paragraph TO = new Paragraph($"TO:   {convertText(FlightInfo.SanBayDen)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
+            Paragraph NUMBER_OF_SEATS = new Paragraph($"NUMBER OF SEATS:   {BookingInfo.SoVeDat}       ").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
+            document.Add(NAME);
+            document.Add(FROM);
+            document.Add(TO);
+            document.Add(NUMBER_OF_SEATS);
+
+            document.Add(ls);
+            Paragraph DETAIL_HEADER = new Paragraph("FLIGHT CODE              DATE              CLASS").SetBold().SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(14);
+            document.Add(DETAIL_HEADER);
+            Paragraph DETAIL = new Paragraph($"{FlightInfo.DisplayFlightCode}           {FlightInfo.DisplayDepartDate}           {convertText(BookingInfo.TenHangVe)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(14);
+            document.Add(DETAIL);
+
+            document.Add(ls);
+            document.Close();
+            System.Diagnostics.Process.Start("demo.pdf");
         }
 
         #endregion

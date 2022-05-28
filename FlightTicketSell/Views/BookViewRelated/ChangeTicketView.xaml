@@ -511,11 +511,10 @@
 
             <Button Grid.Row="9"
                     Grid.Column="8" Grid.ColumnSpan="2"
-                    Command="{Binding BookPay}"                
+                    Command="{Binding PrintCommand}"                
                     BorderBrush="{StaticResource GreenBrush}"
                     Style="{StaticResource HoverButton}"
                     VerticalAlignment="Bottom"
-                               
                     materialDesign:ButtonAssist.CornerRadius="5"
                     Height="50">
                 <Grid>
@@ -530,6 +529,7 @@
 
             <!-- Pay button -->
             <Button Grid.Row="9"
+                    IsEnabled="{Binding IsInteractable}"
                     Grid.Column="6" Grid.ColumnSpan="2"
                     VerticalAlignment="Bottom"
                     HorizontalAlignment="Right"

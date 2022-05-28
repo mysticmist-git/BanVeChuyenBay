@@ -8,6 +8,7 @@ using System.Data.Entity;
 using FlightTicketSell.Models.Enums;
 using System.Collections.Generic;
 using FlightTicketSell.ViewModels.Search;
+using FlightTicketSell.Interface;
 using MaterialDesignThemes.Wpf;
 
 namespace FlightTicketSell.ViewModels
@@ -42,7 +43,11 @@ namespace FlightTicketSell.ViewModels
         /// The command to execute on view load
         /// </summary>
         public ICommand LoadCommand { get; set; }
-        public ICommand CloseDialogCommand { get; set; }
+
+        /// <summary>
+        /// Close this window
+        /// </summary>
+        public ICommand CloseCommand { get; set; }
 
         #endregion
 
@@ -105,11 +110,7 @@ namespace FlightTicketSell.ViewModels
                 }
             });
 
-            CloseDialogCommand = new RelayCommand<object>((p) => true, (p) =>
-             {
-                 //Close dialog
-                 DialogHost.CloseDialogCommand.Execute(null, null);
-             });
+            CloseCommand = new RelayCommand<ICustomerDetail>(p => true, p => p.Close());
         }
 
         #endregion
