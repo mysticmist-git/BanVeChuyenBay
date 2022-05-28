@@ -56,21 +56,21 @@
                     <RowDefinition Height="72*" />
                     <RowDefinition Height="72*" />
                     <RowDefinition Height="72*" />
-                    <RowDefinition Height="72*" />
+                    <RowDefinition Height="30*" />
                     <RowDefinition Height="72*" />
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
 
                 <!-- Flight detail -->
@@ -353,7 +353,7 @@
                                       d:ItemsSource="{d:SampleData ItemCount=3}"
                                       SelectedItem="{Binding CurrentTicketTier}"
                                       AutoGenerateColumns="False"
-                                      RowHeight="50"
+                                      RowHeight="40"
                                       ColumnWidth="*" 
                                       SelectionMode="Single"
                                       SelectionUnit="FullRow"
@@ -517,8 +517,8 @@
                 <!--Nut tiep tuc-->
                 <Button Grid.Row="10"
                         Grid.Column="7" Grid.ColumnSpan="2"
-                        Height="50"
-                        Padding="50 0"
+                        Height="40"
+                        Padding="30 0"
                         Style="{StaticResource HoverButton}"
                         BorderBrush="{StaticResource OrangeBrush}"
                         HorizontalAlignment="Right"
