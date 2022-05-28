@@ -10,6 +10,7 @@
     <UserControl.DataContext>
         <vm:ScheduleViewModel/>
     </UserControl.DataContext>
+<<<<<<< Updated upstream
     <!--Sân bay-->
     <Border Grid.Row="1" Grid.Column="1" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
         <Grid>
@@ -33,11 +34,54 @@
 
             <!--Tựa-->
             <TextBlock 
+=======
+    <Border
+                Background="{StaticResource LightGrayBrush}"
+                CornerRadius="5" 
+                Style="{StaticResource ResourceKey=DropShadow}" >
+        <Grid>
+            <Border CornerRadius="5 5  12 12"  Height="100" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
+
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="6.5*" />
+                    <RowDefinition Height="1.2*" />
+                </Grid.RowDefinitions>
+
+                <!--Sân bay-->
+                <Border Grid.Row="1" Grid.Column="1" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="5.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="7*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" ></RowDefinition>
+                            <RowDefinition Height="5*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="2*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!--Tựa-->
+                        <TextBlock 
+>>>>>>> Stashed changes
                         Grid.Row="0" 
                         Grid.ColumnSpan="5" 
                         VerticalAlignment="Center"  
                         FontFamily="{StaticResource RobotoBlack}" 
                         HorizontalAlignment="Center"
+<<<<<<< Updated upstream
                         FontSize="{StaticResource Small}" >Chỉnh Sửa Thời Gian Dừng / Ghi Chú</TextBlock>
 
             <!--Thông tin sân bay-->
@@ -64,12 +108,45 @@
 
                     <!--Tên sân bay-->
                     <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Tên sân bay" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+=======
+                        FontSize="{StaticResource Small}" >Chỉnh sửa thời gian dừng / ghi chú</TextBlock>
+
+                        <!--Thông tin sân bay-->
+                        <Border Grid.Row="1" Grid.Column="1" 
+                            Grid.RowSpan="3"
+                            Background="{StaticResource LightGrayBrush}"
+                            CornerRadius="5" Style="{StaticResource ResourceKey=DropShadow}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                    <ColumnDefinition Width="15*"></ColumnDefinition>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" ></RowDefinition>
+                                    <RowDefinition Height="4*"></RowDefinition>
+                                    <RowDefinition Height="1*" ></RowDefinition>
+                                    <RowDefinition Height="4*"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                    <RowDefinition Height="8*"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <!--Tên sân bay-->
+                                <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Tên sân bay" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+>>>>>>> Stashed changes
                                       IsReadOnly="True"
                                       Focusable="False"
                                       Text="{Binding List_LayoverAirport_SelectedItem.AirportName}"
                                       />
+<<<<<<< Updated upstream
                     <!--Thời gian dừng cũ-->
                     <TextBox Grid.Row="3" Grid.Column="1" 
+=======
+                                <!--Thời gian dừng cũ-->
+                                <TextBox Grid.Row="3" Grid.Column="1" 
+>>>>>>> Stashed changes
                                      materialDesign:HintAssist.Hint="Thời gian dừng cũ" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
                                      IsReadOnly="True" 
                                      Focusable="False"
@@ -77,8 +154,13 @@
                                      materialDesign:TextFieldAssist.SuffixText="phút"
                                       materialDesign:HintAssist.HelperText="{Binding LayoverAirport_MinMaxStopTime}"
                                      />
+<<<<<<< Updated upstream
                     <!--Ghi chú-->
                     <TextBox  Grid.Row="5" Grid.Column="1" 
+=======
+                                <!--Ghi chú-->
+                                <TextBox  Grid.Row="5" Grid.Column="1" 
+>>>>>>> Stashed changes
                                       Grid.RowSpan="2"
                                       Height="100"
                                       materialDesign:HintAssist.Hint="Ghi chú" Style="{StaticResource CustomTextbox}" 
@@ -87,6 +169,7 @@
                                       Focusable="False"
                                       Text="{Binding List_LayoverAirport_SelectedItem.Note}"
                                       />
+<<<<<<< Updated upstream
                 </Grid>
             </Border>
 
@@ -110,20 +193,51 @@
 
                 <!--Thời gian dừng mới-->
                 <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Thời gian dừng mới" Style="{StaticResource CustomTextbox}" 
+=======
+                            </Grid>
+                        </Border>
+
+                        <!--Thông tin mới-->
+                        <Grid Grid.Row="1"
+                          Grid.Column="3"
+                          Grid.RowSpan="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="15*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" ></RowDefinition>
+                                <RowDefinition Height="4*"></RowDefinition>
+                                <RowDefinition Height="1*"></RowDefinition>
+                                <RowDefinition Height="8*"></RowDefinition>
+                                <RowDefinition Height="1*"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <!--Thời gian dừng mới-->
+                            <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Thời gian dừng mới" Style="{StaticResource CustomTextbox}" 
+>>>>>>> Stashed changes
                                   VerticalAlignment="Top" 
                              Text="{Binding EditLayoverAirport_StopTime}"
                              materialDesign:HintAssist.HelperText="Để trống nếu giữ nguyên!"
                              materialDesign:TextFieldAssist.SuffixText="phút"
                               PreviewTextInput="PreviewTextInput"/>
 
+<<<<<<< Updated upstream
                 <!--Ghi chú mới-->
                 <TextBox  Grid.Row="3" Grid.Column="1" materialDesign:HintAssist.Hint="Ghi chú mới" Style="{StaticResource CustomTextbox}" 
+=======
+                            <!--Ghi chú mới-->
+                            <TextBox  Grid.Row="3" Grid.Column="1" materialDesign:HintAssist.Hint="Ghi chú mới" Style="{StaticResource CustomTextbox}" 
+>>>>>>> Stashed changes
                                   VerticalAlignment="Top" 
                              Text="{Binding EditLayoverAirport_Note}"
                                    Height="120"
                                   MaxLength="200"
                              materialDesign:HintAssist.HelperText="Để trống nếu giữ nguyên!"/>
 
+<<<<<<< Updated upstream
             </Grid>
 
             <!--Nút nhận lịch chuyến bay/ Hủy-->
@@ -136,6 +250,20 @@
             <!--Nút xóa-->
             
                 <Button Margin="0 0 10 0" 
+=======
+                        </Grid>
+
+                    </Grid>
+                </Border>
+
+                <!--Nút nhận lịch chuyến bay/ Hủy-->
+                <StackPanel Orientation="Horizontal" 
+                                    Grid.Row="2" Grid.Column="1" 
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Stretch">
+                    <!--Nút xóa-->
+                    <Button Margin="7 0 0 0" 
+>>>>>>> Stashed changes
                                     Content="Hủy" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
@@ -143,6 +271,7 @@
                         Height="30"
                         Width="100"/>
 
+<<<<<<< Updated upstream
                 
             <!--Nút thêm-->
             
@@ -159,4 +288,18 @@
 
    
 
+=======
+                    <!--Nút thêm-->
+                    <Button Margin="7 0 10 0" Content="Lưu" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource GreenBrush}"
+                                Command="{Binding EditLayoverAirport_Save_Command}"
+                                materialDesign:ShadowAssist.Darken="True"
+                                    />
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+    </Border>
+>>>>>>> Stashed changes
 </UserControl>

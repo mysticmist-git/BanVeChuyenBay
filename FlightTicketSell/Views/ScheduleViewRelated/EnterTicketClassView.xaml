@@ -19,32 +19,36 @@
             <i:InvokeCommandAction Command="{Binding EnterTicketClass_LoadCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    
-    <Grid Background="{StaticResource LightGrayBrush}">
-        <Border CornerRadius="0 0 12 12" Height="200" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
 
-        <Grid >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="2*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="11*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="4.5*" />
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="2.5*" />
-                <RowDefinition Height="1*" />
-            </Grid.RowDefinitions>
+    <Border
+                Background="{StaticResource LightGrayBrush}"
+                CornerRadius="5" 
+                Style="{StaticResource ResourceKey=DropShadow}" >
+        <Grid>
+            <Border CornerRadius="5 5  12 12"  Height="100" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
 
-            <!--Title-->
-            <TextBlock Grid.Row="1"
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="11*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="4.5*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="2.5*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+
+                <!--Title-->
+                <TextBlock Grid.Row="1"
                        Grid.Column="1"
                        Grid.ColumnSpan="3"
                        Text="THÊM HẠNG VÉ"
@@ -54,30 +58,30 @@
                        FontFamily="{StaticResource RobotoBlack}"
                        Foreground="{StaticResource LightGrayBrush}">
 
-            </TextBlock>
+                </TextBlock>
 
-            <!--Sân bay-->
-            <Border Grid.Row="3" 
+                <!--Sân bay-->
+                <Border Grid.Row="3" 
                     Grid.Column="1" 
                     Grid.ColumnSpan="3"
                     Background="White" 
                     CornerRadius="10" 
                     Style="{StaticResource ResourceKey=DropShadow}" >
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                        <ColumnDefinition Width="10*"></ColumnDefinition>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="10*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*" ></RowDefinition>
-                        <RowDefinition Height="10*"></RowDefinition>
-                        <RowDefinition Height="1*" ></RowDefinition>
-                    </Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" ></RowDefinition>
+                            <RowDefinition Height="10*"></RowDefinition>
+                            <RowDefinition Height="1*" ></RowDefinition>
+                        </Grid.RowDefinitions>
 
-                    <!--Tựa-->
-                    <TextBlock  
+                        <!--Tựa-->
+                        <TextBlock  
                         Grid.Row="0"
                         Grid.Column="1"
                         VerticalAlignment="Center"  
@@ -85,8 +89,8 @@
                         FontSize="{StaticResource Small}" 
                         Text="Chọn hạng vé"/>
 
-                    <!--Danh sách sân bay-->
-                    <DataGrid
+                        <!--Danh sách sân bay-->
+                        <DataGrid
                             ItemsSource="{Binding EnterTicketClass_List_TicketClass}"
                             SelectedItem="{Binding EnterTicketClass_TicketClass_SelectedItem}"
                             d:ItemsSource="{d:SampleData ItemCount=5}"
@@ -103,61 +107,61 @@
                             ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                         >
 
-                        <DataGrid.Columns>
-                            <materialDesign:DataGridTextColumn
+                            <DataGrid.Columns>
+                                <materialDesign:DataGridTextColumn
                                     Binding="{Binding Name}"
                                     Header="Tên hạng vé"
                                 Width="180"
                                 />
-                            <materialDesign:DataGridTextColumn
+                                <materialDesign:DataGridTextColumn
                                     Binding="{Binding Coefficient}"
                                     Header="Hệ số" 
                                 Width="70"
                                     />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
-            </Border>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
 
-            <!--Số ghế trống-->
-            <Border
+                <!--Số ghế trống-->
+                <Border
                     Grid.Row="5" Grid.Column="1"
                     Grid.ColumnSpan="3"
                     Background="White" 
                     CornerRadius="10" 
                     Style="{StaticResource ResourceKey=DropShadow}" >
-                <TextBox  
+                    <TextBox  
                         Margin="20 0 20 0"
                       materialDesign:HintAssist.Hint="Số ghế trống" 
                       Style="{StaticResource CustomTextbox}" 
                       VerticalAlignment="Center" 
                        Text="{Binding EnterTicketClass_Seats}"
                     PreviewTextInput="PreviewTextInput"/>
-            </Border>
+                </Border>
 
-            <!--Nút hủy, nút lưu-->
-            <StackPanel Orientation="Horizontal" 
+                <!--Nút hủy, nút lưu-->
+                <StackPanel Orientation="Horizontal" 
                                     Grid.Row="7"
                         Grid.Column="1"
                         Grid.ColumnSpan="3"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Stretch">
-                <!--Nút xóa-->
-                <Button Margin="7 0 0 0" 
+                    <!--Nút xóa-->
+                    <Button Margin="7 0 0 0" 
                                     Content="Hủy" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
                                     Command="{Binding EnterTicketClass_Cancel_Command}"/>
 
-                <!--Nút thêm-->
-                <Button Margin="7 0 10 0" Content="Chọn" 
+                    <!--Nút thêm-->
+                    <Button Margin="7 0 10 0" Content="Chọn" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource GreenBrush}"
                                 Command="{Binding EnterTicketClass_Save_Command}"
                                 materialDesign:ShadowAssist.Darken="True"
                                     />
-            </StackPanel>
-
+                </StackPanel>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </UserControl>

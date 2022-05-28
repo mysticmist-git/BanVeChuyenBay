@@ -210,7 +210,11 @@
                                       Margin="0 -10 0 0"
                                         Text="{Binding FlightInfo.ThoiGianBay, Mode=OneWay}"
                                         Grid.Row="1"
+<<<<<<< Updated upstream
                                         Style="{StaticResource CustomTextbox}"   VerticalAlignment="Top"
+=======
+                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Top"
+>>>>>>> Stashed changes
                                         materialDesign:TextFieldAssist.SuffixText="phút">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">

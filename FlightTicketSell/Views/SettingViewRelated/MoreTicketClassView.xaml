@@ -14,6 +14,7 @@
         <vm:SettingViewModel/>
     </UserControl.DataContext>
 
+<<<<<<< Updated upstream
     <!--Hạng vé-->
     <Border Grid.Row="1" Grid.Column="1" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
         <Grid>
@@ -43,26 +44,89 @@
 
             <!--Hệ số-->
             <TextBox  Grid.Row="1" Grid.Column="3" materialDesign:HintAssist.Hint="Hệ số" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+=======
+    <Border
+                Background="{StaticResource LightGrayBrush}"
+                CornerRadius="5" 
+                Style="{StaticResource ResourceKey=DropShadow}" >
+        <Grid>
+            <Border CornerRadius="5 5  12 12"  Height="100" VerticalAlignment="Top" Background="{StaticResource BlueBrush}" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+
+                <!--Hạng vé-->
+                <Border Grid.Row="1" Grid.Column="1" Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="5*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="5*"></ColumnDefinition>
+                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" ></RowDefinition>
+                            <RowDefinition Height="3*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!--Tựa-->
+                        <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Hạng vé</TextBlock>
+
+                        <!--Tên hạng vé-->
+                        <TextBox  Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Tên hạng vé" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                              Text="{Binding MoreTicketClass_Name}"
+                              materialDesign:HintAssist.HelperText="Ví dụ: Thương gia"/>
+
+                        <!--Hệ số-->
+                        <TextBox  Grid.Row="1" Grid.Column="3" materialDesign:HintAssist.Hint="Hệ số" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+>>>>>>> Stashed changes
                               Text="{Binding MoreTicketClass_Coefficien}"
                               materialDesign:HintAssist.HelperText="Ví dụ: 1.4"
                                PreviewTextInput="TextBox_PreviewTextInput"/>
 
+<<<<<<< Updated upstream
             <StackPanel
                 Grid.Row="3"
+=======
+                    </Grid>
+                </Border>
+
+                <!--Nút lưu-->
+                <StackPanel
+                Grid.Row="2"
+>>>>>>> Stashed changes
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
                 Orientation="Horizontal"
                 HorizontalAlignment="Center"
                 >
 
+<<<<<<< Updated upstream
                 <!--Nút hủy-->
 
                 <Button
+=======
+                    <!--Nút hủy-->
+                    <Button
+>>>>>>> Stashed changes
                     Style="{StaticResource HoverButton}"
                     Margin="0 0 10 0"
                     BorderBrush="{StaticResource RedBrush}"
                     Content="Hủy"
                     Command="{Binding MoreTicketClass_Cancel_Button_Command}"
+<<<<<<< Updated upstream
                     Height="30"
                     Width="100"
                     />
@@ -71,6 +135,12 @@
 
                 <Button
                     Margin="10 0 0 0"
+=======
+                />
+                    <!--Nút lưu-->
+                    <Button
+                    Margin="20 0"
+>>>>>>> Stashed changes
                     Content="Lưu"
                     Command="{Binding MoreTicketClass_Save_Button_Command}"
                     Style="{StaticResource HoverButton}"
@@ -78,10 +148,20 @@
                      Height="30"
                     Width="100"
                     />
+<<<<<<< Updated upstream
             </StackPanel>
         </Grid>
     </Border>
 
 
 
+=======
+
+
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+    </Border>
+>>>>>>> Stashed changes
 </UserControl>
