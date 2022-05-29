@@ -120,14 +120,6 @@
     <Compile Include="Interface\Report\IReport.cs" />
     <Compile Include="Interface\Report\IReportPrintPreview.cs" />
     <Compile Include="Models\Book\Book.cs" />
-    <Compile Include="Models\Enums\General\Parameter.cs" />
-    <Compile Include="ValueConverters\Application\AppViewToDisplayTextConverter.cs" />
-    <Compile Include="ValueConverters\Base\BaseMultiValueConverter.cs" />
-    <Compile Include="ValueConverters\BooleanInvertConverter.cs" />
-    <Compile Include="ValueConverters\General\BooleanToVisibilityConverter.cs" />
-    <Compile Include="ValueConverters\Search\SellBookButtonEnableConverter.cs" />
-    <Compile Include="ViewModels\Book\CustomerBookVariant.cs" />
-    <Compile Include="Models\Book\CustomerWithIndex.cs" />
     <Compile Include="Models\CHITIETDATCHO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -152,19 +144,8 @@
     <Compile Include="Models\DUONGBAY.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Enums\Search\CustomerDetailType.cs" />
-    <Compile Include="Models\Enums\Report\ReportType.cs" />
-    <Compile Include="Models\Enums\Search\BookingState.cs" />
+    <Compile Include="Models\Enums\General\Parameter.cs" />
     <Compile Include="Models\GetFlightData_Result.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Report\FlightReport.cs" />
-    <Compile Include="Models\GetBookedCustomers_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HANGVE.cs">
@@ -178,23 +159,51 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Model.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Report\MonthReport.cs" />
-    <Compile Include="Models\Report\YearReport.cs" />
     <Compile Include="Models\SANBAY.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SANBAYTG.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SearchRelated\DetailFlilghtInfo.cs" />
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\THAMSO.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\VE.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ValueConverters\Application\AppViewToDisplayTextConverter.cs" />
+    <Compile Include="ValueConverters\Base\BaseMultiValueConverter.cs" />
+    <Compile Include="ValueConverters\BooleanInvertConverter.cs" />
+    <Compile Include="ValueConverters\General\BooleanToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\Search\SellBookButtonEnableConverter.cs" />
+    <Compile Include="ViewModels\Book\CustomerBookVariant.cs" />
+    <Compile Include="Models\Book\CustomerWithIndex.cs" />
+    <Compile Include="Models\Enums\Search\CustomerDetailType.cs" />
+    <Compile Include="Models\Enums\Report\ReportType.cs" />
+    <Compile Include="Models\Enums\Search\BookingState.cs" />
+    <Compile Include="Models\Report\FlightReport.cs" />
+    <Compile Include="Models\Report\MonthReport.cs" />
+    <Compile Include="Models\Report\YearReport.cs" />
+    <Compile Include="Models\SearchRelated\DetailFlilghtInfo.cs" />
     <Compile Include="ValidateRules\MailFormatRule.cs" />
     <Compile Include="ValidateRules\StringNotEmptyRule.cs" />
     <Compile Include="ValueConverters\Book\CustomerNameDisplayConverter.cs" />
@@ -209,9 +218,6 @@
     <Compile Include="ViewModels\Schedule\TicketClassDetail.cs" />
     <Compile Include="ViewModels\Search\CustomersDetailViewModel.cs" />
     <Compile Include="Models\SearchRelated\FlightInfo.cs" />
-    <Compile Include="Models\THAMSO.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\NavigationBar.xaml.cs">
       <DependentUpon>NavigationBar.xaml</DependentUpon>
     </Compile>
@@ -550,7 +556,6 @@
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -31,5 +31,18 @@ namespace FlightTicketSell.Models.SearchRelated
         /// Empty sits of this ticket tier of a specific flight
         /// </summary>
         public int GheTrong { get; set; }
+
+        int values = 0;
+        public int SoGheDat 
+        { 
+            get
+            {
+                return values;
+            }     
+            set
+            {
+                value = Convert.ToInt32(values);
+            }
+        }
     }
 }

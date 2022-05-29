@@ -75,6 +75,8 @@ namespace FlightTicketSell.Models
         /// </summary>
         public Nullable<int> GheTrong { get; set; }
 
+        public Nullable<int> SoGheDat { get; set; }
+
         /// <summary>
         /// Indicates of this flight has already departed or not
         /// </summary>
@@ -126,6 +128,14 @@ namespace FlightTicketSell.Models
             SoHangVe = result.SoHangVe;
             SoHangVe = result.SoHangVe;
             GiaVe= result.GiaVe;
+            if(result.SoGheDat == null)
+            {
+                SoGheDat = 0;
+            }
+            else
+            {
+                SoGheDat = result.SoGheDat;
+            }
             GheTrong = result.GheTrong;
             DaKhoiHanh = result.DaKhoiHanh;
         }

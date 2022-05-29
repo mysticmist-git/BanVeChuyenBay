@@ -325,6 +325,10 @@
                                 <materialDesign:DataGridTextColumn
                             Binding="{Binding GheTrong}"
                             Header="Ghế trống" />
+                                <materialDesign:DataGridTextColumn
+                            Width="100"
+                            Binding="{Binding SoGheDat}"
+                            Header="Số ghế đặt" />
                                 <DataGridTemplateColumn Header="Trạng thái">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -336,6 +340,7 @@
                                 </DataGridTemplateColumn>
 
                             </DataGrid.Columns>
+                            
                         </DataGrid>
                     </Grid>
                 </Border>
