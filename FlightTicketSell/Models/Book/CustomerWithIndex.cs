@@ -10,7 +10,7 @@ namespace FlightTicketSell.Models
         /// The index of this customer in some list
         /// </summary>
         public int Index { get; set; }
-
+        public string DisplayIndex { get => "Khách hàng " + Index; }
         #endregion
 
         #region Constructor

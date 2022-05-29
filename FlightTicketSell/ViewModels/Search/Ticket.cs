@@ -5,6 +5,7 @@ using System.Globalization;
 using FlightTicketSell.ViewModels;
 using FlightTicketSell.Helpers;
 using FlightTicketSell.Views;
+using MaterialDesignThemes.Wpf;
 
 namespace FlightTicketSell.ViewModels.Search
 {
@@ -70,7 +71,7 @@ namespace FlightTicketSell.ViewModels.Search
 
         public Ticket()
         {
-            Open_Window_DescriptionCustomer_Command = new RelayCommand<object>((p) => true, (p) =>
+            Open_Window_DescriptionCustomer_Command = new RelayCommand<object>((p) => true, async (p) =>
             {
                 var view = new DetailCustomers()
                 {
@@ -80,8 +81,8 @@ namespace FlightTicketSell.ViewModels.Search
                         Info = (this as object)
                     }
                 };
+                var result = await DialogHost.Show(view, "RootDialog");
 
-                view.ShowDialog();
             });
 
         }

@@ -68,7 +68,8 @@ namespace FlightTicketSell.IoC
         /// <typeparam name="T"></typeparam>
         public static void Rebind<T>() where T : class, new()
         {
-            Kernel.Rebind<T>().ToConstant(new T());
+            Kernel.Unbind<T>();
+            Kernel.Bind<T>().ToConstant(new T());
         }
 
     }

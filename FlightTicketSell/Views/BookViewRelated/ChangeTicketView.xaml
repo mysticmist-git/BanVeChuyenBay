@@ -511,11 +511,10 @@
 
             <Button Grid.Row="9"
                     Grid.Column="8" Grid.ColumnSpan="2"
-                    Command="{Binding BookPay}"                
+                    Command="{Binding PrintCommand}"                
                     BorderBrush="{StaticResource GreenBrush}"
                     Style="{StaticResource HoverButton}"
                     VerticalAlignment="Bottom"
-                               
                     materialDesign:ButtonAssist.CornerRadius="5"
                     Height="50">
                 <Grid>
@@ -523,13 +522,14 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Thanh toán"  Grid.Column="0" FontSize="{StaticResource Regular}" TextAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="In vé"  Grid.Column="0" FontSize="{StaticResource Regular}" />
                     <materialDesign:PackIcon Kind="Ticket" Grid.Column="1" VerticalAlignment="Stretch" Width="35" Height="35" />
                 </Grid>
             </Button>
 
             <!-- Pay button -->
             <Button Grid.Row="9"
+                    IsEnabled="{Binding IsInteractable}"
                     Grid.Column="6" Grid.ColumnSpan="2"
                     VerticalAlignment="Bottom"
                     HorizontalAlignment="Right"

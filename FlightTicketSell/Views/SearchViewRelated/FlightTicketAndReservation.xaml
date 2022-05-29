@@ -18,20 +18,21 @@
             <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <Grid SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
+    <materialDesign:DialogHost CloseOnClickAway="True" Identifier="RootDialog">
+        <Grid SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <!-- Spacing -->
-                <ColumnDefinition Width="1*" />
-                <!-- Content -->
-                <ColumnDefinition Width="10*" />
-                <!-- Spacing -->
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <!-- Spacing -->
+                    <ColumnDefinition Width="1*" />
+                    <!-- Content -->
+                    <ColumnDefinition Width="14*" />
+                    <!-- Spacing -->
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
 
-            <!-- Return button -->
-            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                <!-- Return button -->
+                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
                 Name="Quay_Lai"
                 Command="{Binding ReturnCommand}"
                 Grid.Column="0"
@@ -47,58 +48,58 @@
                 materialDesign:ButtonAssist.CornerRadius="5"
                 HorizontalContentAlignment="Center" 
                 VerticalContentAlignment="Center">
-                <materialDesign:PackIcon Kind="ArrowLeft"
+                    <materialDesign:PackIcon Kind="ArrowLeft"
                                      Height="30"
                                      Width="30"
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center" />
-            </Button>
+                </Button>
 
-            <!-- Content -->
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="10*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="10*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                </Grid.RowDefinitions>
+                <!-- Content -->
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                        <RowDefinition Height="1*"></RowDefinition>
+                    </Grid.RowDefinitions>
 
-                <!--Vé đã bán-->
-                <Grid Grid.Row="1">
-                    <Border Background="#fff" CornerRadius="8" Style="{StaticResource DropShadow}">
-                        <Grid>
-                            <Grid.RowDefinitions>
+                    <!--Vé đã bán-->
+                    <Grid Grid.Row="1">
+                        <Border Background="#fff" CornerRadius="8" Style="{StaticResource DropShadow}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <!-- Heading and search bar -->
+                                    <RowDefinition Height="2*"/>
+                                    <!-- Ticket sold table -->
+                                    <RowDefinition Height="8*" />
+                                </Grid.RowDefinitions>
+
                                 <!-- Heading and search bar -->
-                                <RowDefinition Height="2*"/>
-                                <!-- Ticket sold table -->
-                                <RowDefinition Height="8*" />
-                            </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
 
-                            <!-- Heading and search bar -->
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
+                                    </Grid.ColumnDefinitions>
 
-                                </Grid.ColumnDefinitions>
-
-                                <!-- Heading -->
-                                <Border Grid.Column="0"
+                                    <!-- Heading -->
+                                    <Border Grid.Column="0"
                                     Grid.ColumnSpan="4"
                                     Background="{StaticResource BlueBrush}" 
                                     CornerRadius="8"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center">
-                                    <TextBlock Text="VÉ ĐÃ BÁN"
+                                        <TextBlock Text="VÉ ĐÃ BÁN"
                                            Margin="60 5"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
                                            FontSize="{StaticResource Small}"
                                            FontFamily="{StaticResource RobotoBlack}"
                                            Foreground="White" />
-                                </Border>
+                                    </Border>
 
-                                <!-- Search box -->
-                                <Border BorderThickness="1"
+                                    <!-- Search box -->
+                                    <Border BorderThickness="1"
                                     BorderBrush="{StaticResource GrayBrush}"
                                     CornerRadius="7"
                                     Padding="10 0 10 5"
@@ -106,59 +107,59 @@
                                     Width="250"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center">
-                                    <Grid>
+                                        <Grid>
 
-                                        <Grid.ColumnDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <!-- Search box -->
+                                                <ColumnDefinition Width="74*" />
+                                                <ColumnDefinition Width="97*"/>
+                                                <!-- Search button -->
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
                                             <!-- Search box -->
-                                            <ColumnDefinition Width="74*" />
-                                            <ColumnDefinition Width="97*"/>
-                                            <!-- Search button -->
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <!-- Search box -->
-                                        <TextBox Grid.Column="0"
+                                            <TextBox Grid.Column="0"
                                              Name="Ma_Ve"
                                              VerticalAlignment="Center"
                                              materialDesign:HintAssist.Hint="Mã vé"
                                              Text="{Binding Search_IDSold}"
                                              FontSize="{StaticResource RealSmall}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.ColumnSpan="2">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="TextChanged">
-                                                    <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </TextBox>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="TextChanged">
+                                                        <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </TextBox>
 
-                                        <!-- Search button -->
-                                        <Button Grid.Column="2"
+                                            <!-- Search button -->
+                                            <Button Grid.Column="2"
                                         VerticalAlignment="Center" 
                                         Background="Transparent" 
                                         Foreground="{StaticResource GrayBrush}" 
                                         BorderThickness="0"
                                         Command="{Binding LoadCommand1}">
-                                            <!-- Trigger -->
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="SelectedChange">
-                                                    <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
+                                                <!-- Trigger -->
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="SelectedChange">
+                                                        <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
 
-                                            <!-- Icon -->
-                                            <materialDesign:PackIcon Kind="Magnify" Height="25" Width="25"/>
-                                        </Button>
-                                    </Grid>
-                                </Border>
-                            </Grid>
+                                                <!-- Icon -->
+                                                <materialDesign:PackIcon Kind="Magnify" Height="25" Width="25"/>
+                                            </Button>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
 
-                            <DataGrid
+                                <DataGrid
                                   Name="Ve_Da_Ban"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                                   Grid.Row="1"
                                   Background="Transparent"
                                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                                  Margin="20,8,20,0"
+                                  Margin="0,0,0,8"
                                   ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                                   CellStyle="{StaticResource DataGridCellCenter}"
                                   ColumnWidth="*"
@@ -170,95 +171,97 @@
                                   AutoGenerateColumns="False"
                                   materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                                   materialDesign:DataGridAssist.ColumnHeaderPadding="8" Grid.RowSpan="2">
-                                <DataGrid.Columns>
+                                    <DataGrid.Columns>
 
-                                    <DataGridTextColumn                                    
+                                        <DataGridTextColumn                                    
                                         IsReadOnly="True"
                                         Binding="{Binding DisplayTicketID}"
                                         Header="Mã vé"
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
 
-                                    <DataGridTemplateColumn Header="Tên khách hàng" Width="250" IsReadOnly="True">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="150" />
-                                                        <ColumnDefinition Width="Auto" />
-                                                    </Grid.ColumnDefinitions>
+                                        <DataGridTemplateColumn Header="Tên khách hàng" Width="auto" IsReadOnly="True">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
 
-                                                    <!-- Flight code -->
-                                                    <TextBlock Grid.Column="0"
+
+                                                        <!-- Flight code -->
+                                                        <TextBlock 
                                                                Text="{Binding TenKhachHang}"
                                                                VerticalAlignment="Center"
                                                                HorizontalAlignment="Left"/>
 
-                                                    <!-- Detail button -->
-                                                    <Button Content="Chi tiết"
-                                                            Grid.Column="1"
+                                                        <!-- Detail button -->
+                                                        <Button Content="Chi tiết"
+                                                           
                                                             Style="{StaticResource HoverButton}"
                                                             BorderBrush="{StaticResource LightBlueBrush}"
-                                                            Height="28"
+                                                            Height="25"
+                                                            Margin="7 0 0 0"
+                                                            FontSize="{StaticResource RealSmall}"
                                                             Command="{Binding Open_Window_DescriptionCustomer_Command}" />
-                                                </Grid>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
 
-                                    <!-- set a max length to get an indicator in the editor -->
-                                    <materialDesign:DataGridTextColumn
+                                        <!-- set a max length to get an indicator in the editor -->
+                                        <DataGridTextColumn
+                                        
                                         IsReadOnly="True"
                                         Binding="{Binding TenHangVe}"
                                         Header="Tên hạng vé"                                        
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
-                                    <materialDesign:DataGridTextColumn
+                                        <DataGridTextColumn
+                                          
                                         Binding="{Binding DisplayPayDate}"
                                         Header="Ngày thanh toán"
                                         IsReadOnly="True"
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                                    <materialDesign:DataGridTextColumn
+                                        <DataGridTextColumn
+                                           
                                         Binding="{Binding DisplayTicketPrice}"
                                         Header="Giá tiền"
                                         IsReadOnly="True"
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Grid>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
 
-                    </Border>
-                </Grid>
+                        </Border>
+                    </Grid>
 
-                <!--Chỗ đã đặt-->
-                <Grid Grid.Row="3">
-                    <Border Background="#fff" CornerRadius="8" Style="{StaticResource DropShadow}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <!-- Heading and search bar -->
-                                <RowDefinition Height="2*"/>
-                                <!-- Ticket sold table -->
-                                <RowDefinition Height="8*" />
-                            </Grid.RowDefinitions>
+                    <!--Chỗ đã đặt-->
+                    <Grid Grid.Row="3">
+                        <Border Background="#fff" CornerRadius="8" Style="{StaticResource DropShadow}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <!-- Heading and search bar -->
+                                    <RowDefinition Height="2*"/>
+                                    <!-- Ticket sold table -->
+                                    <RowDefinition Height="8*" />
+                                </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0" VerticalAlignment="Center">
+                                <Grid Grid.Row="0" VerticalAlignment="Center">
 
-                                <!-- Heading -->
-                                <Border Grid.Column="0"
+                                    <!-- Heading -->
+                                    <Border Grid.Column="0"
                                     Grid.ColumnSpan="4"
                                     Background="{StaticResource BlueBrush}" 
                                     CornerRadius="8"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center">
-                                    <TextBlock Text="CHỖ ĐÃ ĐẶT"
+                                        <TextBlock Text="CHỖ ĐÃ ĐẶT"
                                            Margin="60 5"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
                                            FontSize="{StaticResource Small}"
                                            FontFamily="{StaticResource RobotoBlack}"
                                            Foreground="White" />
-                                </Border>
+                                    </Border>
 
-                                <!-- Search box -->
-                                <Border BorderThickness="1"
+                                    <!-- Search box -->
+                                    <Border BorderThickness="1"
                                     BorderBrush="{StaticResource GrayBrush}"
                                     CornerRadius="7"
                                     Padding="10 0 10 5"
@@ -266,57 +269,57 @@
                                     Width="250"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center">
-                                    <Grid>
+                                        <Grid>
 
-                                        <Grid.ColumnDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <!-- Search box -->
+                                                <ColumnDefinition Width="*" />
+                                                <!-- Search button -->
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
                                             <!-- Search box -->
-                                            <ColumnDefinition Width="*" />
-                                            <!-- Search button -->
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <!-- Search box -->
-                                        <TextBox Grid.Column="0"
+                                            <TextBox Grid.Column="0"
                                              Name="Ma_Dat_Cho"
                                              VerticalAlignment="Center"
                                              materialDesign:HintAssist.Hint="Mã đặt chỗ"
                                              Text="{Binding Search_IDBooked}"
                                              FontSize="{StaticResource RealSmall}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="TextChanged">
-                                                    <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </TextBox>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="TextChanged">
+                                                        <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </TextBox>
 
-                                        <!-- Search button -->
-                                        <Button Grid.Column="1"
+                                            <!-- Search button -->
+                                            <Button Grid.Column="1"
                                         VerticalAlignment="Center" 
                                         Background="Transparent" 
                                         Foreground="{StaticResource GrayBrush}" 
                                         BorderThickness="0"
                                         Command="{Binding LoadCommand1}">
-                                            <!-- Trigger -->
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="SelectedChange">
-                                                    <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
+                                                <!-- Trigger -->
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="SelectedChange">
+                                                        <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
 
-                                            <!-- Icon -->
-                                            <materialDesign:PackIcon Kind="Magnify" Height="25" Width="25"/>
-                                        </Button>
-                                    </Grid>
-                                </Border>
-                            </Grid>
+                                                <!-- Icon -->
+                                                <materialDesign:PackIcon Kind="Magnify" Height="25" Width="25"/>
+                                            </Button>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
 
-                            <DataGrid
+                                <DataGrid
                                   Name="Cho_Da_Dat"
                                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                                   Background="Transparent"
-                                  Margin="20 8 20 0"
+                                  Margin="0 0 0 10"
                                   Grid.Row="1"
                                   ItemsSource="{Binding Books}"
                                   d:ItemsSource="{d:SampleData ItemCount=5}"
@@ -329,82 +332,77 @@
                                   RowHeight="50"
                                   materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                                   materialDesign:DataGridAssist.ColumnHeaderPadding="8" SelectionChanged="DataGrid_SelectionChanged">
-                                <DataGrid.Columns>
+                                    <DataGrid.Columns>
 
-                                    <DataGridTextColumn IsReadOnly="True"
-                                    Width="100"
-                                    Binding="{Binding DisplayReservationID}"
-                                    Header="Mã đặt chỗ"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                                        <DataGridTextColumn IsReadOnly="True"
+                                                            Binding="{Binding DisplayReservationID}"
+                                                            Header="Mã đặt chỗ"
+                                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
 
-                                    <DataGridTemplateColumn Header="Tên khách hàng" IsReadOnly="True">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="100" />
-                                                        <ColumnDefinition Width="Auto" />
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <!-- Flight code -->
-                                                    <TextBlock Grid.Column="0"
+                                        <DataGridTemplateColumn Header="Tên khách hàng" IsReadOnly="True"
+                                                                Width="auto">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <!-- Flight code -->
+                                                        <TextBlock 
                                                                Text="{Binding ThongTinNguoiDat.HoTen}"
                                                                VerticalAlignment="Center"
                                                                HorizontalAlignment="Left"/>
 
-                                                    <!-- Detail button -->
-                                                    <Button Content="Chi tiết"
+                                                        <!-- Detail button -->
+                                                        <Button Content="Chi tiết"
                                                             Name="Thong_Tin_Chi_Tiet_Khach_Hang"
-                                                            Grid.Column="1"
+                                                            Margin="7 0 0 0"
                                                             Style="{StaticResource HoverButton}"
                                                             BorderBrush="{StaticResource LightBlueBrush}"
-                                                            Height="28"
+                                                            Height="25"
+                                                            FontSize="{StaticResource RealSmall}"
                                                             Command="{Binding Open_Window_DescriptionCustomer_Command}" />
-                                                </Grid>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
 
-                                    <!-- set a max length to get an indicator in the editor -->
-                                    <materialDesign:DataGridTextColumn IsReadOnly="True"
-                                    Width="100"
-                                    Binding="{Binding SoVeDat}"
-                                    Header="Số chỗ"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
+                                        <!-- set a max length to get an indicator in the editor -->
+                                        <DataGridTextColumn IsReadOnly="True"
+                                                                            Binding="{Binding SoVeDat}"
+                                                                            Header="Số chỗ"
+                                                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" 
+                                                                           />
 
-                                    <!-- Tên hạng vé -->
-                                    <materialDesign:DataGridTextColumn IsReadOnly="True"
-                                    Width="200"
-                                    Binding="{Binding TenHangVe}"
-                                    Header="Tên hạng vé"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                        <!-- Tên hạng vé -->
+                                        <DataGridTextColumn IsReadOnly="True"
+                                
+                                                                            Binding="{Binding TenHangVe}"
+                                                                            Header="Tên hạng vé"
+                                                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"                                      
+                                                                           />
 
-                                    <!-- Ngày đặt vé -->
-                                    <materialDesign:DataGridTextColumn IsReadOnly="True"
-                                    Width="175"
-                                    Binding="{Binding DisplayBookDate}"
-                                    Header="Ngày đặt vé"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                        <!-- Ngày đặt vé -->
+                                        <DataGridTextColumn IsReadOnly="True"
+                                 
+                                                                            Binding="{Binding DisplayBookDate}"
+                                                                            Header="Ngày đặt vé"
+                                                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"                                      
+                                                                           />
 
-                                    <!-- Giá tiền / vé -->
-                                    <materialDesign:DataGridTextColumn IsReadOnly="True"
-                                    Width="175"
-                                    Binding="{Binding DisplayTicketPrice}"
-                                    Header="Giá tiền / Vé"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"/>
+                                        <!-- Giá tiền / vé -->
+                                        <DataGridTextColumn IsReadOnly="True"
+                               
+                                                                            Binding="{Binding DisplayTicketPrice}"
+                                                                            Header="Giá tiền / Vé"
+                                                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"                                     
+                                                                           />
 
-                                    <!-- Trạng thái -->
-                                    <DataGridTemplateColumn Header="Trạng thái" IsReadOnly="True">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="70" />
-                                                        <ColumnDefinition Width="Auto" />
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <!-- Trạng thái đặt chỗ -->
-                                                    <TextBlock Grid.Column="0"
+                                        <!-- Trạng thái -->
+                                        <DataGridTemplateColumn Header="Trạng thái" IsReadOnly="True"
+                                                                Width="auto">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <!-- Trạng thái đặt chỗ -->
+                                                        <TextBlock 
                                                                Text="{Binding BookingState, Mode=OneWay, Converter={valueConverters:BookingStateToStringConverter}}"
                                                                Foreground="{Binding BookingState, Mode=OneWay, Converter={valueConverters:BookingStateToColorConverter}}"
                                                                FontWeight="Bold"
@@ -412,31 +410,34 @@
                                                                VerticalAlignment="Center"
                                                                HorizontalAlignment="Left"/>
 
-                                                    <!-- Booking change button -->
-                                                    <Button ToolTip="Đổi vé"
+                                                        <!-- Booking change button -->
+                                                        <Button ToolTip="Đổi vé"
                                                             Name="Chi_Tiet_Cho_Dat_Doi_Ve"
-                                                            Grid.Column="1"
+                                                                FontSize="{StaticResource RealSmall}"
+                                                                Height="25"
+                                                                Margin="7 0 0 0"
                                                            BorderBrush="{StaticResource GreenBrush}"
                                                             Style="{StaticResource HoverButton}"
                                                             Command="{Binding ShowMoreCommand}">
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Text="Xem " />
-                                                            <materialDesign:PackIcon Kind="TicketAccount" VerticalAlignment="Center" />
-                                                        </StackPanel>
-                                                    </Button>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </Grid>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="Xem " />
+                                                                <materialDesign:PackIcon Kind="TicketAccount" VerticalAlignment="Center" />
+                                                            </StackPanel>
+                                                        </Button>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
 
-                    </Border>
+                        </Border>
+                    </Grid>
                 </Grid>
+
             </Grid>
 
         </Grid>
-
-    </Grid>
+    </materialDesign:DialogHost>
 </UserControl>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FlightTicketSell.Interface;
+using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +19,19 @@ namespace FlightTicketSell.Views
     /// <summary>
     /// Interaction logic for DetailCustomers.xaml
     /// </summary>
-    public partial class DetailCustomers : Window
+    public partial class DetailCustomers : UserControl, ICustomerDetail
     {
         public DetailCustomers()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Close this window
+        /// </summary>
+        public void Close()
+        {
+            DialogHost.CloseDialogCommand.Execute(null, null);
         }
     }
 }

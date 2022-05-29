@@ -42,11 +42,6 @@ namespace FlightTicketSell.ViewModels
         }
 
         /// <summary>
-        /// The display index of the customer
-        /// </summary>
-        public string DisplayIndex { get => "Khách hàng " + Index; }
-
-        /// <summary>
         /// The name buffer
         /// </summary>
         public string NameBuffer { get; set; }
