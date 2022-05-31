@@ -10,11 +10,17 @@
              mc:Ignorable="d" 
              d:Background="{StaticResource LightGrayBrush}"
              d:DesignHeight="450" d:DesignWidth="800"
-             DataContext="{Binding ScheduleViewModel, Source={x:Static vm:ViewModelLocator.Instance}}">
+             DataContext="{Binding ScheduleViewModel, Source={x:Static vm:ViewModelLocator.Instance}}"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <!--<UserControl.DataContext>
         <vm:ScheduleViewModel />
     </UserControl.DataContext>-->
 
+    <UserControl.Resources>
+        <Style x:Key="TodayDatePicker" TargetType="{x:Type DatePicker }" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}" >
+            <Setter Property="DisplayDateStart" Value="{x:Static sys:DateTime.Today}"/>
+        </Style>
+    </UserControl.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
@@ -159,12 +165,15 @@
                             </TextBox>
 
                             <!--Ngày bay-->
-                            <DatePicker Grid.Column="4" materialDesign:HintAssist.Hint="Ngày bay" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black" 
+                            <DatePicker Grid.Column="4" materialDesign:HintAssist.Hint="Ngày bay" 
+                                        FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" 
+                                        Foreground="Black" 
                                         SelectedDate="{Binding DateFlight,StringFormat={}{0:dd-MM-yyyy}}"   
                                         HorizontalAlignment="Stretch"
                                         materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource BlueBrush}"
                                         materialDesign:HintAssist.Foreground="{StaticResource BlueBrush}"
                                         Focusable="False"
+                                        Style="{StaticResource TodayDatePicker}"
                                         >
                                 <DatePicker.Resources>
                                     <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
@@ -187,6 +196,12 @@
                                         <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendar}" />
                                     </Style>
                                 </DatePicker.Resources>
+                                <!--Command-->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectedDateChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectedFlightDateChanged_Command}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </DatePicker>
 
                             <!--Giờ bay-->
@@ -194,7 +209,15 @@
                                 Grid.Column="6 " Style="{StaticResource MaterialDesignFloatingHintTimePicker}" Is24Hours="True" materialDesign:HintAssist.Hint="Giờ bay" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black" 
                                 SelectedTime="{Binding TimeFlight}"
                                 HorizontalAlignment="Stretch"
-                                Focusable="False"/>
+                                Focusable="False"
+                                >
+                                <!--Command-->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectedTimeChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectedFlightTimeChanged_Command}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </materialDesign:TimePicker>
                         </Grid>
                     </Grid>
                 </Border>

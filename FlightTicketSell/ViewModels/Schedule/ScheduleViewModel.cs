@@ -199,6 +199,14 @@ namespace FlightTicketSell.ViewModels
         /// Nút Hủy trong Chọn sân bay
         /// </summary>
         public ICommand Cancel_ChooseAirportButton_Command { get; set; }
+        /// <summary>
+        /// Thay đổi ngày bay
+        /// </summary>
+        public ICommand SelectedFlightDateChanged_Command { get; set; }
+        /// <summary>
+        /// Thay đổi thời gian bay
+        /// </summary>
+        public ICommand SelectedFlightTimeChanged_Command { get; set; }
         #endregion
 
         #region Main Properties
@@ -291,7 +299,7 @@ namespace FlightTicketSell.ViewModels
                    if ( FirstLoad)
                    {
                        // Gán ngày hiện tại cho datepicker lúc mở 
-                       DateFlight = DateTime.Now;
+                       DateFlight = DateTime.Now.AddDays(1);
                        // Gán ngày hiện tại cho datepicker lúc mở 
                        TimeFlight = DateTime.Now;
                        FirstLoad = false;
@@ -677,6 +685,32 @@ namespace FlightTicketSell.ViewModels
 
                     //MessageBox.Show(DepartureAirport.Name);
                 });
+
+            SelectedFlightDateChanged_Command = new RelayCommand<object>((p) => {return true; }, (p) => 
+            {
+                DateTime a = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day);
+                DateTime b = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                if(a < b)
+                {
+                    MessageBox.Show("Ngày bay không hợp lệ!", "Cảnh báo");
+                    DateFlight = DateTime.Now;
+                }
+            });
+
+            SelectedFlightTimeChanged_Command = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                DateTime a = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day);
+                DateTime b = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                if (a != b)
+                    return;
+                DateTime c = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day, TimeFlight.Hour, TimeFlight.Minute, TimeFlight.Second);
+                DateTime d = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                if (c<d)
+                {
+                    MessageBox.Show("Thời gian không hợp lệ!", "Cảnh báo");
+                    TimeFlight = DateTime.Now;
+                }
+            });
             #endregion
 
             #region LayoverAirport
