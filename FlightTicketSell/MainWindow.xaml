@@ -11,11 +11,12 @@
         xmlns:models="clr-namespace:FlightTicketSell.Models"
         xmlns:viewmodels="clr-namespace:FlightTicketSell.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1366"
+        Title="SellTicketApp" Height="720" Width="1366"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
         MinWidth="600"
         MinHeight="600"
+        Icon="pack://application:,,,/Images/Logo_Icon.ico"
         >
 
     <Window.Resources>
