@@ -16,51 +16,74 @@
         <vm:NavigationBarViewModel />
     </UserControl.DataContext>
 
-    <Border Background="White">
+    <Border Background="White" Style="{StaticResource DropShadow}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <!-- Logo, App Name -->
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="2*" />
                 <!-- View indicator -->
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="5*" />
                 <!-- Buttons -->
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
 
             <!-- Logo, App Name -->
             <Viewbox Grid.Column="0"
-                     MaxHeight="{Binding ElementName=logos, Path=ActualHeight}"
-                     MaxWidth="{Binding ElementName=logos, Path=ActualWidth}">
-                <StackPanel x:Name="logos" Orientation="Horizontal" Margin="10 5">
-                    <Border Width="50" Height="50" Background="{StaticResource LightBlueBrush}" CornerRadius="50">
-                        <materialDesign:PackIcon Kind="Airplane"
-                                             Foreground="White"
-                                             HorizontalAlignment="Center"
-                                             VerticalAlignment="Center"
-                                             Width="30"
-                                             Height="30"
-                                             />
-                    </Border>
-                    <TextBlock Text="TÊN APP"
+                     HorizontalAlignment="Left"
+                     MaxHeight="{Binding ElementName=logos, Path=ActualHeight}">
+                <Border Margin="10 5">
+                    <StackPanel x:Name="logos" Orientation="Horizontal" Margin="10 7 15 7">
+                        <Image
+                        Source="pack://application:,,,/Images/Logo.png"
+                        RenderOptions.BitmapScalingMode="HighQuality"
+                        Margin="-15 0 0 0"
+                        Width="70"
+                        >
+                        </Image>
+
+                        <TextBlock Text="SellTicketApp"
                            VerticalAlignment="Center"
+                                   TextAlignment="Center"
                            Style="{StaticResource AppNameText}"
-                           Margin="20 0 0 0"
+                           Margin="10 0 0 0"
+                                   Foreground="{StaticResource LightBlueBrush}"
                            />
-                </StackPanel>
+                    </StackPanel>
+                </Border>
+               
             </Viewbox>
             
             <!-- View indicator -->
-            <Viewbox Grid.Column="1"
-                     HorizontalAlignment="Center"
-                     MaxHeight="{Binding ElementName=buttons, Path=ActualHeight}"
-                     MaxWidth="{Binding ElementName=buttons, Path=ActualWidth}">
-                <TextBlock d:Text="ĐẶT VÉ" FontWeight="Bold" Text="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToDisplayTextConverter}}"/>
-            </Viewbox>
+            <Border Grid.Column="2"
+                    BorderBrush="{StaticResource LightBlueBrush}"
+                    BorderThickness="5 4 0 4"
+                    Margin="0 10 0 10"
+                    CornerRadius="15 0 0 15"
+                    Height="40"
+                     HorizontalAlignment="Right"
+                    >
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="NavigationVariant" 
+                                             VerticalAlignment="Center"
+                                             Margin="6 0 6 0" Height="25" Width="25"
+                                             Foreground="{StaticResource LightBlueBrush}"/>
+                    <TextBlock d:Text="ĐẶT VÉ" 
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                               FontWeight="Black" 
+                           Foreground="{StaticResource LightBlueBrush}"
+                           Margin="0 0 10 0"
+                           FontSize="15"
+                               Text="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToDisplayTextConverter}}"/>
+                </StackPanel>
+            </Border>
             
             
             <!-- Buttons -->
-            <Viewbox Grid.Column="2"
-                     HorizontalAlignment="Right"
+            <Viewbox Grid.Column="0"
+                     Grid.ColumnSpan="3"
+                     HorizontalAlignment="Center"
                      MaxHeight="{Binding ElementName=buttons, Path=ActualHeight}"
                      MaxWidth="{Binding ElementName=buttons, Path=ActualWidth}">
                 <StackPanel x:Name="buttons" Orientation="Horizontal">

@@ -156,12 +156,19 @@
                             <!--Thời gian bay-->
                             <TextBox Grid.Column="2" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="phút"
                                  Text="{Binding FlightTime}"
-                                 PreviewTextInput="PreviewTextInput">
+                                 PreviewTextInput="PreviewTextInput"
+                                     materialDesign:HintAssist.HelperText="{Binding MinFlightTime}">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                         <TextBlock Text="Thời gian bay" />
                                     </StackPanel>
                                 </materialDesign:HintAssist.Hint>
+                                <!--Command-->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="LostFocus">
+                                        <i:InvokeCommandAction Command="{Binding CheckFlightTime}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </TextBox>
 
                             <!--Ngày bay-->
@@ -173,8 +180,8 @@
                                         materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource BlueBrush}"
                                         materialDesign:HintAssist.Foreground="{StaticResource BlueBrush}"
                                         Focusable="False"
-                                        Style="{StaticResource TodayDatePicker}"
-                                        >
+                                        DisplayDateStart="{Binding DisplayDateStart}"
+                                        materialDesign:HintAssist.HelperText="Ngày nhận lịch cách ngày hiện tại&#x0a;ít nhất 2 ngày.">
                                 <DatePicker.Resources>
                                     <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
                                         <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="{StaticResource BlueBrush}"/>

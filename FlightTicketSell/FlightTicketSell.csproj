@@ -603,6 +603,8 @@
     <Resource Include="Images\paper-plane.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Logo.png" />
+    <Resource Include="Images\Plane.png" />
     <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>

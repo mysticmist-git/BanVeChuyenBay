@@ -48,7 +48,7 @@ namespace FlightTicketSell.Views
                     printDialog.PrintVisual(print, "Invoice");
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception) { }
             finally
             {
                 this.IsEnabled = true;
