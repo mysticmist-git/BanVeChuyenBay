@@ -292,38 +292,47 @@
                                 </DataGridTemplateColumn>
 
                                 <materialDesign:DataGridTextColumn
-                            Binding="{Binding SanBayDi}"
-                            Header="Sân bay đi"
+                                    Binding="{Binding SanBayDi}"
+                                    Header="Sân bay đi"
                                    />
                                
                                 <materialDesign:DataGridTextColumn
-                          
-                            Binding="{Binding SanBayDen}"
-                            Header="Sân bay đến" />
+                                    Binding="{Binding SanBayDen}"
+                                    Header="Sân bay đến" />
+                                
                                 <materialDesign:DataGridTextColumn
-                            Binding="{Binding DisplayDepartDate}"
-                                   Width="auto"
-                            Header="Khởi hành" />
+                                    Binding="{Binding DisplayDepartDate}"
+                                    Width="auto"
+                                    Header="Khởi hành" />
+                                
                                 <materialDesign:DataGridTextColumn
-                            Binding="{Binding SoDiemDung}"
-                                    
-                            Header="Số điểm dừng" />
+                                    Binding="{Binding SoDiemDung}"
+                                    Header="Số điểm dừng" />
+                                
                                 <materialDesign:DataGridTextColumn
-                            Binding="{Binding SoHangVe}"
-                                    
-                            Header="Số hạng vé" />
+                                    Binding="{Binding SoHangVe}"
+                                    Header="Số hạng vé" />
+                                
                                 <materialDesign:DataGridTextColumn
-                            Binding="{Binding DisplayPrice}"
-                                    
-                            Header="Giá cơ bản" />
+                                    Binding="{Binding DisplayPrice}"
+                                    Header="Giá cơ bản" />
+                                
+                                <DataGridTemplateColumn Header="Ghế trống" Width="auto" >
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding GheTrong}"
+                                                       Foreground="{Binding GheTrong,Converter={valueConverters:SeatLeftToColorConverter}}"
+                                                       FontWeight="Bold"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                
                                 <materialDesign:DataGridTextColumn
-                            Binding="{Binding GheTrong}"
-                                   
-                            Header="Ghế trống" />
-                                <materialDesign:DataGridTextColumn
-                          Width="auto"
-                            Binding="{Binding SoGheDat}"
-                            Header="Số ghế đã đặt/bán" />
+                                    Width="auto"
+                                    Binding="{Binding SoGheDat}"
+                                    Header="Số ghế đã đặt/bán"
+                                    FontWeight="Bold"/>
+                                
                                 <DataGridTemplateColumn Header="Trạng thái" Width="auto" >
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
