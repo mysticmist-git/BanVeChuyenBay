@@ -141,7 +141,13 @@ namespace FlightTicketSell.ViewModels
                     ToggleIncludeBookingCustomer();
 
                 if (CurrentTicketTier is null)
-                    CurrentTicketTier = TicketTiers.ElementAt(0);
+                {
+                    int i = 0;
+                    while (i < TicketTiers.Count && TicketTiers[i].GheTrong == 0)
+                        i++;
+
+                    CurrentTicketTier = TicketTiers.ElementAt(i);
+                }
 
                 _firstLoad = false;
             });
