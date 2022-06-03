@@ -49,6 +49,10 @@ namespace FlightTicketSell.Views.Helper
                         })
                         .ToListAsync();
 
+                    // Null check
+                    if (flightList == null || flightList.Count == 0)
+                        return null;
+
                     return new ObservableCollection<object>(flightList.Cast<object>());
                 }
             }
@@ -80,6 +84,10 @@ namespace FlightTicketSell.Views.Helper
                             Ratio = dt.TiLe
                         })
                         .ToListAsync();
+
+                    // Null check
+                    if (list == null || list.Count == 0)
+                        return null;
 
                     return new ObservableCollection<object>(list.Cast<object>());
                 }
@@ -113,6 +121,10 @@ namespace FlightTicketSell.Views.Helper
                         })
                         .ToListAsync();
 
+                    // Null check
+                    if (list == null || list.Count == 0)
+                        return null;
+
                     return new ObservableCollection<object>(list.Cast<object>());
                 }
             }
@@ -133,6 +145,11 @@ namespace FlightTicketSell.Views.Helper
             {
                 using (var context = new FlightTicketSellEntities())
                 {
+                    // Null check
+                    var nullCheckList = await context.DOANHTHUNAMs.ToListAsync();
+                    if (nullCheckList == null || nullCheckList.Count == 0)
+                        return null;
+
                     var totalRevenue = await context.DOANHTHUNAMs.SumAsync(dt => dt.DoanhThu);
 
                     var list = await context.DOANHTHUNAMs
@@ -161,6 +178,9 @@ namespace FlightTicketSell.Views.Helper
 
         public static decimal CalculateTotalRevenue(ObservableCollection<object> report, ReportType reportType)
         {
+            if (report is null)
+                return 0;
+            
             switch (reportType)
             {
                 case ReportType.FlightsOfOneMonth:
