@@ -192,17 +192,18 @@
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Horizontal">
-
-
                                                         <!-- Flight code -->
                                                         <TextBlock 
                                                                Text="{Binding TenKhachHang}"
                                                                VerticalAlignment="Center"
-                                                               HorizontalAlignment="Left"/>
+                                                               HorizontalAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextAlignment="Left"
+                                                            Width="150"/>
 
                                                         <!-- Detail button -->
                                                         <Button Content="Chi tiết"
-                                                           
+                                                           HorizontalAlignment="Right"
                                                             Style="{StaticResource HoverButton}"
                                                             BorderBrush="{StaticResource LightBlueBrush}"
                                                             Height="25"
@@ -345,6 +346,7 @@
                                   ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                                   CellStyle="{StaticResource DataGridCellCenter}"
                                   ColumnWidth="*"
+                                    IsReadOnly="True"
                                   CanUserSortColumns="True"
                                   CanUserAddRows="False"
                                   AutoGenerateColumns="False"
@@ -353,26 +355,37 @@
                                   materialDesign:DataGridAssist.ColumnHeaderPadding="8" SelectionChanged="DataGrid_SelectionChanged">
                                     <DataGrid.Columns>
 
-                                        <DataGridTextColumn IsReadOnly="True"
-                                                            Binding="{Binding DisplayReservationID}"
-                                                            Header="Mã đặt chỗ"
-                                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-
-                                        <DataGridTemplateColumn Header="Tên khách hàng" IsReadOnly="True"
-                                                                Width="auto">
+                                        <!--Mã đặt chỗ-->
+                                        <DataGridTemplateColumn Header="Mã đặt chỗ" IsReadOnly="True" Width="auto">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Margin="40 0 20 0"
+                                                               Text="{Binding DisplayReservationID}"
+                                                               Focusable="False"
+                                                               VerticalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+
+                                        <!--Tên khách hàng-->
+                                        <DataGridTemplateColumn Header="Tên khách hàng" IsReadOnly="True" Width="auto">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" Margin="20 0 20 0">
                                                         <!-- Flight code -->
                                                         <TextBlock 
                                                                Text="{Binding ThongTinNguoiDat.HoTen}"
                                                                VerticalAlignment="Center"
+                                                               TextAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            Width="250"
                                                                HorizontalAlignment="Left"/>
 
                                                         <!-- Detail button -->
                                                         <Button Content="Chi tiết"
                                                             Name="Thong_Tin_Chi_Tiet_Khach_Hang"
-                                                            Margin="7 0 0 0"
+                                                                HorizontalAlignment="Right"
+                                                                VerticalAlignment="Center"
                                                             Style="{StaticResource HoverButton}"
                                                             BorderBrush="{StaticResource LightBlueBrush}"
                                                             Height="25"
@@ -383,51 +396,72 @@
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
 
-                                        <!-- set a max length to get an indicator in the editor -->
-                                        <DataGridTextColumn IsReadOnly="True"
-                                                                            Binding="{Binding SoVeDat}"
-                                                                            Header="Số chỗ"
-                                                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" 
-                                                                           />
+                                        <!--Số chỗ-->
+                                        <DataGridTemplateColumn Header="Số chỗ" IsReadOnly="True" Width="auto">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock  Margin="20 0 20 0"
+                                                               Text="{Binding SoVeDat}"
+                                                               Focusable="False"
+                                                               VerticalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
 
                                         <!-- Tên hạng vé -->
-                                        <DataGridTextColumn IsReadOnly="True"
-                                
-                                                                            Binding="{Binding TenHangVe}"
-                                                                            Header="Tên hạng vé"
-                                                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"                                      
-                                                                           />
-
+                                        <DataGridTemplateColumn Header="Tên hạng vé" IsReadOnly="True" Width="auto">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock  Margin="20 0 20 0"
+                                                               Text="{Binding TenHangVe}"
+                                                               Focusable="False"
+                                                               VerticalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        
                                         <!-- Ngày đặt vé -->
-                                        <DataGridTextColumn IsReadOnly="True"
-                                 
-                                                                            Binding="{Binding DisplayBookDate}"
-                                                                            Header="Ngày đặt vé"
-                                                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"                                      
-                                                                           />
+                                        <DataGridTemplateColumn Header="Ngày đặt vé" IsReadOnly="True" Width="auto">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock  Margin="20 0 20 0"
+                                                               Text="{Binding DisplayBookDate}"
+                                                               Focusable="False"
+                                                               VerticalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
 
-                                        <!-- Giá tiền / vé -->
-                                        <DataGridTextColumn IsReadOnly="True"
-                               
-                                                                            Binding="{Binding DisplayTicketPrice}"
-                                                                            Header="Tổng tiền"
-                                                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"                                     
-                                                                           />
 
+                                        <!-- Tổng tiền -->
+                                        <DataGridTemplateColumn Header="Tổng tiền" IsReadOnly="True" Width="auto">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock  Margin="20 0 20 0"
+                                                               Text="{Binding DisplayTicketPrice}"
+                                                               Focusable="False"
+                                                               VerticalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        
                                         <!-- Trạng thái -->
                                         <DataGridTemplateColumn Header="Trạng thái" IsReadOnly="True"
                                                                 Width="auto">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal">
+                                                    <StackPanel Orientation="Horizontal" Margin="20 0 20 0">
                                                         <!-- Trạng thái đặt chỗ -->
                                                         <TextBlock 
                                                                Text="{Binding BookingState, Mode=OneWay, Converter={valueConverters:BookingStateToStringConverter}}"
                                                                Foreground="{Binding BookingState, Mode=OneWay, Converter={valueConverters:BookingStateToColorConverter}}"
                                                                FontWeight="Bold"
                                                                IsEnabled="False"
+                                                            Width="60"
                                                                VerticalAlignment="Center"
-                                                               HorizontalAlignment="Left"/>
+                                                               HorizontalAlignment="Left"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextAlignment="Left"/>
 
                                                         <!-- Booking change button -->
                                                         <Button ToolTip="Đổi vé"
@@ -435,6 +469,8 @@
                                                                 FontSize="{StaticResource RealSmall}"
                                                                 Height="25"
                                                                 Margin="7 0 0 0"
+                                                                VerticalAlignment="Center"
+                                                                HorizontalAlignment="Right"
                                                            BorderBrush="{StaticResource GreenBrush}"
                                                             Style="{StaticResource HoverButton}"
                                                             Command="{Binding ShowMoreCommand}">
