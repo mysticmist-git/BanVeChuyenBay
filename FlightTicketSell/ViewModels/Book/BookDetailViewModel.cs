@@ -28,6 +28,11 @@ namespace FlightTicketSell.ViewModels
         #region Private Members
 
         /// <summary>
+        /// Indicates if this is the first time view model loads
+        /// </summary>
+        private bool _firstLoad = true;
+        
+        /// <summary>
         /// Indicates if this list included the booking person
         /// </summary>
         private bool _isBookingCustomerIncluded = true;
@@ -132,9 +137,13 @@ namespace FlightTicketSell.ViewModels
             LoadCommand = new RelayCommand<object>((p) => true, (p) =>
             {
                 // Initializes
-                ToggleIncludeBookingCustomer();
+                if (_firstLoad)
+                    ToggleIncludeBookingCustomer();
+
                 if (CurrentTicketTier is null)
                     CurrentTicketTier = TicketTiers.ElementAt(0);
+
+                _firstLoad = false;
             });
 
             // Create command
