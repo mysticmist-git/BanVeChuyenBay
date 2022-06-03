@@ -309,12 +309,15 @@ namespace FlightTicketSell.ViewModels
 
                    if (FirstLoad)
                    {
-                       // Gán ngày hiện tại cho datepicker lúc mở 
-                       DateFlight = DateTime.Now.AddDays(2);
-                       // Gán ngày hiện tại cho datepicker lúc mở 
+                       // TEST: Cho mục đích test
+                       DateFlight = DateTime.Now;
+                       DisplayDateStart = DateTime.Now;
+                       // Thực tế
+                       //DateFlight = DateTime.Now.AddDays(2);
+                       //DisplayDateStart = DateTime.Now.AddDays(2);
+
                        TimeFlight = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day, 0, 0, 0);
                        FirstLoad = false;
-                       DisplayDateStart = DateTime.Now.AddDays(2);
                        FlightCode = null;
                    }
 
@@ -562,7 +565,7 @@ namespace FlightTicketSell.ViewModels
             FormatStringToMoney = new RelayCommand<object>((p) => { return true; },
              (p) =>
              {
-                 if (double.TryParse(Airfares, out double value) && value!=0)
+                 if (double.TryParse(Airfares, out double value) && value != 0)
                      Airfares = string.Format("{0:0,0}", value);
                  else
                      Airfares = string.Empty;
@@ -693,7 +696,11 @@ namespace FlightTicketSell.ViewModels
             RefreshScheduleAFlight_Command = new RelayCommand<object>((p) => { return true; },
                 (p) =>
                 {
-                    DateFlight = DateTime.Now.AddDays(2);
+                    // TEST: Cho mục đích test
+                    DateFlight = DateTime.Now;
+                    // Thực tế
+                    // DateFlight = DateTime.Now.AddDays(2);
+
                     TimeFlight = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day, 0, 0, 0);
                     DepartureAirport = null;
                     LandingAirport = null;
@@ -717,7 +724,11 @@ namespace FlightTicketSell.ViewModels
 
             SelectedFlightTimeChanged_Command = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                DateTime a = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day);
+                // TEST: Cho mục đích test
+                // Rỗng
+
+                // Thực tế
+                /*DateTime a = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day);
                 DateTime b = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
                 if (a != b)
                     return;
@@ -727,7 +738,7 @@ namespace FlightTicketSell.ViewModels
                 {
                     MessageBox.Show("Thời gian không hợp lệ!", "Cảnh báo");
                     TimeFlight = DateTime.Now;
-                }
+                }*/
             });
             CheckFlightTime = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -738,7 +749,7 @@ namespace FlightTicketSell.ViewModels
                     try
                     {
                         var minFlightTime = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianBayToiThieu").ToList().FirstOrDefault().GiaTri;
-                        if (int.Parse(FlightTime)<minFlightTime)
+                        if (int.Parse(FlightTime) < minFlightTime)
                         {
                             MessageBox.Show("Thời gian bay tối thiểu là " + minFlightTime.ToString() + " phút!", "Cảnh báo");
                             FlightTime = string.Empty;
