@@ -158,7 +158,8 @@ namespace FlightTicketSell.ViewModels
 
                         MessageBox.Show("Thanh toán thành công", "Thành công", MessageBoxButton.OK);
                         IoC.IoC.Rebind<BookDetailViewModel>();
-                        IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.Search;
+                        FlightInfo.GheTrong -= datCho.SoVeDat;
+                        IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.FlightDetail;
                     }
                     catch (EntityException e)
                     {
