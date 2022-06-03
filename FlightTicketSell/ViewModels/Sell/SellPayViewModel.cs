@@ -90,9 +90,6 @@ namespace FlightTicketSell.ViewModels
                 var flightInfo = FlightInfo;
                 var customer = Customer;
 
-                // Clear view models
-                
-
                 // Send mail
                 await SendMail(flightInfo, customer);
             });
