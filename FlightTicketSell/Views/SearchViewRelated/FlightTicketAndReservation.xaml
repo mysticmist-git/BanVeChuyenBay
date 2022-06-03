@@ -78,15 +78,12 @@
 
                                 <!-- Heading and search bar -->
                                 <Grid Grid.Row="0">
-                                    <Grid.ColumnDefinitions>
-
-                                    </Grid.ColumnDefinitions>
-
                                     <!-- Heading -->
                                     <Border Grid.Column="0"
                                     Grid.ColumnSpan="4"
                                     Background="{StaticResource BlueBrush}" 
                                     CornerRadius="8"
+                                            Height="35"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center">
                                         <TextBlock Text="VÉ ĐÃ BÁN"
@@ -100,31 +97,36 @@
 
                                     <!-- Search box -->
                                     <Border BorderThickness="1"
-                                    BorderBrush="{StaticResource GrayBrush}"
-                                    CornerRadius="7"
-                                    Padding="10 0 10 5"
-                                    Margin="0 10 20 0"
-                                    Width="250"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Center">
+                                        BorderBrush="{StaticResource BlueBrush}"
+                                        CornerRadius="7"
+                                        Width="250"
+                                        Height="35"
+                                            Margin="0 0 20 0"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center">
                                         <Grid>
 
                                             <Grid.ColumnDefinitions>
                                                 <!-- Search box -->
-                                                <ColumnDefinition Width="74*" />
-                                                <ColumnDefinition Width="97*"/>
+                                                <ColumnDefinition Width="55" />
+                                                <ColumnDefinition Width="1*"/>
                                                 <!-- Search button -->
-                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="55" />
                                             </Grid.ColumnDefinitions>
 
                                             <!-- Search box -->
                                             <TextBox Grid.Column="0"
-                                             Name="Ma_Ve"
-                                             VerticalAlignment="Center"
-                                             materialDesign:HintAssist.Hint="Mã vé"
-                                             Text="{Binding Search_IDSold}"
-                                             FontSize="{StaticResource RealSmall}"
-                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.ColumnSpan="2">
+                                                 Name="Ma_Ve"
+                                                 VerticalAlignment="Center"
+                                                     FontSize="{StaticResource RealSmall}"
+                                                     Foreground="{StaticResource BlueBrush}"
+                                                     FontWeight="SemiBold"
+                                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                                 materialDesign:HintAssist.Hint="Mã vé"
+                                                 Text="{Binding Search_IDSold, UpdateSourceTrigger=PropertyChanged}"
+                                                 Margin="15 0 10 0"
+                                                 Grid.ColumnSpan="2"
+                                                     BorderThickness="0">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="TextChanged">
                                                         <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
@@ -134,11 +136,15 @@
 
                                             <!-- Search button -->
                                             <Button Grid.Column="2"
-                                        VerticalAlignment="Center" 
-                                        Background="Transparent" 
-                                        Foreground="{StaticResource GrayBrush}" 
-                                        BorderThickness="0"
-                                        Command="{Binding LoadCommand1}">
+                                                    Height="35"
+                                                    BorderThickness="1.5 0 0 0"
+                                                    BorderBrush="{StaticResource BlueBrush}"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Stretch"
+                                                     materialDesign:ButtonAssist.CornerRadius="0 8 8 0"
+                                                    
+                                                    Style="{StaticResource HoverButton}"
+                                                    Command="{Binding LoadCommand1}">   
                                                 <!-- Trigger -->
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="SelectedChange">
@@ -147,10 +153,13 @@
                                                 </i:Interaction.Triggers>
 
                                                 <!-- Icon -->
-                                                <materialDesign:PackIcon Kind="Magnify" Height="25" Width="25"/>
+                                                <materialDesign:PackIcon
+                                                    VerticalAlignment="Center"
+                                                    Kind="Magnify" Height="23" Width="23"/>
                                             </Button>
                                         </Grid>
                                     </Border>
+
                                 </Grid>
 
                                 <DataGrid
@@ -163,7 +172,7 @@
                                   ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                                   CellStyle="{StaticResource DataGridCellCenter}"
                                   ColumnWidth="*"
-                                  ItemsSource="{Binding Tickets}"
+                                  ItemsSource="{Binding Tickets,UpdateSourceTrigger=PropertyChanged}"
                                   d:ItemsSource="{d:SampleData ItemCount=5}"
                                   CanUserSortColumns="True"
                                   CanUserAddRows="False"
@@ -247,6 +256,7 @@
                                     <!-- Heading -->
                                     <Border Grid.Column="0"
                                     Grid.ColumnSpan="4"
+                                            Height="35"
                                     Background="{StaticResource BlueBrush}" 
                                     CornerRadius="8"
                                     HorizontalAlignment="Center"
@@ -262,11 +272,11 @@
 
                                     <!-- Search box -->
                                     <Border BorderThickness="1"
-                                    BorderBrush="{StaticResource GrayBrush}"
+                                    BorderBrush="{StaticResource BlueBrush}"
                                     CornerRadius="7"
-                                    Padding="10 0 10 5"
-                                    Margin="0 10 20 0"
                                     Width="250"
+                                            Height="35"
+                                              Margin="0 0 20 0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center">
                                         <Grid>
@@ -275,17 +285,22 @@
                                                 <!-- Search box -->
                                                 <ColumnDefinition Width="*" />
                                                 <!-- Search button -->
-                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="55" />
                                             </Grid.ColumnDefinitions>
 
                                             <!-- Search box -->
                                             <TextBox Grid.Column="0"
                                              Name="Ma_Dat_Cho"
                                              VerticalAlignment="Center"
+                                                     
                                              materialDesign:HintAssist.Hint="Mã đặt chỗ"
-                                             Text="{Binding Search_IDBooked}"
+                                             Text="{Binding Search_IDBooked, UpdateSourceTrigger=PropertyChanged}"
+                                                     Foreground="{StaticResource BlueBrush}"
+                                                     FontWeight="SemiBold"
+                                                      Margin="15 0 10 0"
+                                                     BorderThickness="0"
                                              FontSize="{StaticResource RealSmall}"
-                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                     materialDesign:TextFieldAssist.DecorationVisibility="Hidden">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="TextChanged">
                                                         <i:InvokeCommandAction Command="{Binding LoadCommand1}"/>
@@ -295,11 +310,13 @@
 
                                             <!-- Search button -->
                                             <Button Grid.Column="1"
-                                        VerticalAlignment="Center" 
-                                        Background="Transparent" 
-                                        Foreground="{StaticResource GrayBrush}" 
-                                        BorderThickness="0"
-                                        Command="{Binding LoadCommand1}">
+                                                    VerticalAlignment="Center" 
+                                                    HorizontalAlignment="Stretch"
+                                                    BorderThickness="1.5 0 0 0"
+                                                    BorderBrush="{StaticResource BlueBrush}"
+                                                    Command="{Binding LoadCommand1}"
+                                                     materialDesign:ButtonAssist.CornerRadius="0 8 8 0"
+                                                    Style="{StaticResource HoverButton}">
                                                 <!-- Trigger -->
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="SelectedChange">
@@ -308,7 +325,9 @@
                                                 </i:Interaction.Triggers>
 
                                                 <!-- Icon -->
-                                                <materialDesign:PackIcon Kind="Magnify" Height="25" Width="25"/>
+                                                <materialDesign:PackIcon 
+                                                    VerticalAlignment="Center"
+                                                    Kind="Magnify" Height="23" Width="23"/>
                                             </Button>
                                         </Grid>
                                     </Border>

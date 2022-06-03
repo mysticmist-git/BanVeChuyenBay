@@ -23,7 +23,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Border Grid.Row="1" Grid.Column="1" Background="White" CornerRadius="5" Style="{StaticResource ResourceKey=DropShadow}">
+    <Border Grid.Row="1" Grid.Column="1" CornerRadius="5">
         <Grid>
 
             <Grid.ColumnDefinitions>
@@ -71,12 +71,12 @@
             Grid.Column="1"
             Grid.Row="3"
             Style="{StaticResource HoverButton}"
-            BorderBrush="{StaticResource LightBlueBrush}"
+            BorderBrush="{StaticResource BlueBrush}"
             Content="Đóng"
-            FontSize="15"
+            FontSize="18"
             HorizontalAlignment="Stretch"
             Width="230"
-            Height="30"
+            Height="35"
             Command="{Binding CloseCommand}"
             CommandParameter="{Binding ElementName=uc, Converter={valueConverters:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverters:ViewInterface.CustomerDetail_Search}}"/>
 
@@ -103,7 +103,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <Border Background="{StaticResource LightGrayBrush}"
+                            <Border Background="White"
                                 CornerRadius="10"
                                 Padding="20"
                                 Height="280"

@@ -97,7 +97,8 @@ namespace FlightTicketSell.ViewModels
             LoadCommand = new RelayCommand<object>((p) => true, (p) =>
             {
                 var MaChuyenBay = IoC.IoC.Get<FlightDetailViewModel>().FlightInfo.MaChuyenBay;
-
+                Search_IDSold = string.Empty;
+                Search_IDBooked = string.Empty;
                 using (var context = new FlightTicketSellEntities())
                 {
                     try
@@ -147,11 +148,35 @@ namespace FlightTicketSell.ViewModels
                 {
                     try
                     {
-                        if (Search_IDSold != null)
+                        if (!string.IsNullOrEmpty(Search_IDSold))
+                        {
+                            var list = new ObservableCollection<Ticket>(
+                                                                context.VEs
+                                                                .Where(result => result.MaChuyenBay == MaChuyenBay)
+                                                                .Select(result => new Ticket
+                                                                {
+                                                                    MaVe = result.MaVe,
+                                                                    TenKhachHang = context.KHACHHANGs.Where(x => x.MaKhachHang == result.MaKhachHang).FirstOrDefault().HoTen,
+                                                                    TenHangVe = context.HANGVEs.Where(x => x.MaHangVe == result.MaHangVe).FirstOrDefault().TenHangVe,
+                                                                    NgayThanhToan = result.NgayThanhToan,
+                                                                    GiaTien = result.GiaTien
+                                                                }).ToList());
+                            list = new ObservableCollection<Ticket>(list.Where(h => h.DisplayTicketID.ToLower().Contains(Search_IDSold.ToLower())).ToList());
+                            if (list.Count > 0)
+                            {
+                                Tickets = new ObservableCollection<Ticket>(list);
+                            }
+                            else
+                            {
+                                Tickets = null;
+                            }
+                            
+                        }
+                        else
                         {
                             Tickets = new ObservableCollection<Ticket>(
                                                                 context.VEs
-                                                                .Where(result => result.MaChuyenBay == MaChuyenBay && result.MaVe.ToString() == Search_IDSold)
+                                                                .Where(result => result.MaChuyenBay == MaChuyenBay)
                                                                 .Select(result => new Ticket
                                                                 {
                                                                     MaVe = result.MaVe,
@@ -165,9 +190,37 @@ namespace FlightTicketSell.ViewModels
 
                         if (Search_IDBooked != null)
                         {
+                            var list = new ObservableCollection<BookSearchVariant>(
+                                                                context.DATCHOes
+                                                                .Where(result => result.MaChuyenBay == MaChuyenBay)
+                                                                .Select(result => new BookSearchVariant
+                                                                {
+                                                                    MaDatCho = result.MaDatCho,
+                                                                    ThongTinNguoiDat = new Customer
+                                                                    {
+                                                                        HoTen = context.KHACHHANGs.Where(x => x.MaKhachHang == result.MaNguoiDat).FirstOrDefault().HoTen
+                                                                    },
+                                                                    SoVeDat = result.SoVeDat,
+                                                                    TenHangVe = context.HANGVEs.Where(x => x.MaHangVe == result.MaHangVe).FirstOrDefault().TenHangVe,
+                                                                    NgayGioDat = result.NgayGioDat,
+                                                                    GiaTien_Ve = result.HANGVE.HeSo * result.CHUYENBAY.GiaVe,
+                                                                    TrangThai = result.TrangThai,
+                                                                }).ToList());
+                            list = new ObservableCollection<BookSearchVariant>(list.Where(h => h.DisplayReservationID.ToLower().Contains(Search_IDBooked.ToLower())).ToList());
+                            if (list.Count > 0)
+                            {
+                                Books = new ObservableCollection<BookSearchVariant>(list);
+                            }
+                            else
+                            {
+                                Books = null;
+                            }
+                        }
+                        else
+                        {
                             Books = new ObservableCollection<BookSearchVariant>(
                                                                 context.DATCHOes
-                                                                .Where(result => result.MaChuyenBay == MaChuyenBay && result.MaDatCho.ToString() == Search_IDBooked)
+                                                                .Where(result => result.MaChuyenBay == MaChuyenBay)
                                                                 .Select(result => new BookSearchVariant
                                                                 {
                                                                     MaDatCho = result.MaDatCho,
@@ -181,7 +234,7 @@ namespace FlightTicketSell.ViewModels
                                                                     GiaTien_Ve = result.HANGVE.HeSo * result.CHUYENBAY.GiaVe,
                                                                     TrangThai = result.TrangThai,
                                                                 }).ToList()
-                                                           ) ;
+                                                           );
                         }
                     }
                     catch

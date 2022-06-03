@@ -219,44 +219,45 @@
                                        TextAlignment="Right"
                                        Foreground="{StaticResource LightBlueBrush}"/>
 
-                                    <ToggleButton IsChecked="{Binding IsDisplayDeparted}" Margin="0 5 0 0"
+                                <ToggleButton IsChecked="{Binding IsDisplayDeparted}" Margin="0 5 0 0"
                                           Background="{StaticResource LightBlueBrush}"
                                           HorizontalAlignment="Right" Height="17" Width="33">
                                     <ToggleButton.Style>
-                                            <Style TargetType="{x:Type ToggleButton}"
+                                        <Style TargetType="{x:Type ToggleButton}"
                                        BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsChecked" Value="True">
-                                                        <Setter Property="ToolTip" Value="Hiển thị chuyến bay đã cất cánh" />
-                                                    </Trigger>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsChecked" Value="True">
+                                                    <Setter Property="ToolTip" Value="Hiển thị chuyến bay đã cất cánh" />
+                                                </Trigger>
 
-                                                    <Trigger Property="IsChecked" Value="False">
-                                                        <Setter Property="ToolTip" Value="Chỉ hiển thị chuyến bay chưa cất cánh" />
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </ToggleButton.Style>
-                                    </ToggleButton>
+                                                <Trigger Property="IsChecked" Value="False">
+                                                    <Setter Property="ToolTip" Value="Chỉ hiển thị chuyến bay chưa cất cánh" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ToggleButton.Style>
+                                </ToggleButton>
                             </StackPanel>
                         </Grid>
 
                         <!-- Flight table-->
                         <DataGrid 
-                    Name="Bang_Cac_Chuyen_Bay"
-                    Grid.Row="1" Grid.RowSpan="7"
-                    ItemsSource="{Binding ProcessedFlights}"
-                    d:ItemsSource="{d:SampleData ItemCount=5}"
-                    Background="Transparent"
-                    ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
-                    CellStyle="{StaticResource DataGridCellCenter}"
-                    ColumnWidth="*"
-                    RowHeight="50"
-                    CanUserSortColumns="True"
-                    CanUserAddRows="False"
-                    AutoGenerateColumns="False"
-                    materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                    materialDesign:DataGridAssist.ColumnHeaderPadding="8"
-                              IsReadOnly="True">
+                            Name="Bang_Cac_Chuyen_Bay"
+                            Grid.Row="1" Grid.RowSpan="7"
+                            ItemsSource="{Binding ProcessedFlights}"
+                            d:ItemsSource="{d:SampleData ItemCount=5}"
+                            Background="Transparent"
+                            ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                            CellStyle="{StaticResource DataGridCellCenter}"
+                            ColumnWidth="*"
+                            RowHeight="50"
+                            Margin="7 0 7 0"
+                            CanUserSortColumns="True"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                            materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+                                      IsReadOnly="True">
 
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Loaded">
@@ -265,7 +266,7 @@
                             </i:Interaction.Triggers>
                             <DataGrid.Columns>
 
-                                <DataGridTemplateColumn Header="Mã chuyến bay" Width="200">
+                                <DataGridTemplateColumn Header="Mã chuyến bay" Width="auto">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Grid>
@@ -296,40 +297,40 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
 
-                                <!--<DataGridTextColumn
-                            Width="100"
-                            Binding="{Binding MaChuyenBay}"
-                            Header="Mã chuyến bay"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />-->
-
                                 <materialDesign:DataGridTextColumn
                             Binding="{Binding SanBayDi}"
-                            Header="Sân bay đi" />
-                                <!-- set a max length to get an indicator in the editor -->
+                            Header="Sân bay đi"
+                                   />
+                               
                                 <materialDesign:DataGridTextColumn
-                            Width="100"
+                          
                             Binding="{Binding SanBayDen}"
                             Header="Sân bay đến" />
                                 <materialDesign:DataGridTextColumn
                             Binding="{Binding DisplayDepartDate}"
+                                   
                             Header="Khởi hành" />
                                 <materialDesign:DataGridTextColumn
                             Binding="{Binding SoDiemDung}"
+                                    
                             Header="Số điểm dừng" />
                                 <materialDesign:DataGridTextColumn
                             Binding="{Binding SoHangVe}"
+                                    
                             Header="Số hạng vé" />
                                 <materialDesign:DataGridTextColumn
                             Binding="{Binding DisplayPrice}"
+                                    
                             Header="Giá cơ bản" />
                                 <materialDesign:DataGridTextColumn
                             Binding="{Binding GheTrong}"
+                                   
                             Header="Ghế trống" />
                                 <materialDesign:DataGridTextColumn
-                            Width="100"
+                          
                             Binding="{Binding SoGheDat}"
                             Header="Số ghế đặt" />
-                                <DataGridTemplateColumn Header="Trạng thái">
+                                <DataGridTemplateColumn Header="Trạng thái" >
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding DaKhoiHanh, Converter={valueConverters:FlightStateToStringConverter}}"
@@ -340,7 +341,7 @@
                                 </DataGridTemplateColumn>
 
                             </DataGrid.Columns>
-                            
+
                         </DataGrid>
                     </Grid>
                 </Border>
