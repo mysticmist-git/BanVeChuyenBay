@@ -468,6 +468,7 @@
                                             Visibility="{Binding IsBookingCustomer, Mode=OneWay, Converter={valueConverters:BooleanToVisibilityConverter}, ConverterParameter=Inverted}" />
 
                                         <TextBox Text="(Người đặt)"
+                                                 IsReadOnly="True"
                                                  Grid.Column="1"
                                                  Grid.ColumnSpan="2"
                                                  HorizontalAlignment="Center"
