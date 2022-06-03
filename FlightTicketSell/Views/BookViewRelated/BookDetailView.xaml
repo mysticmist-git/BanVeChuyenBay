@@ -110,10 +110,10 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Mã chuyến bay</TextBlock>
-                                <TextBox  IsReadOnly="True"
+                                <TextBox  IsReadOnly="True" Margin="0 -10 0 0"
                                               Text="{Binding FlightInfo.DisplayFlightCode, Mode=OneWay}"
                                               Grid.Row="1" 
-                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                             Style="{StaticResource CustomTextbox}"
                                               VerticalAlignment="Top">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
@@ -130,10 +130,10 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đi</TextBlock>
-                                <TextBox IsReadOnly="True" 
+                                <TextBox IsReadOnly="True" Margin="0 -10 0 0"
                                              Text="{Binding FlightInfo.SanBayDi, Mode=OneWay}"
                                              Grid.Row="1"
-                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                                             Style="{StaticResource CustomTextbox}" 
                                              VerticalAlignment="Top">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
@@ -150,10 +150,10 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đến</TextBlock>
-                                <TextBox IsReadOnly="True" 
+                                <TextBox IsReadOnly="True" Margin="0 -10 0 0"
                                              Text="{Binding FlightInfo.SanBayDen, Mode=OneWay}" 
                                              Grid.Row="1" 
-                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                             Style="{StaticResource CustomTextbox}"
                                              VerticalAlignment="Top">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal"  Margin="-2 0 0 0">
@@ -171,10 +171,10 @@
 
                                 <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Ngày giờ bay</TextBlock>
                                 <Grid Grid.Row="1">
-                                    <TextBox IsReadOnly="True" 
+                                    <TextBox IsReadOnly="True" Margin="0 -10 0 0"
                                                  Text="{Binding FlightInfo.NgayGio, Mode=OneWay}"
                                                  Grid.Row="1"
-                                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                                                 Style="{StaticResource CustomTextbox}" 
                                                  VerticalAlignment="Top">
                                         <materialDesign:HintAssist.Hint>
                                             <StackPanel Orientation="Horizontal"  Margin="-2 0 0 0">
@@ -192,10 +192,11 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Số điểm dừng</TextBlock>
-                                <TextBox IsReadOnly="True"
+                                <TextBox IsReadOnly="True" Margin="0 -10 0 0"
                                              Text="{Binding FlightInfo.SoDiemDung, Mode=OneWay}"
                                              Grid.Row="1"
-                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Top"
+                                             Style="{StaticResource CustomTextbox}"   
+                                         VerticalAlignment="Top"
                                              >
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
@@ -210,9 +211,9 @@
                 </Border>
 
                 <!--Khách hàng đặt chỗ-->
-                <Border Grid.Column="1" Grid.ColumnSpan="6"
+                <Border Grid.Column="1" Grid.ColumnSpan="4"
                         Grid.Row="3" Grid.RowSpan="3"
-                        Margin="0,20,126,0" Padding="25"
+                        Margin="0,20,0,0"
                         Background="White"
                         CornerRadius="10"
                         Style="{StaticResource ResourceKey=DropShadow}" >
@@ -227,23 +228,31 @@
                         </Grid.RowDefinitions>
 
                         <!-- Heading -->
-                        <TextBlock Grid.Row="0" FontSize="20" VerticalAlignment="Center" FontWeight="Bold"> Khách hàng</TextBlock>
+                        <TextBlock Grid.Row="0" 
+                                   FontSize="20" 
+                                   Margin="25 10 0 0"
+                                   VerticalAlignment="Center" 
+                                   FontWeight="Bold"> Khách hàng</TextBlock>
 
                         <!-- Customer information filling fields -->
                         <Grid Grid.Row="1" Grid.RowSpan="5">
 
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="6*" />
                                 <!-- Spacing -->
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="6*" />
+                                <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
 
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="0*" />
                                 <RowDefinition Height="5*" />
                                 <!-- Spacing -->
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="0.5*" />
                                 <RowDefinition Height="5*" />
+                                <RowDefinition Height="2*" />
                             </Grid.RowDefinitions>
 
                             <!-- Name -->
@@ -251,7 +260,7 @@
                                     VerticalAlignment="Center"
                                     LostFocus="TextBox_LostFocus"
                                     TextChanged="BookingCustomerInfo_Changed"
-                                    Grid.Column="0" Grid.Row="0"
+                                    Grid.Column="1" Grid.Row="1"
                                     materialDesign:HintAssist.Hint="Họ và tên"
                                     materialDesign:HintAssist.HelperText="VD: Nguyễn Văn A"
                                     Style="{StaticResource CustomTextbox}">
@@ -269,7 +278,7 @@
                                      TextChanged="BookingCustomerInfo_Changed"
                                         PreviewTextInput="PreviewTextInput"
                                         VerticalAlignment="Center"
-                                        Grid.Column="2" Grid.Row="0"
+                                        Grid.Column="3" Grid.Row="1"
                                         LostFocus="TextBox_LostFocus"
                                         materialDesign:HintAssist.Hint="CMND"
                                         materialDesign:HintAssist.HelperText="VD: 312509001"
@@ -295,7 +304,7 @@
                                      TextChanged="BookingCustomerInfo_Changed"
                                                 PreviewTextInput="PreviewTextInput"
                                                 VerticalAlignment="Center"
-                                                Grid.Column="0" Grid.Row="2"
+                                                Grid.Column="1" Grid.Row="3"
                                                 materialDesign:HintAssist.Hint="Số điện thoại"
                                                 materialDesign:HintAssist.HelperText="VD: 0359723000"
                                                 Style="{StaticResource CustomTextbox}">
@@ -308,7 +317,7 @@
                             <TextBox x:Name="tbCustomerEmail"
                                      TextChanged="BookingCustomerInfo_Changed"
                                         VerticalAlignment="Center"
-                                        Grid.Column="2" Grid.Row="2"
+                                        Grid.Column="3" Grid.Row="3"
                                         materialDesign:HintAssist.Hint="Email" 
                                         materialDesign:HintAssist.HelperText="VD: nguyenvana@gmail.com"
                                         Style="{StaticResource CustomTextbox}">
@@ -329,8 +338,8 @@
                 <!--Hạng vé-->
                 <Border Padding="20"
                         Grid.Row="6" Grid.RowSpan="4"
-                        Grid.Column="1" Grid.ColumnSpan="6"
-                        Margin="0,20,126,0"
+                        Grid.Column="1" Grid.ColumnSpan="4"
+                        Margin="0,20,0,0"
                         Background="White" 
                         CornerRadius="10" 
                         Style="{StaticResource ResourceKey=DropShadow}" >
@@ -372,7 +381,7 @@
                 <!--Khach hang thu huong-->
                 <Border Padding="20" 
                         Grid.Row="3" Grid.RowSpan="7"
-                        Grid.Column="6" Grid.ColumnSpan="3"
+                        Grid.Column="5" Grid.ColumnSpan="4"
                         Margin="20 20 0 0"
                         Background="White" 
                         CornerRadius="10" 
@@ -385,7 +394,7 @@
                         </Grid.RowDefinitions>
 
                         <!-- Heading -->
-                        <TextBlock Text="Khách hàng thụ hưởng vé" Grid.Row="0" FontSize="20" VerticalAlignment="Center" FontWeight="Bold" />
+                        <TextBlock Text="Khách hàng thụ hưởng vé" Grid.Row="0" FontSize="20" VerticalAlignment="Top" FontWeight="Bold" />
 
                         <!-- Customer info list-->
                         <ListView x:Name="lvCustomers" ItemsSource="{Binding Customers}" Grid.Row="1" Margin="0,10,0,0" d:ItemsSource="{d:SampleData ItemCount=5}">
@@ -454,7 +463,7 @@
                                         <Button Content="X"
                                             Grid.Column="2"
                                             Command="{Binding RemoveCustomerInfoCommand}" 
-                                            Background="{StaticResource OrangeBrush}"
+                                            Background="{StaticResource RedBrush}"
                                             Style="{StaticResource CustomerInfoButton}"
                                             Visibility="{Binding IsBookingCustomer, Mode=OneWay, Converter={valueConverters:BooleanToVisibilityConverter}, ConverterParameter=Inverted}" />
 
@@ -475,24 +484,28 @@
                         <!-- Add new customer button -->
                         <Button Content="+ Thêm"
                             Command="{Binding AddCustomerCommand}"
-                            Grid.Row="2"
-                            Margin="0 10 0 0" 
-                            materialDesign:ButtonAssist.CornerRadius="0"
-                            HorizontalAlignment="Right" 
-                            VerticalAlignment="Bottom" 
-                            Style="{StaticResource AddButton}" 
+                            Grid.Row="2" 
+                            materialDesign:ButtonAssist.CornerRadius="5"
+                                Width="150"
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Style="{StaticResource HoverButton}"
+                                BorderBrush="{StaticResource LightBlueBrush}"
                             FontSize="{StaticResource Small}"/>
 
                         <!-- Attach booking customer toggle button -->
-                        <StackPanel Grid.Row="2"
-                                    VerticalAlignment="Center" 
-                                    Orientation="Horizontal">
+                        <StackPanel Grid.Row="0"
+                                   HorizontalAlignment="Right"
+                                    Orientation="Vertical">
                             <TextBlock Text="Kèm người đặt"
-                                       FontSize="{StaticResource Small}"
+                                       FontSize="14"
                                        FontWeight="Bold"
+                                       Foreground="{StaticResource LightBlueBrush}"
                                        VerticalAlignment="Center" />
 
-                            <ToggleButton IsChecked="{Binding IsBookingCustomerIncluded}" Margin="10 0 0 0">
+                            <ToggleButton IsChecked="{Binding IsBookingCustomerIncluded}" Margin="0 5 0 0"
+                                           Background="{StaticResource LightBlueBrush}"
+                                          HorizontalAlignment="Right">
                                 <ToggleButton.Style>
                                     <Style TargetType="{x:Type ToggleButton}"
                                        BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
@@ -516,12 +529,13 @@
 
                 <!--Nut tiep tuc-->
                 <Button Grid.Row="10"
-                        Grid.Column="7" Grid.ColumnSpan="2"
+                        Grid.Column="0" Grid.ColumnSpan="10"
                         Height="40"
-                        Padding="30 0"
+                        Width="250"
+                        Margin="0 0 50 0"
                         Style="{StaticResource HoverButton}"
-                        BorderBrush="{StaticResource OrangeBrush}"
-                        HorizontalAlignment="Right"
+                        BorderBrush="{StaticResource BlueBrush}"
+                        HorizontalAlignment="Center"
                         VerticalAlignment="Bottom"
                         Command="{Binding ContinueCommand}" 
                         CommandParameter="{Binding ElementName=uc, Converter={valueConverters:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverters:ViewInterface.BookDetail}}"

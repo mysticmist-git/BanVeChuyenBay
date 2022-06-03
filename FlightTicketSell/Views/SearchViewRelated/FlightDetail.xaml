@@ -92,7 +92,7 @@
                     <TextBlock Margin="21,0,0,0" Grid.Row="0" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Column="2" Grid.ColumnSpan="2" >Chi tiết chuyến bay</TextBlock>
 
                     <!--Sân bay đi và sân bay đến-->
-                    <Grid Background="#fff" Margin="0,1,0,0" Grid.Row="1" >
+                    <Grid Background="#fff" Margin="0,0,0,0" Grid.Row="1" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                             <ColumnDefinition Width="2*"></ColumnDefinition>
