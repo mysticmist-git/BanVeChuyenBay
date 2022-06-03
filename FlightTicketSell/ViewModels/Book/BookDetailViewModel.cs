@@ -30,7 +30,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Indicates if this list included the booking person
         /// </summary>
-        private bool _isBookingCustomerIncluded;
+        private bool _isBookingCustomerIncluded = true;
 
         #endregion
 
@@ -132,8 +132,7 @@ namespace FlightTicketSell.ViewModels
             LoadCommand = new RelayCommand<object>((p) => true, (p) =>
             {
                 // Initializes
-                IsBookingCustomerIncluded = true;
-
+                ToggleIncludeBookingCustomer();
                 if (CurrentTicketTier is null)
                     CurrentTicketTier = TicketTiers.ElementAt(0);
             });
@@ -146,6 +145,13 @@ namespace FlightTicketSell.ViewModels
                  {
                      p.ForceUpdateSource();
                      MessageBox.Show("Vui lòng nhập đủ thông tin người đặt / người thụ hưởng!", "Thiếu thông tin", MessageBoxButton.OK, MessageBoxImage.Information);
+                     return;
+                 }
+
+                 // Check if customer list is not empty
+                 if (Customers.Count < 1)
+                 {
+                     MessageBox.Show("Phiếu đặt chỗ phải có ít nhất một khách hàng!", "Thiếu thông tin", MessageBoxButton.OK, MessageBoxImage.Information);
                      return;
                  }
 
