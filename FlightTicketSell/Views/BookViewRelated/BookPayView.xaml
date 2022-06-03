@@ -290,10 +290,10 @@
                                 CellStyle="{StaticResource DataGridCellCenter}"
                                 ColumnWidth="*">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Thứ tự" Binding="{Binding ThuTu}" />
-                            <DataGridTextColumn Header="Tên sân bay" Binding="{Binding TenSanBay}" />
-                            <DataGridTextColumn Header="Thời gian dừng" Binding="{Binding ThoiGianDung}" />
-                            <DataGridTextColumn Header="Ghi chú" Binding="{Binding GhiChu}" />
+                            <DataGridTextColumn  Header="Thứ tự" Binding="{Binding ThuTu}" />
+                            <DataGridTextColumn  Header="Tên sân bay" Binding="{Binding TenSanBay}" />
+                            <DataGridTextColumn  Header="Thời gian dừng" Binding="{Binding ThoiGianDung}" />
+                            <DataGridTextColumn Width="auto" Header="Ghi chú" Binding="{Binding GhiChu}" />
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -305,7 +305,6 @@
                     Grid.Row="3" Grid.RowSpan="6"
                     Background="White"
                     CornerRadius="10" 
-                    Padding="20" 
                     Margin="20 20 0 0" 
                     Style="{StaticResource DropShadow}">
                 <Grid>
@@ -319,24 +318,30 @@
 
 
                     <!-- Heading -->
-                    <TextBlock Text="Khách hàng" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" />
+                    <TextBlock Text="Khách hàng" 
+                               Grid.Row="0" 
+                               Margin="20 20 0 0"
+                               Style="{StaticResource FieldLabelText}" 
+                               HorizontalAlignment="Left" />
 
                     <!-- Customers table -->
                     <DataGrid Grid.Row="1"
                                 ItemsSource="{Binding Customers}"
                                 IsReadOnly="True"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Auto"
                                 CanUserAddRows="False"
                                 AutoGenerateColumns="False"
                                 d:ItemsSource="{d:SampleData ItemCount=5}"
                                 Background="Transparent"
                                 RowHeight="50"
-                                Margin="0 10 0 0"
+                                Margin="10 10 10 10"
                                 ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                                 CellStyle="{StaticResource DataGridCellCenter}"
                                 ColumnWidth="*">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Thứ tự" Binding="{Binding Index}" />
-                            <DataGridTextColumn Header="Tên khách hàng" Binding="{Binding HoTen}" />
+                            <DataGridTextColumn Width="auto" Header="Thứ tự" Binding="{Binding Index}" />
+                            <DataGridTextColumn Width="auto" Header="Tên khách hàng" Binding="{Binding HoTen}" />
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -362,7 +367,9 @@
 
 
                     <!-- Heading -->
-                    <TextBlock Text="Hóa đơn" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" Margin="0,-2,0,2" />
+                    <TextBlock Text="Hóa đơn" Grid.Row="0" Style="{StaticResource FieldLabelText}" 
+                               FontSize="{StaticResource Regular}"
+                               HorizontalAlignment="Left" Margin="0,-2,0,2" />
 
                     <!-- Bill table -->
                     <Grid Grid.Row="1" Margin="10 10 10 0">
@@ -381,8 +388,12 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="Hạng vé" Grid.Column="0" />
-                                <TextBlock Text="{Binding CurrentTicketTier.TenHangVe}" d:Text="Phổ thông" Grid.Column="1" HorizontalAlignment="Right" FontWeight="Bold"/>
+                                <TextBlock Text="Hạng vé" FontSize="17" Grid.Column="0"
+                                           FontWeight="SemiBold" Grid.ColumnSpan="2" Height="23" Margin="0,0,236,0" VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding CurrentTicketTier.TenHangVe}"
+                                           FontSize="17" FontWeight="Black"
+                                           d:Text="Phổ thông" Grid.Column="1" HorizontalAlignment="Right" 
+                                           />
                             </Grid>
                         </Grid>
 
@@ -392,8 +403,8 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Giá vé" Grid.Column="0" />
-                            <TextBlock Text="{Binding CurrentTicketTier.DisplayTicketPrice}" d:Text="920.000 VNĐ" Grid.Column="1" HorizontalAlignment="Right" />
+                            <TextBlock Text="Giá vé" Grid.Column="0" FontWeight="SemiBold" FontSize="17" />
+                            <TextBlock Text="{Binding CurrentTicketTier.DisplayTicketPrice}" FontSize="17" FontWeight="Black" d:Text="920.000 VNĐ" Grid.Column="1" HorizontalAlignment="Right" />
                         </Grid>
 
                         <!-- Customer count -->
@@ -402,8 +413,8 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Số lượng chỗ" Grid.Column="0" />
-                            <TextBlock Text="{Binding BookInfo.SoVeDat}" d:Text="3" Grid.Column="1" HorizontalAlignment="Right" />
+                            <TextBlock Text="Số lượng chỗ" Grid.Column="0" FontWeight="SemiBold" FontSize="17" />
+                            <TextBlock Text="{Binding BookInfo.SoVeDat}" d:Text="3" FontSize="17" FontWeight="Black" Grid.Column="1" HorizontalAlignment="Right" />
                         </Grid>
 
                         <!-- Customer paid -->
@@ -412,8 +423,16 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Người thanh toán" Grid.Column="0" />
-                            <TextBlock Text="{Binding BookInfo.ThongTinNguoiDat.HoTen}" d:Text="Nguyễn Văn A" Grid.Column="1" HorizontalAlignment="Right" />
+                            <TextBlock Text="Người thanh toán" Grid.Column="0" FontWeight="SemiBold" FontSize="17" />
+                            <TextBlock Text="{Binding BookInfo.ThongTinNguoiDat.HoTen}"
+                                           FlowDirection="LeftToRight"
+                                           Grid.Column="1"
+                                       Width="130"
+                                       TextAlignment="Right"
+                                           TextTrimming="CharacterEllipsis"
+                                       FontSize="17" FontWeight="Black" d:Text="Nguyễn Trần Trung Quân"
+                                       HorizontalAlignment="Right" />
+
                         </Grid>
 
                     </Grid>
@@ -424,7 +443,7 @@
             <!-- Total price to pay -->
             <Border Grid.Row="7" Grid.RowSpan="2"
                     Grid.Column="7" Grid.ColumnSpan="3"
-                    Background="White" 
+                    Background="{StaticResource BlueBrush}" 
                     CornerRadius="10" 
                     Padding="20" 
                     Margin="20 20 0 0" 
@@ -439,14 +458,17 @@
 
 
                     <!-- Heading -->
-                    <TextBlock Text="Thành tiền" Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" Margin="0,-2,0,2" />
+                    <TextBlock Text="Thành tiền" 
+                               Foreground="White"
+                               Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" Margin="0,-2,0,2" />
                     <!-- Heading -->
                     <TextBlock Text="{Binding BookInfo.DisplayTotalPrice}"
                                d:Text="2.760.000 VNĐ"
                                Grid.Row="1"
+                               Foreground="White"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Right"
-                               FontSize="{StaticResource Regular}" 
+                               FontSize="{StaticResource Large}" 
                                FontWeight="Bold"
                                Opacity="0.8" />
                 </Grid>
@@ -458,20 +480,18 @@
                     Command="{Binding BookPay}"                
                     Style="{StaticResource HoverButton}"
                     VerticalAlignment="Center"
-                    Width="350"
+                    Width="200"
+                    Padding="0 0 10 0"
                     Margin="0 20 0 0"
                     FontSize="{StaticResource Regular}"
                     BorderBrush="{StaticResource GreenBrush}"
-                    materialDesign:ButtonAssist.CornerRadius="5"
-                    Height="40">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Thanh toán" VerticalAlignment="Center" Grid.Column="0" FontSize="{StaticResource Regular}" />
-                    <materialDesign:PackIcon Kind="Dollar" Grid.Column="1" VerticalAlignment="Stretch" Width="35" Height="35" />
-                </Grid>
+                    materialDesign:ButtonAssist.CornerRadius="7"
+                    Height="45">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon VerticalAlignment="Center" Kind="Check"  Width="35" Height="35" />
+                    <TextBlock Text="Thanh toán" Margin="10 0 0 0" VerticalAlignment="Center" FontSize="{StaticResource Regular}" />
+
+                </StackPanel>
             </Button>
         </Grid>
     </Grid>

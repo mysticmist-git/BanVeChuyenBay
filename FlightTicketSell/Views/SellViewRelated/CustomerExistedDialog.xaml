@@ -124,6 +124,8 @@
             <Button Content="Đóng" 
                     Command="{Binding CloseCommand}"
                 Grid.Row="4" Grid.Column="6"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Left"
                Style="{StaticResource HoverButton}"
                     BorderBrush="{StaticResource RedBrush}"
                 Margin="20 0 0 0"/>

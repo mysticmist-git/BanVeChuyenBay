@@ -308,7 +308,7 @@
                             Header="Sân bay đến" />
                                 <materialDesign:DataGridTextColumn
                             Binding="{Binding DisplayDepartDate}"
-                                   
+                                   Width="auto"
                             Header="Khởi hành" />
                                 <materialDesign:DataGridTextColumn
                             Binding="{Binding SoDiemDung}"
@@ -327,10 +327,10 @@
                                    
                             Header="Ghế trống" />
                                 <materialDesign:DataGridTextColumn
-                          
+                          Width="auto"
                             Binding="{Binding SoGheDat}"
-                            Header="Số ghế đặt" />
-                                <DataGridTemplateColumn Header="Trạng thái" >
+                            Header="Số ghế đã đặt/bán" />
+                                <DataGridTemplateColumn Header="Trạng thái" Width="auto" >
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding DaKhoiHanh, Converter={valueConverters:FlightStateToStringConverter}}"

@@ -352,7 +352,6 @@ namespace FlightTicketSell.ViewModels
                            context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDungToiDa").FirstOrDefault().GiaTri = int.Parse(Max_TimeStop);
                            context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDatVeChamNhat").FirstOrDefault().GiaTri = int.Parse(Latest_BookingTime);
                            context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri = int.Parse(Cancel_BookingTime);
-                           context.SaveChanges();
                            if (context.SaveChanges() > 0)
                                MessageBox.Show("Lưu thành công!", "Cảnh báo");
                            else
@@ -374,33 +373,39 @@ namespace FlightTicketSell.ViewModels
                     {
                         try
                         {
-                            if (string.IsNullOrEmpty(Max_LayoverAirport.ToString()))
+                            if (string.IsNullOrEmpty(Max_LayoverAirport.ToString()) || int.Parse(Max_LayoverAirport) <= 0)
                             {
+                                MessageBox.Show("Thời gian bay trung gian tối đa không thể là 0.", "Cảnh báo");
                                 Max_LayoverAirport = context.THAMSOes.Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri.ToString();
                                 return;
                             }
-                            if (string.IsNullOrEmpty(Min_FlightTime.ToString()))
+                            if (string.IsNullOrEmpty(Min_FlightTime.ToString()) || int.Parse(Min_FlightTime) <= 0)
                             {
+                                MessageBox.Show("Thời gian bay tối thiểu không thể là 0.", "Cảnh báo");
                                 Min_FlightTime = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianBayToiThieu").FirstOrDefault().GiaTri.ToString();
                                 return;
                             }
-                            if (string.IsNullOrEmpty(Min_TimeStop.ToString()))
+                            if (string.IsNullOrEmpty(Min_TimeStop.ToString()) || int.Parse(Min_TimeStop) <= 0)
                             {
+                                MessageBox.Show("Thời gian dừng tối thiểu không thể là 0.", "Cảnh báo");
                                 Min_TimeStop = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDungToiThieu").FirstOrDefault().GiaTri.ToString();
                                 return;
                             }
-                            if (string.IsNullOrEmpty(Max_TimeStop.ToString()))
+                            if (string.IsNullOrEmpty(Max_TimeStop.ToString()) || int.Parse(Max_TimeStop) <= int.Parse(Min_TimeStop))
                             {
+                                MessageBox.Show("Thời gian dừng tối đa không thể nhỏ hơn thời gian dừng tối thiểu.", "Cảnh báo");
                                 Max_TimeStop = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDungToiDa").FirstOrDefault().GiaTri.ToString();
                                 return;
                             }
-                            if (string.IsNullOrEmpty(Latest_BookingTime.ToString()))
+                            if (string.IsNullOrEmpty(Latest_BookingTime.ToString()) || int.Parse(Latest_BookingTime) <= 0)
                             {
+                                MessageBox.Show("Thời gian đặt vé chậm nhất không thể là 0.", "Cảnh báo");
                                 Latest_BookingTime = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianDatVeChamNhat").FirstOrDefault().GiaTri.ToString();
                                 return;
                             }
-                            if (string.IsNullOrEmpty(Cancel_BookingTime.ToString()))
+                            if (string.IsNullOrEmpty(Cancel_BookingTime.ToString()) || int.Parse(Cancel_BookingTime) <= 0)
                             {
+                                MessageBox.Show("Thời gian hủy đặt chỗ không thể là 0.", "Cảnh báo");
                                 Cancel_BookingTime = context.THAMSOes.Where(h => h.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri.ToString();
                                 return;
                             }
@@ -695,7 +700,7 @@ namespace FlightTicketSell.ViewModels
                            {
                                foreach (var item in context.HANGVEs.ToList())
                                {
-                                   if (item.MaHangVe!= TicketClass_selecteditem.Id && item.TenHangVe== EditTicketClass_Name)
+                                   if (item.MaHangVe != TicketClass_selecteditem.Id && item.TenHangVe == EditTicketClass_Name)
                                    {
                                        MessageBox.Show("Tên hạng vé đã tồn tại!", "Cảnh báo");
                                        return;

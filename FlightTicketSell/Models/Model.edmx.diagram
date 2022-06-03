@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a94ca8e537eb4880bf14f6651879f90a" Name="Diagram1">
+      <Diagram DiagramId="baab6d2d55824e1398133389e499840b" Name="Diagram1">
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHITIETDATCHO" Width="1.5" PointX="12.75" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHITIETHANGVE" Width="1.5" PointX="7.5" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHUYENBAY" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
@@ -17,8 +17,7 @@
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.KHACHHANG" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.SANBAY" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.SANBAYTG" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.sysdiagram" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.THAMSO" Width="1.5" PointX="9.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BANVECHUYENBAYModel.THAMSO" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.VE" Width="1.5" PointX="7.5" PointY="12.625" IsExpanded="true" />
         <AssociationConnector Association="BANVECHUYENBAYModel.FK_CHITIETDATCHO_MaDatCho" ManuallyRouted="false" />
         <AssociationConnector Association="BANVECHUYENBAYModel.FK_CHITIETDATCHO_MaKhachHang" ManuallyRouted="false" />

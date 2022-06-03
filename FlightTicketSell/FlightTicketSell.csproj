@@ -233,15 +233,6 @@
     <Compile Include="Models\SANBAYTG.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\THAMSO.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -606,6 +597,8 @@
     <Resource Include="Images\Plane.png" />
     <Resource Include="Images\Logo.png" />
     <Resource Include="Images\Logo_Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>

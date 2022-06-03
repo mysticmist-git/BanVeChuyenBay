@@ -19,26 +19,26 @@ namespace FlightTicketSell.ValueConverters
                     return "TRA CỨU";
                 // Ticket Flight
                 case AppView.FlightDetail:
-                    return "CHI TIẾT CHUYẾN BAY";
+                    return @"...\CHI TIẾT CHUYẾN BAY";
                 //TicketsoldBooked
                 case AppView.TicketSoldOrBooked:
-                    return "ĐÃ ĐẶT (BÁN) VÉ";
+                    return @"...\VÉ ĐÃ ĐẶT & BÁN";
                 // Book related
                 case AppView.Book:
-                    return "ĐẶT CHỖ";
+                    return @"...\ĐẶT CHỖ";
                 case AppView.BookDetail:
-                    return "CHI TIẾT ĐẶT CHỖ";
+                    return @"...\CHI TIẾT ĐẶT CHỖ";
                 case AppView.BookPay:
-                    return "THANH TOÁN ĐẶT CHỖ";
+                    return @"...\THANH TOÁN ĐẶT CHỖ";
                 // Sell related
                 case AppView.Sell:
-                    return "MUA VÉ";
+                    return @"...\MUA VÉ";
                 case AppView.SellPay:
-                    return "THANH TOÁN VÉ";
+                    return @"...\THANH TOÁN VÉ";
                 case AppView.TicketInfoFilling:
-                    return "ĐIỀN THÔNG TIN VÉ";
+                    return @"...\ĐIỀN THÔNG TIN VÉ";
                 case AppView.ChangeTicket:
-                    return "ĐỔI VÉ";
+                    return @"...\ĐỔI VÉ";
                 // Schedule
                 case AppView.Schedule:
                     return "NHẬN LỊCH";
