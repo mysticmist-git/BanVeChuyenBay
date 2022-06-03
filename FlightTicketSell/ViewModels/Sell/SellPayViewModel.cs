@@ -74,7 +74,7 @@ namespace FlightTicketSell.ViewModels
             // Create commands
             ReturnCommand = new RelayCommand<object>((p) => true, (p) =>
             {
-                IoC.IoC.Get<TicketInfoFillingViewModel>().ClearData();
+                //IoC.IoC.Get<TicketInfoFillingViewModel>().ClearData();
                 IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.TicketInfoFilling;
             }); 
 

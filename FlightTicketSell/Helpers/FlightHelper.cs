@@ -62,7 +62,7 @@ namespace FlightTicketSell.Helpers
 
                             /// Save changes down to database
                             await context.SaveChangesAsync();
-                        } 
+                        }
 
                         #endregion
 
@@ -70,6 +70,12 @@ namespace FlightTicketSell.Helpers
                         item.DaKhoiHanh = true;
                         await context.SaveChangesAsync();
 
+                        // Cancel all bookings
+                        var bookings = await context.DATCHOes.Where(dc => dc.MaChuyenBay == item.MaChuyenBay).ToListAsync();
+                        for (int i = 0; i < bookings.Count; i++)
+                            bookings[i].TrangThai = BookHelper.BookingStateToString(Models.Enums.BookingState.Cancel);
+                        await context.SaveChangesAsync();
+    
                         // Add flight report
                         var monthReportID = await context.DOANHTHUTHANGs
                             .Where(p => p.Thang == item.NgayGio.Month && p.DOANHTHUNAM.Nam == item.NgayGio.Year)

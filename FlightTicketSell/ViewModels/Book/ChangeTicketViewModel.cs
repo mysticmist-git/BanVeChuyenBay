@@ -1,7 +1,4 @@
-﻿using FlightTicketSell.Views;
-using FlightTicketSell.Models;
-using FlightTicketSell.ViewModels.Sell;
-using FlightTicketSell.ViewModels.Search;
+﻿using FlightTicketSell.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Linq;
@@ -15,17 +12,9 @@ using FlightTicketSell.Models.Enums;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
-using iText.Layout.Properties;
 using Paragraph = iText.Layout.Element.Paragraph;
-using TextAlignment = System.Windows.TextAlignment;
-using iText.IO.Font;
-using iText.Kernel.Font;
 using iText.Kernel.Pdf.Canvas.Draw;
-
-using iText.Pdfa;
-using FlightTicketSell.ViewModels;
-using System.Drawing;
-using iText.IO.Font.Constants;
+using FlightTicketSell.Helpers;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -149,7 +138,7 @@ namespace FlightTicketSell.ViewModels
                     {
                         // Update book state in database
                         var book = await context.DATCHOes.Where(dc => dc.MaDatCho == BookingInfo.MaDatCho).FirstOrDefaultAsync();
-                        book.TrangThai = BookingStateToString(BookingState.Changed);
+                        book.TrangThai = BookHelper.BookingStateToString(BookingState.Changed);
                         await context.SaveChangesAsync();
 
                         // Update book state in the app
@@ -215,7 +204,7 @@ namespace FlightTicketSell.ViewModels
                             .Where(dc => dc.MaDatCho == BookingInfo.MaDatCho)
                             .FirstOrDefaultAsync();
                         
-                        datCho.TrangThai = BookingStateToString(BookingState.Cancel);
+                        datCho.TrangThai = BookHelper.BookingStateToString(BookingState.Cancel);
                         await context.SaveChangesAsync();
 
                         // Update client
@@ -238,71 +227,6 @@ namespace FlightTicketSell.ViewModels
         #region Helpers
 
         /// <summary>
-        /// Convert a state frorm string to an enum and back
-        /// </summary>
-        /// <param name="state"></param>
-        /// <returns></returns>
-        public string BookingStateToString(BookingState state)
-        {
-            switch (state)
-            {
-                case BookingState.NotChanged:
-                    return "ChuaDoi";
-                case BookingState.Changed:
-                    return "DaDoi";
-                case BookingState.Cancel:
-                    return "DaHuy";
-                default:
-                    return null;
-
-            }
-        }
-
-        private static readonly string[] VietnameseSigns = new string[]
-        {
-
-            "aAeEoOuUiIdDyY",
-
-            "áàạảãâấầậẩẫăắằặẳẵ",
-
-            "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
-
-            "éèẹẻẽêếềệểễ",
-
-            "ÉÈẸẺẼÊẾỀỆỂỄ",
-
-            "óòọỏõôốồộổỗơớờợởỡ",
-
-            "ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
-
-            "úùụủũưứừựửữ",
-
-            "ÚÙỤỦŨƯỨỪỰỬỮ",
-
-            "íìịỉĩ",
-
-            "ÍÌỊỈĨ",
-
-            "đ",
-
-            "Đ",
-
-            "ýỳỵỷỹ",
-
-            "ÝỲỴỶỸ"
-        };
-
-        public static string convertText(string str)
-        {
-            for (int i = 1; i < VietnameseSigns.Length; i++)
-            {
-                for (int j = 0; j < VietnameseSigns[i].Length; j++)
-                    str = str.Replace(VietnameseSigns[i][j], VietnameseSigns[0][i - 1]);
-            }
-            return str;
-        }
-
-        /// <summary>
         /// Print ticket
         /// </summary>
         private void PrintTicket()
@@ -319,9 +243,9 @@ namespace FlightTicketSell.ViewModels
             document.Add(header);
             LineSeparator ls = new LineSeparator(new SolidLine());
 
-            Paragraph NAME = new Paragraph($"BOOKER NAME:   {convertText(BookingInfo.ThongTinNguoiDat.HoTen)}                    BOOK ID: {BookingInfo.MaDatCho}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
-            Paragraph FROM = new Paragraph($"FROM:   {convertText(FlightInfo.SanBayDi)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
-            Paragraph TO = new Paragraph($"TO:   {convertText(FlightInfo.SanBayDen)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
+            Paragraph NAME = new Paragraph($"BOOKER NAME:   {BookHelper.convertText(BookingInfo.ThongTinNguoiDat.HoTen)}                    BOOK ID: {BookingInfo.MaDatCho}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
+            Paragraph FROM = new Paragraph($"FROM:   {BookHelper.convertText(FlightInfo.SanBayDi)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
+            Paragraph TO = new Paragraph($"TO:   {BookHelper.convertText(FlightInfo.SanBayDen)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
             Paragraph NUMBER_OF_SEATS = new Paragraph($"NUMBER OF SEATS:   {BookingInfo.SoVeDat}       ").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
             document.Add(NAME);
             document.Add(FROM);
@@ -331,7 +255,7 @@ namespace FlightTicketSell.ViewModels
             document.Add(ls);
             Paragraph DETAIL_HEADER = new Paragraph("FLIGHT CODE              DATE              CLASS").SetBold().SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(14);
             document.Add(DETAIL_HEADER);
-            Paragraph DETAIL = new Paragraph($"{FlightInfo.DisplayFlightCode}           {FlightInfo.DisplayDepartDate}           {convertText(BookingInfo.TenHangVe)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(14);
+            Paragraph DETAIL = new Paragraph($"{FlightInfo.DisplayFlightCode}           {FlightInfo.DisplayDepartDate}           {BookHelper.convertText(BookingInfo.TenHangVe)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(14);
             document.Add(DETAIL);
 
             document.Add(ls);
