@@ -76,15 +76,3 @@ INSERT INTO KHACHHANG (HoTen, CMND, SDT, Email) VALUES (N'Phan Trường Huy', '
 INSERT INTO KHACHHANG (HoTen, CMND, SDT, Email) VALUES (N'Hàn Phi Trường', '2468135790', '0000000003', 'truong@mail.com')
 INSERT INTO KHACHHANG (HoTen, CMND, SDT, Email) VALUES (N'Trần Nguyễn Nhật Tân', '111222333', '0000000004', 'tan@mail.com')
 INSERT INTO KHACHHANG (HoTen, CMND, SDT, Email) VALUES (N'Nguyễn Đình Thi', '444555666', '0000000005', 'thi@mail.com')
-
--- Nhập vé
-INSERT INTO VE (MaKhachHang, MaHangVe, MaChuyenBay, NgayThanhToan) VALUES (1, 1, 1, convert(datetime, '15/4/2022', 103))
-INSERT INTO VE (MaKhachHang, MaHangVe, MaChuyenBay, NgayThanhToan) VALUES (2, 2, 2, convert(datetime, '16/4/2022', 103))
-
--- Nhập đặt chỗ
-INSERT INTO DATCHO (MaNguoiDat, MaHangVe, MaChuyenBay, SoVeDat) VALUES (3, 3, 3, 3)
-
--- Nhập chi tiết đặt chỗ
-INSERT INTO CHITIETDATCHO (MaDatCho, MaKhachHang) VALUES (1, 3)
-INSERT INTO CHITIETDATCHO (MaDatCho, MaKhachHang) VALUES (1, 4)
-INSERT INTO CHITIETDATCHO (MaDatCho, MaKhachHang) VALUES (1, 5)

@@ -57,8 +57,9 @@
                                 HorizontalAlignment="Center">
                                 <TextBlock Text="Tháng" Style="{StaticResource FieldLabelText}" />
                                 <ComboBox materialDesign:HintAssist.Hint="Chọn tháng"
+                                          IsReadOnly="True"
+                                          IsEditable="False"
                                       materialDesign:HintAssist.HintOpacity=".26"
-                                      IsEditable="True"
                                       MinWidth="150"
                                       HorizontalAlignment="Stretch"
                                       ItemsSource="{Binding Months}"
@@ -76,8 +77,9 @@
                             <StackPanel Margin="40 5 40 5" HorizontalAlignment="Center">
                                 <TextBlock Text="Năm" Style="{StaticResource FieldLabelText}" />
                                 <ComboBox materialDesign:HintAssist.Hint="Chọn năm"
+                                          IsReadOnly="True"
+                                          IsEditable="False"
                                   materialDesign:HintAssist.HintOpacity=".26"
-                                  IsEditable="True"
                                   MinWidth="150"
                                   HorizontalAlignment="Stretch"
                                   SelectedItem="{Binding CurrentYear}"
@@ -169,6 +171,7 @@
                                   Background="Transparent"
                                   RowHeight="50"
                                   Grid.Row="1"
+                                  FontSize="16"
                                   ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                                   CellStyle="{StaticResource DataGridCellCenter}"
                                   ItemsSource="{Binding Report, 
