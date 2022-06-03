@@ -36,9 +36,11 @@ namespace FlightTicketSell.Helpers
                     if (flights.Count == 0)
                         return;
 
-                    // For each flights, check year, month existence and then add a new flight report
+                    // Action on each flights
                     foreach (var item in flights)
                     {
+
+                        #region Guarantees month, year existence
 
                         // Check year existence
                         if (context.DOANHTHUNAMs.Where(p => p.Nam == item.NgayGio.Year).ToList().Count == 0)
@@ -60,8 +62,9 @@ namespace FlightTicketSell.Helpers
 
                             /// Save changes down to database
                             await context.SaveChangesAsync();
+                        } 
 
-                        }
+                        #endregion
 
                         // Update flight's depart flag
                         item.DaKhoiHanh = true;
@@ -81,10 +84,10 @@ namespace FlightTicketSell.Helpers
                             DoanhThu = Convert.ToInt32(
                                 item.VEs.Sum(p => p.GiaTien) +
                                 item.DATCHOes.Sum(p => p.GiaTien)
-                            )
+                            ),
                         };
 
-                        // Update month, year revenue
+                        // Update month, year revenue, flight count
                         var yearReport = await context.DOANHTHUNAMs
                             .Where(dtn => dtn.Nam == item.NgayGio.Year)
                             .FirstOrDefaultAsync();
@@ -95,14 +98,28 @@ namespace FlightTicketSell.Helpers
                         var monthReport = await context.DOANHTHUTHANGs
                             .Where(dtt => dtt.MaDoanhThuThang == monthReportID)
                             .FirstOrDefaultAsync();
-
+                        
                         monthReport.DoanhThu += newFlightReport.DoanhThu;
                         monthReport.SoChuyenBay++;
-                        monthReport.TiLe = yearReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : monthReport.DoanhThu / yearReport.DoanhThu;
 
-                        newFlightReport.TiLe = monthReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : newFlightReport.DoanhThu / monthReport.DoanhThu;
+                        // Update every month of that year's revenue ratio
+                        var monthReports = await context.DOANHTHUTHANGs
+                            .Where(dtt => dtt.DOANHTHUNAM.Nam == yearReport.Nam)
+                            .ToListAsync();
+
+                        for (int i = 0; i < monthReports.Count; i++)
+                            monthReports[i].TiLe = yearReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : monthReports[i].DoanhThu / yearReport.DoanhThu;
+
+                        // Update every flight of that month's revenue ratio
+                        var flightReports = await context.DOANHTHUCHUYENBAYs
+                            .Where(dtcb => dtcb.DOANHTHUTHANG.Thang == monthReport.Thang && dtcb.DOANHTHUTHANG.DOANHTHUNAM.Nam == yearReport.Nam)
+                            .ToListAsync();
+
+                        for (int i = 0; i < flightReports.Count; i++)
+                            flightReports[i].TiLe = monthReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : flightReports[i].DoanhThu / monthReport.DoanhThu;
 
                         // Add new flight report
+                        newFlightReport.TiLe = monthReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : newFlightReport.DoanhThu / monthReport.DoanhThu;
                         context.DOANHTHUCHUYENBAYs.Add(newFlightReport);
                         
                         /// Save changes down to database
