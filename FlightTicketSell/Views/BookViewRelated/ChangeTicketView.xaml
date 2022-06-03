@@ -552,8 +552,8 @@
                     Height="45"
                     materialDesign:ButtonAssist.CornerRadius="7" />
 
-                    <Button 
-                          Grid.Column="2"
+                    <Button Grid.Column="2"
+                            IsEnabled="{Binding IsBookCanceled, Converter={valueConverters:BooleanInvertConverter}}"
                     Command="{Binding PrintCommand}"                
                     BorderBrush="{StaticResource GreenBrush}"
                     Style="{StaticResource HoverButton}"

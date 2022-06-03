@@ -57,14 +57,14 @@ namespace FlightTicketSell.Models
         /// <summary>
         /// The total price of this book
         /// </summary>
-        public decimal GiaTien { get => GiaTien_Ve * SoVeDat; }
+        public decimal GiaTien { get; set; }
 
         /// <summary>
         /// The display of total price of this book
         /// </summary>
         public string DisplayTicketPrice { get => FormatHelper.VietnamCurrencyFormat(GiaTien) + " VNĐ"; }
 
-        public decimal GiaTien_Ve { get; set; }
+        public decimal GiaTien_Ve { get => GiaTien / (decimal)SoVeDat; }
 
         /// <summary>
         /// The display of total price of this book
