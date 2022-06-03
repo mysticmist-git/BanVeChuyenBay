@@ -226,7 +226,7 @@ namespace FlightTicketSell.ViewModels
 
                  // Update Book Information (SoVeDat)
                  BookInfo.SoVeDat = Customers.Count;
-                 BookInfo.GiaTien_Ve = CurrentTicketTier.GiaTien;
+                 BookInfo.GiaTien = CurrentTicketTier.GiaTien * Customers.Count;
              });
 
             ReturnCommand = new RelayCommand<object>((p) => true, (p) =>

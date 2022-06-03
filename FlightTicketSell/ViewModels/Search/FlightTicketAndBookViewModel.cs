@@ -129,7 +129,7 @@ namespace FlightTicketSell.ViewModels
                                                                     SoVeDat = result.SoVeDat,
                                                                     TenHangVe = context.HANGVEs.Where(x => x.MaHangVe == result.MaHangVe).FirstOrDefault().TenHangVe,
                                                                     NgayGioDat = result.NgayGioDat,
-                                                                    GiaTien_Ve = result.HANGVE.HeSo * result.CHUYENBAY.GiaVe,
+                                                                    GiaTien = result.GiaTien,
                                                                     TrangThai = result.TrangThai
                                                                 }).ToList()
                                                            );
@@ -203,7 +203,7 @@ namespace FlightTicketSell.ViewModels
                                                                     SoVeDat = result.SoVeDat,
                                                                     TenHangVe = context.HANGVEs.Where(x => x.MaHangVe == result.MaHangVe).FirstOrDefault().TenHangVe,
                                                                     NgayGioDat = result.NgayGioDat,
-                                                                    GiaTien_Ve = result.HANGVE.HeSo * result.CHUYENBAY.GiaVe,
+                                                                    GiaTien = result.GiaTien,
                                                                     TrangThai = result.TrangThai,
                                                                 }).ToList());
                             list = new ObservableCollection<BookSearchVariant>(list.Where(h => h.DisplayReservationID.ToLower().Contains(Search_IDBooked.ToLower())).ToList());
@@ -231,7 +231,7 @@ namespace FlightTicketSell.ViewModels
                                                                     SoVeDat = result.SoVeDat,
                                                                     TenHangVe = context.HANGVEs.Where(x => x.MaHangVe == result.MaHangVe).FirstOrDefault().TenHangVe,
                                                                     NgayGioDat = result.NgayGioDat,
-                                                                    GiaTien_Ve = result.HANGVE.HeSo * result.CHUYENBAY.GiaVe,
+                                                                    GiaTien = result.GiaTien,
                                                                     TrangThai = result.TrangThai,
                                                                 }).ToList()
                                                            );

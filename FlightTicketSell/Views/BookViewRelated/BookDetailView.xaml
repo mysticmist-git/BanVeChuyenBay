@@ -357,11 +357,11 @@
                         <TextBlock FontSize="20" VerticalAlignment="Center" Grid.Row="0" FontWeight="Bold"> Hạng vé</TextBlock>
 
                         <DataGrid x:Name="dgTicketTier" Grid.Row="1" Grid.RowSpan="5"
+                                      AutoGenerateColumns="False"
                                       Background="Transparent"
                                       ItemsSource="{Binding TicketTiers, Mode=OneWay}"
                                       d:ItemsSource="{d:SampleData ItemCount=3}"
                                       SelectedItem="{Binding CurrentTicketTier}"
-                                      AutoGenerateColumns="False"
                                       RowHeight="40"
                                       ColumnWidth="*" 
                                       SelectionMode="Single"
