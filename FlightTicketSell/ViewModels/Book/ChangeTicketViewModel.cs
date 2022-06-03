@@ -101,12 +101,17 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Indicates if this booking is already canceled
         /// </summary>
-        public bool BookCanceled { get => BookingInfo.BookingState == BookingState.Cancel; }
+        public bool IsBookCanceled { get => BookingInfo.BookingState == BookingState.Cancel; }
+
+        /// <summary>
+        /// Indicates if it's already too late to cancel this booking
+        /// </summary>
+        public bool IsBookCancelDeadlinePassed { get => DateTime.Now >= HanChotHuyVe; }
 
         /// <summary>
         /// Indicates if this booking can be interacted
         /// </summary>
-        public bool IsInteractable { get => !BookCanceled && !BookPrinted; } 
+        public bool IsInteractable { get => !IsBookCanceled && !BookPrinted && !IsBookCancelDeadlinePassed; } 
 
         #endregion
 

@@ -172,7 +172,7 @@
                                 <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Ngày giờ bay</TextBlock>
                                 <Grid Grid.Row="1">
                                     <TextBox IsReadOnly="True" Margin="0 -10 0 0"
-                                                 Text="{Binding FlightInfo.NgayGio, Mode=OneWay}"
+                                                 Text="{Binding FlightInfo.DisplayDepartDate, Mode=OneWay}"
                                                  Grid.Row="1"
                                                  Style="{StaticResource CustomTextbox}" 
                                                  VerticalAlignment="Top">
