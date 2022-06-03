@@ -73,7 +73,8 @@ namespace FlightTicketSell.Helpers
                         // Cancel all bookings
                         var bookings = await context.DATCHOes.Where(dc => dc.MaChuyenBay == item.MaChuyenBay).ToListAsync();
                         for (int i = 0; i < bookings.Count; i++)
-                            bookings[i].TrangThai = BookHelper.BookingStateToString(Models.Enums.BookingState.Cancel);
+                            if (bookings[i].TrangThai == BookHelper.BookingStateToString(Models.Enums.BookingState.NotChanged))
+                                bookings[i].TrangThai = BookHelper.BookingStateToString(Models.Enums.BookingState.Cancel);
                         await context.SaveChangesAsync();
     
                         // Add flight report
