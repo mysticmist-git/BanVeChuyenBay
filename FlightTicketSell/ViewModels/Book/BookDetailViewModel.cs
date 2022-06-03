@@ -10,6 +10,7 @@ using System.Data.Entity;
 using FlightTicketSell.Views;
 using MaterialDesignThemes.Wpf;
 using System;
+using System.Windows.Controls;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -112,6 +113,11 @@ namespace FlightTicketSell.ViewModels
         /// Check the customer ID if it is already existed
         /// </summary>
         public ICommand CustomerIDCheck { get; set; }
+
+        /// <summary>
+        /// Executes when ticket tier change
+        /// </summary>
+        public ActionCommand<SelectionChangedEventArgs> CurrentTicketTierChangedCommand { get; set; }
 
         #endregion
 
@@ -218,7 +224,8 @@ namespace FlightTicketSell.ViewModels
             AddCustomerCommand = new RelayCommand<object>((p) => true, (p) =>
             {
                 // Check if there's enought seat left
-                if (FlightInfo.GheTrong == Customers.Count)
+                //if (FlightInfo.GheTrong == Customers.Count)
+                if (CurrentTicketTier.GheTrong == Customers.Count)
                 {
                     MessageBox.Show("Đã hết ghế trống!", "Hết ghế trống", MessageBoxButton.OK);
                     return;
@@ -284,6 +291,21 @@ namespace FlightTicketSell.ViewModels
                         return;
                     }
                 } while (false);
+            });
+
+            CurrentTicketTierChangedCommand = new ActionCommand<SelectionChangedEventArgs>(args =>
+            {
+                if (CurrentTicketTier.GheTrong < Customers.Count)
+                {
+                    if (MessageBox.Show(
+                        String.Format(
+                            $"Hạng vé này chỉ có {CurrentTicketTier.GheTrong} ghế trống, trong khi có {Customers.Count} khách thụ hưởng.\n" +
+                            "Xin điều chỉnh danh sách khách hàng."), 
+                            "Quá số ghế trống hiện có",
+                            MessageBoxButton.OK
+                            ) == MessageBoxResult.OK)
+                        CurrentTicketTier = args.RemovedItems.Count > 0 ? args.RemovedItems[0] as TicketTier : TicketTiers[0];
+                }
             });
         }
 
