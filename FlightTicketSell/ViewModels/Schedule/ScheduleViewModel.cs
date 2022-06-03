@@ -315,6 +315,7 @@ namespace FlightTicketSell.ViewModels
                        TimeFlight = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day, 0, 0, 0);
                        FirstLoad = false;
                        DisplayDateStart = DateTime.Now.AddDays(2);
+                       FlightCode = null;
                    }
 
                    using (var context = new FlightTicketSellEntities())
@@ -415,7 +416,10 @@ namespace FlightTicketSell.ViewModels
                  if (DepartureAirport != null && LandingAirport != null)
                  {
                      if (string.IsNullOrEmpty(DepartureAirport.Name) || string.IsNullOrEmpty(LandingAirport.Name))
+                     {
+                         FlightCode = null;
                          return;
+                     }
                      try
                      {
                          using (var context = new FlightTicketSellEntities())
@@ -443,7 +447,10 @@ namespace FlightTicketSell.ViewModels
                  if (DepartureAirport != null && LandingAirport != null)
                  {
                      if (string.IsNullOrEmpty(DepartureAirport.Name) || string.IsNullOrEmpty(LandingAirport.Name))
+                     {
+                         FlightCode = null;
                          return;
+                     }
                      try
                      {
                          using (var context = new FlightTicketSellEntities())
@@ -694,6 +701,7 @@ namespace FlightTicketSell.ViewModels
                     FlightTime = null;
                     List_TicketClass = null;
                     List_LayoverAirport = null;
+                    FlightCode = null;
                 });
 
             SelectedFlightDateChanged_Command = new RelayCommand<object>((p) => { return true; }, (p) =>

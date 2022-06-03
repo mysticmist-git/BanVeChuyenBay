@@ -107,7 +107,8 @@
                             <TextBox  IsReadOnly="True"
                                         Text="{Binding FlightInfo.DisplayFlightCode, Mode=OneWay}"
                                         Grid.Row="1" 
-                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                        Style="{StaticResource CustomTextbox}"
+                                      Margin="0 -10 0 0"
                                         VerticalAlignment="Top">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
@@ -127,7 +128,8 @@
                             <TextBox IsReadOnly="True" 
                                         Text="{Binding FlightInfo.SanBayDi, Mode=OneWay}"
                                         Grid.Row="1"
-                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                                        Style="{StaticResource CustomTextbox}"
+                                      Margin="0 -10 0 0"
                                         VerticalAlignment="Top">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
@@ -147,7 +149,8 @@
                             <TextBox IsReadOnly="True" 
                                         Text="{Binding FlightInfo.SanBayDen, Mode=OneWay}" 
                                         Grid.Row="1" 
-                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                      Style="{StaticResource CustomTextbox}"
+                                      Margin="0 -10 0 0"
                                         VerticalAlignment="Top">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal"  Margin="-2 0 0 0">
@@ -168,7 +171,8 @@
                                 <TextBox IsReadOnly="True" 
                                             Text="{Binding FlightInfo.NgayGio, Mode=OneWay}"
                                             Grid.Row="1"
-                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                                            Style="{StaticResource CustomTextbox}"
+                                      Margin="0 -10 0 0"
                                             VerticalAlignment="Top">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal"  Margin="-2 0 0 0">
@@ -189,7 +193,8 @@
                             <TextBox IsReadOnly="True"
                                         Text="{Binding FlightInfo.ThoiGianBay, Mode=OneWay}"
                                         Grid.Row="1"
-                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Top"
+                                       Style="{StaticResource CustomTextbox}"
+                                      Margin="0 -10 0 0"   VerticalAlignment="Top"
                                         materialDesign:TextFieldAssist.SuffixText="phút">
                                 <materialDesign:HintAssist.Hint>
                                     <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
@@ -449,19 +454,22 @@
 
             <!-- Pay button -->
             <Button Grid.Row="9"
-                    Grid.Column="8" Grid.ColumnSpan="2"
+                    Grid.Column="0" Grid.ColumnSpan="10"
                     Command="{Binding BookPay}"                
                     Style="{StaticResource HoverButton}"
-                    VerticalAlignment="Bottom"
+                    VerticalAlignment="Center"
+                    Width="350"
+                    Margin="0 20 0 0"
+                    FontSize="{StaticResource Regular}"
                     BorderBrush="{StaticResource GreenBrush}"
                     materialDesign:ButtonAssist.CornerRadius="5"
-                    Height="50">
+                    Height="40">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Thanh toán"  Grid.Column="0" FontSize="{StaticResource Regular}" />
+                    <TextBlock Text="Thanh toán" VerticalAlignment="Center" Grid.Column="0" FontSize="{StaticResource Regular}" />
                     <materialDesign:PackIcon Kind="Dollar" Grid.Column="1" VerticalAlignment="Stretch" Width="35" Height="35" />
                 </Grid>
             </Button>
