@@ -454,11 +454,11 @@ namespace FlightTicketSell.ViewModels
                            }
                            if (list_airport.Where(h => h.VietTat == MoreAirport_Code).FirstOrDefault() != null)
                            {
-                               MessageBox.Show("Mã sân bay đã tồn tại!", "Cảnh báo");
+                               MessageBox.Show("Mã sân bay đã tồn tại hoặc đã được sử dụng trong quá khứ!", "Cảnh báo");
                                MoreAirport_Code = "";
                                return;
                            }
-                           if (list_airport.Where(h => h.TenSanBay == MoreAirport_Name).FirstOrDefault() != null)
+                           if (list_airport.Where(h => h.TenSanBay == MoreAirport_Name && h.TrangThai == true).FirstOrDefault() != null)
                            {
                                MessageBox.Show("Tên sân bay đã tồn tại!", "Cảnh báo");
                                MoreAirport_Name = "";
@@ -527,7 +527,7 @@ namespace FlightTicketSell.ViewModels
                           {
                               foreach (var item in context.SANBAYs.ToList())
                               {
-                                  if (item.MaSanBay != Airport_selecteditem.Id && item.TenSanBay == EditAirport_Name)
+                                  if (item.MaSanBay != Airport_selecteditem.Id && item.TenSanBay == EditAirport_Name && item.TrangThai == true)
                                   {
                                       MessageBox.Show("Tên sân bay đã tồn tại!", "Cảnh báo");
                                       return;
@@ -584,13 +584,13 @@ namespace FlightTicketSell.ViewModels
                             if (messageBoxResult == MessageBoxResult.No)
                                 return;
 
-                            var list = context.SANBAYs.ToList();
+                            var list = context.SANBAYs.Where(h => h.TrangThai == true).ToList();
                             SANBAY temp = list.Where(h => h.MaSanBay == Airport_selecteditem.Id).FirstOrDefault();
                             if (temp != null)
                             {
                                 temp.TrangThai = false;
                                 context.SaveChanges();
-                                MessageBox.Show($"Xóa sân bay {Airport_selecteditem.Code} - {Airport_selecteditem.Name} - {Airport_selecteditem.Province}\nthành công!");
+                                MessageBox.Show($"Xóa sân bay thành công!");
 
                                 //Load lại danh sách sân bay
                                 ReLoadList_Airport();
@@ -639,7 +639,7 @@ namespace FlightTicketSell.ViewModels
                                MessageBox.Show("Vui lòng nhập đầy đủ thông tin hạng vé!", "Cảnh báo");
                                return;
                            }
-                           if (list_ticketclass.Where(h => h.TenHangVe == MoreTicketClass_Name).FirstOrDefault() != null)
+                           if (list_ticketclass.Where(h => h.TenHangVe == MoreTicketClass_Name && h.TrangThai == true).FirstOrDefault() != null)
                            {
                                MessageBox.Show("Tên hạng vé đã tồn tại!", "Cảnh báo");
                                MoreTicketClass_Name = "";
@@ -648,6 +648,10 @@ namespace FlightTicketSell.ViewModels
                            HANGVE temp = new HANGVE() { TenHangVe = MoreTicketClass_Name, TrangThai = true, HeSo = (decimal)(double.Parse(MoreTicketClass_Coefficien)) };
                            context.HANGVEs.Add(temp);
                            context.SaveChanges();
+
+                           //Close dialog
+                           DialogHost.CloseDialogCommand.Execute(null, null);
+
                            MessageBox.Show("Thêm hạng vé thành công!", "Cảnh báo");
 
                        }
@@ -703,6 +707,7 @@ namespace FlightTicketSell.ViewModels
                                    if (item.MaHangVe != TicketClass_selecteditem.Id && item.TenHangVe == EditTicketClass_Name)
                                    {
                                        MessageBox.Show("Tên hạng vé đã tồn tại!", "Cảnh báo");
+                                       EditTicketClass_Name = null;
                                        return;
                                    }
                                }
@@ -763,7 +768,7 @@ namespace FlightTicketSell.ViewModels
                              {
                                  temp.TrangThai = false;
                                  context.SaveChanges();
-                                 MessageBox.Show($"Xóa hạng vé {TicketClass_selecteditem.Name} - {TicketClass_selecteditem.Coefficient}\nthành công!");
+                                 MessageBox.Show($"Xóa hạng vé thành công!");
 
                                  //Load lại danh sách sân bay
                                  ReLoadList_TicketClass();

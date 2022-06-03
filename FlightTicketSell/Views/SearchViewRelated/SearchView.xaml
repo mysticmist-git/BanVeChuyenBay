@@ -104,7 +104,7 @@
                                         </materialDesign:PackIcon>
                                     </Button.Content>
                                     <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="PreviewMouseDown">
+                                        <i:EventTrigger EventName="Click">
                                             <i:InvokeCommandAction Command="{Binding Change_Departure_Landing_Airport_Command}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
@@ -258,12 +258,6 @@
                             materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                             materialDesign:DataGridAssist.ColumnHeaderPadding="8"
                                       IsReadOnly="True">
-
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Loaded">
-                                    <i:InvokeCommandAction Command="{Binding SanBayDoi}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
                             <DataGrid.Columns>
 
                                 <DataGridTemplateColumn Header="Mã chuyến bay" Width="auto">
