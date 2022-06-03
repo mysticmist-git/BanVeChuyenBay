@@ -28,6 +28,7 @@
                 Grid.RowSpan="2"
                 Width="50"
                 Height="50"
+                    BorderThickness="0"
                 ToolTip="Resource name: MaterialDesignRaisedLightDarkButton"
                 Background="{StaticResource LightBlueBrush}"
                 HorizontalAlignment="Left"
@@ -111,7 +112,8 @@
                                 <TextBox  IsReadOnly="True"
                                               Text="{Binding FlightInfo.DisplayFlightCode, Mode=OneWay}"
                                               Grid.Row="1" 
-                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                              Style="{StaticResource CustomTextbox}"
+                                          Margin="0 -10 0 0"
                                               VerticalAlignment="Top">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
@@ -131,7 +133,8 @@
                                 <TextBox IsReadOnly="True" 
                                              Text="{Binding FlightInfo.SanBayDi, Mode=OneWay}"
                                              Grid.Row="1"
-                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                                               Style="{StaticResource CustomTextbox}"
+                                          Margin="0 -10 0 0"
                                              VerticalAlignment="Top">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
@@ -151,7 +154,8 @@
                                 <TextBox IsReadOnly="True" 
                                              Text="{Binding FlightInfo.SanBayDen, Mode=OneWay}" 
                                              Grid.Row="1" 
-                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                              Style="{StaticResource CustomTextbox}"
+                                          Margin="0 -10 0 0"
                                              VerticalAlignment="Top">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal"  Margin="-2 0 0 0">
@@ -172,7 +176,8 @@
                                     <TextBox IsReadOnly="True" 
                                                  Text="{Binding FlightInfo.DisplayDepartDate, Mode=OneWay}"
                                                  Grid.Row="1"
-                                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                                                  Style="{StaticResource CustomTextbox}"
+                                          Margin="0 -10 0 0"
                                                  VerticalAlignment="Top">
                                         <materialDesign:HintAssist.Hint>
                                             <StackPanel Orientation="Horizontal"  Margin="-2 0 0 0">
@@ -193,7 +198,8 @@
                                 <TextBox IsReadOnly="True"
                                              Text="{Binding FlightInfo.SoDiemDung, Mode=OneWay}"
                                              Grid.Row="1"
-                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"   VerticalAlignment="Top"
+                                               Style="{StaticResource CustomTextbox}"
+                                          Margin="0 -10 0 0"   VerticalAlignment="Top"
                                              >
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
@@ -210,7 +216,7 @@
                 <!-- Customer info -->
                 <Border Grid.Column="2" Grid.ColumnSpan="6"
                                 Grid.Row="2" Grid.RowSpan="3"
-                                Margin="0 20 0 0" Padding="25"
+                                Margin="0 20 0 0"
                                 Background="White"
                                 CornerRadius="10"
                                 Style="{StaticResource ResourceKey=DropShadow}" >
@@ -225,33 +231,40 @@
                         </Grid.RowDefinitions>
 
                         <!-- Heading -->
-                        <TextBlock Grid.Row="0" FontSize="20" VerticalAlignment="Center" FontWeight="Bold"> Khách hàng</TextBlock>
+                        <TextBlock Grid.Row="0"
+                                   Margin="20 20 0 0"
+                                   FontSize="20" VerticalAlignment="Center" FontWeight="Bold"> Khách hàng</TextBlock>
 
                         <!-- Customer information filling fields -->
                         <Grid Grid.Row="1" Grid.RowSpan="5">
 
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*" />
                                 <ColumnDefinition Width="6*" />
                                 <!-- Spacing -->
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="0.5*" />
                                 <ColumnDefinition Width="6*" />
+                                <ColumnDefinition Width="0.5*" />
                             </Grid.ColumnDefinitions>
 
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="5*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="6*" />
                                 <!-- Spacing -->
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="5*" />
+                                <RowDefinition Height="0*" />
+                                <RowDefinition Height="6*" />
+                                <RowDefinition Height="3*" />
                             </Grid.RowDefinitions>
 
                             <!-- Name -->
                             <TextBox x:Name="tbCustomerName"
                                         VerticalAlignment="Center"
                                         LostFocus="TextBox_LostFocus"
-                                        Grid.Column="0" Grid.Row="0"
+                                        Grid.Column="1" Grid.Row="1"
                                         materialDesign:HintAssist.Hint="Họ và tên"
                                         materialDesign:HintAssist.HelperText="VD: Nguyễn Văn A"
-                                        Style="{StaticResource CustomTextbox}">
+                                        Style="{StaticResource CustomTextbox}"
+                                     Margin="50 0 0 0">
                                 <TextBox.Text>
                                     <Binding Path="Customer.HoTen" UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
@@ -263,13 +276,14 @@
 
                             <!-- CMND -->
                             <TextBox x:Name="tbCustomerID"
+                                     Margin="0 0 50 0"
                                                 PreviewTextInput="PreviewTextInput"
                                                 VerticalAlignment="Top"
-                                                Grid.Column="1" Grid.Row="0"
+                                                Grid.Column="3" Grid.Row="1"
                                                 LostFocus="TextBox_LostFocus"
                                                 materialDesign:HintAssist.Hint="CMND"
                                                 materialDesign:HintAssist.HelperText="VD: 312509001"
-                                                Style="{StaticResource CustomTextbox}" Grid.ColumnSpan="2" Margin="54,5,0,0">
+                                                Style="{StaticResource CustomTextbox}" Grid.ColumnSpan="2">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="LostFocus">
                                         <i:InvokeCommandAction Command="{Binding CustomerIDCheck}"/>
@@ -289,10 +303,11 @@
                             <TextBox x:Name="tbCustomerPhoneNumber"
                                                 PreviewTextInput="PreviewTextInput"
                                                 VerticalAlignment="Center"
-                                                Grid.Column="0" Grid.Row="2"
+                                                Grid.Column="1" Grid.Row="3"
                                                 materialDesign:HintAssist.Hint="Số điện thoại"
                                                 materialDesign:HintAssist.HelperText="VD: 0359723000"
-                                                Style="{StaticResource CustomTextbox}">
+                                     Margin="50 0 0 0"           
+                                     Style="{StaticResource CustomTextbox}">
                                 <TextBox.Text>
                                     <Binding Path="Customer.SDT" UpdateSourceTrigger="PropertyChanged" />
                                 </TextBox.Text>
@@ -301,7 +316,8 @@
                             <!-- Email -->
                             <TextBox x:Name="tbCustomerEmail"
                                         VerticalAlignment="Center"
-                                        Grid.Column="2" Grid.Row="2"
+                                        Grid.Column="3" Grid.Row="3"
+                                     Margin="0 0 50 0"
                                         materialDesign:HintAssist.Hint="Email" 
                                         materialDesign:HintAssist.HelperText="VD: nguyenvana@gmail.com"
                                         Style="{StaticResource CustomTextbox}">
@@ -363,12 +379,14 @@
                     </Grid>
                 </Border>
 
-                <Button Grid.Row="9"
-                        Grid.Column="7" Grid.ColumnSpan="2"
+                <Border Grid.Row="9"
+                        Grid.Column="1" Grid.ColumnSpan="8"
+                        >
+                    <Button 
                         Height="45"
-                        Padding="20 0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Bottom"
+                        Width="200"
                         Command="{Binding ContinueCommand}" 
                         CommandParameter="{Binding ElementName=uc, Converter={valueConverter:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverter:ViewInterface.TicketInfoFilling}}"
                         BorderBrush="{StaticResource OrangeBrush}"
@@ -376,6 +394,8 @@
                         Content="Tiếp tục"
                        Style="{StaticResource HoverButton}"
                         materialDesign:ButtonAssist.CornerRadius="7"/>
+                </Border>
+                
             </Grid>
         </Grid>
     </materialDesign:DialogHost>
