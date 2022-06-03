@@ -528,6 +528,7 @@
 
             <Button Grid.Row="9"
                     Grid.Column="5" Grid.ColumnSpan="2"
+                    IsEnabled="{Binding IsBookCanceled, Converter={valueConverters:BooleanInvertConverter}}"
                     Command="{Binding PrintCommand}"                
                     BorderBrush="{StaticResource GreenBrush}"
                     Style="{StaticResource HoverButton}"

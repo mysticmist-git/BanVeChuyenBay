@@ -216,6 +216,7 @@ namespace FlightTicketSell.ViewModels
                         BookingInfo.BookingState = BookingState.Cancel;
 
                         OnPropertyChanged(nameof(IsInteractable));
+                        OnPropertyChanged(nameof(IsBookCanceled));
                     }
                     catch (EntityException e)
                     {
