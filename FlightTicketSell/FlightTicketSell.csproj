@@ -170,6 +170,7 @@
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\Book\IsValidProperty.cs" />
     <Compile Include="AttachedProperties\ReportTypeProperty.cs" />
+    <Compile Include="Helpers\BookHelper.cs" />
     <Compile Include="Helpers\FlightHelper.cs" />
     <Compile Include="Helpers\FormatHelper.cs" />
     <Compile Include="Interface\Book\IBookDetail.cs" />
