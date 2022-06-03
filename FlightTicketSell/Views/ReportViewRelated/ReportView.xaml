@@ -172,6 +172,7 @@
                                   RowHeight="50"
                                   Grid.Row="1"
                                   FontSize="16"
+                                      IsReadOnly="True"
                                   ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                                   CellStyle="{StaticResource DataGridCellCenter}"
                                   ItemsSource="{Binding Report, 

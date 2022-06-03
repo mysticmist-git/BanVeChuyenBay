@@ -634,7 +634,7 @@ namespace FlightTicketSell.ViewModels
                        try
                        {
                            var list_ticketclass = context.HANGVEs.ToList();
-                           if (string.IsNullOrEmpty(MoreTicketClass_Name) && string.IsNullOrEmpty(MoreTicketClass_Coefficien))
+                           if (string.IsNullOrEmpty(MoreTicketClass_Name) || string.IsNullOrEmpty(MoreTicketClass_Coefficien))
                            {
                                MessageBox.Show("Vui lòng nhập đầy đủ thông tin hạng vé!", "Cảnh báo");
                                return;
