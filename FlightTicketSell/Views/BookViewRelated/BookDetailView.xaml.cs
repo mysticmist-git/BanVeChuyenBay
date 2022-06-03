@@ -110,8 +110,9 @@ namespace FlightTicketSell.Views
                 // TODO: Rất tà đạo
                 (DataContext as BookDetailViewModel).Customers[0].OnPropertyChanged("IsEssensialInfoNoFilled");
             }
-        } 
+        }
 
         #endregion
+
     }
 }

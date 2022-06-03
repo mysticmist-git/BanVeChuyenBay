@@ -245,6 +245,8 @@
     <Compile Include="ValueConverters\BooleanInvertConverter.cs" />
     <Compile Include="ValueConverters\General\BooleanToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\Search\SellBookButtonEnableConverter.cs" />
+    <Compile Include="ViewModels\Base\ActionCommand.cs" />
+    <Compile Include="ViewModels\Base\EventToCommandBehavior.cs" />
     <Compile Include="ViewModels\Book\CustomerBookVariant.cs" />
     <Compile Include="Models\Book\CustomerWithIndex.cs" />
     <Compile Include="Models\Enums\Search\CustomerDetailType.cs" />

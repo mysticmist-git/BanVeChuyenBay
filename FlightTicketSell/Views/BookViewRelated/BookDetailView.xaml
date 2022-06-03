@@ -369,9 +369,14 @@
                                       IsReadOnly="True"
                                       ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                                       CellStyle="{StaticResource DataGridCellCenter}">
+                            <i:Interaction.Behaviors>
+                                <vm:EventToCommandBehavior Command="{Binding CurrentTicketTierChangedCommand}" Event="SelectionChanged" PassArguments="True" />
+                            </i:Interaction.Behaviors>
+
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Tên hạng vé" Binding="{Binding TenHangVe}" />
                                 <DataGridTextColumn Header="Giá vé" Binding="{Binding DisplayTicketPrice}" />
+                                <DataGridTextColumn Header="Ghế trống" Binding="{Binding GheTrong}" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

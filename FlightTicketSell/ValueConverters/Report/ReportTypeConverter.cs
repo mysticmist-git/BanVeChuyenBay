@@ -12,6 +12,9 @@ namespace FlightTicketSell.ValueConverters
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value is null)
+                return null;
+            
             // TODO: Rất tà đạo, sửa nếu được.
             switch(IoC.IoC.Get<ReportViewModel>().CurrentReportType)
             {
