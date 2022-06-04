@@ -341,22 +341,21 @@
                                   Background="Transparent"
                                   Margin="0 0 0 10"
                                   Grid.Row="1"
+                                  ColumnWidth="*"
                                   ItemsSource="{Binding Books}"
-                                  d:ItemsSource="{d:SampleData ItemCount=5}"
+                                  d:ItemsSource="{d:SampleData ItemCount=7}"
                                   ColumnHeaderStyle="{StaticResource DataGridBlackColumnHeader}"
                                   CellStyle="{StaticResource DataGridCellCenter}"
-                                  ColumnWidth="*"
-                                    IsReadOnly="True"
                                   CanUserSortColumns="True"
                                   CanUserAddRows="False"
                                   AutoGenerateColumns="False"
                                   RowHeight="50"
                                   materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                                   materialDesign:DataGridAssist.ColumnHeaderPadding="8" SelectionChanged="DataGrid_SelectionChanged">
-                                    <DataGrid.Columns>
+                                  <DataGrid.Columns>
 
                                         <!--Mã đặt chỗ-->
-                                        <DataGridTemplateColumn Header="Mã đặt chỗ" IsReadOnly="True" Width="auto">
+                                        <DataGridTemplateColumn Header="Mã đặt chỗ" IsReadOnly="True">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Margin="40 0 20 0"
@@ -377,8 +376,8 @@
                                                                Text="{Binding ThongTinNguoiDat.HoTen}"
                                                                VerticalAlignment="Center"
                                                                TextAlignment="Left"
+                                                            Width="150"
                                                             TextTrimming="CharacterEllipsis"
-                                                            Width="250"
                                                                HorizontalAlignment="Left"/>
 
                                                         <!-- Detail button -->
@@ -397,7 +396,7 @@
                                         </DataGridTemplateColumn>
 
                                         <!--Số chỗ-->
-                                        <DataGridTemplateColumn Header="Số chỗ" IsReadOnly="True" Width="auto">
+                                        <DataGridTemplateColumn Header="Số chỗ" IsReadOnly="True">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock  Margin="20 0 20 0"
@@ -409,7 +408,7 @@
                                         </DataGridTemplateColumn>
 
                                         <!-- Tên hạng vé -->
-                                        <DataGridTemplateColumn Header="Tên hạng vé" IsReadOnly="True" Width="auto">
+                                        <DataGridTemplateColumn Header="Tên hạng vé" IsReadOnly="True">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock  Margin="20 0 20 0"
@@ -421,7 +420,7 @@
                                         </DataGridTemplateColumn>
                                         
                                         <!-- Ngày đặt vé -->
-                                        <DataGridTemplateColumn Header="Ngày đặt vé" IsReadOnly="True" Width="auto">
+                                        <DataGridTemplateColumn Header="Ngày đặt vé" IsReadOnly="True">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock  Margin="20 0 20 0"
@@ -434,7 +433,7 @@
 
 
                                         <!-- Tổng tiền -->
-                                        <DataGridTemplateColumn Header="Tổng tiền" IsReadOnly="True" Width="auto">
+                                        <DataGridTemplateColumn Header="Tổng tiền" IsReadOnly="True">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock  Margin="20 0 20 0"
@@ -447,7 +446,7 @@
                                         
                                         <!-- Trạng thái -->
                                         <DataGridTemplateColumn Header="Trạng thái" IsReadOnly="True"
-                                                                Width="auto">
+                                                                >
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Horizontal" Margin="20 0 20 0">
@@ -457,7 +456,6 @@
                                                                Foreground="{Binding BookingState, Mode=OneWay, Converter={valueConverters:BookingStateToColorConverter}}"
                                                                FontWeight="Bold"
                                                                IsEnabled="False"
-                                                            Width="60"
                                                                VerticalAlignment="Center"
                                                                HorizontalAlignment="Left"
                                                             TextTrimming="CharacterEllipsis"
