@@ -941,10 +941,13 @@ namespace FlightTicketSell.ViewModels
                    {
                        try
                        {
-                           if (List_TicketClass.Count == context.HANGVEs.ToList().Count())
+                           if (List_TicketClass != null)
                            {
-                               MessageBox.Show("Bạn đã thêm tất cả hạng vé!", "Cảnh báo");
-                               return;
+                               if (List_TicketClass.Count == context.HANGVEs.ToList().Count())
+                               {
+                                   MessageBox.Show("Bạn đã thêm tất cả hạng vé!", "Cảnh báo");
+                                   return;
+                               }
                            }
                        }
                        catch (EntityException e)
