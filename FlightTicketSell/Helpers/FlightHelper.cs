@@ -114,19 +114,32 @@ namespace FlightTicketSell.Helpers
                             .Where(dtt => dtt.DOANHTHUNAM.Nam == yearReport.Nam)
                             .ToListAsync();
 
-                        for (int i = 0; i < monthReports.Count; i++)
-                            monthReports[i].TiLe = yearReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : monthReports[i].DoanhThu / yearReport.DoanhThu;
+                        if (monthReports.Count > 0)
+                        {
+                            for (int i = 0; i < monthReports.Count; i++)
+                                monthReports[i].TiLe = yearReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : monthReports[i].DoanhThu / yearReport.DoanhThu;
+                        }
+
 
                         // Update every flight of that month's revenue ratio
                         var flightReports = await context.DOANHTHUCHUYENBAYs
                             .Where(dtcb => dtcb.DOANHTHUTHANG.Thang == monthReport.Thang && dtcb.DOANHTHUTHANG.DOANHTHUNAM.Nam == yearReport.Nam)
                             .ToListAsync();
 
-                        for (int i = 0; i < flightReports.Count; i++)
-                            flightReports[i].TiLe = monthReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : flightReports[i].DoanhThu / monthReport.DoanhThu;
+                        decimal temp2 = (decimal)0.0;
+
+                        if (flightReports.Count > 0)
+                        {
+                            for (int i = 0; i < flightReports.Count; i++)
+                            {
+                                flightReports[i].TiLe = monthReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : flightReports[i].DoanhThu / monthReport.DoanhThu;
+                                temp2 += flightReports[i].TiLe;
+                            }
+                        }
 
                         // Add new flight report
-                        newFlightReport.TiLe = monthReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : newFlightReport.DoanhThu / monthReport.DoanhThu;
+                        //newFlightReport.TiLe = monthReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : newFlightReport.DoanhThu / monthReport.DoanhThu;
+                        newFlightReport.TiLe = (decimal)1.0 - temp2;
                         context.DOANHTHUCHUYENBAYs.Add(newFlightReport);
                         
                         /// Save changes down to database
