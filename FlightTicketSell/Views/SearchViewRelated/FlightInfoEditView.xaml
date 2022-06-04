@@ -60,16 +60,15 @@
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center" />
                         </Button>
-                    </Grid>
 
-                    <!--Ma chuyen bay-->
-                    <Grid  Height="auto" Margin="20">
+                        <!--Ma chuyen bay-->
                         <Border
                         Background="White" 
                          BorderBrush="{StaticResource LightBlueBrush}"
                          BorderThickness="3"
                         CornerRadius="10" 
                          Width="300"
+                            Margin="0 30 0 -20"
                         Height="65"
                          VerticalAlignment="Center"
                          HorizontalAlignment="Center"
@@ -109,7 +108,7 @@
                     </Grid>
 
                     <!--chi tiet chuyen bay-->
-                    <Grid Height="230" Margin="20">
+                    <Grid Height="230" Margin="20 20 20 10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30*"/>
                             <ColumnDefinition Width="0.5*"/>
@@ -118,7 +117,9 @@
                         <!--Thông tin chuyến bay cu-->
                         <Border 
                         Grid.Column="0"
-                        Background="{StaticResource VeryLightGrayBrush}" 
+                        Background="{StaticResource LightGrayBrush}"
+                            BorderBrush="{StaticResource GrayBrush}"
+                            BorderThickness="2"
                         CornerRadius="10" 
                         Width="600"
                         HorizontalAlignment="Center"
@@ -157,7 +158,8 @@
                                    Style="{StaticResource CustomTextbox}" 
                                    VerticalAlignment="Center" 
                                    Text="{Binding OldDepartureAirport.Name, Mode=OneWay}"
-                                   IsReadOnly="True" />
+                                   IsReadOnly="True"
+                                           Focusable="False"/>
 
                                 <!--Sân bay đến-->
                                 <TextBox   Grid.Row="1" Grid.Column="5" 
@@ -165,7 +167,7 @@
                                    Style="{StaticResource CustomTextbox}" 
                                    VerticalAlignment="Center" 
                                    Text="{Binding OldLandingAirport.Name, Mode=OneWay}"
-                                   IsReadOnly="True" />
+                                   IsReadOnly="True" Focusable="False"/>
 
                                     <Grid Grid.Row="3" Grid.Column="1"
                               Grid.ColumnSpan="5">
@@ -182,7 +184,7 @@
                                     <!--Giá vé-->
                                     <TextBox Grid.Column="0" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="VNĐ"
                                              Text="{Binding OldAirfares, Mode=OneWay}"
-                                             IsReadOnly="True">
+                                             IsReadOnly="True" Focusable="False">
                                     <materialDesign:HintAssist.Hint>
                                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                                 <TextBlock Text="Giá vé" />
@@ -193,7 +195,7 @@
                                     <!--Thời gian bay-->
                                     <TextBox Grid.Column="2" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="phút"
                                              Text="{Binding OldFlightTime, Mode=OneWay}"
-                                             IsReadOnly="True">
+                                             IsReadOnly="True" Focusable="False">
                                         <materialDesign:HintAssist.Hint>
                                             <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
                                                 <TextBlock Text="Thời gian bay" />
@@ -267,7 +269,7 @@
                                    Style="{StaticResource CustomTextbox}" 
                                    VerticalAlignment="Center" 
                                    Text="{Binding DepartureAirport.Name}"
-                                     materialDesign:TextFieldAssist.HasClearButton="True">
+                                    >
                                     <!--Command-->
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="PreviewMouseDown">
@@ -296,7 +298,7 @@
                                    Style="{StaticResource CustomTextbox}" 
                                    VerticalAlignment="Center" 
                                     Text="{Binding LandingAirport.Name}"
-                                     materialDesign:TextFieldAssist.HasClearButton="True">
+                                    >
                                     <!--Command-->
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="PreviewMouseDown">
@@ -420,7 +422,7 @@
                     </Grid>
 
                     <!--san bay trung gian, hang ve-->
-                    <Grid  Height="300" Margin="20">
+                    <Grid  Height="300" Margin="20 10 20 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30*"/>
                             <ColumnDefinition Width="*"/>

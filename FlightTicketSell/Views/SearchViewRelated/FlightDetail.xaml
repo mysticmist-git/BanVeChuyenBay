@@ -462,7 +462,7 @@
                     Grid.Column="4"
                     Content="Chỉnh sửa"
                     IsEnabled="{Binding FlightInfo.DaKhoiHanh, Converter={valueConverters:BooleanInvertConverter}}"
-                    BorderBrush="{StaticResource LightBlueBrush}"
+                    BorderBrush="{StaticResource OrangeBrush}"
                     Style="{StaticResource HoverButton}"
                     Height="45"
                     Command="{Binding EditCommand}"

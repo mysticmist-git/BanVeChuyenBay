@@ -354,21 +354,6 @@ namespace FlightTicketSell.ViewModels
             LoadCommand = new RelayCommand<object>((p) => { return true; },
                async (p) =>
                {
-
-                   //if (FirstLoad)
-                   //{
-                   //    // TEST: Cho mục đích test
-                   //    DateFlight = DateTime.Now;
-                   //    DisplayDateStart = DateTime.Now;
-                   //    // Thực tế
-                   //    //DateFlight = DateTime.Now.AddDays(2);
-                   //    //DisplayDateStart = DateTime.Now.AddDays(2);
-
-                   //    TimeFlight = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day, 0, 0, 0);
-                   //    FirstLoad = false;
-                   //    FlightCode = null;
-                   //}
-
                    using (var context = new FlightTicketSellEntities())
                    {
                        try
@@ -472,6 +457,24 @@ namespace FlightTicketSell.ViewModels
                        {
                            MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
                        }
+                   }
+
+                   if (FirstLoad)
+                   {
+                       // TEST: Cho mục đích test
+                       //DisplayDateStart = DateTime.Now;
+                       // Thực tế
+                       DateTime a = new DateTime(OldDateFlight.Year, OldDateFlight.Month, OldDateFlight.Day);
+                       DateTime b = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                       if (b < a)
+                       {
+                           DisplayDateStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                       }
+                       else
+                       {
+                           DisplayDateStart = OldDateFlight;
+                       }
+                       FirstLoad = false;
                    }
                }
            );
@@ -687,14 +690,6 @@ namespace FlightTicketSell.ViewModels
              {
                  // Close dialog
                  DialogHost.CloseDialogCommand.Execute(null, null);
-                 if (OpenChooseAirport == "Departure")
-                 {
-                     DepartureAirport = new Airport();
-                 }
-                 if (OpenChooseAirport == "Landing")
-                 {
-                     LandingAirport = new Airport();
-                 }
              });
 
             FormatStringToMoney = new RelayCommand<object>((p) => { return true; },
@@ -706,8 +701,11 @@ namespace FlightTicketSell.ViewModels
                  }
                  else
                  {
-                     Airfares = string.Empty;
+                     Airfares = IoC.IoC.Get<FlightDetailViewModel>().FlightInfo.GiaVe.ToString();
+                     Airfares = String.Format("{0:0,0}", double.Parse(Airfares));
                  }
+
+                
              });
             FormatMoneyToString = new RelayCommand<object>((p) => { return true; },
              (p) =>
@@ -905,8 +903,12 @@ namespace FlightTicketSell.ViewModels
             });
             CheckFlightTime = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if (string.IsNullOrEmpty(FlightTime))
+                if (string.IsNullOrEmpty(FlightTime)||int.Parse(FlightTime)==0)
+                {
+                    FlightTime = IoC.IoC.Get<FlightDetailViewModel>().FlightInfo.ThoiGianBay.ToString();
                     return;
+                }
+                    
                 using (var context = new FlightTicketSellEntities())
                 {
                     try

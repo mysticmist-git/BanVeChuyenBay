@@ -747,6 +747,12 @@ namespace FlightTicketSell.ViewModels
                            }
                            if (!string.IsNullOrEmpty(EditTicketClass_Coefficien))
                            {
+                               if (double.Parse(EditTicketClass_Coefficien) == 0)
+                               {
+                                   MessageBox.Show("Hệ số không thể là 0.", "Cảnh báo");
+                                   EditTicketClass_Coefficien = string.Empty;
+                                   return;
+                               }
                                context.HANGVEs.ToList().Where(s => s.MaHangVe == TicketClass_selecteditem.Id).FirstOrDefault().HeSo = (decimal)(double.Parse(EditTicketClass_Coefficien));
                                check = true;
                            }

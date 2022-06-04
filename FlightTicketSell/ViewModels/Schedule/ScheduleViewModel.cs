@@ -320,7 +320,6 @@ namespace FlightTicketSell.ViewModels
                        FirstLoad = false;
                        FlightCode = null;
                    }
-
                    using (var context = new FlightTicketSellEntities())
                    {
                        try
@@ -370,6 +369,15 @@ namespace FlightTicketSell.ViewModels
                                List_LayoverAirport = new ObservableCollection<LayoverAirport>();
                            if (List_LayoverAirport.Count > 0)
                            {
+                               var maxsbtg = context.THAMSOes.Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri;
+                               if (List_LayoverAirport.Count == maxsbtg)
+                               {
+                                   // Close dialog
+                                   DialogHost.CloseDialogCommand.Execute(null, null);
+
+                                   MessageBox.Show("Số sân bay trung gian đạt tối đa!", "Cảnh báo");
+                                   return;
+                               }
                                foreach (var h in List_LayoverAirport)
                                {
                                    var temp = LayoverAirport_List_Airport.Where(k => k.Id == h.Id_Airport).ToList().FirstOrDefault();
@@ -706,8 +714,8 @@ namespace FlightTicketSell.ViewModels
                     LandingAirport = null;
                     Airfares = null;
                     FlightTime = null;
-                    List_TicketClass = null;
-                    List_LayoverAirport = null;
+                    List_TicketClass.Clear();
+                    List_LayoverAirport.Clear();
                     FlightCode = null;
                 });
 
@@ -770,25 +778,6 @@ namespace FlightTicketSell.ViewModels
                {
                    LayoverAirport_StopTime = null;
                    LayoverAirport_Note = null;
-                   try
-                   {
-                       using (var context = new FlightTicketSellEntities())
-                       {
-                           var temp = context.THAMSOes.Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri;
-                           if (List_LayoverAirport!=null)
-                           {
-                               if (List_LayoverAirport.Count() == temp)
-                               {
-                                   MessageBox.Show("Số sân bay trung gian đạt tối đa!", "Cảnh báo");
-                                   return;
-                               }
-                           }
-                       }
-                   }
-                   catch (System.Data.Entity.Core.EntityException e)
-                   {
-                       MessageBox.Show($"Exception: {e.Message}");
-                   }
                    EnterLayoverAirportView enterLayoverAirportView = new EnterLayoverAirportView { DataContext = this };
                    var result = await DialogHost.Show(enterLayoverAirportView, "RootDialog");
                }
@@ -808,7 +797,11 @@ namespace FlightTicketSell.ViewModels
                       MessageBox.Show("Bạn chưa chọn sân bay!", "Cảnh báo");
                       return;
                   }
-
+                  if (int.Parse(LayoverAirport_StopTime) == 0)
+                  {
+                      MessageBox.Show("Thời gian dừng không thể là 0.", "Cảnh báo");
+                      return;
+                  }
                   try
                   {
                       using (var context = new FlightTicketSellEntities())
@@ -940,26 +933,6 @@ namespace FlightTicketSell.ViewModels
                async (p) =>
                {
                    EnterTicketClass_Seats = null;
-                   using (var context = new FlightTicketSellEntities())
-                   {
-                       try
-                       {
-                           if (List_TicketClass != null)
-                           {
-                               if (List_TicketClass.Count == context.HANGVEs.ToList().Count())
-                               {
-                                   MessageBox.Show("Bạn đã thêm tất cả hạng vé!", "Cảnh báo");
-                                   return;
-                               }
-                           }
-                       }
-                       catch (EntityException e)
-                       {
-
-                           MessageBox.Show($"Exception: {e.Message}");
-                       }
-
-                   }
                    EnterTicketClassView enterTicketClassView = new EnterTicketClassView { DataContext = this };
                    var result = await DialogHost.Show(enterTicketClassView, "RootDialog");
                }
@@ -992,7 +965,13 @@ namespace FlightTicketSell.ViewModels
                                    EnterTicketClass_List_TicketClass.Remove(temp);
                                }
                            }
-
+                           if (EnterTicketClass_List_TicketClass.Count == 0)
+                           {
+                               // Close dialog
+                               DialogHost.CloseDialogCommand.Execute(null, null);
+                               MessageBox.Show("Bạn đã thêm tất cả hạng vé!", "Cảnh báo");
+                               return;
+                           }
                        }
                    }
                    catch (System.Data.Entity.Core.EntityException e)
@@ -1015,7 +994,12 @@ namespace FlightTicketSell.ViewModels
                         MessageBox.Show("Bạn chưa nhập số ghế!", "Cảnh báo");
                         return;
                     }
-
+                    if (int.Parse(EnterTicketClass_Seats) == 0)
+                    {
+                        MessageBox.Show("Số ghế không thể là 0.", "Cảnh báo");
+                        EnterTicketClass_Seats = string.Empty;
+                        return;
+                    }
                     List_TicketClass.Add
                     (
                         new TicketClassDetail
@@ -1057,6 +1041,12 @@ namespace FlightTicketSell.ViewModels
                    if (string.IsNullOrEmpty(EditTicketClass_Seats))
                    {
                        MessageBox.Show("Hãy nhập số ghế mới!", "Cảnh báo");
+                       return;
+                   }
+                   if (int.Parse(EditTicketClass_Seats) == 0)
+                   {
+                       MessageBox.Show("Số ghế không thể là 0.", "Cảnh báo");
+                       EditTicketClass_Seats = string.Empty;
                        return;
                    }
                    List_TicketClass.Where(h => h.Id_TicketClass == List_TicketClass_SelectedItem.Id_TicketClass).ToList().FirstOrDefault().Seats = int.Parse(EditTicketClass_Seats);
