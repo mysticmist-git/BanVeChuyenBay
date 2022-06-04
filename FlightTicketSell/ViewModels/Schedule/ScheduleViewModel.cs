@@ -775,10 +775,13 @@ namespace FlightTicketSell.ViewModels
                        using (var context = new FlightTicketSellEntities())
                        {
                            var temp = context.THAMSOes.Where(h => h.TenThamSo == "SoSanBayTrungGianToiDa").FirstOrDefault().GiaTri;
-                           if (List_LayoverAirport.Count() == temp)
+                           if (List_LayoverAirport!=null)
                            {
-                               MessageBox.Show("Số sân bay trung gian đạt tối đa!", "Cảnh báo");
-                               return;
+                               if (List_LayoverAirport.Count() == temp)
+                               {
+                                   MessageBox.Show("Số sân bay trung gian đạt tối đa!", "Cảnh báo");
+                                   return;
+                               }
                            }
                        }
                    }
