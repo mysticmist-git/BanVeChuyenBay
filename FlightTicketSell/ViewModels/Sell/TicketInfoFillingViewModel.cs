@@ -45,6 +45,8 @@ namespace FlightTicketSell.ViewModels
         /// Stores ticket tier list
         /// </summary>
         public ObservableCollection<TicketTier> TicketTiers { get => IoC.IoC.Get<FlightDetailViewModel>().TicketTier; }
+        public ObservableCollection<TicketTier> ProcessedTicketTiers { get; set; }
+
 
         /// <summary>
         /// Stores current selected ticket tier
@@ -151,8 +153,10 @@ namespace FlightTicketSell.ViewModels
 
             LoadCommand = new RelayCommand<object>(p => true, p =>
             {
+                ProcessedTicketTiers = new ObservableCollection<TicketTier>(TicketTiers.Where(tt => tt.GheTrong > 0).ToList());
+
                 if (CurrentTicketTier is null)
-                    CurrentTicketTier = TicketTiers.ElementAt(0);
+                    CurrentTicketTier = ProcessedTicketTiers.ElementAt(0);
             });
 
             ReturnCommand = new RelayCommand<object>((p) => true, (p) =>

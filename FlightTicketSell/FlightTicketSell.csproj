@@ -291,6 +291,7 @@
     <Compile Include="ViewModels\Search\BookSearchVariant.cs" />
     <Compile Include="ViewModels\Search\FlightDetailViewModel.cs" />
     <Compile Include="Models\SearchRelated\OverlayAirport_Search.cs" />
+    <Compile Include="ViewModels\Search\FlightInfoEditViewModel.cs" />
     <Compile Include="ViewModels\Search\FlightTicketAndBookViewModel.cs" />
     <Compile Include="Models\SearchRelated\TicketTier.cs" />
     <Compile Include="ViewModels\Search\Ticket.cs" />
@@ -335,6 +336,9 @@
     </Compile>
     <Compile Include="Views\SearchViewRelated\CustomerDetail.xaml.cs">
       <DependentUpon>CustomerDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SearchViewRelated\FlightInfoEditView.xaml.cs">
+      <DependentUpon>FlightInfoEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SellViewRelated\CustomerExistedDialog.xaml.cs">
       <DependentUpon>CustomerExistedDialog.xaml</DependentUpon>
@@ -463,6 +467,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SearchViewRelated\CustomerDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SearchViewRelated\FlightInfoEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

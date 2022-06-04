@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows;
 using System.Data.Entity.Core;
 using FlightTicketSell.Models.SearchRelated;
+using System.Data.Entity;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -29,6 +30,8 @@ namespace FlightTicketSell.ViewModels
         /// Ticket Tier infos
         /// </summary>
         public ObservableCollection<TicketTier> TicketTier { get; set; }
+
+        public bool IsJustEdited { get; set; } = false;
 
         #endregion
 
@@ -59,6 +62,11 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand TickedSoldBookedCommand { get; set; }
 
+        /// <summary>
+        /// Edit the flight's info
+        /// </summary>
+        public ICommand EditCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -84,9 +92,7 @@ namespace FlightTicketSell.ViewModels
                 IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.TicketSoldOrBooked;
             });
 
-            
-
-            LoadCommand = new RelayCommand<object>((p) => true, (p) =>
+            LoadCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
                 using (var context = new FlightTicketSellEntities())
                 {
@@ -96,6 +102,25 @@ namespace FlightTicketSell.ViewModels
 
                         FlightInfo.MaDuongBay = context.CHUYENBAYs.Where(result => result.MaChuyenBay == FlightInfo.MaChuyenBay).FirstOrDefault().MaDuongBay;
 
+                        if (IsJustEdited)
+                        {
+                            var flight = await context.CHUYENBAYs.Where(cb => cb.MaChuyenBay == FlightInfo.MaChuyenBay).FirstOrDefaultAsync();
+
+                            FlightInfo.MaSanBayDi = flight.DUONGBAY.MaSanBayDi;
+                            FlightInfo.MaSanBayDen = flight.DUONGBAY.MaSanBayDen;
+                            FlightInfo.SanBayDen = flight.DUONGBAY.SANBAY.TenSanBay;
+                            FlightInfo.SanBayDi = flight.DUONGBAY.SANBAY1.TenSanBay;
+                            FlightInfo.SanBayDenVietTat = flight.DUONGBAY.SANBAY.VietTat;
+                            FlightInfo.SanBayDiVietTat = flight.DUONGBAY.SANBAY1.VietTat;
+
+                            //FlightInfo.GheTrong = TicketTier.Sum(tt => tt.GheTrong);
+                            FlightInfo.GheTrong = await context.CHITIETHANGVEs.Where(cthv => cthv.MaChuyenBay == FlightInfo.MaChuyenBay).SumAsync(cthv => cthv.SoGhe);
+
+                            FlightInfo.NgayGio = await context.CHUYENBAYs.Where(cb => cb.MaChuyenBay == FlightInfo.MaChuyenBay).Select(cb => cb.NgayGio).FirstOrDefaultAsync();
+
+                            IsJustEdited = false;
+                        }
+
                         OverlayAirport = new ObservableCollection<OverlayAirport_Search>(
                                                                 context.SANBAYTGs.Where(result =>
                                                                 result.MaDuongBay == FlightInfo.MaDuongBay)
@@ -104,7 +129,9 @@ namespace FlightTicketSell.ViewModels
                                                                     ThuTu = result.ThuTu.ToString(),
                                                                     TenSanBay = context.SANBAYs.Where(x => x.MaSanBay == result.MaSanBay).FirstOrDefault().TenSanBay,
                                                                     GhiChu = result.GhiChu.ToString(),
-                                                                    ThoiGianDung = result.ThoiGianDung.ToString()
+                                                                    ThoiGianDung = result.ThoiGianDung.ToString(),
+                                                                    MaSanBay = result.MaSanBay,
+                                                                    MaDuongBay = result.MaDuongBay
                                                                 }).ToList()
                                                            );
                         TicketTier = new ObservableCollection<TicketTier>(
@@ -123,7 +150,7 @@ namespace FlightTicketSell.ViewModels
                                                                     GiaTien = ((cthv.HANGVE.HeSo) * FlightInfo.GiaVe),
                                                                     HeSo = cthv.HANGVE.HeSo,
                                                                     MaHangVe = cthv.HANGVE.MaHangVe,
-                                                                    TrangThai = cthv.HANGVE.TrangThai
+                                                                    TrangThai = cthv.HANGVE.TrangThai,
                                                                 }).ToList()
                             );
 
@@ -135,6 +162,8 @@ namespace FlightTicketSell.ViewModels
                     }
                 }
             });
+
+            EditCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.FlightInfoEdit);
         }
 
         #endregion

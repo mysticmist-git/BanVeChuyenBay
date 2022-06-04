@@ -330,7 +330,7 @@
                                 <materialDesign:DataGridTextColumn
                                     Width="auto"
                                     Binding="{Binding SoGheDat}"
-                                    Header="Số ghế đã đặt/bán"
+                                    Header="Số ghế đã đặt"
                                     FontWeight="Bold"/>
                                 
                                 <DataGridTemplateColumn Header="Trạng thái" Width="auto" >

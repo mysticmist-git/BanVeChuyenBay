@@ -21,6 +21,9 @@ namespace FlightTicketSell.ValueConverters
                 // Ticket Flight
                 case AppView.FlightDetail:
                     return new DescriptionTicketFlight();
+                // Flight info edit
+                case AppView.FlightInfoEdit:
+                    return new FlightInfoEditView();
                 //TicketsoldBooked
                 case AppView.TicketSoldOrBooked:
                     return new FlightTicketAndBookView();

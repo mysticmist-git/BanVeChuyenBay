@@ -48,7 +48,7 @@
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center" />
         </Button>
-
+        
         <Grid Margin="50,20,50,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -299,7 +299,7 @@
 
             <!-- Ticket Deadline-->
             <Border Grid.Row="2"
-                    Grid.Column="3" Grid.ColumnSpan="2"
+                    Grid.Column="2" Grid.ColumnSpan="2"
                     Margin="0 20 40 0"
                     CornerRadius="10" 
                     HorizontalAlignment="Stretch" 
@@ -341,7 +341,7 @@
             <!-- Booking state-->
             <Border CornerRadius="10" 
                     Grid.Row="2"
-                    Grid.Column="5" Grid.ColumnSpan="2"
+                    Grid.Column="4" Grid.ColumnSpan="2"
                     Margin="-20 20 0 0"
                     HorizontalAlignment="Stretch" 
                     Background="White" 
@@ -379,6 +379,18 @@
                                Margin="0 0 20 0"/>
                 </Grid>
             </Border>
+            
+            <!-- Edit flight info button -->
+            <Button Grid.Row="2"
+                    Grid.Column="6" Grid.ColumnSpan="1"
+                    Margin="20 20 0 0"
+                    Content="Chỉnh sửa"
+                    BorderBrush="{StaticResource LightBlueBrush}"
+                    Style="{StaticResource HoverButton}"
+                    Height="40"
+                    Command="{Binding EditCommand}"
+                    ToolTip="Chỉnh sửa thông tin chuyến bay"
+                    materialDesign:RippleAssist.Feedback="#DD000000" />
 
             <!--Hạng vé-->
             <Border Grid.Column="6" Grid.ColumnSpan="4"

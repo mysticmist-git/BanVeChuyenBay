@@ -359,7 +359,7 @@
 
                         <DataGrid x:Name="dgTicketTier" Grid.Row="1" Grid.RowSpan="5"
                                 Background="Transparent"
-                                ItemsSource="{Binding TicketTiers, Mode=OneWay}"
+                                ItemsSource="{Binding ProcessedTicketTiers, Mode=OneWay}"
                                 d:ItemsSource="{d:SampleData ItemCount=3}"
                                 SelectedItem="{Binding CurrentTicketTier}"
                                 AutoGenerateColumns="False"

@@ -50,6 +50,7 @@ namespace FlightTicketSell.ViewModels
         /// Stores ticket tiers info
         /// </summary>
         public ObservableCollection<TicketTier> TicketTiers { get => IoC.IoC.Get<FlightDetailViewModel>().TicketTier; }
+        public ObservableCollection<TicketTier> ProcessedTicketTiers { get; set; }
 
         /// <summary>
         /// Stores current ticket tier being selected
@@ -140,13 +141,11 @@ namespace FlightTicketSell.ViewModels
                 if (_firstLoad)
                     ToggleIncludeBookingCustomer();
 
+                ProcessedTicketTiers = new ObservableCollection<TicketTier>(TicketTiers.Where(tt => tt.GheTrong > 0).ToList());
+
                 if (CurrentTicketTier is null)
                 {
-                    int i = 0;
-                    while (i < TicketTiers.Count && TicketTiers[i].GheTrong == 0)
-                        i++;
-
-                    CurrentTicketTier = TicketTiers.ElementAt(i);
+                    CurrentTicketTier = ProcessedTicketTiers.ElementAt(0);
                 }
 
                 _firstLoad = false;

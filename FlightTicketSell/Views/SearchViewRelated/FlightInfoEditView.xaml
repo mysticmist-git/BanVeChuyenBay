@@ -1,0 +1,659 @@
+﻿<UserControl x:Class="FlightTicketSell.Views.FlightInfoEditView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FlightTicketSell.Views"
+             xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
+             mc:Ignorable="d" 
+             d:Background="{StaticResource LightGrayBrush}"
+             d:DesignHeight="720" d:DesignWidth="1366"
+             DataContext="{Binding FlightInfoEditViewModel, Source={x:Static vm:ViewModelLocator.Instance}}"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!--<UserControl.DataContext>
+        <vm:ScheduleViewModel />
+    </UserControl.DataContext>-->
+
+    <UserControl.Resources>
+        <Style x:Key="TodayDatePicker" TargetType="{x:Type DatePicker }" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}" >
+            <Setter Property="DisplayDateStart" Value="{x:Static sys:DateTime.Today}"/>
+        </Style>
+    </UserControl.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <materialDesign:DialogHost CloseOnClickAway="True" Identifier="RootDialog">
+        <Grid >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
+                <StackPanel  Orientation="Vertical"   >
+
+                    <Grid Height="auto" Margin=" 0 0 0 20">
+                        <!-- Return button -->
+                        <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                Name="Quay_Lai"
+                Command="{Binding CancelCommand}"
+                Width="50"
+                Height="50"
+                ToolTip="Quay lại"
+                Background="{StaticResource LightBlueBrush}"
+                BorderThickness="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="20 20 10 0"
+                materialDesign:ButtonAssist.CornerRadius="5"
+                HorizontalContentAlignment="Center" 
+                VerticalContentAlignment="Center">
+                            <materialDesign:PackIcon Kind="ArrowLeft"
+                                     Height="30"
+                                     Width="30"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center" />
+                        </Button>
+                    </Grid>
+
+                    <!--Ma chuyen bay-->
+                    <Grid  Height="auto" Margin="20">
+                        <Border
+                        Background="White" 
+                         BorderBrush="{StaticResource LightBlueBrush}"
+                         BorderThickness="3"
+                        CornerRadius="10" 
+                         Width="300"
+                        Height="65"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                        Style="{StaticResource ResourceKey=DropShadow}" >
+                            <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                                <TextBlock Grid.Row="0" Grid.ColumnSpan="4" 
+                                   VerticalAlignment="Center"  
+                                   FontFamily="{StaticResource Roboto}" 
+                                   FontSize="{StaticResource Small}" 
+                                   FontWeight="SemiBold"
+                                   Text="Mã chuyến bay: "
+                                   Foreground="{StaticResource LightBlueBrush}"
+                                   />
+                                <TextBox 
+                           Margin="10 0 0 0"
+                            FontFamily="{StaticResource Roboto}"
+                            materialDesign:HintAssist.Hint="*********"
+                            TextWrapping="WrapWithOverflow"
+                            FontSize="{StaticResource Regular}"
+                            VerticalAlignment="Center" 
+                            Text="{Binding FlightCode}"
+                            materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource LightBlueBrush}"
+                            materialDesign:HintAssist.Foreground="{StaticResource LightBlueBrush}"
+                            CaretBrush="{StaticResource LightBlueBrush}"
+                            Foreground="{StaticResource LightBlueBrush}"
+                            BorderBrush="{StaticResource LightBlueBrush}"
+                            FontWeight="Bold"
+                            TextAlignment="Center"
+                            Focusable="False"
+                            >
+
+                                </TextBox>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!--chi tiet chuyen bay-->
+                    <Grid Height="230" Margin="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="30*"/>
+                        </Grid.ColumnDefinitions>
+                        <!--Thông tin chuyến bay cu-->
+                        <Border 
+                        Grid.Column="0"
+                        Background="{StaticResource VeryLightGrayBrush}" 
+                        CornerRadius="10" 
+                        Width="600"
+                        HorizontalAlignment="Center"
+                        Style="{StaticResource ResourceKey=DropShadow}" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="8*"/>
+                                    <ColumnDefinition Width="0.2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="0.2*"/>
+                                    <ColumnDefinition Width="8*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="3*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="3*"/>
+                                    <RowDefinition Height="2*"/>
+                                </Grid.RowDefinitions>
+
+
+                                <!--Tựa-->
+                                <TextBlock Margin="30 0 0 0" Grid.Row="0" 
+                                       Grid.ColumnSpan="4" 
+                                       VerticalAlignment="Bottom"  
+                                       FontFamily="{StaticResource RobotoBlack}" 
+                                       FontSize="{StaticResource Small}" >Thông tin chuyến bay cũ</TextBlock>
+
+
+                                <!--Sân bay đi-->
+                                <TextBox   Grid.Row="1" Grid.Column="1" 
+                                   materialDesign:HintAssist.Hint="Sân bay đi" 
+                                   Style="{StaticResource CustomTextbox}" 
+                                   VerticalAlignment="Center" 
+                                   Text="{Binding OldDepartureAirport.Name, Mode=OneWay}"
+                                   IsReadOnly="True" />
+
+                                <!--Sân bay đến-->
+                                <TextBox   Grid.Row="1" Grid.Column="5" 
+                                   materialDesign:HintAssist.Hint="Sân bay đến" 
+                                   Style="{StaticResource CustomTextbox}" 
+                                   VerticalAlignment="Center" 
+                                   Text="{Binding OldLandingAirport.Name, Mode=OneWay}"
+                                   IsReadOnly="True" />
+
+                                    <Grid Grid.Row="3" Grid.Column="1"
+                              Grid.ColumnSpan="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="5*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--Giá vé-->
+                                    <TextBox Grid.Column="0" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="VNĐ"
+                                             Text="{Binding OldAirfares, Mode=OneWay}"
+                                             IsReadOnly="True">
+                                    <materialDesign:HintAssist.Hint>
+                                            <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                                                <TextBlock Text="Giá vé" />
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+                                    </TextBox>
+
+                                    <!--Thời gian bay-->
+                                    <TextBox Grid.Column="2" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="phút"
+                                             Text="{Binding OldFlightTime, Mode=OneWay}"
+                                             IsReadOnly="True">
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                                                <TextBlock Text="Thời gian bay" />
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+                                    </TextBox>
+
+                                    <!--Ngày bay-->
+                                    <TextBox Grid.Column="4" 
+                                             Style="{StaticResource CustomTextbox}"
+                                             materialDesign:HintAssist.Hint="Ngày bay"
+                                             FontFamily="{StaticResource Roboto}"
+                                             Foreground="Black" 
+                                             Text="{Binding DisplayOldDateFlight, Mode=OneWay}"   
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Center"
+                                             materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource BlueBrush}"
+                                             materialDesign:HintAssist.Foreground="{StaticResource BlueBrush}"
+                                             Focusable="False" />
+                                        
+                                    <!--Giờ bay-->
+                                    <TextBox
+                                        Style="{StaticResource CustomTextbox}"
+                                        Grid.Column="6"
+                                        materialDesign:HintAssist.Hint="Giờ bay" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black" 
+                                        Text="{Binding DisplayOldTimeFlight, Mode=OneWay}"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        Focusable="False" />
+
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <!--Thông tin chuyến bay mới-->
+                        <Border Grid.Column="2"
+                        Background="White" 
+                        CornerRadius="10" 
+                        Width="600"
+                        HorizontalAlignment="Center"
+                        Style="{StaticResource ResourceKey=DropShadow}" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="8*"/>
+                                    <ColumnDefinition Width="0.2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="0.2*"/>
+                                    <ColumnDefinition Width="8*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="3*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="3*"/>
+                                    <RowDefinition Height="2*"/>
+                                </Grid.RowDefinitions>
+
+                                <!--Tựa-->
+                                <TextBlock Margin="30 0 0 0" Grid.Row="0" 
+                                       Grid.ColumnSpan="4" VerticalAlignment="Bottom"  
+                                       FontFamily="{StaticResource RobotoBlack}" 
+                                       FontSize="{StaticResource Small}" >Thông tin chuyến bay mới</TextBlock>
+
+
+                                <!--Sân bay đi-->
+                                <TextBox   Grid.Row="1" Grid.Column="1" 
+                                   materialDesign:HintAssist.Hint="Sân bay đi" 
+                                   Style="{StaticResource CustomTextbox}" 
+                                   VerticalAlignment="Center" 
+                                   Text="{Binding DepartureAirport.Name}"
+                                     materialDesign:TextFieldAssist.HasClearButton="True">
+                                    <!--Command-->
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseDown">
+                                            <i:InvokeCommandAction Command="{Binding ChooseDepartureAirport_Command}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+
+
+                                <!--Nút chuyển giữa sân bay đi và sân bay đến-->
+                                <Button  Grid.Row="1" Grid.Column="3" Padding="0" Width="22" Height="22" Margin="0" Background="{StaticResource LightBlueBrush}" BorderThickness="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                             Command="{Binding Change_Departure_Landing_Airport_Command}">
+                                    <Button.Content>
+                                        <materialDesign:PackIcon Kind="MenuSwap" Margin="0"  Width="32" Height="32" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" RenderTransformOrigin="0.5,0.5" >
+                                            <materialDesign:PackIcon.RenderTransform>
+                                                <RotateTransform Angle="90"/>
+                                            </materialDesign:PackIcon.RenderTransform>
+                                        </materialDesign:PackIcon>
+                                    </Button.Content>
+                                </Button>
+
+
+                                <!--Sân bay đến-->
+                                <TextBox   Grid.Row="1" Grid.Column="5" 
+                                   materialDesign:HintAssist.Hint="Sân bay đến" 
+                                   Style="{StaticResource CustomTextbox}" 
+                                   VerticalAlignment="Center" 
+                                    Text="{Binding LandingAirport.Name}"
+                                     materialDesign:TextFieldAssist.HasClearButton="True">
+                                    <!--Command-->
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseDown">
+                                            <i:InvokeCommandAction Command="{Binding ChooseLandingAirport_Command}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+
+                                <Grid Grid.Row="3" Grid.Column="1"
+                              Grid.ColumnSpan="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="5*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="5*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--Giá vé-->
+                                    <TextBox Grid.Column="0" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="VNĐ"
+                                 Text="{Binding Airfares}"
+                                 PreviewTextInput="PreviewTextInput">
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                                                <TextBlock Text="Giá vé" />
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+
+                                        <!--Command-->
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="LostFocus">
+                                                <i:InvokeCommandAction Command="{Binding FormatStringToMoney}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="GotFocus">
+                                                <i:InvokeCommandAction Command="{Binding FormatMoneyToString}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
+
+                                    <!--Thời gian bay-->
+                                    <TextBox Grid.Column="2" Style="{StaticResource CustomTextbox}"   VerticalAlignment="Center"  materialDesign:TextFieldAssist.SuffixText="phút"
+                                 Text="{Binding FlightTime}"
+                                 PreviewTextInput="PreviewTextInput"
+                                     materialDesign:HintAssist.HelperText="{Binding MinFlightTime}">
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                                                <TextBlock Text="Thời gian bay" />
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+
+                                        <!--Command-->
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="LostFocus">
+                                                <i:InvokeCommandAction Command="{Binding CheckFlightTime}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
+
+
+                                    <!--Ngày bay-->
+                                    <DatePicker Grid.Column="4" materialDesign:HintAssist.Hint="Ngày bay" 
+                                        FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" 
+                                        Foreground="Black" 
+                                        SelectedDate="{Binding DateFlight,StringFormat={}{0:dd-MM-yyyy}}"   
+                                        HorizontalAlignment="Stretch"
+                                        materialDesign:TextFieldAssist.UnderlineBrush="{StaticResource BlueBrush}"
+                                        materialDesign:HintAssist.Foreground="{StaticResource BlueBrush}"
+                                        Focusable="False"
+                                        DisplayDateStart="{Binding DisplayDateStart}"
+                                        materialDesign:HintAssist.HelperText="Ngày nhận lịch cách ngày&#x0a;hiện tại ít nhất 2 ngày.">
+                                        <DatePicker.Resources>
+                                            <Style x:Key="CustomCalendarDayButton" TargetType="CalendarDayButton" BasedOn="{StaticResource MaterialDesignCalendarDayButton}">
+                                                <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="{StaticResource BlueBrush}"/>
+                                                <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="White" />
+                                            </Style>
+                                            <Style x:Key="CustomCalendarButton" TargetType="CalendarButton" BasedOn="{StaticResource MaterialDesignCalendarButton}">
+                                                <Setter Property="materialDesign:CalendarAssist.SelectionColor" Value="{StaticResource BlueBrush}" />
+                                                <Setter Property="materialDesign:CalendarAssist.SelectionForegroundColor" Value="White" />
+                                            </Style>
+                                            <Style x:Key="CustomCalendar" TargetType="{x:Type Calendar}" BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
+                                                <Setter Property="Background" Value="White" />
+                                                <Setter Property="Foreground" Value="{StaticResource BlueBrush}" />
+                                                <Setter Property="materialDesign:CalendarAssist.HeaderBackground" Value="{StaticResource BlueBrush}" />
+                                                <Setter Property="materialDesign:CalendarAssist.HeaderForeground" Value="White" />
+                                                <Setter Property="CalendarDayButtonStyle" Value="{StaticResource CustomCalendarDayButton}" />
+                                                <Setter Property="CalendarButtonStyle" Value="{StaticResource CustomCalendarButton}" />
+                                            </Style>
+                                            <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                                                <Setter Property="CalendarStyle" Value="{StaticResource CustomCalendar}" />
+                                            </Style>
+                                        </DatePicker.Resources>
+
+                                        <!--Command-->
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="SelectedDateChanged">
+                                                <i:InvokeCommandAction Command="{Binding SelectedFlightDateChanged_Command}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </DatePicker>
+
+
+                                    <!--Giờ bay-->
+                                    <materialDesign:TimePicker 
+                                Grid.Column="6 " Style="{StaticResource MaterialDesignFloatingHintTimePicker}" Is24Hours="True" materialDesign:HintAssist.Hint="Giờ bay" FontFamily="{StaticResource Roboto}" FontSize="{StaticResource Small}" Foreground="Black" 
+                                SelectedTime="{Binding TimeFlight}"
+                                HorizontalAlignment="Stretch"
+                                Focusable="False"
+                                >
+                                        <!--Command-->
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="SelectedTimeChanged">
+                                                <i:InvokeCommandAction Command="{Binding SelectedFlightTimeChanged_Command}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </materialDesign:TimePicker>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+
+                    <!--san bay trung gian, hang ve-->
+                    <Grid  Height="300" Margin="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="30*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--Hạng vé mới-->
+                        <Border Grid.Column="0"
+                        Background="White" CornerRadius="10" Style="{StaticResource ResourceKey=DropShadow}" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="15*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="8*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+
+                                <!--Tựa-->
+                                <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Hạng vé</TextBlock>
+
+                                <!--Danh sách hạng vé-->
+                                <DataGrid
+                            ItemsSource="{Binding List_TicketClass}"
+                            SelectedItem="{Binding List_TicketClass_SelectedItem}"
+                             d:ItemsSource="{d:SampleData ItemCount=5}"
+                             Background="Transparent"
+                            RowHeight="40"
+                            CanUserSortColumns="True"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            Grid.ColumnSpan="3"
+                            Grid.Row="1" Grid.Column="0"
+                            Margin="15 0 15 0"
+                            IsReadOnly="True"
+                            BorderThickness="0"
+                            ColumnWidth="*"
+                            >
+                                    <DataGrid.Columns>
+                                        <materialDesign:DataGridTextColumn
+                                    Binding="{Binding TicketClassName}"
+                                    Header="Tên hạng vé"
+                                   
+                                    CellStyle="{StaticResource DataGridCellCenter}"
+                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                                        <materialDesign:DataGridTextColumn
+                                    Binding="{Binding TicketClassCoefficient}"
+                                    Header="Hệ số" 
+                                  
+                                    CellStyle="{StaticResource DataGridCellCenter}"
+                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                                        <materialDesign:DataGridTextColumn
+                                    Binding="{Binding Seats}"
+                                    Header="Số ghế"
+                                 
+                                    CellStyle="{StaticResource DataGridCellCenter}"
+                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <!--Nút thêm sửa xóa-->
+                                <StackPanel Orientation="Horizontal" 
+                                     Grid.Row="3" Grid.Column="1" 
+                                    HorizontalAlignment="Right">
+
+                                    <!--Nút xóa-->
+                                    <Button Margin="7 0 0 0" 
+                                    Content="Xóa" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource RedBrush}"
+                                Command="{Binding Delete_EnteredTicketClass_Command}"/>
+
+                                    <!--Nút sửa-->
+                                    <Button Margin="7 0 0 0" 
+                                    Content="Sửa" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource OrangeBrush}"
+                                    Command="{Binding Open_Window_EditTicketClass_Command}"
+                                materialDesign:ShadowAssist.Darken="True"
+                                   />
+
+                                    <!--Nút thêm-->
+                                    <Button Margin="7 0 10 0" Content="Thêm" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource BlueBrush}"
+                                Command="{Binding Open_Window_EnterTicketClass_Command}"
+                                materialDesign:ShadowAssist.Darken="True"
+                                    />
+                                </StackPanel>
+
+                            </Grid>
+                        </Border>
+
+                        <!-- Sân bay trung gian mới -->
+                        <Border 
+                        Grid.Column="2"
+                        Background="White" 
+                        CornerRadius="10" 
+                        Style="{StaticResource ResourceKey=DropShadow}" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="15*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="8*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="2*"/>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+
+                                <!--Tựa-->
+                                <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Sân bay trung gian</TextBlock>
+
+                                <!--Danh sách sân bay trung gian-->
+                                <DataGrid
+                            ItemsSource="{Binding List_LayoverAirport}"
+                            d:ItemsSource="{d:SampleData ItemCount=5}"
+                            Background="Transparent"
+                            RowHeight="40"
+                            CanUserSortColumns="True"
+                            CanUserAddRows="False"
+                            AutoGenerateColumns="False"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            Grid.Row="1"
+                            Margin="20 0 20 0"
+                            IsReadOnly="True"
+                            SelectedItem="{Binding List_LayoverAirport_SelectedItem}">
+
+                                    <DataGrid.Columns>
+                                        <materialDesign:DataGridTextColumn
+                                    Binding="{Binding Order}"
+                                    Header="Thứ tự"
+                                    Width="0.7*"
+                                    CellStyle="{StaticResource DataGridCellCenter}"
+                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                                        <materialDesign:DataGridTextColumn
+                                    Binding="{Binding AirportName}"
+                                    Header="Tên sân bay" 
+                                    Width="*"
+                                    CellStyle="{StaticResource DataGridCellCenter}"
+                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                                        <materialDesign:DataGridTextColumn
+                                    Binding="{Binding StopTime}"
+                                    Header="Thời gian dừng"
+                                    Width="*"
+                                    CellStyle="{StaticResource DataGridCellCenter}"
+                                    HeaderStyle="{StaticResource DataGridBlackColumnHeader}"/>
+                                        <materialDesign:DataGridTextColumn
+                                    Binding="{Binding Note}"
+                                     HeaderStyle="{StaticResource DataGridBlackColumnHeader}"
+                                    Header="Ghi chú" 
+                                    Width="2*"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <!--Nút thêm sửa xóa-->
+                                <StackPanel Orientation="Horizontal" 
+                                     Grid.Row="3" Grid.Column="1"
+                                    Grid.ColumnSpan="2" 
+                                    HorizontalAlignment="Right">
+                                    <!--Nút xóa-->
+                                    <Button Margin="7 0 0 0" 
+                                    Content="Xóa" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource RedBrush}"
+                                Command="{Binding Delete_LayoverAirport_Command}"/>
+
+                                    <!--Nút sửa-->
+                                    <Button Margin="7 0 0 0" 
+                                    Content="Sửa" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource OrangeBrush}"
+                                    Command="{Binding Open_Window_EditLayoverAirport_Command}"
+                                materialDesign:ShadowAssist.Darken="True"
+                                   />
+
+                                    <!--Nút thêm-->
+                                    <Button Margin="7 0 10 0" Content="Thêm" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource BlueBrush}"
+                                Command="{Binding Open_Window_EnterLayoverAirport_Command}"
+                                materialDesign:ShadowAssist.Darken="True"
+                                    />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                    </Grid>
+
+
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <!--2 nut duoi-->
+            <Border Grid.Row="1" Background="{StaticResource LightGrayBrush}">
+                <Border.Effect>
+                    <DropShadowEffect Direction="180" Opacity="0.8" />
+                </Border.Effect>
+                <!--Nút nhận lịch chuyến bay/ Hủy-->
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Center"  Margin="0 10 20 10">
+                    <!--Nút hủy-->
+                    <Button Margin="7 0 0 0" 
+                            Padding="40 0"
+                                    Content="Hủy" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource RedBrush}"
+                                    Command="{Binding CancelCommand}"/>
+
+
+                    <!--Nút lưu-->
+                    <Button Margin="7 0 10 0" Content="Lưu" 
+                            Padding="40 0"
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource GreenBrush}"
+                                Command="{Binding ScheduleAFlight_Command}"
+                                materialDesign:ShadowAssist.Darken="True"
+                                    />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </materialDesign:DialogHost>
+</UserControl>
+

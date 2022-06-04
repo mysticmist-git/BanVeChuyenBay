@@ -48,6 +48,7 @@ namespace FlightTicketSell.IoC
             Kernel.Bind<FlightDetailViewModel>().ToConstant(new FlightDetailViewModel());
             Kernel.Bind<FlightTicketAndBookViewModel>().ToConstant(new FlightTicketAndBookViewModel());
             Kernel.Bind<ScheduleViewModel>().ToConstant(new ScheduleViewModel());
+            Kernel.Bind<FlightInfoEditViewModel>().ToConstant(new FlightInfoEditViewModel());
         }
 
         #endregion

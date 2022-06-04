@@ -20,6 +20,8 @@ namespace FlightTicketSell.ValueConverters
                 // Ticket Flight
                 case AppView.FlightDetail:
                     return @"...\CHI TIẾT CHUYẾN BAY";
+                case AppView.FlightInfoEdit:
+                    return @"...\SỬA CHUYẾN BAY";
                 //TicketsoldBooked
                 case AppView.TicketSoldOrBooked:
                     return @"...\VÉ ĐÃ ĐẶT & BÁN";

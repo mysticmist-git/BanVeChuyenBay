@@ -22,6 +22,10 @@
         /// </summary>
         FlightDetail,
         /// <summary>
+        /// The view to edit the flight information
+        /// </summary>
+        FlightInfoEdit,
+        /// <summary>
         /// The Ticket Flight to enter Detail
         /// </summary>
         TicketSoldOrBooked,
