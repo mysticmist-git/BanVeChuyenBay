@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FlightTicketSell.Views"
+             xmlns:valueconverter="clr-namespace:FlightTicketSell.ValueConverters"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
@@ -321,7 +322,7 @@
                                     HorizontalAlignment="Right">
                             <!--Nút xóa-->
                             <Button Margin="7 0 0 0" 
-                                    Content="Xóa" 
+                                    Content="{Binding IsUsed, Converter={valueconverter:TicketClass_BooleanToString}}"
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
                                 Command="{Binding DeleteTicketClass_Command}"/>

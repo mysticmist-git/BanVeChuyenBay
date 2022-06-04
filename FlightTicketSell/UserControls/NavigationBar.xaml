@@ -87,10 +87,28 @@
                      MaxHeight="{Binding ElementName=buttons, Path=ActualHeight}"
                      MaxWidth="{Binding ElementName=buttons, Path=ActualWidth}">
                 <StackPanel x:Name="buttons" Orientation="Horizontal">
-                    <Button Content="TRA CỨU" Command="{Binding SearchCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Search}}"/>
-                    <Button Content="NHẬN LỊCH" Command="{Binding ScheduleCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Schedule}}"/>
-                    <Button Content="DOANH THU" Command="{Binding ReportCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Report}}"/>
-                    <Button Content="CÀI ĐẶT" Command="{Binding SettingCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}"/>
+                    <Button Content="TRA CỨU" 
+                            BorderThickness="5 4 4 4"
+                            Width="150" Height="37"
+                            materialDesign:ButtonAssist.CornerRadius="15 0 0 15"
+                            Command="{Binding SearchCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Search}}"/>
+                    <Button Content="NHẬN LỊCH" 
+                            BorderThickness="4"
+                             Width="150" Height="37"
+                            Margin="-4 0 -2 0"
+                            materialDesign:ButtonAssist.CornerRadius="0"
+                            Command="{Binding ScheduleCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Schedule}}"/>
+                    <Button Content="DOANH THU" 
+                            BorderThickness="4"
+                             Width="150" Height="37"
+                            Margin="-2 0 -4 0"
+                            materialDesign:ButtonAssist.CornerRadius="0"
+                            Command="{Binding ReportCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Report}}"/>
+                    <Button Content="CÀI ĐẶT" 
+                            BorderThickness="4 4 5 4"
+                             Width="150" Height="37"
+                            materialDesign:ButtonAssist.CornerRadius="0 15 15 0"
+                            Command="{Binding SettingCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}"/>
                 </StackPanel>
             </Viewbox>
         </Grid>

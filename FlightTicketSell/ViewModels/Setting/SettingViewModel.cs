@@ -182,6 +182,32 @@ namespace FlightTicketSell.ViewModels
         /// Hệ số
         /// </summary>
         public string EditTicketClass_Coefficien { get; set; }
+        /// <summary>
+        /// Biến bool
+        /// </summary>
+        public bool IsUsed
+        {
+            get
+            {
+                using (var context = new FlightTicketSellEntities())
+                {
+                    try
+                    {
+                        if (TicketClass_selecteditem != null)
+                        {
+                            var exist = context.CHITIETHANGVEs.Where(h => h.MaHangVe == TicketClass_selecteditem.Id).FirstOrDefault();
+                            if (exist != null)
+                                return false;
+                        }
+                    }
+                    catch (EntityException e)
+                    {
+                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                return true;
+            }
+        }
         #endregion
 
         #region Method
@@ -579,6 +605,11 @@ namespace FlightTicketSell.ViewModels
                     {
                         if (Airport_selecteditem != null)
                         {
+                            var exist = context.DUONGBAYs.Where(h => h.MaSanBayDen == Airport_selecteditem.Id || h.MaSanBayDi == Airport_selecteditem.Id).FirstOrDefault();
+                            if (exist != null)
+                            {
+                                MessageBox.Show("Sân bay đã");
+                            }
                             //Kiểm tra chắc chắn muốn xóa
                             MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắn chắn muốn xóa sân bay?", "Cảnh báo", MessageBoxButton.YesNo);
                             if (messageBoxResult == MessageBoxResult.No)
@@ -757,6 +788,12 @@ namespace FlightTicketSell.ViewModels
                      {
                          if (TicketClass_selecteditem != null)
                          {
+                             var exist = context.CHITIETHANGVEs.Where(h => h.MaHangVe == TicketClass_selecteditem.Id).FirstOrDefault();
+                             if (exist != null)
+                             {
+                                 MessageBox.Show("Hạng vé đã được sử dụng nên không thể xóa!");
+                                 return;
+                             }
                              //Kiểm tra chắc chắn muốn xóa
                              MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắn chắn muốn xóa hạng vé?", "Cảnh báo", MessageBoxButton.YesNo);
                              if (messageBoxResult == MessageBoxResult.No)

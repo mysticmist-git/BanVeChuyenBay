@@ -116,8 +116,15 @@ namespace FlightTicketSell.Helpers
 
                         if (monthReports.Count > 0)
                         {
-                            for (int i = 0; i < monthReports.Count; i++)
+                            var tempp = 0.0m;
+                            
+                            for (int i = 0; i < monthReports.Count - 1; i++)
+                            {
                                 monthReports[i].TiLe = yearReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : monthReports[i].DoanhThu / yearReport.DoanhThu;
+                                tempp += monthReports[i].TiLe;
+                            }
+
+                            monthReports[monthReports.Count - 1].TiLe = Math.Round(1.0m - tempp, 2);
                         }
 
 
@@ -126,7 +133,7 @@ namespace FlightTicketSell.Helpers
                             .Where(dtcb => dtcb.DOANHTHUTHANG.Thang == monthReport.Thang && dtcb.DOANHTHUTHANG.DOANHTHUNAM.Nam == yearReport.Nam)
                             .ToListAsync();
 
-                        decimal temp2 = (decimal)0.0;
+                        decimal temp2 = 0.0m;
 
                         if (flightReports.Count > 0)
                         {
@@ -139,7 +146,7 @@ namespace FlightTicketSell.Helpers
 
                         // Add new flight report
                         //newFlightReport.TiLe = monthReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : newFlightReport.DoanhThu / monthReport.DoanhThu;
-                        newFlightReport.TiLe = (decimal)1.0 - temp2;
+                        newFlightReport.TiLe = Math.Round(1.0m - temp2, 2);
                         context.DOANHTHUCHUYENBAYs.Add(newFlightReport);
                         
                         /// Save changes down to database
