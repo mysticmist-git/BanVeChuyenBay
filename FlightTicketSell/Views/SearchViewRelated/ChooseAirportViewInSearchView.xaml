@@ -53,7 +53,13 @@
             Background="White"
             >
             <ListView ItemsSource="{Binding ChooseAirport_List}"
-                              SelectedItem="{Binding ChooseAirport_SelectedItem}">
+                              SelectedItem="{Binding ChooseAirport_SelectedItem}"
+                      >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding ChooseAirportButton_Command}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <ListView.View>
                     <GridView>
 
@@ -104,22 +110,23 @@
         <StackPanel Orientation="Horizontal" 
                                     Grid.Row="3"
                                      Grid.Column="1"
-                                    HorizontalAlignment="Right"
+                                    HorizontalAlignment="Center"
                                     VerticalAlignment="Stretch">
             <!--Nút xóa-->
-            <Button Margin="7 0 0 0" 
+            <Button Margin="0 0 0 0" 
                                     Content="Hủy" 
+                    Width="130"
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
                                     Command="{Binding Cancel_ChooseAirportButton_Command}"/>
 
             <!--Nút thêm-->
-            <Button Margin="7 0 10 0" Content="Chọn" 
+            <!--<Button Margin="7 0 10 0" Content="Chọn" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource GreenBrush}"
                                 Command="{Binding ChooseAirportButton_Command}"
                                 materialDesign:ShadowAssist.Darken="True"
-                                    />
+                                    />-->
         </StackPanel>
 
     </Grid>

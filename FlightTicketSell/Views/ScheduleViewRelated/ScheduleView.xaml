@@ -465,18 +465,21 @@
 
                 <!--Nút nhận lịch chuyến bay/ Hủy-->
                 <StackPanel Orientation="Horizontal" 
-                                     Grid.Row="6" Grid.Column="2" 
-                                    HorizontalAlignment="Right">
+                            Grid.ColumnSpan="3"
+                                     Grid.Row="6" Grid.Column="0" 
+                                    HorizontalAlignment="Center">
                     <!--Nút xóa-->
-                    <Button Margin="7 0 0 0" 
+                    <Button Margin="0 0 10 0" 
                                     Content="Làm mới" 
+                            Width="130"
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
                                     Command="{Binding RefreshScheduleAFlight_Command}"/>
 
                     <!--Nút thêm-->
-                    <Button Margin="7 0 10 0" Content="Nhận lịch bay" 
-                                    Style="{StaticResource HoverButton}"
+                    <Button Margin="10 0 0 0" Content="Nhận lịch bay" 
+                            Width="180"        
+                            Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource GreenBrush}"
                                 Command="{Binding ScheduleAFlight_Command}"
                                 materialDesign:ShadowAssist.Darken="True"

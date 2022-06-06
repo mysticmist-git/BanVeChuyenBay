@@ -653,12 +653,15 @@ namespace FlightTicketSell.ViewModels
             ChooseAirportButton_Command = new RelayCommand<object>((p) => { return true; },
              (p) =>
              {
-                 if (string.IsNullOrEmpty(OpenChooseAirport) || ChooseAirport_SelectedItem == null)
+                 //if (string.IsNullOrEmpty(OpenChooseAirport) || ChooseAirport_SelectedItem == null)
+                 //{
+                 //    MessageBox.Show("Hãy chọn sân bay!", "Cảnh báo");
+                 //    return;
+                 //}
+                 if (ChooseAirport_SelectedItem == null)
                  {
-                     MessageBox.Show("Hãy chọn sân bay!", "Cảnh báo");
                      return;
                  }
-
                  if (OpenChooseAirport == "Departure")
                  {
                      DepartureAirport = new Airport()

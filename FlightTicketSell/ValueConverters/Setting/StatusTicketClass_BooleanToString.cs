@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace FlightTicketSell.ValueConverters
 {
-    public class TicketClass_BooleanToString : BaseValueConverter<TicketClass_BooleanToString>
+    public class StatusTicketClass_BooleanToString : BaseValueConverter<StatusTicketClass_BooleanToString>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var boolean = System.Convert.ToBoolean(value);
             switch (boolean)
             {
-                case true: return "Ngừng cung cấp";
+                case true: return "Có sẵn";
                 default:
-                    return "Xóa";
+                    return "Ngừng cung cấp";
             }
         }
 
@@ -25,4 +25,5 @@ namespace FlightTicketSell.ValueConverters
             throw new NotImplementedException();
         }
     }
+
 }

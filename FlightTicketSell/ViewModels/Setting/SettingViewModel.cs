@@ -127,6 +127,46 @@ namespace FlightTicketSell.ViewModels
         /// Tỉnh thành mới sân bay
         /// </summary>
         public string EditAirport_Province { get; set; }
+        public string IsAirportUsed
+        {
+            get
+            {
+                using (var context = new FlightTicketSellEntities())
+                {
+                    try
+                    {
+                        if (Airport_selecteditem != null)
+                        {
+                            var exist1 = context.SANBAYTGs.Where(h => h.MaSanBay == Airport_selecteditem.Id).FirstOrDefault();
+                            var exist2 = context.DUONGBAYs.Where(h => h.MaSanBayDi == Airport_selecteditem.Id || h.MaSanBayDen == Airport_selecteditem.Id).FirstOrDefault();
+                            var isUsing = context.SANBAYs.Where(h => h.MaSanBay == Airport_selecteditem.Id).FirstOrDefault().TrangThai;
+                            if (exist1 != null || exist2 != null)
+                            {
+                                if (isUsing)
+                                {
+                                    return "Ngừng hoạt động";
+                                }
+                                else
+                                {
+                                    return "Tái hoạt động";
+                                }
+                                
+                            }
+                            else
+                            {
+                                return "Xóa";
+                            }
+                                
+                        }
+                    }
+                    catch (EntityException e)
+                    {
+                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                return "Xóa";
+            }
+        }
         #endregion
 
         #region TicketClass Commands
@@ -185,7 +225,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Biến bool
         /// </summary>
-        public bool IsUsed
+        public string IsTicketUsed
         {
             get
             {
@@ -196,8 +236,23 @@ namespace FlightTicketSell.ViewModels
                         if (TicketClass_selecteditem != null)
                         {
                             var exist = context.CHITIETHANGVEs.Where(h => h.MaHangVe == TicketClass_selecteditem.Id).FirstOrDefault();
+                            var isprovide = context.HANGVEs.Where(h => h.MaHangVe == TicketClass_selecteditem.Id).FirstOrDefault().TrangThai;
                             if (exist != null)
-                                return false;
+                            {
+                                if (isprovide)
+                                {
+                                    return "Ngừng cung cấp";
+                                }
+                                else
+                                {
+                                    return "Tái cung cấp";
+                                }
+                            }
+                            else
+                            {
+                                return "Xóa";
+                            }
+
                         }
                     }
                     catch (EntityException e)
@@ -205,7 +260,7 @@ namespace FlightTicketSell.ViewModels
                         MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
-                return true;
+                return "Xóa";
             }
         }
         #endregion
@@ -227,9 +282,7 @@ namespace FlightTicketSell.ViewModels
                     }
                     foreach (var item in context.SANBAYs.ToList())
                     {
-                        //Sân bay còn hoạt động mới thêm vào list
-                        if (item.TrangThai)
-                            List_Airport.Add(new Airport() { Id = item.MaSanBay, Code = item.VietTat, Name = item.TenSanBay, Province = item.TinhThanh, Status = item.TrangThai });
+                        List_Airport.Add(new Airport() { Id = item.MaSanBay, Code = item.VietTat, Name = item.TenSanBay, Province = item.TinhThanh, Status = item.TrangThai });
                     }
                 }
                 catch (EntityException e)
@@ -255,9 +308,7 @@ namespace FlightTicketSell.ViewModels
                     }
                     foreach (var item in context.HANGVEs.ToList())
                     {
-                        //Sân bay còn hoạt động mới thêm vào list
-                        if (item.TrangThai)
-                            List_TicketClass.Add(new TicketClass() { Id = item.MaHangVe, Name = item.TenHangVe, Coefficient = (double)item.HeSo, Status = item.TrangThai });
+                        List_TicketClass.Add(new TicketClass() { Id = item.MaHangVe, Name = item.TenHangVe, Coefficient = (double)item.HeSo, Status = item.TrangThai });
                     }
                 }
                 catch (EntityException e)
@@ -295,9 +346,7 @@ namespace FlightTicketSell.ViewModels
                             }
                             foreach (var item in context.SANBAYs.ToList())
                             {
-                                //Sân bay còn hoạt động mới thêm vào list
-                                if (item.TrangThai)
-                                    List_Airport.Add(new Airport() { Id = item.MaSanBay, Code = item.VietTat, Name = item.TenSanBay, Province = item.TinhThanh, Status = item.TrangThai });
+                                List_Airport.Add(new Airport() { Id = item.MaSanBay, Code = item.VietTat, Name = item.TenSanBay, Province = item.TinhThanh, Status = item.TrangThai });
                             }
 
                             // Danh sách hạng vé
@@ -307,9 +356,7 @@ namespace FlightTicketSell.ViewModels
                             }
                             foreach (var item in context.HANGVEs.ToList())
                             {
-                                //Hạng vé còn áp dụng mới thêm vào list
-                                if (item.TrangThai)
-                                    List_TicketClass.Add(new TicketClass() { Id = item.MaHangVe, Name = item.TenHangVe, Coefficient = (double)item.HeSo, Status = item.TrangThai });
+                                List_TicketClass.Add(new TicketClass() { Id = item.MaHangVe, Name = item.TenHangVe, Coefficient = (double)item.HeSo, Status = item.TrangThai });
                             }
 
                         }
@@ -484,9 +531,9 @@ namespace FlightTicketSell.ViewModels
                                MoreAirport_Code = "";
                                return;
                            }
-                           if (list_airport.Where(h => h.TenSanBay == MoreAirport_Name && h.TrangThai == true).FirstOrDefault() != null)
+                           if (list_airport.Where(h => h.TenSanBay == MoreAirport_Name).FirstOrDefault() != null)
                            {
-                               MessageBox.Show("Tên sân bay đã tồn tại!", "Cảnh báo");
+                               MessageBox.Show("Tên sân bay đã tồn tại hoặc đã được sử dụng trong quá khứ!", "Cảnh báo");
                                MoreAirport_Name = "";
                                return;
                            }
@@ -605,26 +652,87 @@ namespace FlightTicketSell.ViewModels
                     {
                         if (Airport_selecteditem != null)
                         {
-                            var exist = context.DUONGBAYs.Where(h => h.MaSanBayDen == Airport_selecteditem.Id || h.MaSanBayDi == Airport_selecteditem.Id).FirstOrDefault();
-                            if (exist != null)
+                            MessageBoxResult messageBoxResult;
+                            if (IsAirportUsed=="Ngừng hoạt động")
                             {
-                                MessageBox.Show("Sân bay đã");
+                                //Kiểm tra sân bay có là sân bay trung gian của 1 chuyến bay chưa khởi hành hay không?
+                                var existSBTG = context.SANBAYTGs.Where(h => h.MaSanBay == Airport_selecteditem.Id).ToList();
+                                foreach (var item in existSBTG)
+                                {
+                                    var check = context.CHUYENBAYs.Where(h => h.MaDuongBay == item.MaDuongBay).FirstOrDefault();
+                                    if (check.DaKhoiHanh == false)
+                                    {
+
+                                        var code1 = check.DUONGBAY.SANBAY1.VietTat;
+                                        var code2 = check.DUONGBAY.SANBAY.VietTat;
+                                        MessageBox.Show("Không thể ngừng hoạt động sân bay.\nSân bay đang là sân bay trung gian của chuyến bay chưa cất cánh: " + code1 + code2 + "-" + check.MaChuyenBay, "Cảnh báo");
+                                        return;
+                                    }
+                                }
+
+                                //Kiểm tra sân bay có là sân bay đi/đến của 1 chuyến bay chưa khởi hành hay không?
+                                var existDB = context.DUONGBAYs.Where(h => h.MaSanBayDi == Airport_selecteditem.Id || h.MaSanBayDen == Airport_selecteditem.Id).ToList();
+                                foreach (var item in existDB)
+                                {
+                                    var check = context.CHUYENBAYs.Where(h => h.MaDuongBay == item.MaDuongBay).FirstOrDefault();
+                                    if (check.DaKhoiHanh == false)
+                                    {
+                                        var code1 = check.DUONGBAY.SANBAY1.VietTat;
+                                        var code2 = check.DUONGBAY.SANBAY.VietTat;
+                                        MessageBox.Show("Không thể ngừng hoạt động sân bay.\nSân bay là sân bay đi/đến của chuyến bay chưa cất cánh: " + code1 + code2 + "-" + check.MaChuyenBay, "Cảnh báo");
+                                        return;
+                                    }
+                                }
+
+                                //Kiểm tra chắc chắn muốn ngừng hoạt động
+                                messageBoxResult = MessageBox.Show("Bạn chắn chắn muốn ngừng hoạt động sân bay?", "Cảnh báo", MessageBoxButton.YesNo);
+                                if (messageBoxResult == MessageBoxResult.No)
+                                    return;
+                                var temp = context.SANBAYs.Where(h => h.MaSanBay == Airport_selecteditem.Id).FirstOrDefault();
+                                if (temp != null)
+                                {
+                                    temp.TrangThai = false;
+                                    context.SaveChanges();
+                                    MessageBox.Show($"Ngừng hoạt động sân bay thành công!");
+
+                                    //Load lại danh sách sân bay
+                                    ReLoadList_Airport();
+                                }
                             }
-                            //Kiểm tra chắc chắn muốn xóa
-                            MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắn chắn muốn xóa sân bay?", "Cảnh báo", MessageBoxButton.YesNo);
-                            if (messageBoxResult == MessageBoxResult.No)
-                                return;
-
-                            var list = context.SANBAYs.Where(h => h.TrangThai == true).ToList();
-                            SANBAY temp = list.Where(h => h.MaSanBay == Airport_selecteditem.Id).FirstOrDefault();
-                            if (temp != null)
+                            else if (IsAirportUsed=="Tái hoạt động")
                             {
-                                temp.TrangThai = false;
-                                context.SaveChanges();
-                                MessageBox.Show($"Xóa sân bay thành công!");
+                                //Kiểm tra chắc chắn muốn ngừng hoạt động
+                                messageBoxResult = MessageBox.Show("Bạn chắn chắn muốn tái hoạt động sân bay?", "Cảnh báo", MessageBoxButton.YesNo);
+                                if (messageBoxResult == MessageBoxResult.No)
+                                    return;
+                                var temp = context.SANBAYs.Where(h => h.MaSanBay == Airport_selecteditem.Id).FirstOrDefault();
+                                if (temp != null)
+                                {
+                                    temp.TrangThai = true;
+                                    context.SaveChanges();
+                                    MessageBox.Show($"Tái hoạt động sân bay thành công!");
 
-                                //Load lại danh sách sân bay
-                                ReLoadList_Airport();
+                                    //Load lại danh sách sân bay
+                                    ReLoadList_Airport();
+                                }
+                            }
+                            else
+                            {
+                                //Kiểm tra chắc chắn muốn xóa
+                                messageBoxResult = MessageBox.Show("Bạn chắn chắn muốn xóa sân bay?", "Cảnh báo", MessageBoxButton.YesNo);
+                                if (messageBoxResult == MessageBoxResult.No)
+                                    return;
+
+                                var temp = context.SANBAYs.Where(h => h.MaSanBay == Airport_selecteditem.Id).FirstOrDefault();
+                                if (temp != null)
+                                {
+                                    context.SANBAYs.Remove(temp);
+                                    context.SaveChanges();
+                                    MessageBox.Show($"Xóa sân bay thành công!");
+
+                                    //Load lại danh sách sân bay
+                                    ReLoadList_Airport();
+                                }
                             }
                         }
                         else
@@ -670,7 +778,7 @@ namespace FlightTicketSell.ViewModels
                                MessageBox.Show("Vui lòng nhập đầy đủ thông tin hạng vé!", "Cảnh báo");
                                return;
                            }
-                           if (list_ticketclass.Where(h => h.TenHangVe == MoreTicketClass_Name && h.TrangThai == true).FirstOrDefault() != null)
+                           if (list_ticketclass.Where(h => h.TenHangVe == MoreTicketClass_Name).FirstOrDefault() != null)
                            {
                                MessageBox.Show("Tên hạng vé đã tồn tại!", "Cảnh báo");
                                MoreTicketClass_Name = "";
@@ -794,27 +902,71 @@ namespace FlightTicketSell.ViewModels
                      {
                          if (TicketClass_selecteditem != null)
                          {
-                             var exist = context.CHITIETHANGVEs.Where(h => h.MaHangVe == TicketClass_selecteditem.Id).FirstOrDefault();
-                             if (exist != null)
+                             MessageBoxResult messageBoxResult;
+                             if (IsTicketUsed == "Ngừng cung cấp")
                              {
-                                 MessageBox.Show("Hạng vé đã được sử dụng nên không thể xóa!");
-                                 return;
+                                 //Kiểm tra có chuyến bay nào sử dụng vé mà chưa cất cánh
+                                 var list = context.CHITIETHANGVEs.Where(h => h.MaHangVe == TicketClass_selecteditem.Id).ToList();
+                                 foreach (var item in list)
+                                 {
+                                     var exist = context.CHUYENBAYs.Where(h => h.MaChuyenBay == item.MaChuyenBay).FirstOrDefault();
+                                     if (!exist.DaKhoiHanh)
+                                     {
+                                         var code1 = exist.DUONGBAY.SANBAY1.VietTat;
+                                         var code2 = exist.DUONGBAY.SANBAY.VietTat;
+                                         MessageBox.Show("Bạn không thể ngừng cung cấp hạng vé.\nHạng vé đang được cung cấp trên chuyến bay chưa khởi hành: " + code1 + code2 + "-" + exist.MaChuyenBay, "Cảnh báo");
+                                         return;
+                                     }
+                                 }
+
+                                 //Kiểm tra chắc chắn muốn ngừng cung cấp
+                                 messageBoxResult = MessageBox.Show("Bạn chắn chắn muốn ngừng cung cấp hạng vé?", "Cảnh báo", MessageBoxButton.YesNo);
+                                 if (messageBoxResult == MessageBoxResult.No)
+                                     return;
+                                 var disable = context.HANGVEs.Where(h => h.MaHangVe == TicketClass_selecteditem.Id).FirstOrDefault();
+                                 if (disable != null)
+                                 {
+                                     disable.TrangThai = false;
+                                     context.SaveChanges();
+                                     MessageBox.Show($"Ngừng cung cấp hạng vé thành công!");
+
+                                     //Load lại danh sách sân bay
+                                     ReLoadList_TicketClass();
+                                 }
                              }
-                             //Kiểm tra chắc chắn muốn xóa
-                             MessageBoxResult messageBoxResult = MessageBox.Show("Bạn chắn chắn muốn xóa hạng vé?", "Cảnh báo", MessageBoxButton.YesNo);
-                             if (messageBoxResult == MessageBoxResult.No)
-                                 return;
-
-                             var list = context.HANGVEs.ToList();
-                             HANGVE temp = list.Where(h => h.MaHangVe == TicketClass_selecteditem.Id).FirstOrDefault();
-                             if (temp != null)
+                             else if (IsTicketUsed == "Tái cung cấp")
                              {
-                                 temp.TrangThai = false;
-                                 context.SaveChanges();
-                                 MessageBox.Show($"Xóa hạng vé thành công!");
+                                 //Kiểm tra chắc chắn muốn tái cung cấp
+                                 messageBoxResult = MessageBox.Show("Bạn chắn chắn muốn tái cung cấp hạng vé?", "Cảnh báo", MessageBoxButton.YesNo);
+                                 if (messageBoxResult == MessageBoxResult.No)
+                                     return;
+                                 var disable = context.HANGVEs.Where(h => h.MaHangVe == TicketClass_selecteditem.Id).FirstOrDefault();
+                                 if (disable != null)
+                                 {
+                                     disable.TrangThai = true;
+                                     context.SaveChanges();
+                                     MessageBox.Show($"Tái cung cấp hạng vé thành công!");
 
-                                 //Load lại danh sách sân bay
-                                 ReLoadList_TicketClass();
+                                     //Load lại danh sách sân bay
+                                     ReLoadList_TicketClass();
+                                 }
+                             }
+                             else
+                             {
+                                 //Kiểm tra chắc chắn muốn xóa
+                                 messageBoxResult = MessageBox.Show("Bạn chắn chắn muốn xóa hạng vé?", "Cảnh báo", MessageBoxButton.YesNo);
+                                 if (messageBoxResult == MessageBoxResult.No)
+                                     return;
+                                 var temp = context.HANGVEs.Where(h => h.MaHangVe == TicketClass_selecteditem.Id).FirstOrDefault();
+                                 if (temp != null)
+                                 {
+                                     context.HANGVEs.Remove(temp);
+                                     context.SaveChanges();
+                                     MessageBox.Show($"Xóa hạng vé thành công!");
+
+                                     //Load lại danh sách sân bay
+                                     ReLoadList_TicketClass();
+                                 }
                              }
                          }
                          else

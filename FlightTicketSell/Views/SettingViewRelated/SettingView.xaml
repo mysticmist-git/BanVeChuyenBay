@@ -23,9 +23,9 @@
         <Grid >
             <Grid Margin="100 20 100 20 ">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="8*"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="7*"></ColumnDefinition>
+                    <ColumnDefinition Width="8.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="6.5*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
@@ -218,7 +218,7 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
 
-                                    <!--Tên sân bay-->
+                                    <!--Tỉnh thành-->
                                     <GridViewColumn >
                                         <GridViewColumn.Header>
                                             <TextBlock Text="Tỉnh thành" Style="{StaticResource Custom_GridviewHeader}"/>
@@ -226,6 +226,21 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding Province}" Style="{StaticResource Custom_GridviewCell}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <!--Trạng thái-->
+                                    <GridViewColumn >
+                                        <GridViewColumn.Header>
+                                            <TextBlock Text="Trạng thái" Style="{StaticResource Custom_GridviewHeader}"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Status, Converter={valueconverter:StatusAirport_BooleanToString}}"
+                                                           Foreground="{Binding Status, Converter={valueconverter:StatusAirport_BooleanToColor}}"
+                                                           FontWeight="Bold"
+                                                           Style="{StaticResource Custom_GridviewCell}"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -241,7 +256,7 @@
                                     HorizontalAlignment="Right">
                             <!--Nút xóa-->
                             <Button Margin="7 0 0 0" 
-                                    Content="Xóa" 
+                                    Content="{Binding IsAirportUsed}" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
                                 Command="{Binding DeleteAirport_Command}"/>
@@ -312,6 +327,22 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
 
+                                    <!--Trạng thái-->
+                                    <GridViewColumn >
+                                        <GridViewColumn.Header>
+                                            <TextBlock Text="Trạng thái" Style="{StaticResource Custom_GridviewHeader}"/>
+                                        </GridViewColumn.Header>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock 
+                                                    FontWeight="Bold"
+                                                    Text="{Binding Status, Converter={valueconverter:StatusTicketClass_BooleanToString}}" 
+                                                    Foreground="{Binding Status, Converter={valueconverter:StatusTicketClass_BooleanToColor}}"
+                                                    Style="{StaticResource Custom_GridviewCell}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -322,7 +353,7 @@
                                     HorizontalAlignment="Right">
                             <!--Nút xóa-->
                             <Button Margin="7 0 0 0" 
-                                    Content="{Binding IsUsed, Converter={valueconverter:TicketClass_BooleanToString}}"
+                                    Content="{Binding IsTicketUsed}"
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
                                 Command="{Binding DeleteTicketClass_Command}"/>

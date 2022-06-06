@@ -246,6 +246,10 @@
     <Compile Include="ValueConverters\General\BooleanToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\Search\SeatLeftToColorConverter.cs" />
     <Compile Include="ValueConverters\Search\SellBookButtonEnableConverter.cs" />
+    <Compile Include="ValueConverters\Setting\StatusAirport_BooleanToColor.cs" />
+    <Compile Include="ValueConverters\Setting\StatusAirport_BooleanToString.cs" />
+    <Compile Include="ValueConverters\Setting\StatusTicketClass_BooleanToColor.cs" />
+    <Compile Include="ValueConverters\Setting\StatusTicketClass_BooleanToString.cs" />
     <Compile Include="ValueConverters\Setting\TicketClass_BooleanToString.cs" />
     <Compile Include="ViewModels\Base\ActionCommand.cs" />
     <Compile Include="ViewModels\Base\EventToCommandBehavior.cs" />
