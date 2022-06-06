@@ -36,16 +36,26 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <!-- Heading -->
-                <TextBlock Grid.ColumnSpan="6"
-                           Grid.Row="0"
-                           Grid.RowSpan="2"
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.ColumnSpan="6"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Margin="20 20 0 0"
+                    VerticalAlignment="Center">
+                    <!-- Heading -->
+                    <TextBlock 
                            Text="{Binding Index, Converter={valueConverters:IndexToDisplayHeading}}"
                            d:Text="Khách hàng 1"
                            FontSize="20"
-                           Margin="20 20 0 0"
-                           VerticalAlignment="Center"
                            FontWeight="Bold" />
+                    <TextBlock Text="*"
+                               FontWeight="Bold"
+                               FontSize="{StaticResource Small}"
+                               Foreground="{StaticResource RedBrush}"
+                               Margin="3 0 0 0"/>
+                </StackPanel>
+                
 
                 <!-- Customer information filling fields -->
                 <Grid Grid.Row="2" Margin="20 -15 20 10"
@@ -152,17 +162,21 @@
                     BorderBrush="{StaticResource RedBrush}"
                     IsCancel="True"
                     Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                    Content="Thoát"
                      Margin="10 15 10 0"
                     Height="35"
                     FontWeight="Bold">
+                    <ContentControl>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="CloseThick" VerticalAlignment="Center" Margin="0 0 10 0" Height="21" Width="21" />
+                            <TextBlock Text="Thoát" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ContentControl>
                 </Button>
                 
                 <!-- Save button -->
                 <Button 
                     Grid.Column="3" Grid.ColumnSpan="2"
                     Grid.Row="6" Grid.RowSpan="2" 
-                    Content="Lưu"
                     Margin="10 15 10 0"
                    Style="{StaticResource HoverButton}"
                     BorderBrush="{StaticResource GreenBrush}"
@@ -171,6 +185,12 @@
                     FontWeight="Bold"
                     VerticalAlignment="Center"
                     materialDesign:ShadowAssist.Darken="True">
+                    <ContentControl>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ContentSave" VerticalAlignment="Center" Margin="0 0 10 0" Height="21" Width="21" />
+                            <TextBlock Text="Lưu" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ContentControl>
                 </Button>
             </Grid>
         </Border>

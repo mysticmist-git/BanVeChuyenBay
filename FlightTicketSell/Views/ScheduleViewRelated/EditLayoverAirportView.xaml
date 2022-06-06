@@ -134,25 +134,38 @@
                                     VerticalAlignment="Stretch">
                 
             <!--Nút xóa-->
-            
+
                 <Button Margin="0 0 10 0" 
-                                    Content="Hủy" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
                                     Command="{Binding EditLayoverAirport_Cancel_Command}"
                         Height="30"
-                        Width="100"/>
+                        Width="100">
+                    <ContentControl>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="CloseThick" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                            <TextBlock Text="Hủy" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ContentControl>
+                </Button>
 
                 
             <!--Nút thêm-->
-            
-                <Button Margin="10 0 0 0" Content="Lưu" 
+
+                <Button Margin="10 0 0 0"
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource GreenBrush}"
                                 Command="{Binding EditLayoverAirport_Save_Command}"
                                 materialDesign:ShadowAssist.Darken="True" 
                         Height="30"
-                        Width="100"/>
+                        Width="100">
+                    <ContentControl>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ContentSave" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                            <TextBlock Text="Lưu" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ContentControl>
+                </Button>
             </StackPanel>
         </Grid>
     </Border>

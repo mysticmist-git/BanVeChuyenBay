@@ -153,17 +153,25 @@
                             </i:Interaction.Triggers>
                         </TextBox>
 
-                        <!--Nút lưu-->
-                        <Button
-                            Grid.Row="5" Grid.Column="5"
-                            HorizontalAlignment="Right"
-                            Width="100"
-                            Content="Lưu"
+                        <StackPanel  Grid.Row="5" Grid.Column="1"
+                                     Grid.ColumnSpan="5"
+                            HorizontalAlignment="Center" Orientation="Horizontal"
+                                     VerticalAlignment="Center">
+                            <!--Nút lưu-->
+                            <Button
+                            Width="130"
                             Style="{StaticResource HoverButton}"
                             BorderBrush="{StaticResource BlueBrush}"
                             Command="{Binding Save_FlightRegulations_Command}">
-
-                        </Button>
+                                <ContentControl>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="ContentSave" Margin="0 0 10 0" VerticalAlignment="Center" Height="19" Width="19"/>
+                                        <TextBlock Text="Lưu" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </ContentControl>
+                            </Button>
+                        </StackPanel>
+                       
                     </Grid>
                 </Border>
 
@@ -263,15 +271,21 @@
 
                             <!--Nút sửa-->
                             <Button Margin="7 0 0 0" 
-                                    Content="Sửa" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource OrangeBrush}"
                                     Command="{Binding EditAirport_Command}"
                                 materialDesign:ShadowAssist.Darken="True"
-                                   />
+                                   >
+                                <ContentControl>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Pencil" Margin="0 0 10 0" VerticalAlignment="Center" Height="19" Width="19"/>
+                                        <TextBlock Text="Sửa" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </ContentControl>
+                            </Button>
 
                             <!--Nút thêm-->
-                            <Button Margin="7 0 10 0" Content="Thêm" 
+                            <Button Margin="7 0 10 0" Content="+ Thêm" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource BlueBrush}"
                                 Command="{Binding MoreAirport_Command}"
@@ -360,15 +374,21 @@
 
                             <!--Nút sửa-->
                             <Button Margin="7 0 0 0" 
-                                    Content="Sửa" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource OrangeBrush}"
                                     Command="{Binding EditTicketClass_Command}"
                                 materialDesign:ShadowAssist.Darken="True"
-                                   />
+                                   >
+                                <ContentControl>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Pencil" Margin="0 0 10 0" VerticalAlignment="Center" Height="19" Width="19"/>
+                                        <TextBlock Text="Sửa" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </ContentControl>
+                            </Button>
 
                             <!--Nút thêm-->
-                            <Button Margin="7 0 10 0" Content="Thêm" 
+                            <Button Margin="7 0 10 0" Content="+ Thêm" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource BlueBrush}"
                                 Command="{Binding MoreTicketClass_Command}"

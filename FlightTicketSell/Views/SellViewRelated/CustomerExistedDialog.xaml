@@ -121,23 +121,38 @@
             </Grid>
 
             <!-- Close button -->
-            <Button Content="Đóng" 
+            <Button 
                     Command="{Binding CloseCommand}"
                 Grid.Row="4" Grid.Column="6"
                     Grid.ColumnSpan="2"
                     HorizontalAlignment="Left"
                Style="{StaticResource HoverButton}"
                     BorderBrush="{StaticResource RedBrush}"
-                Margin="20 0 0 0"/>
+                Margin="20 0 0 0">
+                <ContentControl>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="CloseThick" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                        <TextBlock Text="Đóng" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ContentControl>
+            </Button>
 
             <!-- Choose to use this customer button -->
-            <Button Content="Sử dụng" 
+            <Button 
                     Command="{Binding ReuseCommand}"
                     Style="{StaticResource HoverButton}"
                     BorderBrush="{StaticResource GreenBrush}"
                 ToolTip="Dùng thông tin của khách hàng này"
                 Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2"
-                Margin="20 0 0 0" />
+                Margin="20 0 0 0" 
+                    >
+                <ContentControl>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Tick" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                        <TextBlock Text="Sử dụng" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ContentControl>
+            </Button>
 
         </Grid>
     </Border>

@@ -48,7 +48,7 @@
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center" />
         </Button>
-        
+
         <Grid Margin="50,20,50,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -89,21 +89,23 @@
                     </Grid.RowDefinitions>
 
                     <!--Header-->
-                    <TextBlock Margin="21,0,0,0" Grid.Row="0" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Column="2" Grid.ColumnSpan="2" >Chi tiết chuyến bay</TextBlock>
+                    <TextBlock Margin="21,0,0,0" 
+                               Grid.Row="0" 
+                               VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Column="2" Grid.ColumnSpan="2" >Chi tiết chuyến bay</TextBlock>
 
                     <!--Sân bay đi và sân bay đến-->
                     <Grid Background="#fff" Margin="0,0,0,0" Grid.Row="1" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                            <ColumnDefinition Width="5*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
@@ -113,8 +115,14 @@
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Mã chuyến bay</TextBlock>
+                            <TextBlock Margin="0,0,0,0" 
+                                       HorizontalAlignment="Left" 
+                                       VerticalAlignment="Bottom" 
+                                       FontFamily="{StaticResource RobotoBlack}" 
+                                       FontSize="{StaticResource Small}" 
+                                       Grid.Row="0" >Mã chuyến bay</TextBlock>
                             <TextBox  IsReadOnly="True"
+                                      Focusable="False"
                                         Name="Ma_Chuyen_Bay"
                                       Margin="0 -10 0 0"
                                         Text="{Binding FlightInfo.DisplayFlightCode, Mode=OneWay}"
@@ -135,10 +143,10 @@
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đi</TextBlock>
+                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Sân bay đi</TextBlock>
                             <TextBox IsReadOnly="True" 
                                         Name="San_Bay_Di"
-
+                                    Focusable="False"
                                       Margin="0 -10 0 0"
                                         Text="{Binding FlightInfo.SanBayDi, Mode=OneWay}"
                                         Grid.Row="1"
@@ -158,9 +166,10 @@
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đến</TextBlock>
+                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Sân bay đến</TextBlock>
                             <TextBox IsReadOnly="True" 
                                         Name="San_Bay_Den"
+                                      Focusable="False"
                                       Margin="0 -10 0 0"
                                         Text="{Binding FlightInfo.SanBayDen, Mode=OneWay}" 
                                         Grid.Row="1" 
@@ -180,10 +189,11 @@
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Ngày giờ bay</TextBlock>
+                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Ngày giờ bay</TextBlock>
                             <Grid Grid.Row="1">
                                 <TextBox IsReadOnly="True" 
                                             Name="Ngay_Gio_Bay"
+                                          Focusable="False"
                                           Margin="0 -10 0 0"
                                             Text="{Binding FlightInfo.DisplayDepartDate, Mode=OneWay}"
                                             Grid.Row="1"
@@ -204,9 +214,10 @@
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Thời gian bay</TextBlock>
+                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Thời gian bay</TextBlock>
                             <TextBox IsReadOnly="True"
                                         Name="Thoi_Gian_Bay"
+                                      Focusable="False"
                                       Margin="0 -10 0 0"
                                         Text="{Binding FlightInfo.ThoiGianBay, Mode=OneWay}"
                                         Grid.Row="1"
@@ -379,7 +390,7 @@
                                Margin="0 0 20 0"/>
                 </Grid>
             </Border>
-            
+
             <!--Hạng vé-->
             <Border Grid.Column="6" Grid.ColumnSpan="4"
                     Grid.Row="3" Grid.RowSpan="6"
@@ -403,8 +414,8 @@
                                        FontSize="{StaticResource Small}" />
                     </Border>
 
-                        <Border Grid.Row="1" Padding="30 15">
-                            <DataGrid
+                    <Border Grid.Row="1" Padding="30 15">
+                        <DataGrid
                                 IsReadOnly="True"
                                 Name="Thong_Tin_Hang_Ve"
                                 Background="Transparent"
@@ -427,7 +438,7 @@
                                     Header="Tên hạng vé"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                                 <!-- set a max length to get an indicator in the editor -->
-                                    <materialDesign:DataGridTextColumn
+                                <materialDesign:DataGridTextColumn
                                     Width="Auto"
                                     IsReadOnly="True"
                                     Binding="{Binding DisplayTicketPrice}"
@@ -460,39 +471,56 @@
                 <!-- Edit flight info button -->
                 <Button 
                     Grid.Column="4"
-                    Content="Chỉnh sửa"
                     IsEnabled="{Binding FlightInfo.DaKhoiHanh, Converter={valueConverters:BooleanInvertConverter}}"
                     BorderBrush="{StaticResource OrangeBrush}"
                     Style="{StaticResource HoverButton}"
                     Height="45"
                     Command="{Binding EditCommand}"
                     ToolTip="Chỉnh sửa thông tin chuyến bay"
-                    materialDesign:RippleAssist.Feedback="#DD000000" />
+                    materialDesign:RippleAssist.Feedback="#DD000000">
+                    <ContentControl>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="AirplaneSettings" Margin="0 0 12 0" VerticalAlignment="Center" Height="28" Width="28"/>
+                            <TextBlock Text="Chỉnh sửa" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ContentControl>
+                </Button>
 
                 <!-- Buy ticket button -->
                 <Button 
                     Grid.Column="0" 
                     IsEnabled="{Binding FlightInfo.IsAbleToSellAndBook}"
-                    Content="Mua vé"
                     BorderBrush="{StaticResource GreenBrush}"
                     Style="{StaticResource HoverButton}"
                     Height="45"
                     Command="{Binding TicketBuyCommand}"
-                    ToolTip="Xem vé đã bán, chỗ đã đặt"
+                    ToolTip="Mua vé"
                     materialDesign:RippleAssist.Feedback="#DD000000">
+                    <ContentControl>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Cash" Margin="0 0 12 0" VerticalAlignment="Center" Height="30" Width="30"/>
+                            <TextBlock Text="Mua vé" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ContentControl>
                 </Button>
 
                 <!-- Place Reservation book button -->
                 <Button 
                     Grid.Column="2"
                     IsEnabled="{Binding FlightInfo.IsAbleToSellAndBook}"
-                    Content="Đặt chỗ"
                     BorderBrush="{StaticResource RedBrush}"
                     Style="{StaticResource HoverButton}"
                     Height="45"
                     Command="{Binding PlaceBookCommand}"
-                    ToolTip="Xem vé đã bán, chỗ đã đặt"
-                    materialDesign:RippleAssist.Feedback="#DD000000" />
+                    ToolTip="Đặt chỗ"
+                    materialDesign:RippleAssist.Feedback="#DD000000" >
+                    <ContentControl>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ArrowTopRightThick" Margin="0 0 12 0" VerticalAlignment="Center" Height="34" Width="34"/>
+                            <TextBlock Text="Đặt chỗ" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ContentControl>
+                </Button>
             </Grid>
 
 
@@ -502,14 +530,20 @@
             <!-- Show ticket sold, place reserved button -->
             <Button Grid.Column="7" Grid.ColumnSpan="3"
                     Grid.Row="10" Grid.RowSpan="1" 
-                    Content="Vé đã bán / Chỗ đã đặt"
                     Margin=" 0 10 50 -10"
                     BorderBrush="{StaticResource BlueBrush}"
                     Style="{StaticResource HoverButton}"
                     Height="45"
                     Command="{Binding TickedSoldBookedCommand}"
                     ToolTip="Xem vé đã bán, chỗ đã đặt"
-                    materialDesign:RippleAssist.Feedback="#DD000000" />
+                    materialDesign:RippleAssist.Feedback="#DD000000">
+                <ContentControl>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="TableCheck" Margin="0 0 12 0" VerticalAlignment="Center" Height="28" Width="28"/>
+                        <TextBlock Text="Vé đã bán / Chỗ đã đặt" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ContentControl>
+            </Button>
 
         </Grid>
     </Grid>

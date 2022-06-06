@@ -42,7 +42,7 @@
                     Background="White" 
                     Padding="60 20" 
                     Margin="90 0"
-                    MaxWidth="800"
+                    MaxWidth="600"
                     Style="{StaticResource DropShadow}">
                         <Border.Resources>
                             <sys:Int32 x:Key="LayoutTransformWidth">600</sys:Int32>
@@ -55,9 +55,11 @@
                             <!-- Month -->
                             <StackPanel Margin="40 5 40 5"
                                 HorizontalAlignment="Center">
-                                <TextBlock Text="Tháng" Style="{StaticResource FieldLabelText}" />
+                                <TextBlock Text="Tháng" Style="{StaticResource FieldLabelText}" 
+                                             FontSize="20"/>
                                 <ComboBox materialDesign:HintAssist.Hint="Chọn tháng"
                                           IsReadOnly="True"
+                                          FontSize="20"
                                           IsEditable="False"
                                       materialDesign:HintAssist.HintOpacity=".26"
                                       MinWidth="150"
@@ -75,10 +77,11 @@
 
                             <!-- Year -->
                             <StackPanel Margin="40 5 40 5" HorizontalAlignment="Center">
-                                <TextBlock Text="Năm" Style="{StaticResource FieldLabelText}" />
+                            <TextBlock Text="Năm" Style="{StaticResource FieldLabelText}"   FontSize="20"/>
                                 <ComboBox materialDesign:HintAssist.Hint="Chọn năm"
                                           IsReadOnly="True"
                                           IsEditable="False"
+                                           FontSize="20"
                                   materialDesign:HintAssist.HintOpacity=".26"
                                   MinWidth="150"
                                   HorizontalAlignment="Stretch"
@@ -163,7 +166,8 @@
                         <TextBlock Text="Bảng báo cáo doanh thu" 
                                        Grid.Row="0"
                                        Style="{StaticResource FieldLabelText}" 
-                                       HorizontalAlignment="Center" />
+                                       HorizontalAlignment="Center"
+                                   FontSize="{StaticResource Small}"/>
 
                         <!-- Report table -->
                             <DataGrid x:Name="reportDataGrid"
@@ -185,15 +189,22 @@
                     </Border>
 
                     <!-- Print button -->
-                    <Button Content="In báo cáo" 
+                <Button 
                     Command="{Binding PrintCommand}"
                     CommandParameter="{Binding ElementName=UC, Converter={valueConverters:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverters:ViewInterface.Report}}"
                     Grid.Row="3" 
-                    HorizontalAlignment="Right" 
-                    Width="150"
+                    HorizontalAlignment="Center" 
+                    Width="180"
                     BorderBrush="{StaticResource GreenBrush}" 
                     Style="{StaticResource HoverButton}"
-                    Margin="0 20 20 20"/>
+                    Margin="0 20 20 20">
+                    <ContentControl>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Printer" Margin="0 0 10 0" VerticalAlignment="Center" Height="19" Width="19"/>
+                            <TextBlock Text="In báo cáo" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ContentControl>
+                </Button>
                 </Grid>
             </materialDesign:DialogHost>
         </Grid>

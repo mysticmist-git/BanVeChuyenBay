@@ -74,8 +74,22 @@
                             <RowDefinition Height="2*"/>
                         </Grid.RowDefinitions>
 
-                        <!--Tựa-->
-                        <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Bottom"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Thông tin chuyến bay</TextBlock>
+                        <StackPanel Margin="30 0 0 0" 
+                                   Grid.Row="0" 
+                                   Grid.ColumnSpan="4" 
+                                   VerticalAlignment="Bottom"
+                                    Orientation="Horizontal">
+                            <!--Tựa-->
+                            <TextBlock   
+                                   FontFamily="{StaticResource RobotoBlack}" 
+                                   FontSize="{StaticResource Small}" >Thông tin chuyến bay</TextBlock>
+
+                            <TextBlock Text="*" Foreground="{StaticResource RedBrush}"
+                                       FontSize="{StaticResource Small}"
+                                       VerticalAlignment="Top"
+                                       FontWeight="Bold"
+                                       Margin="3 -3 0 0"/>
+                        </StackPanel>
 
                         <!--Sân bay đi-->
                         <TextBox   Grid.Row="1" Grid.Column="1" 
@@ -84,8 +98,7 @@
                                    VerticalAlignment="Center" 
                                    Text="{Binding DepartureAirport.Name}"
                                      materialDesign:TextFieldAssist.HasClearButton="True">
-                             
-                        <!--Command-->
+                            <!--Command-->
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PreviewMouseDown">
                                     <i:InvokeCommandAction Command="{Binding ChooseDepartureAirport_Command}"/>
@@ -348,22 +361,34 @@
                                     HorizontalAlignment="Right">
                             <!--Nút xóa-->
                             <Button Margin="7 0 0 0" 
-                                    Content="Xóa" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
-                                Command="{Binding Delete_LayoverAirport_Command}"/>
+                                Command="{Binding Delete_LayoverAirport_Command}">
+                                <ContentControl>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Delete" Margin="0 0 10 0" VerticalAlignment="Center" Height="19" Width="19"/>
+                                        <TextBlock Text="Xóa" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </ContentControl>
+                            </Button>
 
                             <!--Nút sửa-->
                             <Button Margin="7 0 0 0" 
-                                    Content="Sửa" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource OrangeBrush}"
                                     Command="{Binding Open_Window_EditLayoverAirport_Command}"
                                 materialDesign:ShadowAssist.Darken="True"
-                                   />
+                                   >
+                                <ContentControl>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Pencil" Margin="0 -1 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                                        <TextBlock Text="Sửa" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </ContentControl>
+                            </Button>
 
                             <!--Nút thêm-->
-                            <Button Margin="7 0 10 0" Content="Thêm" 
+                            <Button Margin="7 0 10 0" Content="+ Thêm" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource BlueBrush}"
                                 Command="{Binding Open_Window_EnterLayoverAirport_Command}"
@@ -390,8 +415,21 @@
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
 
-                        <!--Tựa-->
-                        <TextBlock Margin="30 0 0 0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center"  FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Hạng vé</TextBlock>
+                        <StackPanel Margin="30 0 0 0" 
+                                   Grid.Row="0" 
+                                   Grid.ColumnSpan="4" 
+                                   VerticalAlignment="Center" 
+                                    Orientation="Horizontal">
+                            <!--Tựa-->
+                            <TextBlock  
+                                   FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" >Hạng vé</TextBlock>
+
+                            <TextBlock Text="*" Foreground="{StaticResource RedBrush}"
+                                       FontSize="{StaticResource Small}"
+                                       VerticalAlignment="Top"
+                                       FontWeight="Bold"
+                                       Margin="3 -3 0 0"/>
+                        </StackPanel>
 
                         <!--Danh sách hạng vé-->
                         <DataGrid
@@ -437,22 +475,34 @@
                                     HorizontalAlignment="Right">
                             <!--Nút xóa-->
                             <Button Margin="7 0 0 0" 
-                                    Content="Xóa" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
-                                Command="{Binding Delete_EnteredTicketClass_Command}"/>
+                                Command="{Binding Delete_EnteredTicketClass_Command}">
+                                <ContentControl>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Delete" Margin="0 0 10 0" VerticalAlignment="Center" Height="19" Width="19"/>
+                                        <TextBlock Text="Xóa" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </ContentControl>
+                            </Button>
 
                             <!--Nút sửa-->
                             <Button Margin="7 0 0 0" 
-                                    Content="Sửa" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource OrangeBrush}"
                                     Command="{Binding Open_Window_EditTicketClass_Command}"
                                 materialDesign:ShadowAssist.Darken="True"
-                                   />
+                                   >
+                                <ContentControl>
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="Pencil" Margin="0 -1 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                                        <TextBlock Text="Sửa" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </ContentControl>
+                            </Button>
 
                             <!--Nút thêm-->
-                            <Button Margin="7 0 10 0" Content="Thêm" 
+                            <Button Margin="7 0 10 0" Content="+ Thêm" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource BlueBrush}"
                                 Command="{Binding Open_Window_EnterTicketClass_Command}"
@@ -470,20 +520,33 @@
                                     HorizontalAlignment="Center">
                     <!--Nút xóa-->
                     <Button Margin="0 0 10 0" 
-                                    Content="Làm mới" 
                             Width="130"
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
-                                    Command="{Binding RefreshScheduleAFlight_Command}"/>
+                                    Command="{Binding RefreshScheduleAFlight_Command}">
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Refresh" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                                <TextBlock Text="Làm mới" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
 
                     <!--Nút thêm-->
-                    <Button Margin="10 0 0 0" Content="Nhận lịch bay" 
+                    <Button Margin="10 0 0 0" 
                             Width="180"        
                             Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource GreenBrush}"
                                 Command="{Binding ScheduleAFlight_Command}"
                                 materialDesign:ShadowAssist.Darken="True"
-                                    />
+                                    >
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="AirplanePlus" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                                <TextBlock Text="Nhận lịch bay" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
                 </StackPanel>
             </Grid>
 

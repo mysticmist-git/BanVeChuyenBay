@@ -72,13 +72,20 @@
             Grid.Row="3"
             Style="{StaticResource HoverButton}"
             BorderBrush="{StaticResource BlueBrush}"
-            Content="Đóng"
             FontSize="18"
             HorizontalAlignment="Stretch"
             Width="230"
             Height="35"
             Command="{Binding CloseCommand}"
-            CommandParameter="{Binding ElementName=uc, Converter={valueConverters:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverters:ViewInterface.CustomerDetail_Search}}"/>
+            CommandParameter="{Binding ElementName=uc, Converter={valueConverters:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverters:ViewInterface.CustomerDetail_Search}}"
+                >
+                <ContentControl>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="CloseThick" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                        <TextBlock Text="Đóng" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ContentControl>
+            </Button>
 
             <!-- Customer info list-->
             <ListView Grid.Column="1"

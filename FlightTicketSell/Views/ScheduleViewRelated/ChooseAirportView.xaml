@@ -114,11 +114,17 @@
                                     VerticalAlignment="Stretch">
             <!--Nút xóa-->
             <Button Margin="0 0 0 0" 
-                                    Content="Hủy" 
-                    Width="130"
-                                    Style="{StaticResource HoverButton}"
-                                    BorderBrush="{StaticResource RedBrush}"
-                                    Command="{Binding Cancel_ChooseAirportButton_Command}"/>
+                    Width="110"
+                    Style="{StaticResource HoverButton}"
+                    BorderBrush="{StaticResource RedBrush}"
+                    Command="{Binding Cancel_ChooseAirportButton_Command}">
+                <ContentControl>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="CloseThick" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                        <TextBlock Text="Hủy" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ContentControl>
+            </Button>
 
             <!--Nút thêm-->
             <!--<Button Margin="7 0 10 0" Content="Chọn" 

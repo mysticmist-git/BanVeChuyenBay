@@ -12,7 +12,7 @@
              DataContext="{Binding ChangeTicketViewModel, Source={x:Static vm:ViewModelLocator.Instance}}"
              d:DesignHeight="720" d:DesignWidth="1366"
              d:Background="{StaticResource LightGrayBrush}">
-    
+
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -90,15 +90,15 @@
                     <Grid Background="#fff" Margin="0,1,0,0" Grid.Row="1" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                            <ColumnDefinition Width="5*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
@@ -108,7 +108,7 @@
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Mã chuyến bay</TextBlock>
+                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Mã chuyến bay</TextBlock>
                             <TextBox  IsReadOnly="True"
                                         Text="{Binding FlightInfo.DisplayFlightCode, Mode=OneWay}"
                                         Grid.Row="1" 
@@ -130,7 +130,7 @@
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đi</TextBlock>
+                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Sân bay đi</TextBlock>
                             <TextBox IsReadOnly="True" 
                                         Text="{Binding FlightInfo.SanBayDi, Mode=OneWay}"
                                         Grid.Row="1"
@@ -151,7 +151,7 @@
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đến</TextBlock>
+                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Sân bay đến</TextBlock>
                             <TextBox IsReadOnly="True" 
                                         Text="{Binding FlightInfo.SanBayDen, Mode=OneWay}" 
                                         Grid.Row="1" 
@@ -172,7 +172,7 @@
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Ngày giờ bay</TextBlock>
+                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Ngày giờ bay</TextBlock>
                             <Grid Grid.Row="1">
                                 <TextBox IsReadOnly="True" 
                                             Text="{Binding FlightInfo.DisplayDepartDate, Mode=OneWay}"
@@ -195,7 +195,7 @@
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Thời gian bay</TextBlock>
+                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Thời gian bay</TextBlock>
                             <TextBox IsReadOnly="True"
                                         Text="{Binding FlightInfo.ThoiGianBay, Mode=OneWay}"
                                         Grid.Row="1"
@@ -535,8 +535,8 @@
                         <ColumnDefinition Width="4*"/>
                         <ColumnDefinition Width="0.5*"/>
                         <ColumnDefinition Width="4*"/>
-                        
-                        
+
+
                     </Grid.ColumnDefinitions>
                     <!-- Pay button -->
                     <Button
@@ -545,12 +545,19 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Right"
                      Width="170"
-                    Content="Hủy đặt vé"     
+                      
                     Command="{Binding CancelTicketCommand}"
                     BorderBrush="{StaticResource RedBrush}"
                     Style="{StaticResource HoverButton}"
                     Height="45"
-                    materialDesign:ButtonAssist.CornerRadius="7" />
+                    materialDesign:ButtonAssist.CornerRadius="7" >
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="CloseThick" VerticalAlignment="Center" Margin="0 0 10 0" Height="25" Width="25" />
+                                <TextBlock Text="Hủy đặt vé" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
 
                     <Button Grid.Column="2"
                             IsEnabled="{Binding IsBookCanceled, Converter={valueConverters:BooleanInvertConverter}}"
@@ -573,9 +580,9 @@
                     </Button>
                 </Grid>
 
-               
+
             </Border>
-           
+
         </Grid>
     </Grid>
 </UserControl>

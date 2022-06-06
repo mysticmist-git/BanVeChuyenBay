@@ -5,36 +5,19 @@
                     >
     <!-- Navigation Header Button -->
     <Style x:Key="NavigationButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="{StaticResource BlueBrush}" />
         <Setter Property="FontSize" Value="{StaticResource Small}" />
         <Setter Property="FontFamily" Value="{StaticResource RobotoBlack}" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Foreground" Value="{StaticResource LightBlueBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource LightBlueBrush}"/>
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="FontWeight" Value="Black"/>
-
-        <!--<Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border TextBlock.Foreground="{TemplateBinding Foreground}"
-                            Background="{TemplateBinding Background}"
-                            Padding="20 0"
-                            >
-
-                        <Border VerticalAlignment="Center" 
-                                HorizontalAlignment="Center" 
-                                Padding="5"
-                                x:Name="UnderlineBorder"
-                                >
-                            <ContentPresenter VerticalAlignment="Center"/>
-                        </Border>
-
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>-->
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Width" Value="160"/>
+        <Setter Property="Height" Value="37"/>
+        <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="15"/>
 
         <!-- Trigger -->
         <Style.Triggers>
@@ -46,49 +29,52 @@
                 <MultiTrigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation Duration="0:0:0.2" To="White" 
-                                                            Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
-                            <ColorAnimation Duration="0:0:0.2" To="{StaticResource LightBlue}" 
+                            <ColorAnimation Duration="0:0:0.1" To="{StaticResource LightBlue}" 
                                                             Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
+                            <DoubleAnimation Duration="0:0:0.1" To="170" Storyboard.TargetProperty="(Button.Width)"/>
+                            <DoubleAnimation Duration="0:0:0.1" To="45" Storyboard.TargetProperty="(Button.Height)"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </MultiTrigger.EnterActions>
                 <MultiTrigger.ExitActions>
                     <BeginStoryboard>
                         <Storyboard FillBehavior="Stop">
-                            <ColorAnimation Duration="0:0:0.2" To="{StaticResource LightBlue}" 
-                                                            Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
-                            <ColorAnimation Duration="0:0:0.2" To="Transparent" 
+                            <ColorAnimation Duration="0:0:0.1" To="{StaticResource Blue}" 
                                                             Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
+                            <DoubleAnimation Duration="0:0:0.1" To="160" Storyboard.TargetProperty="(Button.Width)"/>
+                            <DoubleAnimation Duration="0:0:0.1" To="37" Storyboard.TargetProperty="(Button.Height)"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </MultiTrigger.ExitActions>
-                <!--<MultiTrigger.Setters>
+                <MultiTrigger.Setters>
                     <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
-                </MultiTrigger.Setters>-->
+                </MultiTrigger.Setters>
             </MultiTrigger>
 
             <Trigger Property="attachedProperties:IsButtonSelected.Value" Value="True">
                 <Trigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation Duration="0:0:0.2" To="White" 
-                                                            Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
-                            <ColorAnimation Duration="0:0:0.2" To="{StaticResource LightBlue}" 
+                            <ColorAnimation Duration="0:0:0.1" To="{StaticResource LightBlue}" 
                                                             Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
+                            <DoubleAnimation Duration="0:0:0.1" To="170" Storyboard.TargetProperty="(Button.Width)"/>
+                            <DoubleAnimation Duration="0:0:0.1" To="45" Storyboard.TargetProperty="(Button.Height)"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.EnterActions>
                 <Trigger.ExitActions>
                     <BeginStoryboard>
                         <Storyboard FillBehavior="Stop">
-                            <ColorAnimation Duration="0:0:0.2" To="{StaticResource LightBlue}" 
-                                                            Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" />
-                            <ColorAnimation Duration="0:0:0.2" To="Transparent" 
+                            <ColorAnimation Duration="0:0:0.1" To="{StaticResource Blue}" 
                                                             Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
+                            <DoubleAnimation Duration="0:0:0.1" To="160" Storyboard.TargetProperty="(Button.Width)"/>
+                            <DoubleAnimation Duration="0:0:0.1" To="37" Storyboard.TargetProperty="(Button.Height)"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>
+                <Trigger.Setters>
+                    <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
+                </Trigger.Setters>
             </Trigger>
         </Style.Triggers>
     </Style>

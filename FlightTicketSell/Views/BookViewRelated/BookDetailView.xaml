@@ -91,15 +91,15 @@
                         <Grid Background="#fff" Margin="0,1,0,0" Grid.Row="1" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="4*"></ColumnDefinition>
+                                <ColumnDefinition Width="5*"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
-                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
                                 <ColumnDefinition Width="1*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
@@ -109,7 +109,7 @@
                                     <RowDefinition Height="4*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Mã chuyến bay</TextBlock>
+                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Mã chuyến bay</TextBlock>
                                 <TextBox  IsReadOnly="True" Margin="0 -10 0 0"
                                               Text="{Binding FlightInfo.DisplayFlightCode, Mode=OneWay}"
                                               Grid.Row="1" 
@@ -129,7 +129,7 @@
                                     <RowDefinition Height="4*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đi</TextBlock>
+                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Sân bay đi</TextBlock>
                                 <TextBox IsReadOnly="True" Margin="0 -10 0 0"
                                              Text="{Binding FlightInfo.SanBayDi, Mode=OneWay}"
                                              Grid.Row="1"
@@ -149,7 +149,7 @@
                                     <RowDefinition Height="4*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đến</TextBlock>
+                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Sân bay đến</TextBlock>
                                 <TextBox IsReadOnly="True" Margin="0 -10 0 0"
                                              Text="{Binding FlightInfo.SanBayDen, Mode=OneWay}" 
                                              Grid.Row="1" 
@@ -169,7 +169,7 @@
                                     <RowDefinition Height="4*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Ngày giờ bay</TextBlock>
+                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Ngày giờ bay</TextBlock>
                                 <Grid Grid.Row="1">
                                     <TextBox IsReadOnly="True" Margin="0 -10 0 0"
                                                  Text="{Binding FlightInfo.DisplayDepartDate, Mode=OneWay}"
@@ -191,7 +191,7 @@
                                     <RowDefinition Height="4*"></RowDefinition>
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Số điểm dừng</TextBlock>
+                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Số điểm dừng</TextBlock>
                                 <TextBox IsReadOnly="True" Margin="0 -10 0 0"
                                              Text="{Binding FlightInfo.SoDiemDung, Mode=OneWay}"
                                              Grid.Row="1"
@@ -227,12 +227,20 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <!-- Heading -->
-                        <TextBlock Grid.Row="0" 
+                        <StackPanel Orientation="Horizontal"
+                                    Grid.Row="0"
+                                     Margin="25 10 0 0"
+                                   VerticalAlignment="Center" >
+                            <!-- Heading -->
+                            <TextBlock  
                                    FontSize="20" 
-                                   Margin="25 10 0 0"
-                                   VerticalAlignment="Center" 
                                    FontWeight="Bold"> Khách hàng</TextBlock>
+                            <TextBlock Text="*"
+                                       FontWeight="Bold"
+                                       FontSize="{StaticResource Small}"
+                                       Foreground="{StaticResource RedBrush}"
+                                       Margin="3 0 0 0"/>
+                        </StackPanel>
 
                         <!-- Customer information filling fields -->
                         <Grid Grid.Row="1" Grid.RowSpan="5">
@@ -353,8 +361,22 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <!-- Heading -->
-                        <TextBlock FontSize="20" VerticalAlignment="Center" Grid.Row="0" FontWeight="Bold"> Hạng vé</TextBlock>
+                        <StackPanel
+                            VerticalAlignment="Center" 
+                                   Grid.Row="0" 
+                            Orientation="Horizontal"
+                            >
+                            <!-- Heading -->
+                            <TextBlock FontSize="20" 
+                                   
+                                   FontWeight="Bold"> Hạng vé</TextBlock>
+                            <TextBlock Text="*"
+                                       FontWeight="Bold"
+                                       FontSize="{StaticResource Small}"
+                                       Foreground="{StaticResource RedBrush}"
+                                       Margin="3 0 0 0"/>
+                        </StackPanel>
+
 
                         <DataGrid x:Name="dgTicketTier" Grid.Row="1" Grid.RowSpan="5"
                                       AutoGenerateColumns="False"
@@ -398,8 +420,22 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <!-- Heading -->
-                        <TextBlock Text="Khách hàng thụ hưởng vé" Grid.Row="0" FontSize="20" VerticalAlignment="Top" FontWeight="Bold" />
+
+                        <StackPanel
+                            Orientation="Horizontal"
+                            VerticalAlignment="Top"
+                            Grid.Row="0">
+                            <!-- Heading -->
+                            <TextBlock Text="Khách hàng thụ hưởng vé" 
+                                    FontSize="20" 
+                                    FontWeight="Bold" />
+                            <TextBlock Text="*"
+                                       FontWeight="Bold"
+                                       FontSize="{StaticResource Small}"
+                                       Foreground="{StaticResource RedBrush}"
+                                       Margin="3 0 0 0"/>
+                        </StackPanel>
+
 
                         <!-- Customer info list-->
                         <ListView x:Name="lvCustomers" ItemsSource="{Binding Customers}" Grid.Row="1" Margin="0,10,0,0" d:ItemsSource="{d:SampleData ItemCount=5}">
@@ -535,23 +571,38 @@
                 </Border>
 
                 <Border Grid.Row="10"
-                        Grid.Column="0" Grid.ColumnSpan="10">
+                        Grid.Column="0" Grid.ColumnSpan="10"
+                         HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom">
+
                     <!--Nut tiep tuc-->
                     <Button 
                         Height="40"
                         Width="250"
                         Style="{StaticResource HoverButton}"
                         BorderBrush="{StaticResource BlueBrush}"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom"
+                       
                         Command="{Binding ContinueCommand}" 
                         CommandParameter="{Binding ElementName=uc, Converter={valueConverters:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverters:ViewInterface.BookDetail}}"
                         FontSize="{StaticResource Regular}"
-                        Content="Tiếp tục"
                         materialDesign:ButtonAssist.CornerRadius="7"
-                        />
+                        >
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Tiếp tục" VerticalAlignment="Center"/>
+                                <materialDesign:PackIcon 
+                                    Kind="ArrowRightThick" 
+                                    
+                                    VerticalAlignment="Center" 
+                                    Margin="10 0 0 0" Height="28" Width="28" />
+                                
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
+
+
                 </Border>
-               
+
             </Grid>
         </Grid>
     </materialDesign:DialogHost>

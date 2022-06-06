@@ -241,6 +241,7 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\Application\AppViewToDisplayTextConverter.cs" />
+    <Compile Include="ValueConverters\Application\BorderExpand.cs" />
     <Compile Include="ValueConverters\Base\BaseMultiValueConverter.cs" />
     <Compile Include="ValueConverters\BooleanInvertConverter.cs" />
     <Compile Include="ValueConverters\General\BooleanToVisibilityConverter.cs" />

@@ -88,15 +88,15 @@
                     <Grid Background="#fff" Margin="0,1,0,0" Grid.Row="1" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="4*"></ColumnDefinition>
+                            <ColumnDefinition Width="5*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
@@ -106,7 +106,7 @@
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Mã chuyến bay</TextBlock>
+                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Mã chuyến bay</TextBlock>
                             <TextBox  IsReadOnly="True"
                                         Text="{Binding FlightInfo.DisplayFlightCode, Mode=OneWay}"
                                         Grid.Row="1" 
@@ -127,7 +127,7 @@
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đi</TextBlock>
+                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Sân bay đi</TextBlock>
                             <TextBox IsReadOnly="True" 
                                         Text="{Binding FlightInfo.SanBayDi, Mode=OneWay}"
                                         Grid.Row="1"
@@ -148,7 +148,7 @@
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Sân bay đến</TextBlock>
+                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Sân bay đến</TextBlock>
                             <TextBox IsReadOnly="True" 
                                         Text="{Binding FlightInfo.SanBayDen, Mode=OneWay}" 
                                         Grid.Row="1" 
@@ -169,7 +169,7 @@
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Ngày giờ bay</TextBlock>
+                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Ngày giờ bay</TextBlock>
                             <Grid Grid.Row="1">
                                 <TextBox IsReadOnly="True" 
                                             Text="{Binding FlightInfo.NgayGio, Mode=OneWay}"
@@ -192,7 +192,7 @@
                                 <RowDefinition Height="4*"></RowDefinition>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource RealSmall}" Grid.Row="0" >Thời gian bay</TextBlock>
+                            <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="{StaticResource RobotoBlack}" FontSize="{StaticResource Small}" Grid.Row="0" >Thời gian bay</TextBlock>
                             <TextBox IsReadOnly="True"
                                         Text="{Binding FlightInfo.ThoiGianBay, Mode=OneWay}"
                                         Grid.Row="1"
@@ -292,11 +292,17 @@
                         <RowDefinition Height="4*" />
                     </Grid.RowDefinitions>
 
-                    
-                    <!-- Heading -->
-                    <TextBlock Text="Khách hàng"
-                               Margin="20 15 0 0"
-                               Grid.Row="0" Style="{StaticResource FieldLabelText}" HorizontalAlignment="Left" />
+
+                    <StackPanel Margin="20 15 0 0"
+                               Grid.Row="0"
+                                Orientation="Horizontal">
+                        <!-- Heading -->
+                        <TextBlock Text="Khách hàng"
+                                Style="{StaticResource FieldLabelText}" 
+                               FontSize="{StaticResource Regular}"
+                               HorizontalAlignment="Left" />
+                    </StackPanel>
+                   
 
                     <!-- Customers table -->
                     <Grid Grid.Row="1" Margin="0 10 0 0">

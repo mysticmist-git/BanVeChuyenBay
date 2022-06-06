@@ -61,23 +61,35 @@
                     Style="{StaticResource HoverButton}"
                     Margin="0 0 10 0"
                     BorderBrush="{StaticResource RedBrush}"
-                    Content="Hủy"
                     Command="{Binding MoreTicketClass_Cancel_Button_Command}"
                     Height="30"
                     Width="100"
-                    />
+                    >
+                    <ContentControl>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="CloseThick" Margin="0 0 10 0" VerticalAlignment="Center" Height="20" Width="20"/>
+                            <TextBlock Text="Hủy" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ContentControl>
+                </Button>
 
                 <!--Nút lưu-->
 
                 <Button
                     Margin="10 0 0 0"
-                    Content="Lưu"
                     Command="{Binding MoreTicketClass_Save_Button_Command}"
                     Style="{StaticResource HoverButton}"
                     BorderBrush="{StaticResource GreenBrush}"
                      Height="30"
                     Width="100"
-                    />
+                    >
+                    <ContentControl>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ContentSave" Margin="0 0 10 0" VerticalAlignment="Center" Height="19" Width="19"/>
+                            <TextBlock Text="Lưu" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ContentControl>
+                </Button>
             </StackPanel>
         </Grid>
     </Border>
