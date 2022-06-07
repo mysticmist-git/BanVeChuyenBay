@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -710,6 +711,7 @@ namespace FlightTicketSell.ViewModels
 
                 
              });
+
             FormatMoneyToString = new RelayCommand<object>((p) => { return true; },
              (p) =>
              {
@@ -786,7 +788,7 @@ namespace FlightTicketSell.ViewModels
 
                          // Clear danh sách sân bay trung gian hiện tại
                          for (int i = 0; i < currentOverlayAirports.Count; i++)
-                            context.SANBAYTGs.Remove(currentOverlayAirports[i]);
+                             context.SANBAYTGs.Remove(currentOverlayAirports[i]);
 
                          await context.SaveChangesAsync();
 
@@ -832,7 +834,7 @@ namespace FlightTicketSell.ViewModels
 
                          var theFlight = await context.CHUYENBAYs.Where(cb => cb.MaChuyenBay == ActualFlightCode).FirstOrDefaultAsync();
                          theFlight.DUONGBAY.MaSanBayDi = DepartureAirport.Id;
-                         theFlight.DUONGBAY.MaSanBayDen= LandingAirport.Id;
+                         theFlight.DUONGBAY.MaSanBayDen = LandingAirport.Id;
                          theFlight.GiaVe = Convert.ToDecimal(Regex.Replace(Airfares, @"[^a-zA-Z0-9]", string.Empty));
                          theFlight.DUONGBAY.ThoiGianBay = int.Parse(FlightTime);
                          theFlight.NgayGio = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day, TimeFlight.Hour, TimeFlight.Minute, TimeFlight.Second);
@@ -842,9 +844,18 @@ namespace FlightTicketSell.ViewModels
 
                          //Load lại
                          //IoC.IoC.Rebind<ScheduleViewModel>();
-                         RefreshScheduleAFlight_Command.Execute(null);
+                         //RefreshScheduleAFlight_Command.Execute(null);
 
-                         IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.FlightDetail;
+                         //IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.FlightDetail;
+
+                         // Cập nhật view
+                         OldDepartureAirport = DepartureAirport;
+                         OldLandingAirport = LandingAirport;
+                         OldAirfares = Airfares;
+                         OldFlightTime = FlightTime;
+                         OldDateFlight= DateFlight; 
+                         OldTimeFlight= TimeFlight;
+
                          IoC.IoC.Get<FlightDetailViewModel>().IsJustEdited = true;
                      }
                  }
@@ -873,18 +884,42 @@ namespace FlightTicketSell.ViewModels
                     FlightCode = null;
                 });
 
-            CancelCommand = new RelayCommand<object>((p) => { return true; }, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.FlightDetail);
+            CancelCommand = new RelayCommand<object>(
+                (p) => { return true; },
+                async (p) =>
+                {
+                    var isEdited = await IsFlightInfoEdited();
+
+                    if (isEdited)
+                    {
+                        var result = MessageBox.Show("Bạn có muốn lưu chỉnh sửa?", "Phát hiện thay đổi", MessageBoxButton.YesNoCancel);
+
+                        switch (result)
+                        {
+                            case MessageBoxResult.Yes:
+                                ScheduleAFlight_Command.Execute(null);
+                                break;
+                            case MessageBoxResult.No:
+                                break;
+                            case MessageBoxResult.Cancel:
+                                return;
+                        }
+                    }
+
+                    IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.FlightDetail;
+                });
+
 
             SelectedFlightDateChanged_Command = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                DateTime a = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day);
-                DateTime b = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-                if (a < b)
                 {
-                    MessageBox.Show("Ngày bay không hợp lệ!", "Cảnh báo");
-                    DateFlight = DateTime.Now;
-                }
-            });
+                    DateTime a = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day);
+                    DateTime b = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                    if (a < b)
+                    {
+                        MessageBox.Show("Ngày bay không hợp lệ!", "Cảnh báo");
+                        DateFlight = DateTime.Now;
+                    }
+                });
 
             SelectedFlightTimeChanged_Command = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -1005,14 +1040,14 @@ namespace FlightTicketSell.ViewModels
                   // Close dialog
                   DialogHost.CloseDialogCommand.Execute(null, null);
               }
-           );
+            );
             EnterLayoverAirport_Cancel_Command = new RelayCommand<object>((p) => { return true; },
               (p) =>
               {
                   // Close dialog
                   DialogHost.CloseDialogCommand.Execute(null, null);
               }
-           );
+            );
             Open_Window_EditLayoverAirport_Command = new RelayCommand<object>((p) => { return true; },
              async (p) =>
              {
@@ -1025,7 +1060,7 @@ namespace FlightTicketSell.ViewModels
                  EditLayoverAirportView editLayoverAirportView = new EditLayoverAirportView { DataContext = this };
                  var result = await DialogHost.Show(editLayoverAirportView, "RootDialog");
              }
-           );
+            );
             EditLayoverAirport_Save_Command = new RelayCommand<object>((p) => { return true; },
               (p) =>
               {
@@ -1066,14 +1101,14 @@ namespace FlightTicketSell.ViewModels
                       }
                   }
               }
-           );
+            );
             EditLayoverAirport_Cancel_Command = new RelayCommand<object>((p) => { return true; },
               (p) =>
               {
                   // Close dialog
                   DialogHost.CloseDialogCommand.Execute(null, null);
               }
-           );
+            );
             Delete_LayoverAirport_Command = new RelayCommand<object>((p) => { return true; },
               (p) =>
               {
@@ -1095,7 +1130,7 @@ namespace FlightTicketSell.ViewModels
                   }
                   MessageBox.Show("Xóa sân bay trung gian thành công!", "Cảnh báo");
               }
-           );
+            );
 
 
             #endregion
@@ -1199,7 +1234,7 @@ namespace FlightTicketSell.ViewModels
                    // Close dialog
                    DialogHost.CloseDialogCommand.Execute(null, null);
                }
-           );
+            );
             Open_Window_EditTicketClass_Command = new RelayCommand<object>((p) => { return true; },
                async (p) =>
                {
@@ -1212,7 +1247,7 @@ namespace FlightTicketSell.ViewModels
                    EditEnteredTicketClassView editEnteredTicketClassView = new EditEnteredTicketClassView { DataContext = this };
                    var result = await DialogHost.Show(editEnteredTicketClassView, "RootDialog");
                }
-           );
+            );
             EditTicketClass_Save_Command = new RelayCommand<object>((p) => { return true; },
                 (p) =>
                 {
@@ -1225,14 +1260,14 @@ namespace FlightTicketSell.ViewModels
                     // Close dialog
                     DialogHost.CloseDialogCommand.Execute(null, null);
                 }
-           );
+            );
             EditTicketClass_Cancel_Command = new RelayCommand<object>((p) => { return true; },
                 (p) =>
                 {
                     // Close dialog
                     DialogHost.CloseDialogCommand.Execute(null, null);
                 }
-           );
+            );
             Delete_EnteredTicketClass_Command = new RelayCommand<object>((p) => { return true; },
                 (p) =>
                 {
@@ -1250,8 +1285,103 @@ namespace FlightTicketSell.ViewModels
                     List_TicketClass.Remove(temp);
                     MessageBox.Show("Xóa hạng vé thành công!", "Cảnh báo");
                 }
-           );
+            );
             #endregion
         }
+
+        #region Methods
+
+        /// <summary>
+        /// Checks if any fields is edited or not
+        /// </summary>
+        /// <returns></returns>
+        private async Task<bool> IsFlightInfoEdited()
+        {
+            // Check if layover airport list changed     
+            using (var context = new FlightTicketSellEntities())
+            {
+                var layoverAirportList = await context.CHUYENBAYs
+                    .Where(cb => cb.MaChuyenBay == ActualFlightCode)
+                    .Select(cb => cb.MaDuongBay)
+                    .Join(
+                        context.SANBAYTGs,
+                        mdb => mdb,
+                        sbtg => sbtg.MaDuongBay,
+                        (mdb, sbtg) => new
+                        {
+                            sbtg.MaSanBay,
+                            sbtg.ThuTu,
+                            sbtg.ThoiGianDung,
+                            sbtg.GhiChu
+                        }
+                    ).ToListAsync();
+
+                if (List_LayoverAirport.Count != layoverAirportList.Count)
+                    return true;
+
+                for (int i = 0; i < List_LayoverAirport.Count; i++)
+                {
+                    if (List_LayoverAirport[i] is null) continue;
+
+                    for (int j = 0; j < layoverAirportList.Count; j++)
+                    {
+                        if (layoverAirportList[j].ThuTu != i + 1)
+                            continue;
+
+                        if (
+                            List_LayoverAirport[i].Note != layoverAirportList[j].GhiChu ||
+                            List_LayoverAirport[i].StopTime != layoverAirportList[j].ThoiGianDung
+                            )
+                            return true;
+                    }
+                }
+
+                // Check if ticket class list changed     
+                var ticketClassList = await context.CHITIETHANGVEs
+                    .Where(cthv => cthv.MaChuyenBay == ActualFlightCode)
+                    .ToListAsync();
+
+                if (List_TicketClass.Count != ticketClassList.Count)
+                    return true;
+
+                for (int i = 0; i < List_TicketClass.Count; i++)
+                {
+                    if (List_TicketClass[i] is null) continue;
+
+                    for (int j = 0; j < ticketClassList.Count; j++)
+                    {
+                        // Check if it's in the database
+                        if (List_TicketClass[i].Id_TicketClass != ticketClassList[j].MaHangVe)
+                        {
+                            if (j + 1 < ticketClassList.Count)
+                                continue;
+                            else
+                                return true;
+                        }
+                        else
+                        {
+                            if (List_TicketClass[i].Seats != ticketClassList[j].SoGhe)
+                                return true;
+                            else
+                                break;
+                        }
+                    }
+                }
+
+            }
+
+            if (
+                DepartureAirport != OldDepartureAirport ||
+                LandingAirport != OldLandingAirport ||
+                Airfares != OldAirfares ||
+                FlightTime != OldFlightTime ||
+                DateFlight != OldDateFlight ||
+                TimeFlight != OldTimeFlight
+                )
+                return true;
+
+            return false;
+        }
+        #endregion
     }
 }
