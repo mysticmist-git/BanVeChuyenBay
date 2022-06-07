@@ -3,14 +3,18 @@ using FlightTicketSell.ViewModels.Schedule;
 using FlightTicketSell.ViewModels.Setting;
 using FlightTicketSell.Views;
 using MaterialDesignThemes.Wpf;
+using OfficeOpenXml;
 using System;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Data.Entity.Core;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
+using MessageBox = System.Windows.MessageBox;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -138,6 +142,10 @@ namespace FlightTicketSell.ViewModels
         /// Hủy nhận lịch bay
         /// </summary>
         public ICommand RefreshScheduleAFlight_Command { get; set; }
+        /// <summary>
+        /// Import chuyến bay từ excel
+        /// </summary>
+        public ICommand ImportFromExcel_Command { get; set; }
         #endregion
 
         #region Properties
@@ -275,6 +283,12 @@ namespace FlightTicketSell.ViewModels
         /// Sân bay trung gian được chọn để edit
         /// </summary>
         public LayoverAirport List_LayoverAirport_SelectedItem { get; set; }
+
+        /// <summary>
+        /// Itemsource của datagrid chứa data from excel
+        /// </summary>
+
+
 
         private bool FirstLoad { get; set; } = true;
         #endregion
@@ -722,6 +736,72 @@ namespace FlightTicketSell.ViewModels
                     List_LayoverAirport.Clear();
                     FlightCode = null;
                 });
+
+            ImportFromExcel_Command = new RelayCommand<object>((p) => { return true; }, (p) =>
+             {
+                 int RowHeaderBegin = 8;
+                 int RowDataBegin = RowHeaderBegin + 1;
+                 string filePath = "";
+                 OpenFileDialog dlg = new OpenFileDialog();
+                 dlg.Filter = "Excel |*.xlsx| Excel 2003 |*.xls| All files |*.*";
+                 if (dlg.ShowDialog() == DialogResult.OK)
+                 {
+                     filePath = dlg.FileName;
+                 }
+                 if (string.IsNullOrEmpty(filePath))
+                 {
+                     MessageBox.Show("File không hợp lệ!", "Cảnh báo");
+                     return;
+                 }
+
+                 DataTable dataTable = new DataTable();
+
+                 var package = new ExcelPackage(new System.IO.FileInfo(filePath));
+                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                 ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+
+                 dataTable.Columns.Add("STT");
+                 for (int i = worksheet.Dimension.Start.Column; i <= worksheet.Dimension.End.Column; i++)
+                 {
+                     string temp = worksheet.Cells[worksheet.Dimension.Start.Row + RowHeaderBegin, i].Value.ToString();
+                     dataTable.Columns.Add(temp);
+                 }
+
+                 int stt = 1;
+                 for (int i = worksheet.Dimension.Start.Row + RowDataBegin; i < worksheet.Dimension.End.Row; i++)
+                 {
+                     ObservableCollection<string> list = new ObservableCollection<string>();
+                     list.Add((stt++).ToString());
+                     for (int j = worksheet.Dimension.Start.Column; j <= worksheet.Dimension.End.Column; j++)
+                     {
+                         var tencot = worksheet.Cells[1 + RowHeaderBegin, j].Value.ToString();
+                         var giatri = worksheet.Cells[i, j].Value.ToString().Remove(0, 1);
+                         switch (tencot)
+                         {
+                             case "Giá vé":
+                                 giatri = string.Format("{0:0,0}", giatri);
+                                 break;
+                             case "Hạng vé":
+                                 giatri = giatri.Replace("-", "\n");
+                                 giatri = giatri.Replace("_", ", ghế trống: ");
+                                 break;
+                             case "Sân bay trung gian":
+                                 giatri = giatri.Replace("-", "\n");
+                                 giatri = giatri.Replace(":", ", ghi chú: ");
+                                 giatri = giatri.Replace("_", ", thời gian dừng: ");
+                                 break;
+                             default:
+                                 break;
+                         }
+                         list.Add(giatri);
+                     }
+                     dataTable.Rows.Add(list.ToArray());
+                 }
+
+                 ImportFromExcel importFromExcel = new ImportFromExcel(dataTable);
+                 importFromExcel.ShowDialog();
+
+             });
 
             SelectedFlightDateChanged_Command = new RelayCommand<object>((p) => { return true; }, (p) =>
              {

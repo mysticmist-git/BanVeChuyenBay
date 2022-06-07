@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,30 +11,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Text.RegularExpressions;
-using Microsoft.Win32;
-using OfficeOpenXml;
-using System.Data;
 
 namespace FlightTicketSell.Views
 {
     /// <summary>
-    /// Interaction logic for ScheduleView.xaml
+    /// Interaction logic for ImportFromExcel.xaml
     /// </summary>
-    public partial class ScheduleView : UserControl
+    public partial class ImportFromExcel : Window
     {
-        public ScheduleView()
+        public ImportFromExcel()
         {
             InitializeComponent();
         }
 
-        //Không cho nhập chữ
-        private new void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        public ImportFromExcel(DataTable dataTable)
         {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
+            InitializeComponent();
+            datagridfromexcel.ItemsSource = dataTable.DefaultView;
         }
     }
 }

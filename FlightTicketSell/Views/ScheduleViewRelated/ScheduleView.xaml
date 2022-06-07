@@ -518,6 +518,20 @@
                             Grid.ColumnSpan="3"
                                      Grid.Row="6" Grid.Column="0" 
                                     HorizontalAlignment="Center">
+                    <!--Nút import-->
+                    <Button Margin="0 0 10 0" 
+                            Width="130"
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource OrangeBrush}"
+                                    Command="{Binding ImportFromExcel_Command}">
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Import" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                                <TextBlock Text="Import" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
+
                     <!--Nút xóa-->
                     <Button Margin="0 0 10 0" 
                             Width="130"
