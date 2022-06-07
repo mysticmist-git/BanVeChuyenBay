@@ -891,20 +891,7 @@ namespace FlightTicketSell.ViewModels
                     var isEdited = await IsFlightInfoEdited();
 
                     if (isEdited)
-                    {
-                        var result = MessageBox.Show("Bạn có muốn lưu chỉnh sửa?", "Phát hiện thay đổi", MessageBoxButton.YesNoCancel);
-
-                        switch (result)
-                        {
-                            case MessageBoxResult.Yes:
-                                ScheduleAFlight_Command.Execute(null);
-                                break;
-                            case MessageBoxResult.No:
-                                break;
-                            case MessageBoxResult.Cancel:
-                                return;
-                        }
-                    }
+                        AskWhenLeaveUnsave();
 
                     IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.FlightDetail;
                 });
@@ -1295,7 +1282,7 @@ namespace FlightTicketSell.ViewModels
         /// Checks if any fields is edited or not
         /// </summary>
         /// <returns></returns>
-        private async Task<bool> IsFlightInfoEdited()
+        public async Task<bool> IsFlightInfoEdited()
         {
             // Check if layover airport list changed     
             using (var context = new FlightTicketSellEntities())
@@ -1382,6 +1369,28 @@ namespace FlightTicketSell.ViewModels
 
             return false;
         }
+
+        /// <summary>
+        /// Ask if user want to save changes
+        /// </summary>
+        public MessageBoxResult AskWhenLeaveUnsave()
+        {
+            var result = MessageBox.Show("Bạn có muốn lưu chỉnh sửa?", "Phát hiện thay đổi", MessageBoxButton.YesNoCancel);
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    ScheduleAFlight_Command.Execute(null);
+                    return MessageBoxResult.Yes;
+                case MessageBoxResult.No:
+                    return MessageBoxResult.No;
+                case MessageBoxResult.Cancel:
+                    return MessageBoxResult.Yes;
+                default:
+                    return MessageBoxResult.None;
+            }
+        }
+
         #endregion
     }
 }
