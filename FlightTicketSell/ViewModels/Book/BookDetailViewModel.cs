@@ -31,7 +31,7 @@ namespace FlightTicketSell.ViewModels
         /// Indicates if this is the first time view model loads
         /// </summary>
         private bool _firstLoad = true;
-        
+
         /// <summary>
         /// Indicates if this list included the booking person
         /// </summary>
@@ -220,7 +220,7 @@ namespace FlightTicketSell.ViewModels
                              break;
 
                          if (!DialogHost.IsDialogOpen("RootDialog"))
-                            await DialogHost.Show(view, "RootDialog", ClosingEventHandler);
+                             await DialogHost.Show(view, "RootDialog", ClosingEventHandler);
 
                          return;
                      }
@@ -250,7 +250,7 @@ namespace FlightTicketSell.ViewModels
                     MessageBox.Show("Đã hết ghế trống!", "Hết ghế trống", MessageBoxButton.OK);
                     return;
                 }
-                
+
                 // Add a new customer
                 Customers.Add(new CustomerBookVariant { Index = Customers.Count + 1 });
             });
@@ -315,16 +315,21 @@ namespace FlightTicketSell.ViewModels
 
             CurrentTicketTierChangedCommand = new ActionCommand<SelectionChangedEventArgs>(args =>
             {
+                if (CurrentTicketTier is null) return;
+
                 if (CurrentTicketTier.GheTrong < Customers.Count)
                 {
-                    if (MessageBox.Show(
-                        String.Format(
-                            $"Hạng vé này chỉ có {CurrentTicketTier.GheTrong} ghế trống, trong khi có {Customers.Count} khách thụ hưởng.\n" +
-                            "Xin điều chỉnh danh sách khách hàng."), 
-                            "Quá số ghế trống hiện có",
-                            MessageBoxButton.OK
-                            ) == MessageBoxResult.OK)
-                        CurrentTicketTier = args.RemovedItems.Count > 0 ? args.RemovedItems[0] as TicketTier : TicketTiers[0];
+                    MessageBox.Show(String.Format(
+                        $"Hạng vé này chỉ có {CurrentTicketTier.GheTrong} ghế trống, trong khi có {Customers.Count} khách thụ hưởng.\n" +
+                        "Xin điều chỉnh danh sách khách hàng."),
+                        "Quá số ghế trống hiện có",
+                        MessageBoxButton.OK
+                        );
+                    // TODO: Really gross, change if you can
+                    var temp = args.RemovedItems.Count > 0 ? args.RemovedItems[0] as TicketTier : TicketTiers[0];
+                    (args.Source as DataGrid).ItemsSource = null;
+                    (args.Source as DataGrid).ItemsSource = TicketTiers;
+                    CurrentTicketTier = temp;
                 }
             });
         }
@@ -368,7 +373,7 @@ namespace FlightTicketSell.ViewModels
             {
                 if (Customers[0].IsBookingCustomer == false)
                     return;
-                
+
                 Customers.RemoveAt(0);
 
                 // Re-Indexing
