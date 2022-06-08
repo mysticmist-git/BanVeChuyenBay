@@ -10,6 +10,7 @@ using System.Data;
 using System.Data.Entity.Core;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -177,6 +178,41 @@ namespace FlightTicketSell.ViewModels
 
         #endregion
 
+        #region Import
+        /// <summary>
+        /// nút hủy
+        /// </summary>
+        public ICommand CancelImport_Command { set; get; }
+        /// <summary>
+        /// Nút nhận lịch bay
+        /// </summary>
+        public ICommand Import_Command { set; get; }
+        /// <summary>
+        ///  Mảng chứa data các chuyến bay hợp lệ từ excel
+        /// </summary>
+        public ObservableCollection<ImportFromExcelClass> List_ImportFromExcel { get; set; } = new ObservableCollection<ImportFromExcelClass>();
+        /// <summary>
+        /// itemsource của datagrid hiện lên
+        /// </summary>
+        public DataTable Import_dataTable { get; set; } = new DataTable();
+        /// <summary>
+        /// Số dòng ghi các ràng buộc ví dụ trong file excel
+        /// </summary>
+        public int RowHeaderBegin { get; set; } = 8;
+        /// <summary>
+        /// Số dòng bắt đầu có dữ liệu
+        /// </summary>
+        public int RowDataBegin { get; set; } = 8 + 1;
+        /// <summary>
+        /// Đường dẫn file
+        /// </summary>
+        public string filePath { get; set; } = "";
+        /// <summary>
+        /// Số chuyến bay được nhập trong file excel
+        /// </summary>
+        public string rowCount { get; set; }
+        #endregion
+
         #region Main Commands
         /// <summary>
         /// Nút đổi sân bay đi & sân bay đến
@@ -283,13 +319,6 @@ namespace FlightTicketSell.ViewModels
         /// Sân bay trung gian được chọn để edit
         /// </summary>
         public LayoverAirport List_LayoverAirport_SelectedItem { get; set; }
-
-        /// <summary>
-        /// Itemsource của datagrid chứa data from excel
-        /// </summary>
-
-
-
         private bool FirstLoad { get; set; } = true;
         #endregion
 
@@ -308,6 +337,81 @@ namespace FlightTicketSell.ViewModels
                     airports.Remove(airportItem);
                     return true;
                 }
+            }
+            return false;
+        }
+
+        private bool AddFlightInImport(ImportFromExcelClass importFromExcelClass)
+        {
+            try
+            {
+                using (var context = new FlightTicketSellEntities())
+                {
+                    //Thêm đường bay mới
+                    DUONGBAY dUONGBAY = new DUONGBAY()
+                    {
+                        MaSanBayDi = importFromExcelClass.SanBayDi.Id,
+                        MaSanBayDen = importFromExcelClass.SanBayDen.Id,
+                        ThoiGianBay = importFromExcelClass.ThoiGianBay
+                    };
+                    context.DUONGBAYs.Add(dUONGBAY);
+                    context.SaveChanges();
+                    dUONGBAY = context.DUONGBAYs.ToList().LastOrDefault();
+
+                    //Thêm các sân bay trung gian nếu có
+                    if (importFromExcelClass.SanBayTG != null && importFromExcelClass.SanBayTG.Count > 0)
+                    {
+                        foreach (var item in importFromExcelClass.SanBayTG)
+                        {
+                            SANBAYTG sANBAYTG = new SANBAYTG()
+                            {
+                                MaDuongBay = dUONGBAY.MaDuongBay,
+                                MaSanBay = item.Id_Airport,
+                                ThuTu = item.Order,
+                                ThoiGianDung = item.StopTime,
+                                GhiChu = item.Note
+                            };
+                            context.SANBAYTGs.Add(sANBAYTG);
+                        }
+                        context.SaveChanges();
+                    }
+
+                    //Thêm chuyến bay
+                    CHUYENBAY cHUYENBAY = new CHUYENBAY()
+                    {
+                        MaDuongBay = dUONGBAY.MaDuongBay,
+                        GiaVe = int.Parse(Regex.Replace(importFromExcelClass.GiaVe.ToString(), @"[^a-zA-Z0-9]", string.Empty)),
+                        NgayGio = new DateTime(importFromExcelClass.NgayBay.Year,
+                                                                importFromExcelClass.NgayBay.Month,
+                                                                importFromExcelClass.NgayBay.Day,
+                                                                importFromExcelClass.GioBay.Hour,
+                                                                importFromExcelClass.GioBay.Minute,
+                                                                importFromExcelClass.GioBay.Second),
+                        DaKhoiHanh = false
+                    };
+                    context.CHUYENBAYs.Add(cHUYENBAY);
+                    context.SaveChanges();
+                    cHUYENBAY = context.CHUYENBAYs.ToList().LastOrDefault();
+
+                    //Thêm hạng vé cho chuyến bay
+                    foreach (var item in importFromExcelClass.HangVe)
+                    {
+                        CHITIETHANGVE cHITIETHANGVE = new CHITIETHANGVE()
+                        {
+                            MaHangVe = item.Id_TicketClass,
+                            MaChuyenBay = cHUYENBAY.MaChuyenBay,
+                            SoGhe = item.Seats
+                        };
+                        context.CHITIETHANGVEs.Add(cHITIETHANGVE);
+                    }
+
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (EntityException e)
+            {
+                MessageBox.Show($"Exception: {e.Message}");
             }
             return false;
         }
@@ -641,26 +745,17 @@ namespace FlightTicketSell.ViewModels
                  {
                      using (var context = new FlightTicketSellEntities())
                      {
-                         //Thêm đường bay nếu chưa có sẵn
+                         //Thêm đường bay mới
                          int thoigianbay = int.Parse(FlightTime);
-                         DUONGBAY dUONGBAY = context.DUONGBAYs.Where
-                         (
-                             h => h.MaSanBayDi == DepartureAirport.Id
-                             && h.MaSanBayDen == LandingAirport.Id
-                             && h.ThoiGianBay == thoigianbay
-                         ).ToList().FirstOrDefault();
-                         if (dUONGBAY == null)
+                         DUONGBAY dUONGBAY = new DUONGBAY()
                          {
-                             dUONGBAY = new DUONGBAY()
-                             {
-                                 MaSanBayDi = DepartureAirport.Id,
-                                 MaSanBayDen = LandingAirport.Id,
-                                 ThoiGianBay = int.Parse(FlightTime)
-                             };
-                             context.DUONGBAYs.Add(dUONGBAY);
-                             context.SaveChanges();
-                             dUONGBAY = context.DUONGBAYs.ToList().LastOrDefault();
-                         }
+                             MaSanBayDi = DepartureAirport.Id,
+                             MaSanBayDen = LandingAirport.Id,
+                             ThoiGianBay = int.Parse(FlightTime)
+                         };
+                         context.DUONGBAYs.Add(dUONGBAY);
+                         context.SaveChanges();
+                         dUONGBAY = context.DUONGBAYs.ToList().LastOrDefault();
 
                          //Thêm các sân bay trung gian nếu có
                          if (List_LayoverAirport != null && List_LayoverAirport.Count > 0)
@@ -737,71 +832,82 @@ namespace FlightTicketSell.ViewModels
                     FlightCode = null;
                 });
 
-            ImportFromExcel_Command = new RelayCommand<object>((p) => { return true; }, (p) =>
-             {
-                 int RowHeaderBegin = 8;
-                 int RowDataBegin = RowHeaderBegin + 1;
-                 string filePath = "";
-                 OpenFileDialog dlg = new OpenFileDialog();
-                 dlg.Filter = "Excel |*.xlsx| Excel 2003 |*.xls| All files |*.*";
-                 if (dlg.ShowDialog() == DialogResult.OK)
-                 {
-                     filePath = dlg.FileName;
-                 }
-                 if (string.IsNullOrEmpty(filePath))
-                 {
-                     MessageBox.Show("File không hợp lệ!", "Cảnh báo");
-                     return;
-                 }
+            ImportFromExcel_Command = new RelayCommand<object>((p) => { return true; }, async (p) =>
+              {
+                  OpenFileDialog dlg = new OpenFileDialog();
+                  dlg.Filter = "Excel |*.xlsx| Excel 2003 |*.xls";
+                  dlg.Title = "Chọn file Excel";
+                  if (dlg.ShowDialog() == DialogResult.OK)
+                  {
+                      filePath = dlg.FileName;
+                  }
+                  else
+                  {
+                      return;
+                  }
+                  if (string.IsNullOrEmpty(filePath))
+                  {
+                      MessageBox.Show("File không hợp lệ!", "Cảnh báo");
+                      return;
+                  }
 
-                 DataTable dataTable = new DataTable();
+                  var package = new ExcelPackage(new System.IO.FileInfo(filePath));
+                  ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                  ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
 
-                 var package = new ExcelPackage(new System.IO.FileInfo(filePath));
-                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                 ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                  rowCount = "0";
+                  while (true)
+                  {
+                      var check = worksheet.Cells[worksheet.Dimension.Start.Row + RowDataBegin + int.Parse(rowCount), 1].Value;
+                      if (check == null)
+                          break;
+                      rowCount = (int.Parse(rowCount) + 1).ToString();
+                  }
 
-                 dataTable.Columns.Add("STT");
-                 for (int i = worksheet.Dimension.Start.Column; i <= worksheet.Dimension.End.Column; i++)
-                 {
-                     string temp = worksheet.Cells[worksheet.Dimension.Start.Row + RowHeaderBegin, i].Value.ToString();
-                     dataTable.Columns.Add(temp);
-                 }
+                  Import_dataTable = new DataTable();
+                  Import_dataTable.Columns.Add("STT");
+                  for (int i = worksheet.Dimension.Start.Column; i <= worksheet.Dimension.End.Column; i++)
+                  {
+                      string temp = worksheet.Cells[worksheet.Dimension.Start.Row + RowHeaderBegin, i].Value.ToString();
+                      Import_dataTable.Columns.Add(temp);
+                  }
 
-                 int stt = 1;
-                 for (int i = worksheet.Dimension.Start.Row + RowDataBegin; i < worksheet.Dimension.End.Row; i++)
-                 {
-                     ObservableCollection<string> list = new ObservableCollection<string>();
-                     list.Add((stt++).ToString());
-                     for (int j = worksheet.Dimension.Start.Column; j <= worksheet.Dimension.End.Column; j++)
-                     {
-                         var tencot = worksheet.Cells[1 + RowHeaderBegin, j].Value.ToString();
-                         var giatri = worksheet.Cells[i, j].Value.ToString().Remove(0, 1);
-                         switch (tencot)
-                         {
-                             case "Giá vé":
-                                 giatri = string.Format("{0:0,0}", giatri);
-                                 break;
-                             case "Hạng vé":
-                                 giatri = giatri.Replace("-", "\n");
-                                 giatri = giatri.Replace("_", ", ghế trống: ");
-                                 break;
-                             case "Sân bay trung gian":
-                                 giatri = giatri.Replace("-", "\n");
-                                 giatri = giatri.Replace(":", ", ghi chú: ");
-                                 giatri = giatri.Replace("_", ", thời gian dừng: ");
-                                 break;
-                             default:
-                                 break;
-                         }
-                         list.Add(giatri);
-                     }
-                     dataTable.Rows.Add(list.ToArray());
-                 }
-
-                 ImportFromExcel importFromExcel = new ImportFromExcel(dataTable);
-                 importFromExcel.ShowDialog();
-
-             });
+                  // Thêm vào dòng trên datagrid
+                  int stt = 1;
+                  for (int i = worksheet.Dimension.Start.Row + RowDataBegin; i <= RowDataBegin + int.Parse(rowCount); i++)
+                  {
+                      ObservableCollection<string> list = new ObservableCollection<string>();
+                      list.Add((stt++).ToString());
+                      for (int j = worksheet.Dimension.Start.Column; j <= worksheet.Dimension.End.Column; j++)
+                      {
+                          var tencot = worksheet.Cells[1 + RowHeaderBegin, j].Value.ToString();
+                          var giatri = worksheet.Cells[i, j].Value.ToString().Remove(0, 1);
+                          switch (tencot)
+                          {
+                              case "Giá vé":
+                                  giatri = string.Format("{0:0,0}", giatri);
+                                  break;
+                              case "Hạng vé":
+                                  giatri = giatri.Replace("-", "\n");
+                                  giatri = giatri.Replace("_", ", ghế trống: ");
+                                  giatri += "\n";
+                                  break;
+                              case "Sân bay trung gian":
+                                  giatri = giatri.Replace("-", "\n");
+                                  giatri = giatri.Replace(":", ", ghi chú: ");
+                                  giatri = giatri.Replace("_", ", thời gian dừng: ");
+                                  giatri += "\n";
+                                  break;
+                              default:
+                                  break;
+                          }
+                          list.Add(giatri);
+                      }
+                      Import_dataTable.Rows.Add(list.ToArray());
+                  }
+                  ImportFromExcel importFromExcel = new ImportFromExcel(Import_dataTable) { DataContext = this };
+                  var result = await DialogHost.Show(importFromExcel, "RootDialog");
+              });
 
             SelectedFlightDateChanged_Command = new RelayCommand<object>((p) => { return true; }, (p) =>
              {
@@ -1163,6 +1269,51 @@ namespace FlightTicketSell.ViewModels
                     MessageBox.Show("Xóa hạng vé thành công!", "Cảnh báo");
                 }
            );
+            #endregion
+
+            #region Import
+            CancelImport_Command = new RelayCommand<object>((p) => { return true; },
+                (p) =>
+                {
+                    // Close dialog
+                    DialogHost.CloseDialogCommand.Execute(null, null);
+                });
+            Import_Command = new RelayCommand<object>((p) => { return true; },
+                 (p) =>
+                {
+                    if (List_ImportFromExcel != null && List_ImportFromExcel.Count > 0)
+                    {
+                        List_ImportFromExcel.Clear();
+                    }
+                    ImportFromExcelClass.IsSucces = true;
+                    foreach (DataRow item in Import_dataTable.Rows)
+                    {
+                        ObservableCollection<string> list = new ObservableCollection<string>();
+                        foreach (DataColumn cot in Import_dataTable.Columns)
+                        {
+                            list.Add(item[cot].ToString());
+                        }
+                        ImportFromExcelClass importFromExcelClass = new ImportFromExcelClass(list.ToList());
+                        List_ImportFromExcel.Add(importFromExcelClass);
+                    }
+                    if (ImportFromExcelClass.IsSucces == false)
+                    {
+                        MessageBox.Show("Vui lòng chỉnh sữa dữ liệu trong file Excel.", "Cảnh báo");
+                        return;
+                    }
+
+                    foreach (var item in List_ImportFromExcel)
+                    {
+                        if (AddFlightInImport(item) == false)
+                        {
+                            MessageBox.Show("Xảy ra lỗi khi thêm chuyến bay thứ " + item.Stt + "!", "Cảnh báo");
+                        }
+                    }
+                    // Close dialog
+                    DialogHost.CloseDialogCommand.Execute(null, null);
+                    MessageBox.Show("Thêm chuyến bay hoàn tất.");
+
+                });
             #endregion
         }
     }

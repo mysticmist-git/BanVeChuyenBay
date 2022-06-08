@@ -31,9 +31,17 @@ namespace FlightTicketSell.ViewModels.Schedule
 
         public ImportFromExcelClass() { }
         public static bool IsSucces { get; set; }
-        public ImportFromExcelClass(string stt, string masanBayDi, string masanBayDen, string ngayBay, string gioBay, string giaVe, string thoiGianBay, string hangVe, string sanBayTG)
+        public ImportFromExcelClass(List<string> mangstring)
         {
-            IsSucces = true;
+            string stt = mangstring[0];
+            string masanBayDi = mangstring[1];
+            string masanBayDen = mangstring[2];
+            string ngayBay = mangstring[3];
+            string gioBay = mangstring[4];
+            string giaVe = mangstring[5];
+            string thoiGianBay = mangstring[6];
+            string hangVe = mangstring[7];
+            string sanBayTG = mangstring[8];
             Stt = Stt;
             SanBayDi = GetAirportFromCode(stt, "di", masanBayDi);
             if (SanBayDi == null)
@@ -44,11 +52,11 @@ namespace FlightTicketSell.ViewModels.Schedule
                 IsSucces = false;
 
             NgayBay = GetDateFromString(stt, ngayBay);
-            if (NgayBay.Day == -1)
+            if (NgayBay.Day == 1)
                 IsSucces = false;
 
             GioBay = GetTimeFromString(stt, gioBay);
-            if (GioBay.Hour == -1)
+            if (GioBay.Hour == 1)
                 IsSucces = false;
 
             if (!int.TryParse(giaVe, out int gv))
@@ -66,7 +74,6 @@ namespace FlightTicketSell.ViewModels.Schedule
             SanBayTG = GetListLayoverAirportFromListString(stt, GetListFromString_Airport(stt, sanBayTG));
             if (SanBayTG == null)
                 IsSucces = false;
-
         }
 
         #endregion
@@ -79,7 +86,7 @@ namespace FlightTicketSell.ViewModels.Schedule
                 try
                 {
                     var airport = context.SANBAYs.Where(h => h.VietTat == masanBay).FirstOrDefault();
-                    if (airport == null)
+                    if (airport != null)
                     {
                         Airport airport1 = new Airport
                         {
@@ -143,7 +150,7 @@ namespace FlightTicketSell.ViewModels.Schedule
             if (!int.TryParse(ngay, out _) || !int.TryParse(thang, out _) || !int.TryParse(nam, out _))
             {
                 MessageBox.Show("Chuyến bay thứ " + stt + " có [Ngày bay] không hợp lệ.", "Cảnh báo");
-                return new DateTime(-1, -1, -1);
+                return new DateTime(1, 1, 1);
             }
             return new DateTime(int.Parse(nam), int.Parse(thang), int.Parse(ngay));
         }
@@ -173,9 +180,9 @@ namespace FlightTicketSell.ViewModels.Schedule
             if (!int.TryParse(gio, out _) || !int.TryParse(phut, out _))
             {
                 MessageBox.Show("Chuyến bay thứ " + stt + " có [Giờ bay] không hợp lệ.", "Cảnh báo");
-                return new DateTime(-1, -1, -1, -1, -1, -1);
+                return new DateTime(1, 1, 1, 1, 1, 1);
             }
-            return new DateTime(0, 0, 0, int.Parse(gio), int.Parse(phut), 0);
+            return new DateTime(1, 1, 1, int.Parse(gio), int.Parse(phut), 0);
         }
         private List<List<string>> GetListFromString_Ticket(string stt, string chuoi)
         {
@@ -187,17 +194,22 @@ namespace FlightTicketSell.ViewModels.Schedule
             string ten_so = "ten";
             foreach (var item in chuoi)
             {
-                if (item == '-')
+                if (item == ':')
                 {
-                    So.Add(so);
                     so = "";
-                    ten_so = "ten";
+                    ten_so = "so";
                 }
-                else if (item == '_')
+                else if (item == ',')
                 {
                     Ten.Add(ten);
                     ten = "";
                     ten_so = "so";
+                }
+                else if (item == '\n')
+                {
+                    So.Add(so);
+                    so = "";
+                    ten_so = "ten";
                 }
                 else
                 {
@@ -226,26 +238,36 @@ namespace FlightTicketSell.ViewModels.Schedule
             string ma = "";
             string so = "";
             string ghi = "";
-            string ma_so_ghi = "ten";
+            string ma_so_ghi = "ma";
             foreach (var item in chuoi)
             {
-                if (item == '-')
-                {
-                    Ghi.Add(ghi);
-                    ghi = "";
-                    ma_so_ghi = "ma";
-                }
-                else if (item == '_')
+                if (item == ',' && ma_so_ghi == "ma")
                 {
                     Ma.Add(ma);
                     ma = "";
                     ma_so_ghi = "so";
                 }
-                else if (item == ':')
+                else if (item == ':' && ma_so_ghi == "so")
+                {
+                    so = "";
+                    ma_so_ghi = "so";
+                }
+                else if (item == ',' && ma_so_ghi == "so")
                 {
                     So.Add(so);
                     so = "";
                     ma_so_ghi = "ghi";
+                }
+                else if (item == ':' && ma_so_ghi == "ghi")
+                {
+                    ghi = "";
+                    ma_so_ghi = "ghi";
+                }
+                else if (item=='\n')
+                {
+                    Ghi.Add(ghi);
+                    ghi = "";
+                    ma_so_ghi = "ma";
                 }
                 else
                 {
@@ -278,7 +300,8 @@ namespace FlightTicketSell.ViewModels.Schedule
                 {
                     for (int i = 0; i < hangve[0].Count; i++)
                     {
-                        var hangvelayduoc = context.HANGVEs.Where(h => h.TenHangVe == hangve[0][i]).FirstOrDefault();
+                        string tenhangve = hangve[0][i];
+                        var hangvelayduoc = context.HANGVEs.Where(h => h.TenHangVe == tenhangve).FirstOrDefault();
                         if (hangvelayduoc == null)
                         {
                             MessageBox.Show("Chuyến bay thứ " + stt + " có [Hạng vé] chứa hạng vé không tồn tại.", "Cảnh báo");
@@ -322,7 +345,8 @@ namespace FlightTicketSell.ViewModels.Schedule
                 {
                     for (int i = 0; i < sanbaytg[0].Count; i++)
                     {
-                        var sanbaylayduoc = context.SANBAYs.Where(h => h.VietTat == sanbaytg[0][i]).FirstOrDefault();
+                        string masanbay = sanbaytg[0][i];
+                        var sanbaylayduoc = context.SANBAYs.Where(h => h.VietTat == masanbay).FirstOrDefault();
                         if (sanbaylayduoc == null)
                         {
                             MessageBox.Show("Chuyến bay thứ " + stt + " có [Sân bay trung gian] chứa sân bay không tồn tại.", "Cảnh báo");
@@ -340,7 +364,7 @@ namespace FlightTicketSell.ViewModels.Schedule
                         }
                         if (!sanbaylayduoc.TrangThai)
                         {
-                            MessageBox.Show("Chuyến bay thứ " + stt + " có [Sân bay trung gian] chứa sân bay ngừng hoạtd động.", "Cảnh báo");
+                            MessageBox.Show("Chuyến bay thứ " + stt + " có [Sân bay trung gian] chứa sân bay ngừng hoạt động.", "Cảnh báo");
                             return null;
                         }
                         if (!int.TryParse(sanbaytg[1][i], out int soghe))

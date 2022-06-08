@@ -18,17 +18,17 @@ namespace FlightTicketSell.Views
     /// <summary>
     /// Interaction logic for ImportFromExcel.xaml
     /// </summary>
-    public partial class ImportFromExcel : Window
+    public partial class ImportFromExcel : UserControl
     {
         public ImportFromExcel()
         {
             InitializeComponent();
         }
-
         public ImportFromExcel(DataTable dataTable)
         {
             InitializeComponent();
             datagridfromexcel.ItemsSource = dataTable.DefaultView;
+            datagridfromexcel.IsReadOnly = true;
         }
     }
 }
