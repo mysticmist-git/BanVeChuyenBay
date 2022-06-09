@@ -50,6 +50,8 @@ namespace FlightTicketSell.ValueConverters
                 // Settings
                 case AppView.Setting:
                     return "CÀI ĐẶT";
+                case AppView.Roles:
+                    return "PHÂN QUYỀN";
                 // Default
                 default:
                     return "TRA CỨU";

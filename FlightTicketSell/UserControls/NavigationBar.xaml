@@ -20,11 +20,11 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <!-- Logo, App Name -->
-                <ColumnDefinition Width="2*" />
-                <!-- View indicator -->
-                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="Auto" />
                 <!-- Buttons -->
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <!-- View indicator -->
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <!-- Logo, App Name -->
@@ -102,6 +102,7 @@
                             </StackPanel>
                         </ContentControl>
                     </Button>
+
                     <Button 
                             Margin="20 0 10 0"
                             Command="{Binding ScheduleCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Schedule}}"
@@ -130,6 +131,7 @@
                             </StackPanel>
                         </ContentControl>
                     </Button>
+
                     <Button  
                             Command="{Binding SettingCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}"
                             >
@@ -140,6 +142,18 @@
                                                          VerticalAlignment="Center" 
                                                          Height="25" Width="25"/>
                                 <TextBlock Text="CÀI ĐẶT" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
+
+                    <Button Command="{Binding RolesCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}" >
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ShieldLock" 
+                                                         Margin="0 -1 2 0"
+                                                         VerticalAlignment="Center" 
+                                                         Height="25" Width="25"/>
+                                <TextBlock Text="PHÂN QUYỀN" VerticalAlignment="Center"/>
                             </StackPanel>
                         </ContentControl>
                     </Button>

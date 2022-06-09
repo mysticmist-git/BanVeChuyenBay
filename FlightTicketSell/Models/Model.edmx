@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BANVECHUYENBAYModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BANVECHUYENBAYModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CHITIETDATCHO">
           <Key>
             <PropertyRef Name="MaChiTietDatCho" />
@@ -21,6 +21,14 @@
           <Property Name="MaHangVe" Type="int" Nullable="false" />
           <Property Name="MaChuyenBay" Type="int" Nullable="false" />
           <Property Name="SoGhe" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CHUCNANG">
+          <Key>
+            <PropertyRef Name="MaChucNang" />
+          </Key>
+          <Property Name="MaChucNang" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="TenChucNang" Type="varchar" MaxLength="256" />
+          <Property Name="TenManHinhDuocLoad" Type="varchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="CHUYENBAY">
           <Key>
@@ -103,6 +111,29 @@
           <Property Name="CMND" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="SDT" Type="varchar" MaxLength="50" />
           <Property Name="Email" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="NGUOIDUNG">
+          <Key>
+            <PropertyRef Name="TenDangNhap" />
+          </Key>
+          <Property Name="TenDangNhap" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="MatKhau" Type="varchar" MaxLength="1024" />
+          <Property Name="MaNhom" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="NHOMNGUOIDUNG">
+          <Key>
+            <PropertyRef Name="MaNhom" />
+          </Key>
+          <Property Name="MaNhom" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="TenNhom" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="PHANQUYEN">
+          <Key>
+            <PropertyRef Name="MaNhom" />
+            <PropertyRef Name="MaChucNang" />
+          </Key>
+          <Property Name="MaNhom" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="MaChucNang" Type="varchar" MaxLength="32" Nullable="false" />
         </EntityType>
         <EntityType Name="SANBAY">
           <Key>
@@ -299,6 +330,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NGUOIDUNG_MaNhom">
+          <End Role="NHOMNGUOIDUNG" Type="Self.NHOMNGUOIDUNG" Multiplicity="0..1" />
+          <End Role="NGUOIDUNG" Type="Self.NGUOIDUNG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHOMNGUOIDUNG">
+              <PropertyRef Name="MaNhom" />
+            </Principal>
+            <Dependent Role="NGUOIDUNG">
+              <PropertyRef Name="MaNhom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PHANQUYEN_MaChucNang">
+          <End Role="CHUCNANG" Type="Self.CHUCNANG" Multiplicity="1" />
+          <End Role="PHANQUYEN" Type="Self.PHANQUYEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CHUCNANG">
+              <PropertyRef Name="MaChucNang" />
+            </Principal>
+            <Dependent Role="PHANQUYEN">
+              <PropertyRef Name="MaChucNang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PHANQUYEN_MaNhom">
+          <End Role="NHOMNGUOIDUNG" Type="Self.NHOMNGUOIDUNG" Multiplicity="1" />
+          <End Role="PHANQUYEN" Type="Self.PHANQUYEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHOMNGUOIDUNG">
+              <PropertyRef Name="MaNhom" />
+            </Principal>
+            <Dependent Role="PHANQUYEN">
+              <PropertyRef Name="MaNhom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SANBAYTG_MaDuongBay">
           <End Role="DUONGBAY" Type="Self.DUONGBAY" Multiplicity="1" />
           <End Role="SANBAYTG" Type="Self.SANBAYTG" Multiplicity="*" />
@@ -363,6 +430,7 @@
         <EntityContainer Name="BANVECHUYENBAYModelStoreContainer">
           <EntitySet Name="CHITIETDATCHO" EntityType="Self.CHITIETDATCHO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHITIETHANGVE" EntityType="Self.CHITIETHANGVE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CHUCNANG" EntityType="Self.CHUCNANG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CHUYENBAY" EntityType="Self.CHUYENBAY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DATCHO" EntityType="Self.DATCHO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DOANHTHUCHUYENBAY" EntityType="Self.DOANHTHUCHUYENBAY" Schema="dbo" store:Type="Tables" />
@@ -371,6 +439,9 @@
           <EntitySet Name="DUONGBAY" EntityType="Self.DUONGBAY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HANGVE" EntityType="Self.HANGVE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KHACHHANG" EntityType="Self.KHACHHANG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NGUOIDUNG" EntityType="Self.NGUOIDUNG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NHOMNGUOIDUNG" EntityType="Self.NHOMNGUOIDUNG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PHANQUYEN" EntityType="Self.PHANQUYEN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SANBAY" EntityType="Self.SANBAY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SANBAYTG" EntityType="Self.SANBAYTG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="THAMSO" EntityType="Self.THAMSO" Schema="dbo" store:Type="Tables" />
@@ -427,6 +498,18 @@
             <End Role="SANBAY" EntitySet="SANBAY" />
             <End Role="DUONGBAY" EntitySet="DUONGBAY" />
           </AssociationSet>
+          <AssociationSet Name="FK_NGUOIDUNG_MaNhom" Association="Self.FK_NGUOIDUNG_MaNhom">
+            <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNG" />
+            <End Role="NGUOIDUNG" EntitySet="NGUOIDUNG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PHANQUYEN_MaChucNang" Association="Self.FK_PHANQUYEN_MaChucNang">
+            <End Role="CHUCNANG" EntitySet="CHUCNANG" />
+            <End Role="PHANQUYEN" EntitySet="PHANQUYEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PHANQUYEN_MaNhom" Association="Self.FK_PHANQUYEN_MaNhom">
+            <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNG" />
+            <End Role="PHANQUYEN" EntitySet="PHANQUYEN" />
+          </AssociationSet>
           <AssociationSet Name="FK_SANBAYTG_MaDuongBay" Association="Self.FK_SANBAYTG_MaDuongBay">
             <End Role="DUONGBAY" EntitySet="DUONGBAY" />
             <End Role="SANBAYTG" EntitySet="SANBAYTG" />
@@ -448,8 +531,7 @@
             <End Role="VE" EntitySet="VE" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BANVECHUYENBAYModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -931,7 +1013,18 @@
             <End Role="SANBAYTG" EntitySet="SANBAYTGs" />
           </AssociationSet>
           <FunctionImport Name="GetFlightData" ReturnType="Collection(BANVECHUYENBAYModel.GetFlightData_Result)" />
-        </EntityContainer>
+          <EntitySet Name="CHUCNANGs" EntityType="BANVECHUYENBAYModel.CHUCNANG" />
+          <EntitySet Name="NGUOIDUNGs" EntityType="BANVECHUYENBAYModel.NGUOIDUNG" />
+          <EntitySet Name="NHOMNGUOIDUNGs" EntityType="BANVECHUYENBAYModel.NHOMNGUOIDUNG" />
+          <AssociationSet Name="FK_NGUOIDUNG_MaNhom" Association="BANVECHUYENBAYModel.FK_NGUOIDUNG_MaNhom">
+            <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNGs" />
+            <End Role="NGUOIDUNG" EntitySet="NGUOIDUNGs" />
+          </AssociationSet>
+          <AssociationSet Name="PHANQUYEN" Association="BANVECHUYENBAYModel.PHANQUYEN">
+            <End Role="CHUCNANG" EntitySet="CHUCNANGs" />
+            <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNGs" />
+          </AssociationSet>
+          </EntityContainer>
         <ComplexType Name="GetFlightData_Result">
           <Property Type="Int32" Name="MaChuyenBay" Nullable="false" />
           <Property Type="Int32" Name="MaSanBayDi" Nullable="true" />
@@ -948,7 +1041,50 @@
           <Property Type="Int32" Name="SoGheDat" Nullable="true" />
           <Property Type="Boolean" Name="DaKhoiHanh" Nullable="false" />
         </ComplexType>
-      </Schema>
+        <EntityType Name="CHUCNANG">
+          <Key>
+            <PropertyRef Name="MaChucNang" />
+          </Key>
+          <Property Name="MaChucNang" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="TenChucNang" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="TenManHinhDuocLoad" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="NHOMNGUOIDUNGs" Relationship="BANVECHUYENBAYModel.PHANQUYEN" FromRole="CHUCNANG" ToRole="NHOMNGUOIDUNG" />
+        </EntityType>
+        <EntityType Name="NGUOIDUNG">
+          <Key>
+            <PropertyRef Name="TenDangNhap" />
+          </Key>
+          <Property Name="TenDangNhap" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="MatKhau" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="MaNhom" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="BANVECHUYENBAYModel.FK_NGUOIDUNG_MaNhom" FromRole="NGUOIDUNG" ToRole="NHOMNGUOIDUNG" />
+        </EntityType>
+        <EntityType Name="NHOMNGUOIDUNG">
+          <Key>
+            <PropertyRef Name="MaNhom" />
+          </Key>
+          <Property Name="MaNhom" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="TenNhom" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="NGUOIDUNGs" Relationship="BANVECHUYENBAYModel.FK_NGUOIDUNG_MaNhom" FromRole="NHOMNGUOIDUNG" ToRole="NGUOIDUNG" />
+          <NavigationProperty Name="CHUCNANGs" Relationship="BANVECHUYENBAYModel.PHANQUYEN" FromRole="NHOMNGUOIDUNG" ToRole="CHUCNANG" />
+        </EntityType>
+        <Association Name="FK_NGUOIDUNG_MaNhom">
+          <End Type="BANVECHUYENBAYModel.NHOMNGUOIDUNG" Role="NHOMNGUOIDUNG" Multiplicity="0..1" />
+          <End Type="BANVECHUYENBAYModel.NGUOIDUNG" Role="NGUOIDUNG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NHOMNGUOIDUNG">
+              <PropertyRef Name="MaNhom" />
+            </Principal>
+            <Dependent Role="NGUOIDUNG">
+              <PropertyRef Name="MaNhom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PHANQUYEN">
+          <End Type="BANVECHUYENBAYModel.CHUCNANG" Role="CHUCNANG" Multiplicity="*" />
+          <End Type="BANVECHUYENBAYModel.NHOMNGUOIDUNG" Role="NHOMNGUOIDUNG" Multiplicity="*" />
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1126,6 +1262,40 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="CHUCNANGs">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.CHUCNANG">
+              <MappingFragment StoreEntitySet="CHUCNANG">
+                <ScalarProperty Name="TenManHinhDuocLoad" ColumnName="TenManHinhDuocLoad" />
+                <ScalarProperty Name="TenChucNang" ColumnName="TenChucNang" />
+                <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NGUOIDUNGs">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.NGUOIDUNG">
+              <MappingFragment StoreEntitySet="NGUOIDUNG">
+                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NHOMNGUOIDUNGs">
+            <EntityTypeMapping TypeName="BANVECHUYENBAYModel.NHOMNGUOIDUNG">
+              <MappingFragment StoreEntitySet="NHOMNGUOIDUNG">
+                <ScalarProperty Name="TenNhom" ColumnName="TenNhom" />
+                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="PHANQUYEN" TypeName="BANVECHUYENBAYModel.PHANQUYEN" StoreEntitySet="PHANQUYEN">
+            <EndProperty Name="NHOMNGUOIDUNG">
+              <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
+            </EndProperty>
+            <EndProperty Name="CHUCNANG">
+              <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

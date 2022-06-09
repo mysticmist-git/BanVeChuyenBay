@@ -64,6 +64,10 @@
         /// <summary>
         /// The setting view
         /// </summary>
-        Setting
+        Setting,
+        /// <summary>
+        /// The roles settings view
+        /// </summary>
+        Roles
     }
 }

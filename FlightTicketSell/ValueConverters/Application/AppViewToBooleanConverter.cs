@@ -25,6 +25,8 @@ namespace FlightTicketSell.ValueConverters
                     return new[] { AppView.Report }.Any(x => x == (AppView)value);
                 case AppView.Setting:
                     return new[] { AppView.Setting}.Any(x => x == (AppView)value);
+                case AppView.Roles:
+                    return new[] { AppView.Roles}.Any(x => x == (AppView)value);
                 default:
                     return null;
             }

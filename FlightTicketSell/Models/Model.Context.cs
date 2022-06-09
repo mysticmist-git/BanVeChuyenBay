@@ -41,6 +41,9 @@ namespace FlightTicketSell.Models
         public virtual DbSet<SANBAYTG> SANBAYTGs { get; set; }
         public virtual DbSet<THAMSO> THAMSOes { get; set; }
         public virtual DbSet<VE> VEs { get; set; }
+        public virtual DbSet<CHUCNANG> CHUCNANGs { get; set; }
+        public virtual DbSet<NGUOIDUNG> NGUOIDUNGs { get; set; }
+        public virtual DbSet<NHOMNGUOIDUNG> NHOMNGUOIDUNGs { get; set; }
     
         public virtual ObjectResult<GetFlightData_Result> GetFlightData()
         {

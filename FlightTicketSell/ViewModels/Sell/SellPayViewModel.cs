@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FlightTicketSell.Helpers;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -146,7 +147,7 @@ namespace FlightTicketSell.ViewModels
                 }
                 catch (EntityException e)
                 {
-                    System.Windows.MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                    NotifyHelper.ShowEntityException(e);
                 }
             }
         }

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="baab6d2d55824e1398133389e499840b" Name="Diagram1">
+      <Diagram DiagramId="baab6d2d55824e1398133389e499840b" Name="Diagram1" ZoomLevel="60">
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHITIETDATCHO" Width="1.5" PointX="12.75" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHITIETHANGVE" Width="1.5" PointX="7.5" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHUYENBAY" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
@@ -37,7 +37,12 @@
         <AssociationConnector Association="BANVECHUYENBAYModel.FK_VE_MaHangVe" ManuallyRouted="false" />
         <AssociationConnector Association="BANVECHUYENBAYModel.FK_VE_MaKhachHang" ManuallyRouted="false" />
         <AssociationConnector Association="BANVECHUYENBAYModel.FK_SANBAYTG_MaSanBay" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHUCNANG" Width="1.5" PointX="10.375" PointY="0.875" />
+        <EntityTypeShape EntityType="BANVECHUYENBAYModel.NGUOIDUNG" Width="1.5" PointX="14.875" PointY="0.875" />
+        <EntityTypeShape EntityType="BANVECHUYENBAYModel.NHOMNGUOIDUNG" Width="1.5" PointX="12.625" PointY="0.875" />
+        <AssociationConnector Association="BANVECHUYENBAYModel.FK_NGUOIDUNG_MaNhom" />
+        <AssociationConnector Association="BANVECHUYENBAYModel.PHANQUYEN" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

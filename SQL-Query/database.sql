@@ -156,6 +156,40 @@ CREATE TABLE THAMSO
 )
 GO
 
+-- Bảng Chức năng
+CREATE TABLE CHUCNANG
+(
+	MaChucNang VARCHAR(32) PRIMARY KEY,
+	TenChucNang VARCHAR(256),
+	TenManHinhDuocLoad VARCHAR(256)
+)
+GO
+
+-- Bảng Nhóm người dùng
+CREATE TABLE NHOMNGUOIDUNG
+(
+	MaNhom VARCHAR(32) PRIMARY KEY,
+	TenNhom NVARCHAR(256)
+)
+GO
+
+-- Bảng Phân quyền
+CREATE TABLE PHANQUYEN
+(
+	MaNhom VARCHAR(32) NOT NULL,
+	MaChucNang VARCHAR(32) NOT NULL
+)
+GO
+
+-- Bảng Người dùng
+CREATE TABLE NGUOIDUNG
+(
+	TenDangNhap VARCHAR(256) PRIMARY KEY,
+	MatKhau VARCHAR(1024),
+	MaNhom VARCHAR(32)
+)
+GO
+
 --========================================= RÀNG BUỘC BẢNG CHUYẾN BAY =========================================
 ------ Khóa ngoại Mã đường bay
 ALTER TABLE CHUYENBAY ADD CONSTRAINT FK_CHUYENBAY_MaDuongBay FOREIGN KEY (MaDuongBay) REFERENCES DUONGBAY(MaDuongBay)
@@ -655,3 +689,11 @@ GO
 --========================================= RÀNG BUỘC BẢNG THAM SỐ =========================================
 ALTER TABLE THAMSO ADD CONSTRAINT CK_THAMSO_GiaTri CHECK (GiaTri>=0)
 GO
+
+--========================================= RÀNG BUỘC BẢNG PHÂN QUYỀN =========================================
+ALTER TABLE PHANQUYEN ADD CONSTRAINT FK_PHANQUYEN_MaNhom FOREIGN KEY (MaNhom) REFERENCES NHOMNGUOIDUNG(MaNhom)
+ALTER TABLE PHANQUYEN ADD CONSTRAINT FK_PHANQUYEN_MaChucNang FOREIGN KEY (MaChucNang) REFERENCES CHUCNANG(MaChucNang)
+ALTER TABLE PHANQUYEN ADD CONSTRAINT PK_PHANQUYEN PRIMARY KEY (MaNhom, MaChucNang)
+
+--========================================= RÀNG BUỘC BẢNG PHÂN QUYỀN =========================================
+ALTER TABLE NGUOIDUNG ADD CONSTRAINT FK_NGUOIDUNG_MaNhom FOREIGN KEY (MaNhom) REFERENCES NHOMNGUOIDUNG(MaNhom)

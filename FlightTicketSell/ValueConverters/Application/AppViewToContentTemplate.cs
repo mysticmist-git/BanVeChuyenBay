@@ -52,6 +52,9 @@ namespace FlightTicketSell.ValueConverters
                 // Settings
                 case AppView.Setting:
                     return new SettingView();
+                // Roles
+                case AppView.Roles:
+                    return new RolesView();
                 // Default
                 default:
                     return new SearchView();

@@ -187,6 +187,7 @@
     <Compile Include="Helpers\BookHelper.cs" />
     <Compile Include="Helpers\FlightHelper.cs" />
     <Compile Include="Helpers\FormatHelper.cs" />
+    <Compile Include="Helpers\NotifyHelper.cs" />
     <Compile Include="Interface\Book\IBookDetail.cs" />
     <Compile Include="Interface\ITicketInfoFilling.cs" />
     <Compile Include="Interface\Report\IReport.cs" />
@@ -197,6 +198,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CHITIETHANGVE.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CHUCNANG.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CHUYENBAY.cs">
@@ -218,6 +222,7 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Enums\General\Parameter.cs" />
+    <Compile Include="Models\Enums\ViewType.cs" />
     <Compile Include="Models\GetFlightData_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -242,6 +247,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\NGUOIDUNG.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NHOMNGUOIDUNG.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Roles\Function.cs" />
+    <Compile Include="Models\Roles\Permission.cs" />
+    <Compile Include="Models\Roles\User.cs" />
+    <Compile Include="Models\Roles\UserGroup.cs" />
+    <Compile Include="Models\Roles\UserGroupWithCount.cs" />
     <Compile Include="Models\SANBAY.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -288,6 +304,7 @@
     <Compile Include="ValueConverters\Application\ViewToInterfaceConverter.cs" />
     <Compile Include="ViewModels\Book\BookPayViewModel.cs" />
     <Compile Include="ViewModels\Schedule\ImportFromExcelClass.cs" />
+    <Compile Include="ViewModels\Roles\RolesViewModel.cs" />
     <Compile Include="ViewModels\Schedule\LayoverAirport.cs" />
     <Compile Include="ViewModels\Schedule\TicketClassDetail.cs" />
     <Compile Include="ViewModels\Search\CustomersDetailViewModel.cs" />
@@ -345,6 +362,9 @@
     </Compile>
     <Compile Include="Views\ScheduleViewRelated\ImportFromExcel.xaml.cs">
       <DependentUpon>ImportFromExcel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RolesViewRelated\RolesView.xaml.cs">
+      <DependentUpon>RolesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SearchViewRelated\ChooseAirportViewInSearchView.xaml.cs">
       <DependentUpon>ChooseAirportViewInSearchView.xaml</DependentUpon>
@@ -477,6 +497,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\RolesViewRelated\RolesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SearchViewRelated\ChooseAirportViewInSearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -486,7 +510,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ScheduleViewRelated\EditEnteredTicketClassView.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

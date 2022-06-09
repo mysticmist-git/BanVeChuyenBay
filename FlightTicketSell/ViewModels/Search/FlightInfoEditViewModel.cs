@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using FlightTicketSell.Helpers;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -456,7 +457,7 @@ namespace FlightTicketSell.ViewModels
                        }
                        catch (EntityException e)
                        {
-                           MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                           NotifyHelper.ShowEntityException(e);
                        }
                    }
 
@@ -646,7 +647,7 @@ namespace FlightTicketSell.ViewModels
                       }
                       catch (EntityException e)
                       {
-                          MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                          NotifyHelper.ShowEntityException(e);;
                       }
                   }
               }
@@ -948,7 +949,7 @@ namespace FlightTicketSell.ViewModels
                     }
                     catch (EntityException e)
                     {
-                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                        NotifyHelper.ShowEntityException(e);;
                     }
                 }
             });
@@ -1084,7 +1085,7 @@ namespace FlightTicketSell.ViewModels
                       }
                       catch (EntityException e)
                       {
-                          MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                          NotifyHelper.ShowEntityException(e);;
                       }
                   }
               }

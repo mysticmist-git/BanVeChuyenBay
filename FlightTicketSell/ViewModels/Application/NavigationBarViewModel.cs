@@ -43,6 +43,11 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand SettingCommand { get; set; }
 
+        /// <summary>
+        /// To open the role settings view
+        /// </summary>
+        public ICommand RolesCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -64,6 +69,7 @@ namespace FlightTicketSell.ViewModels
             ScheduleCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.Schedule);
             ReportCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.Report);
             SettingCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.Setting);
+            RolesCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.Roles);
         }
 
         #endregion

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Data.Entity.Core;
 using FlightTicketSell.Models.SearchRelated;
 using System.Data.Entity;
+using FlightTicketSell.Helpers;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -158,7 +159,7 @@ namespace FlightTicketSell.ViewModels
                     }
                     catch (EntityException e)
                     {
-                        MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, MessageBoxImage.Error);
+                        NotifyHelper.ShowEntityException(e);
                     }
                 }
             });

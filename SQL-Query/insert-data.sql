@@ -21,7 +21,7 @@ INSERT INTO SANBAY (TenSanBay, VietTat, TinhThanh, TrangThai) VALUES
 	(N'Đà Nẵng', 'DAD', N'Đà Nẵng', 1),
 	(N'Chu Lai', 'VCL', N'Quảng Nam', 1),
 	(N'Phù Cát', 'UIH', N'Bình Định', 1),
-	(N'Tuy Hòa', 'TBB', N'Phú Yên', 1),
+	(N'Tuy Hòa', 'TBB', N'Phú Yên', 1),1
 	(N'Cam Ranh', 'CXR', N'Khánh Hòa', 1),
 	(N'Buôn Ma Thuột', 'BMV', N'Đắk Lắk', 1),
 	(N'Liên Khương', 'DLI', N'Lâm Đồng', 1),
@@ -76,3 +76,19 @@ INSERT INTO SANBAY (TenSanBay, VietTat, TinhThanh, TrangThai) VALUES
 --INSERT INTO KHACHHANG (HoTen, CMND, SDT, Email) VALUES (N'Hàn Phi Trường', '2468135790', '0000000003', 'truong@mail.com')
 --INSERT INTO KHACHHANG (HoTen, CMND, SDT, Email) VALUES (N'Trần Nguyễn Nhật Tân', '111222333', '0000000004', 'tan@mail.com')
 --INSERT INTO KHACHHANG (HoTen, CMND, SDT, Email) VALUES (N'Nguyễn Đình Thi', '444555666', '0000000005', 'thi@mail.com')
+
+---- Nhập Phân quyền
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('PHQ', 'PhanQuyen', 'PhanQuyen')
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('BCDT', 'BaoCaoDoanhThu', 'BaoCaoDoanhThu')
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('TRC', 'TraCuu', 'TraCuu')
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('NHL', 'NhanLich', 'NhanLich')
+
+-- Nhập nhóm người dùng
+INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('ADM', 'Admin')
+INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('NV', 'NhanVien')
+INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('CDN', 'ChuDoanhNghiep')
+
+-- Nhập người dùng
+select * from nguoidung
+INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('admin','admin','ADM')
+
