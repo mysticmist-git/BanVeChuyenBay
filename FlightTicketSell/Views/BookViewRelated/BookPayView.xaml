@@ -241,6 +241,7 @@
                         <TextBlock Foreground="White" 
                                Text="Hạn chót hủy đặt chỗ:" 
                                Grid.Column="0"
+                               FontWeight="SemiBold"
                                HorizontalAlignment="Left" 
                                FontSize="{StaticResource RealSmall}"    
                                VerticalAlignment="Center" />
@@ -389,11 +390,13 @@
                         <Grid>
                             <Grid Grid.Row="0" VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="Hạng vé" FontSize="17" Grid.Column="0"
-                                           FontWeight="SemiBold" Grid.ColumnSpan="2" Height="23" Margin="0,0,236,0" VerticalAlignment="Top"/>
+                                           FontWeight="SemiBold" Grid.ColumnSpan="2" Height="23" 
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Top"/>
                                 <TextBlock Text="{Binding CurrentTicketTier.TenHangVe}"
                                            FontSize="17" FontWeight="Black"
                                            d:Text="Phổ thông" Grid.Column="1" HorizontalAlignment="Right" 
@@ -407,7 +410,8 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Giá vé" Grid.Column="0" FontWeight="SemiBold" FontSize="17" />
+                            <TextBlock Text="Giá vé" Grid.Column="0" FontWeight="SemiBold" FontSize="17" 
+                                       HorizontalAlignment="Left"/>
                             <TextBlock Text="{Binding CurrentTicketTier.DisplayTicketPrice}" FontSize="17" FontWeight="Black" d:Text="920.000 VNĐ" Grid.Column="1" HorizontalAlignment="Right" />
                         </Grid>
 
@@ -417,7 +421,8 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Số lượng chỗ" Grid.Column="0" FontWeight="SemiBold" FontSize="17" />
+                            <TextBlock Text="Số lượng chỗ" Grid.Column="0" FontWeight="SemiBold" FontSize="17"
+                                       HorizontalAlignment="Left"/>
                             <TextBlock Text="{Binding BookInfo.SoVeDat}" d:Text="3" FontSize="17" FontWeight="Black" Grid.Column="1" HorizontalAlignment="Right" />
                         </Grid>
 
@@ -427,7 +432,8 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Người thanh toán" Grid.Column="0" FontWeight="SemiBold" FontSize="17" />
+                            <TextBlock Text="Người thanh toán" Grid.Column="0" FontWeight="SemiBold" FontSize="17"
+                                       HorizontalAlignment="Left"/>
                             <TextBlock Text="{Binding BookInfo.ThongTinNguoiDat.HoTen}"
                                            FlowDirection="LeftToRight"
                                            Grid.Column="1"
@@ -487,13 +493,15 @@
                     Style="{StaticResource HoverButton}"
                     VerticalAlignment="Center"
                     Width="250"
+                    BorderThickness="4"
                     FontSize="{StaticResource Regular}"
                     BorderBrush="{StaticResource GreenBrush}"
                     materialDesign:ButtonAssist.CornerRadius="7"
                     Height="45">
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="Check"  Width="35" Height="35" />
-                        <TextBlock Text="Thanh toán" Margin="10 0 0 0" VerticalAlignment="Center" FontSize="{StaticResource Regular}" />
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="CheckBold"  Width="35" Height="35" 
+                                                 Margin="0 -2 0 2"/>
+                        <TextBlock Text="Thanh toán" Margin="5 0 0 0" VerticalAlignment="Center" FontSize="{StaticResource Regular}" />
                     </StackPanel>
                 </Button>
             </Border>

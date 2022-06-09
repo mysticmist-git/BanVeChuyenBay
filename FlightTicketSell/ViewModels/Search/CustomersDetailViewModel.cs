@@ -111,7 +111,11 @@ namespace FlightTicketSell.ViewModels
                 }
             });
 
-            CloseCommand = new RelayCommand<ICustomerDetail>(p => true, p => p.Close());
+            CloseCommand = new RelayCommand<ICustomerDetail>(p => true, p =>
+            {
+                p.Close();
+                IoC.IoC.Get<FlightTicketAndBookViewModel>().LoadCommand.Execute(null);
+            });
         }
 
         #endregion

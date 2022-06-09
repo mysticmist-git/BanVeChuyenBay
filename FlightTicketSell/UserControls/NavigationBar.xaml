@@ -90,70 +90,86 @@
                      MaxWidth="{Binding ElementName=buttons, Path=ActualWidth}">
                 <StackPanel x:Name="buttons" Orientation="Horizontal">
                     <Button 
-                            Command="{Binding SearchCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Search}}"
+                        ToolTip="TRA CỨU"
+                            Command="{Binding SearchCommand}" 
+                        Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Search}}"
                             >
                         <ContentControl>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal"
+                                        >
                                 <materialDesign:PackIcon Kind="AirplaneSearch" 
-                                                         Margin="0 0 7 -3"
+                                                         Margin="0 0 2 -3"
                                                          VerticalAlignment="Center" 
                                                          Height="25" Width="25"/>
-                                <TextBlock Text="TRA CỨU" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Tag,RelativeSource={RelativeSource AncestorType=Button}}" 
+                                           VerticalAlignment="Center"/>
                             </StackPanel>
                         </ContentControl>
                     </Button>
 
                     <Button 
                             Margin="20 0 10 0"
+                        ToolTip="NHẬN LỊCH"
                             Command="{Binding ScheduleCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Schedule}}"
                             >
                         <ContentControl>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="AirplanePlus" 
-                                                         Margin="0 0 7 -1"
+                                                         Margin="0 0 2 -1"
                                                          VerticalAlignment="Center" 
                                                          Height="25" Width="25"/>
-                                <TextBlock Text="NHẬN LỊCH" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Tag,RelativeSource={RelativeSource AncestorType=Button}}" 
+                                           VerticalAlignment="Center"/>
                             </StackPanel>
                         </ContentControl>
                     </Button>
                     <Button 
                             Margin="10 0 20 0"
+                        ToolTip="DOANH THU"
                             Command="{Binding ReportCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Report}}"
                             >
                         <ContentControl>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="TableSearch" 
-                                                         Margin="0 -2 7 0"
+                                                         Margin="0 -2 2 0"
                                                          VerticalAlignment="Center" 
                                                          Height="25" Width="25"/>
-                                <TextBlock Text="DOANH THU" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Tag,RelativeSource={RelativeSource AncestorType=Button}}"
+                                           VerticalAlignment="Center"/>
                             </StackPanel>
                         </ContentControl>
                     </Button>
 
                     <Button  
+                        ToolTip="CÀI ĐẶT"
+                            Margin="10 0 20 0"
                             Command="{Binding SettingCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}"
                             >
                         <ContentControl>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="AirplaneCog" 
-                                                         Margin="0 -1 7 0"
+                                                         Margin="0 -1 2 0"
                                                          VerticalAlignment="Center" 
                                                          Height="25" Width="25"/>
-                                <TextBlock Text="CÀI ĐẶT" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Tag,RelativeSource={RelativeSource AncestorType=Button}}"
+                                           VerticalAlignment="Center"/>
                             </StackPanel>
                         </ContentControl>
                     </Button>
 
-                    <Button Command="{Binding RolesCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}" >
+                    <Button 
+                        ToolTip="PHÂN QUYỀN"
+                        Command="{Binding RolesCommand}" 
+                        Style="{StaticResource NavigationButton}" 
+                        attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}" >
                         <ContentControl>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="ShieldLock" 
                                                          Margin="0 -1 2 0"
                                                          VerticalAlignment="Center" 
                                                          Height="25" Width="25"/>
-                                <TextBlock Text="PHÂN QUYỀN" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding Tag,RelativeSource={RelativeSource AncestorType=Button}}"
+                                           VerticalAlignment="Center"/>
                             </StackPanel>
                         </ContentControl>
                     </Button>

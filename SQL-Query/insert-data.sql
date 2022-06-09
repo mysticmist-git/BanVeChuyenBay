@@ -1,4 +1,5 @@
 ﻿USE BANVECHUYENBAY
+Go
 
 -- Nhập Tham số
 INSERT INTO THAMSO VALUES
@@ -21,7 +22,7 @@ INSERT INTO SANBAY (TenSanBay, VietTat, TinhThanh, TrangThai) VALUES
 	(N'Đà Nẵng', 'DAD', N'Đà Nẵng', 1),
 	(N'Chu Lai', 'VCL', N'Quảng Nam', 1),
 	(N'Phù Cát', 'UIH', N'Bình Định', 1),
-	(N'Tuy Hòa', 'TBB', N'Phú Yên', 1),1
+	(N'Tuy Hòa', 'TBB', N'Phú Yên', 1),
 	(N'Cam Ranh', 'CXR', N'Khánh Hòa', 1),
 	(N'Buôn Ma Thuột', 'BMV', N'Đắk Lắk', 1),
 	(N'Liên Khương', 'DLI', N'Lâm Đồng', 1),

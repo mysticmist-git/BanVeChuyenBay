@@ -13,25 +13,25 @@
 
     <materialDesign:DialogHost CloseOnClickAway="True" Identifier="ChildDialog">
         <Grid Background="White">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="30*"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="7*"/>
-            <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="30*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
 
-        <StackPanel  
+            <StackPanel  
                 Orientation="Horizontal"
                 Grid.Column="0"
                 Grid.Row="0"
                 Grid.ColumnSpan="3"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center">
-            <TextBlock
+                <TextBlock
                 Text="NHẬP LIỆU TỪ EXCEL"
                 TextAlignment="Center"
                 Foreground="{StaticResource GreenBrush}"
@@ -39,20 +39,21 @@
                 FontSize="{StaticResource Large}"
                 VerticalAlignment="Center"
                     />
-            <materialDesign:PackIcon 
+                <materialDesign:PackIcon 
                     Kind="MicrosoftExcel" 
                     VerticalAlignment="Center"
                     Margin="10 0 0 0"
                     Foreground="{StaticResource GreenBrush}" 
                     Height="40" Width="40"/>
-        </StackPanel>
+            </StackPanel>
 
 
-        <ScrollViewer Grid.Column="0"
+
+            <DataGrid x:Name="datagridfromexcel"
+                      Grid.Column="0"
                 Grid.Row="1"
                       Grid.ColumnSpan="3"
-                      VerticalScrollBarVisibility="Auto" >
-            <DataGrid x:Name="datagridfromexcel"
+                      VerticalScrollBarVisibility="Auto"
                       Background="Transparent"
                       Height="auto"
                       Margin="15 0 5 0"
@@ -60,30 +61,30 @@
                       RowHeight="50"
                       CellStyle="{StaticResource DataGridCellImport}"
                       ColumnHeaderStyle="{StaticResource DataGridColumnImport}"/>
-        </ScrollViewer>
-      
 
-        <StackPanel Orientation="Horizontal"
+
+
+            <StackPanel Orientation="Horizontal"
                         Grid.Row="2"
                         Grid.Column="1"
                         HorizontalAlignment="Center"
                     VerticalAlignment="Center">
 
-            <!--Nút xóa-->
-            <Button Margin="0 0 10 0" 
+                <!--Nút xóa-->
+                <Button Margin="0 0 10 0" 
                             Width="130"
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource RedBrush}"
                                     Command="{Binding CancelImport_Command}">
-                <ContentControl>
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="CloseThick" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
-                        <TextBlock Text="Hủy" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </ContentControl>
-            </Button>
+                    <ContentControl>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="CloseThick" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                            <TextBlock Text="Hủy" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ContentControl>
+                </Button>
 
-            <!--Nút thêm-->
+                <!--Nút thêm-->
                 <Button Margin="10 0 0 0" 
                             Width="180"        
                             Style="{StaticResource HoverButton}"
@@ -100,6 +101,6 @@
 
                 </Button>
             </StackPanel>
-    </Grid>
+        </Grid>
     </materialDesign:DialogHost>
 </UserControl>

@@ -496,10 +496,13 @@
                     BorderBrush="{StaticResource GreenBrush}"                    
                         Style="{StaticResource HoverButton}"
                     materialDesign:ButtonAssist.CornerRadius="7"
+                    BorderThickness="4"
                             Height="45">
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Check"  VerticalAlignment="Center" Width="35" Height="35" />
-                        <TextBlock Text="Thanh toán" Margin="10 0 0 0"  FontSize="{StaticResource Regular}" VerticalAlignment="Center" />
+                        <materialDesign:PackIcon Kind="CheckBold" 
+                                                 Margin="0 -2 0 2"
+                                                 VerticalAlignment="Center" Width="35" Height="35" />
+                        <TextBlock Text="Thanh toán" Margin="5 0 0 0"  FontSize="{StaticResource Regular}" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
             </Border>
