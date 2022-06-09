@@ -29,6 +29,7 @@ namespace FlightTicketSell.Models
     
         public virtual DbSet<CHITIETDATCHO> CHITIETDATCHOes { get; set; }
         public virtual DbSet<CHITIETHANGVE> CHITIETHANGVEs { get; set; }
+        public virtual DbSet<CHUCNANG> CHUCNANGs { get; set; }
         public virtual DbSet<CHUYENBAY> CHUYENBAYs { get; set; }
         public virtual DbSet<DATCHO> DATCHOes { get; set; }
         public virtual DbSet<DOANHTHUCHUYENBAY> DOANHTHUCHUYENBAYs { get; set; }
@@ -37,13 +38,12 @@ namespace FlightTicketSell.Models
         public virtual DbSet<DUONGBAY> DUONGBAYs { get; set; }
         public virtual DbSet<HANGVE> HANGVEs { get; set; }
         public virtual DbSet<KHACHHANG> KHACHHANGs { get; set; }
+        public virtual DbSet<NGUOIDUNG> NGUOIDUNGs { get; set; }
+        public virtual DbSet<NHOMNGUOIDUNG> NHOMNGUOIDUNGs { get; set; }
         public virtual DbSet<SANBAY> SANBAYs { get; set; }
         public virtual DbSet<SANBAYTG> SANBAYTGs { get; set; }
         public virtual DbSet<THAMSO> THAMSOes { get; set; }
         public virtual DbSet<VE> VEs { get; set; }
-        public virtual DbSet<CHUCNANG> CHUCNANGs { get; set; }
-        public virtual DbSet<NGUOIDUNG> NGUOIDUNGs { get; set; }
-        public virtual DbSet<NHOMNGUOIDUNG> NHOMNGUOIDUNGs { get; set; }
     
         public virtual ObjectResult<GetFlightData_Result> GetFlightData()
         {

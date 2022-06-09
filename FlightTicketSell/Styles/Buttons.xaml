@@ -15,10 +15,10 @@
         <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth0" />
         <Setter Property="FontWeight" Value="Black"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Width" Value="160"/>
+        <Setter Property="Width" Value="65"/>
         <Setter Property="Height" Value="37"/>
         <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="15"/>
-
+        <Setter Property="Tag" Value=""/>
         <!-- Trigger -->
         <Style.Triggers>
             <MultiTrigger>
@@ -41,7 +41,7 @@
                         <Storyboard FillBehavior="Stop">
                             <ColorAnimation Duration="0:0:0.1" To="{StaticResource Blue}" 
                                                             Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
-                            <DoubleAnimation Duration="0:0:0.1" To="160" Storyboard.TargetProperty="(Button.Width)"/>
+                            <DoubleAnimation Duration="0:0:0.1" To="65" Storyboard.TargetProperty="(Button.Width)"/>
                             <DoubleAnimation Duration="0:0:0.1" To="37" Storyboard.TargetProperty="(Button.Height)"/>
                         </Storyboard>
                     </BeginStoryboard>
@@ -67,7 +67,7 @@
                         <Storyboard FillBehavior="Stop">
                             <ColorAnimation Duration="0:0:0.1" To="{StaticResource Blue}" 
                                                             Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" />
-                            <DoubleAnimation Duration="0:0:0.1" To="160" Storyboard.TargetProperty="(Button.Width)"/>
+                            <DoubleAnimation Duration="0:0:0.1" To="65" Storyboard.TargetProperty="(Button.Width)"/>
                             <DoubleAnimation Duration="0:0:0.1" To="37" Storyboard.TargetProperty="(Button.Height)"/>
                         </Storyboard>
                     </BeginStoryboard>
@@ -76,6 +76,28 @@
                     <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth1" />
                 </Trigger.Setters>
             </Trigger>
+
+
+            <Trigger Property="attachedProperties:IsButtonSelected.Value" Value="True">
+                <Setter Property="Tag" Value="{Binding ToolTip,RelativeSource={RelativeSource Mode=Self}}"/>
+            </Trigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="attachedProperties:IsButtonSelected.Value" Value="False"/>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Tag" Value="{Binding ToolTip,RelativeSource={RelativeSource Mode=Self}}"/>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="attachedProperties:IsButtonSelected.Value" Value="False"/>
+                    <Condition Property="IsMouseOver" Value="False"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Tag" Value=""/>
+            </MultiTrigger>
+
         </Style.Triggers>
     </Style>
 
