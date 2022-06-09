@@ -1,4 +1,5 @@
 ﻿using FlightTicketSell.ViewModels;
+using System.Collections.ObjectModel;
 
 namespace FlightTicketSell.Models
 {
@@ -17,4 +18,5 @@ namespace FlightTicketSell.Models
 
         #endregion
     }
+
 }

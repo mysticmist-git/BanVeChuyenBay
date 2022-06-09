@@ -12,7 +12,8 @@ namespace FlightTicketSell.ValueConverters
         TicketInfoFilling,
         Report,
         BookDetail,
-        CustomerDetail_Search
+        CustomerDetail_Search,
+        Login
     }
     
     public class ViewToInterfaceConverter : BaseValueConverter<ViewToInterfaceConverter>
@@ -29,6 +30,8 @@ namespace FlightTicketSell.ValueConverters
                     return value as IBookDetail;
                 case ViewInterface.CustomerDetail_Search:
                     return value as ICustomerDetail;
+                case ViewInterface.Login:
+                    return value as ILogin;
             }
 
             return null;
