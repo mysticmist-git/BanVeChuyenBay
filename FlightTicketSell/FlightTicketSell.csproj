@@ -305,6 +305,7 @@
     <Compile Include="ValueConverters\Search\BookingStateToStringConverter.cs" />
     <Compile Include="ValueConverters\Application\ViewToInterfaceConverter.cs" />
     <Compile Include="ViewModels\Book\BookPayViewModel.cs" />
+    <Compile Include="ViewModels\Print\PrintCommand.cs" />
     <Compile Include="ViewModels\Schedule\ImportFromExcelClass.cs" />
     <Compile Include="ViewModels\Roles\RolesViewModel.cs" />
     <Compile Include="ViewModels\Schedule\LayoverAirport.cs" />
@@ -334,6 +335,7 @@
     <Compile Include="ViewModels\Search\FlightInfoEditViewModel.cs" />
     <Compile Include="ViewModels\Search\FlightTicketAndBookViewModel.cs" />
     <Compile Include="Models\SearchRelated\TicketTier.cs" />
+    <Compile Include="ViewModels\Print\PrintTicket.cs" />
     <Compile Include="ViewModels\Search\Ticket.cs" />
     <Compile Include="ViewModels\Book\ChangeTicketViewModel.cs" />
     <Compile Include="ViewModels\Book\BookDetailViewModel.cs" />
@@ -361,6 +363,9 @@
     </Compile>
     <Compile Include="Views\BookViewRelated\CustomerInfoDialog.xaml.cs">
       <DependentUpon>CustomerInfoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BookViewRelated\PrintTicketReview.xaml.cs">
+      <DependentUpon>PrintTicketReview.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ScheduleViewRelated\ImportFromExcel.xaml.cs">
       <DependentUpon>ImportFromExcel.xaml</DependentUpon>
@@ -492,6 +497,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BookViewRelated\CustomerInfoDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BookViewRelated\PrintTicketReview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -664,6 +673,7 @@
     <Resource Include="Images\Logo_Icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\background_ticket.jpg" />
     <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>

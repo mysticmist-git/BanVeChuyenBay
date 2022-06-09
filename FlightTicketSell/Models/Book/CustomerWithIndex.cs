@@ -58,6 +58,20 @@ namespace FlightTicketSell.Models
 
                 if (IsChanged)
                 {
+                    if (string.IsNullOrEmpty(HoTen_Display))
+                    {
+                        MessageBox.Show("Họ tên không được để trống!", "Cảnh báo");
+                        HoTen_Display = HoTen;
+                        return;
+                    }
+
+                    if (string.IsNullOrEmpty(CMND_Display))
+                    {
+                        MessageBox.Show("CMND không được để trống!", "Cảnh báo");
+                        CMND_Display =CMND;
+                        return;
+                    }
+
                     using (var context = new FlightTicketSellEntities())
                     {
                         try

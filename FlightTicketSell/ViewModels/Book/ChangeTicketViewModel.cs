@@ -15,11 +15,22 @@ using iText.Layout.Element;
 using Paragraph = iText.Layout.Element.Paragraph;
 using iText.Kernel.Pdf.Canvas.Draw;
 using FlightTicketSell.Helpers;
+using FlightTicketSell.ViewModels.Search;
+using System.Windows.Controls;
 
 namespace FlightTicketSell.ViewModels
 {
     public class ChangeTicketViewModel : BaseViewModel
     {
+        #region Print
+        public HANGVE print_HANGVE { get; set; }
+        public ObservableCollection<KHACHHANG> print_KHACHHANG { get; set; } = new ObservableCollection<KHACHHANG>();
+        public CHUYENBAY print_CHUYENBAY { get; set; }
+
+        public PrintTicket print { get; set; } 
+        public ICommand PrintLoadCommand { get; set; }
+        #endregion
+
         #region Private Members
 
         /// <summary>
@@ -124,6 +135,10 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ChangeTicketViewModel()
         {
+            PrintLoadCommand = new RelayCommand<object>((p) => true, (p) => 
+            { 
+
+            });
             // Create commands
 
             ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.TicketSoldOrBooked);
@@ -166,7 +181,8 @@ namespace FlightTicketSell.ViewModels
                 {
                     try
                     {
-                        
+                        print_CHUYENBAY = context.CHUYENBAYs.Where(h => h.MaChuyenBay == FlightInfo.MaChuyenBay).FirstOrDefault();
+                        print_HANGVE = context.HANGVEs.Where(h => h.MaHangVe == BookingInfo.MaHangVe).FirstOrDefault();
                         // Get deadline to cancel the booking
                         _cancelDays = context.THAMSOes.Where(ts => ts.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri;
                         OnPropertyChanged(nameof(DisplayCancelDeadline));
@@ -178,6 +194,7 @@ namespace FlightTicketSell.ViewModels
                                     .Select(ctdc => ctdc.KHACHHANG)
                                     )
                                 .FirstOrDefaultAsync();
+                        print_KHACHHANG = new ObservableCollection<KHACHHANG>(result);
 
                         // Convert KHACHHANG to Customer and add it to Customers list
                         Customers = new ObservableCollection<CustomerWithIndex>();
@@ -238,35 +255,41 @@ namespace FlightTicketSell.ViewModels
         private void PrintTicket()
         {
 
-            PdfWriter writer = new PdfWriter("demo.pdf");
-            PdfDocument pdf = new PdfDocument(writer);
-            Document document = new Document(pdf);
+            //PrintDialog printDialog = new PrintDialog();
+            //if (printDialog.ShowDialog() == true)
+            //{
+            //    printDialog.PrintVisual(, "Invoice");
+            //}
+
+            //PdfWriter writer = new PdfWriter("demo.pdf");
+            //PdfDocument pdf = new PdfDocument(writer);
+            //Document document = new Document(pdf);
 
 
-            Paragraph header = new Paragraph("FLIGHT TICKET").SetBold()
-               .SetFontSize(16).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+            //Paragraph header = new Paragraph("FLIGHT TICKET").SetBold()
+            //   .SetFontSize(16).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
 
-            document.Add(header);
-            LineSeparator ls = new LineSeparator(new SolidLine());
+            //document.Add(header);
+            //LineSeparator ls = new LineSeparator(new SolidLine());
 
-            Paragraph NAME = new Paragraph($"BOOKER NAME:   {BookHelper.convertText(BookingInfo.ThongTinNguoiDat.HoTen)}                    BOOK ID: {BookingInfo.MaDatCho}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
-            Paragraph FROM = new Paragraph($"FROM:   {BookHelper.convertText(FlightInfo.SanBayDi)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
-            Paragraph TO = new Paragraph($"TO:   {BookHelper.convertText(FlightInfo.SanBayDen)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
-            Paragraph NUMBER_OF_SEATS = new Paragraph($"NUMBER OF SEATS:   {BookingInfo.SoVeDat}       ").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
-            document.Add(NAME);
-            document.Add(FROM);
-            document.Add(TO);
-            document.Add(NUMBER_OF_SEATS);
+            //Paragraph NAME = new Paragraph($"BOOKER NAME:   {BookHelper.convertText(BookingInfo.ThongTinNguoiDat.HoTen)}                    BOOK ID: {BookingInfo.MaDatCho}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
+            //Paragraph FROM = new Paragraph($"FROM:   {BookHelper.convertText(FlightInfo.SanBayDi)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
+            //Paragraph TO = new Paragraph($"TO:   {BookHelper.convertText(FlightInfo.SanBayDen)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
+            //Paragraph NUMBER_OF_SEATS = new Paragraph($"NUMBER OF SEATS:   {BookingInfo.SoVeDat}       ").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
+            //document.Add(NAME);
+            //document.Add(FROM);
+            //document.Add(TO);
+            //document.Add(NUMBER_OF_SEATS);
 
-            document.Add(ls);
-            Paragraph DETAIL_HEADER = new Paragraph("FLIGHT CODE              DATE              CLASS").SetBold().SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(14);
-            document.Add(DETAIL_HEADER);
-            Paragraph DETAIL = new Paragraph($"{FlightInfo.DisplayFlightCode}           {FlightInfo.DisplayDepartDate}           {BookHelper.convertText(BookingInfo.TenHangVe)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(14);
-            document.Add(DETAIL);
+            //document.Add(ls);
+            //Paragraph DETAIL_HEADER = new Paragraph("FLIGHT CODE              DATE              CLASS").SetBold().SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(14);
+            //document.Add(DETAIL_HEADER);
+            //Paragraph DETAIL = new Paragraph($"{FlightInfo.DisplayFlightCode}           {FlightInfo.DisplayDepartDate}           {BookHelper.convertText(BookingInfo.TenHangVe)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(14);
+            //document.Add(DETAIL);
 
-            document.Add(ls);
-            document.Close();
-            System.Diagnostics.Process.Start("demo.pdf");
+            //document.Add(ls);
+            //document.Close();
+            //System.Diagnostics.Process.Start("demo.pdf");
         }
 
         #endregion
