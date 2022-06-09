@@ -98,7 +98,7 @@
                             <StackPanel Orientation="Horizontal"
                                         >
                                 <materialDesign:PackIcon Kind="AirplaneSearch" 
-                                                         Margin="0 0 7 -3"
+                                                         Margin="0 0 2 -3"
                                                          VerticalAlignment="Center" 
                                                          Height="25" Width="25"/>
                                 <TextBlock Text="{Binding Tag,RelativeSource={RelativeSource AncestorType=Button}}" 
@@ -115,7 +115,7 @@
                         <ContentControl>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="AirplanePlus" 
-                                                         Margin="0 0 7 -1"
+                                                         Margin="0 0 2 -1"
                                                          VerticalAlignment="Center" 
                                                          Height="25" Width="25"/>
                                 <TextBlock Text="{Binding Tag,RelativeSource={RelativeSource AncestorType=Button}}" 
@@ -131,7 +131,7 @@
                         <ContentControl>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="TableSearch" 
-                                                         Margin="0 -2 7 0"
+                                                         Margin="0 -2 2 0"
                                                          VerticalAlignment="Center" 
                                                          Height="25" Width="25"/>
                                 <TextBlock Text="{Binding Tag,RelativeSource={RelativeSource AncestorType=Button}}"
@@ -148,7 +148,7 @@
                         <ContentControl>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="AirplaneCog" 
-                                                         Margin="0 -1 7 0"
+                                                         Margin="0 -1 2 0"
                                                          VerticalAlignment="Center" 
                                                          Height="25" Width="25"/>
                                 <TextBlock Text="{Binding Tag,RelativeSource={RelativeSource AncestorType=Button}}"

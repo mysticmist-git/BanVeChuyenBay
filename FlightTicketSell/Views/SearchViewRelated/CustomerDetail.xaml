@@ -91,7 +91,7 @@
             <ListView Grid.Column="1"
                   Grid.Row="1"
                   ItemsSource="{Binding Customers}"
-                  d:ItemsSource="{d:SampleData ItemCount=3}">
+                  d:ItemsSource="{d:SampleData ItemCount=3}" >
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal"
@@ -123,8 +123,14 @@
                                         <RowDefinition Height="6*" />
                                     </Grid.RowDefinitions>
 
-                                    <!-- Heading -->
-                                    <TextBlock Grid.Row="0"
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="6*"/>
+                                            <ColumnDefinition Width="5*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <!-- Heading -->
+                                        <TextBlock 
+                                            Grid.Column="0"
                                            Text="{Binding DisplayIndex}"
                                            d:Text="Khách hàng 1"
                                            FontSize="20"
@@ -132,6 +138,54 @@
                                            VerticalAlignment="Center"
                                            FontWeight="Bold"
                                            Margin="0 0 0 10"/>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <!--Nút Lưu-->
+                                            <Button
+                                            Style="{StaticResource HoverButton}"
+                                            BorderBrush="{StaticResource GreenBrush}"
+                                            FontSize="10"
+                                            BorderThickness="2"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Width="65"
+                                            Height="23"
+                                            Margin="0 0 5 0"
+                                                Visibility="{Binding IsRead, Converter={valueConverters:BooleanToVisuable}}"
+                                            Command="{Binding SaveCustomerInfor_Command}"
+                                            >
+                                                <ContentControl>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon Kind="ContentSave" Margin="-5 0 1 0" VerticalAlignment="Center" 
+                                                                             Height="15" Width="15"/>
+                                                        <TextBlock Text="Lưu" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </ContentControl>
+                                            </Button>
+                                            <!--Nút Edit-->
+                                            <Button
+                                            Style="{StaticResource HoverButton}"
+                                            BorderBrush="{StaticResource OrangeBrush}"
+                                            FontSize="10"
+                                            BorderThickness="2"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Width="65"
+                                            Height="23"
+                                            Margin="0 0 5 0"
+                                            Command="{Binding EditCustomerInfor_Command}"
+                                            >
+                                                <ContentControl>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon Kind="Edit" Margin="-5 0 1 0" VerticalAlignment="Center" 
+                                                                             Height="15" Width="15"/>
+                                                        <TextBlock Text="Sửa" VerticalAlignment="Center"/>
+                                                    </StackPanel>
+                                                </ContentControl>
+                                            </Button>
+                                        </StackPanel>
+                                     
+                                    </Grid>
+
 
                                     <!-- Customer information fields -->
                                     <Grid Grid.Row="1" Margin="20 0">
@@ -169,25 +223,34 @@
                                         <!-- Name -->
                                         <StackPanel Grid.Row="0" Grid.Column="2">
                                             <TextBlock FontWeight="Bold">Họ Tên</TextBlock>
-                                            <TextBox Name="Ho_Ten"  Text="{Binding HoTen, Mode=OneWay}" materialDesign:HintAssist.Hint="Họ và tên" IsReadOnly="True" />
+                                            <TextBox Name="Ho_Ten"  Text="{Binding HoTen_Display}" materialDesign:HintAssist.Hint="Họ và tên" 
+                                                     IsReadOnly="{Binding IsRead, Mode=TwoWay}" 
+                                                      Background="{Binding IsRead, Converter={valueConverters:EditCumstomerInforToColor}}"
+                                                     />
                                         </StackPanel>
 
                                         <!-- Phone number -->
                                         <StackPanel Grid.Row="4" Grid.Column="2">
                                             <TextBlock FontWeight="Bold">Số điện thoại</TextBlock>
-                                            <TextBox x:Name="SDT" Text="{Binding SDT, Mode=OneWay}" materialDesign:HintAssist.Hint="Số điện thoại" IsReadOnly="True" />
+                                            <TextBox x:Name="SDT" Text="{Binding SDT_Display}" materialDesign:HintAssist.Hint="Số điện thoại" 
+                                                     IsReadOnly="{Binding IsRead, Mode=TwoWay}" 
+                                                      Background="{Binding IsRead, Converter={valueConverters:EditCumstomerInforToColor}}"/>
                                         </StackPanel>
 
                                         <!-- CMND -->
                                         <StackPanel Grid.Row="2" Grid.Column="2">
                                             <TextBlock FontWeight="Bold">CMND/CCCD</TextBlock>
-                                            <TextBox Name="CMND_CCCD" Text="{Binding CMND, Mode=OneWay}" materialDesign:HintAssist.Hint="CMND" IsReadOnly="True" />
+                                            <TextBox Name="CMND_CCCD" Text="{Binding CMND_Display}" materialDesign:HintAssist.Hint="CMND" 
+                                                     IsReadOnly="{Binding IsRead, Mode=TwoWay}" 
+                                                     Background="{Binding IsRead, Converter={valueConverters:EditCumstomerInforToColor}}"/>
                                         </StackPanel>
 
                                         <!-- Email -->
                                         <StackPanel Grid.Row="6" Grid.Column="2">
                                             <TextBlock FontWeight="Bold">Email</TextBlock>
-                                            <TextBox Name="Email" Text="{Binding Email, Mode=OneWay}" materialDesign:HintAssist.Hint="Email" IsReadOnly="True" />
+                                            <TextBox Name="Email" Text="{Binding Email_Display}" materialDesign:HintAssist.Hint="Email" 
+                                                     IsReadOnly="{Binding IsRead, Mode=TwoWay}"
+                                                      Background="{Binding IsRead, Converter={valueConverters:EditCumstomerInforToColor}}"/>
                                         </StackPanel>
 
                                     </Grid>

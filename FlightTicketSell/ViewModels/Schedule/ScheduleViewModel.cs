@@ -856,58 +856,71 @@ namespace FlightTicketSell.ViewModels
                   ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
                   ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
 
-                  rowCount = "0";
-                  while (true)
+                  try
                   {
-                      var check = worksheet.Cells[worksheet.Dimension.Start.Row + RowDataBegin + int.Parse(rowCount), 1].Value;
-                      if (check == null)
-                          break;
-                      rowCount = (int.Parse(rowCount) + 1).ToString();
-                  }
-
-                  Import_dataTable = new DataTable();
-                  Import_dataTable.Columns.Add("STT");
-                  for (int i = worksheet.Dimension.Start.Column; i <= worksheet.Dimension.End.Column; i++)
-                  {
-                      string temp = worksheet.Cells[worksheet.Dimension.Start.Row + RowHeaderBegin, i].Value.ToString();
-                      Import_dataTable.Columns.Add(temp);
-                  }
-
-                  // Thêm vào dòng trên datagrid
-                  int stt = 1;
-                  for (int i = worksheet.Dimension.Start.Row + RowDataBegin; i <= RowDataBegin + int.Parse(rowCount); i++)
-                  {
-                      ObservableCollection<string> list = new ObservableCollection<string>();
-                      list.Add((stt++).ToString());
-                      for (int j = worksheet.Dimension.Start.Column; j <= worksheet.Dimension.End.Column; j++)
+                      rowCount = "0";
+                      while (true)
                       {
-                          var tencot = worksheet.Cells[1 + RowHeaderBegin, j].Value.ToString();
-                          var giatri = worksheet.Cells[i, j].Value.ToString().Remove(0, 1);
-                          switch (tencot)
-                          {
-                              case "Giá vé":
-                                  giatri = string.Format("{0:0,0}", giatri);
-                                  break;
-                              case "Hạng vé":
-                                  giatri = giatri.Replace("-", "\n");
-                                  giatri = giatri.Replace("_", ", ghế trống: ");
-                                  giatri += "\n";
-                                  break;
-                              case "Sân bay trung gian":
-                                  giatri = giatri.Replace("-", "\n");
-                                  giatri = giatri.Replace(":", ", ghi chú: ");
-                                  giatri = giatri.Replace("_", ", thời gian dừng: ");
-                                  giatri += "\n";
-                                  break;
-                              default:
-                                  break;
-                          }
-                          list.Add(giatri);
+                          if (worksheet.Cells[1 + RowDataBegin + int.Parse(rowCount), 1].Value == null)
+                              break;
+                          rowCount = (int.Parse(rowCount) + 1).ToString();
                       }
-                      Import_dataTable.Rows.Add(list.ToArray());
+
+                      if (rowCount=="0")
+                      {
+                          MessageBox.Show("File Excel chưa có dữ liệu. Hoặc không đúng định dạng!", "Cảnh báo");
+                          return;
+                      }
+
+                      Import_dataTable = new DataTable();
+                      Import_dataTable.Columns.Add("STT");
+                      for (int i = worksheet.Dimension.Start.Column; i <= worksheet.Dimension.End.Column; i++)
+                      {
+                          string temp = worksheet.Cells[worksheet.Dimension.Start.Row + RowHeaderBegin, i].Value.ToString();
+                          Import_dataTable.Columns.Add(temp);
+                      }
+
+                      // Thêm vào dòng trên datagrid
+                      int stt = 1;
+                      for (int i = worksheet.Dimension.Start.Row + RowDataBegin; i <= RowDataBegin + int.Parse(rowCount); i++)
+                      {
+                          ObservableCollection<string> list = new ObservableCollection<string>();
+                          list.Add((stt++).ToString());
+                          for (int j = worksheet.Dimension.Start.Column; j <= worksheet.Dimension.End.Column; j++)
+                          {
+                              var tencot = worksheet.Cells[1 + RowHeaderBegin, j].Value.ToString();
+                              var giatri = worksheet.Cells[i, j].Value.ToString().Remove(0, 1);
+                              switch (tencot)
+                              {
+                                  case "Giá vé":
+                                      giatri = string.Format("{0:0,0}", giatri);
+                                      break;
+                                  case "Hạng vé":
+                                      giatri = giatri.Replace("-", "\n");
+                                      giatri = giatri.Replace("_", ", ghế trống: ");
+                                      giatri += "\n";
+                                      break;
+                                  case "Sân bay trung gian":
+                                      giatri = giatri.Replace("-", "\n");
+                                      giatri = giatri.Replace(":", ", ghi chú: ");
+                                      giatri = giatri.Replace("_", ", thời gian dừng: ");
+                                      giatri += "\n";
+                                      break;
+                                  default:
+                                      break;
+                              }
+                              list.Add(giatri);
+                          }
+                          Import_dataTable.Rows.Add(list.ToArray());
+                      }
+                      ImportFromExcel importFromExcel = new ImportFromExcel(Import_dataTable) { DataContext = this };
+                      var result = await DialogHost.Show(importFromExcel, "RootDialog");
+
                   }
-                  ImportFromExcel importFromExcel = new ImportFromExcel(Import_dataTable) { DataContext = this };
-                  var result = await DialogHost.Show(importFromExcel, "RootDialog");
+                  catch (Exception )
+                  {
+                      MessageBox.Show("File Excel không hợp lệ!\nĐảm bảo rằng bạn dùng file Excel chúng tôi cung cấp!", "Cảnh báo");
+                  }
               });
 
             SelectedFlightDateChanged_Command = new RelayCommand<object>((p) => { return true; }, (p) =>
