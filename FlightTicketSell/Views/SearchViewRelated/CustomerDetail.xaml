@@ -172,6 +172,7 @@
                                             Width="65"
                                             Height="23"
                                             Margin="0 0 5 0"
+                                              Visibility="{Binding IsRead,Converter={valueConverters:CustomerDetailTypeToVisuable}}"
                                             Command="{Binding EditCustomerInfor_Command}"
                                             >
                                                 <ContentControl>

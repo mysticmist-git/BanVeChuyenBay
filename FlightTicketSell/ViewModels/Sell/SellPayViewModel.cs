@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using FlightTicketSell.Models;
 using System.Data.Entity.Core;
@@ -10,8 +10,12 @@ using FlightTicketSell.Models.SearchRelated;
 using System.Collections.ObjectModel;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using FlightTicketSell.Helpers;
+using FlightTicketSell.ViewModels.Search;
+using System.Drawing.Printing;
+using FlightTicketSell.Views;
+using System.Printing;
+using System.Windows;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -65,6 +69,13 @@ namespace FlightTicketSell.ViewModels
 
         #endregion
 
+        #region Print
+        public HANGVE hANGVE { get; set; }
+        public KHACHHANG kHACHHANG { get; set; }
+        public CHUYENBAY cHUYENBAY { get; set; }
+        public ObservableCollection<PrintTicket> list_printTickets { get; set; } = new ObservableCollection<PrintTicket>();
+        #endregion
+
         #region Constructor
 
         /// <summary>
@@ -72,17 +83,38 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public SellPayViewModel()
         {
+            LoadCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+                using (var context = new FlightTicketSellEntities())
+                {
+                    try
+                    {
+                        hANGVE = context.HANGVEs.Where(h => h.MaHangVe == CurrentTicketTier.MaHangVe).FirstOrDefault();
+                        kHACHHANG = new KHACHHANG()
+                        {
+                            HoTen=Customer.HoTen
+                        };
+                        cHUYENBAY = context.CHUYENBAYs.Where(h => h.MaChuyenBay == FlightInfo.MaChuyenBay).FirstOrDefault();
+                    }
+                    catch (EntityException e)
+                    {
+                        NotifyHelper.ShowEntityException(e);
+                    }
+                }
+            });
+
             // Create commands
             ReturnCommand = new RelayCommand<object>((p) => true, (p) =>
             {
                 //IoC.IoC.Get<TicketInfoFillingViewModel>().ClearData();
                 IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.TicketInfoFilling;
-            }); 
+            });
 
             PayCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
                 // Save things
                 await SaveTicketInformation();
+                PrintTicket();
 
                 // Navigate back to flight detail view
                 IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.FlightDetail;
@@ -92,13 +124,34 @@ namespace FlightTicketSell.ViewModels
                 var customer = Customer;
 
                 // Send mail
-                await SendMail(flightInfo, customer);
+                //await SendMail(flightInfo, customer);
             });
         }
 
         #endregion
 
         #region Methods
+
+        private void PrintTicket()
+        {
+            try
+            {
+                list_printTickets.Clear();
+                PrintMultipleTicket printMultipleTicket = new PrintMultipleTicket() { DataContext = this };
+                list_printTickets.Add(new PrintTicket(hANGVE, kHACHHANG, cHUYENBAY));
+                printMultipleTicket.Show();
+                PrintDialog printDialog = new PrintDialog();
+                PrinterSettings settings = new PrinterSettings();
+                printDialog.PrintQueue = new PrintQueue(new PrintServer(), settings.PrinterName);
+                printDialog.PrintVisual(printMultipleTicket, "In vé");
+                printMultipleTicket.Close();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         /// <summary>
         /// Saves customer information, ticket information down database
@@ -141,7 +194,7 @@ namespace FlightTicketSell.ViewModels
                     await context.SaveChangesAsync();
 
                     // messagebox to notify sucessful payment
-                    System.Windows.MessageBox.Show("Mua ve thanh cong, quay lai trang chu", "He thong", MessageBoxButton.OK);
+                    System.Windows.MessageBox.Show("Mua vé thành công", "Cảnh báo", MessageBoxButton.OK);
 
                     FlightInfo.GheTrong--;
                 }
@@ -154,49 +207,48 @@ namespace FlightTicketSell.ViewModels
 
         private async Task SendMail(DetailFlilghtInfo flightInfo, Customer customer)
         {
-            // Send email to user
-            string to = customer.Email; //To address
-            if (to == null)
-                return;
-
-            // enter your email
-            string from = "flightsystem53@gmail.com"; //From address    
-
-            MailMessage message = new MailMessage(from, to);
-
-            string mailbody =
-                "<body>" +
-                "<h2>Payment comfirmation</h2>" + Environment.NewLine +
-                "<a>Dear  </a>" + customer.HoTen + Environment.NewLine +
-                "<a>. Here are some information about the ticket</a>" + Environment.NewLine +
-                "<a>. Your flight code is </a>" + flightInfo.DisplayFlightCode + Environment.NewLine +
-                "<a>. The flight will start at </a>" + flightInfo.NgayGio + Environment.NewLine +
-                "<a>. Please take note the information above!!!  </a>" + Environment.NewLine +
-                "<a>. Hope you have a great flight !!! </a>" +
-                "</body>";
-
-            message.Subject = "Flight ticket payment";
-
-            message.Body = mailbody;
-
-            message.BodyEncoding = Encoding.UTF8;
-
-            message.IsBodyHtml = true;
-
-            SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
-
-            System.Net.NetworkCredential basicCredential1 = new
-
-            System.Net.NetworkCredential("flightsystem53@gmail.com", "flightsystem123");
-
-            client.EnableSsl = true;
-
-            client.UseDefaultCredentials = false;
-
-            client.Credentials = basicCredential1;
-
             try
             {
+                // Send email to user
+                string to = customer.Email; //To address
+                if (to == null)
+                    return;
+
+                // enter your email
+                string from = "flightsystem53@gmail.com"; //From address    
+
+                MailMessage message = new MailMessage(from, to);
+
+                string mailbody =
+                    "<body>" +
+                    "<h2>Payment comfirmation</h2>" + Environment.NewLine +
+                    "<a>Dear  </a>" + customer.HoTen + Environment.NewLine +
+                    "<a>. Here are some information about the ticket</a>" + Environment.NewLine +
+                    "<a>. Your flight code is </a>" + flightInfo.DisplayFlightCode + Environment.NewLine +
+                    "<a>. The flight will start at </a>" + flightInfo.NgayGio + Environment.NewLine +
+                    "<a>. Please take note the information above!!!  </a>" + Environment.NewLine +
+                    "<a>. Hope you have a great flight !!! </a>" +
+                    "</body>";
+
+                message.Subject = "Flight ticket payment";
+
+                message.Body = mailbody;
+
+                message.BodyEncoding = Encoding.UTF8;
+
+                message.IsBodyHtml = true;
+
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
+
+                System.Net.NetworkCredential basicCredential1 = new
+
+                System.Net.NetworkCredential("flightsystem53@gmail.com", "flightsystem123");
+
+                client.EnableSsl = true;
+
+                client.UseDefaultCredentials = false;
+
+                client.Credentials = basicCredential1;
                 await client.SendMailAsync(message);
             }
             catch (Exception ex)

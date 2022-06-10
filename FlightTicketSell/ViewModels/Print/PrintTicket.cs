@@ -1,6 +1,8 @@
-﻿using FlightTicketSell.Models;
+﻿using FlightTicketSell.Helpers;
+using FlightTicketSell.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,26 +25,37 @@ namespace FlightTicketSell.ViewModels.Search
         public PrintTicket() { }
         public PrintTicket(HANGVE hANGVE, KHACHHANG kHACHHANG, CHUYENBAY cHUYENBAY)
         {
-            print_TenHangVe = hANGVE.TenHangVe.ToUpper();
+            using (var context = new FlightTicketSellEntities())
+            {
+                try
+                {
+                    var chuyenbay = context.CHUYENBAYs.Where(h => h.MaChuyenBay == cHUYENBAY.MaChuyenBay).FirstOrDefault();
 
-            print_TenKhachHang = kHACHHANG.HoTen.ToUpper();
+                    print_TenHangVe = hANGVE.TenHangVe.ToUpper();
 
-            print_NgayBay = cHUYENBAY.NgayGio.Day + "/" + cHUYENBAY.NgayGio.Month + "/" + cHUYENBAY.NgayGio.Year;
+                    print_TenKhachHang = kHACHHANG.HoTen.ToUpper();
 
-            print_GioBay = cHUYENBAY.NgayGio.Hour + ":" + cHUYENBAY.NgayGio.Minute;
+                    print_NgayBay = chuyenbay.NgayGio.Day + "/" + chuyenbay.NgayGio.Month + "/" + chuyenbay.NgayGio.Year;
 
-            print_SBDi = cHUYENBAY.DUONGBAY.SANBAY1.TenSanBay.ToString().ToUpper();
+                    print_GioBay = chuyenbay.NgayGio.Hour + ":" + chuyenbay.NgayGio.Minute;
 
-            print_SBDi_Code = cHUYENBAY.DUONGBAY.SANBAY1.VietTat.ToString();
+                    print_SBDi = chuyenbay.DUONGBAY.SANBAY1.TenSanBay.ToString().ToUpper();
 
-            print_SBDen = cHUYENBAY.DUONGBAY.SANBAY.TenSanBay.ToString().ToUpper();
+                    print_SBDi_Code = "/" + chuyenbay.DUONGBAY.SANBAY1.VietTat.ToString();
 
-            print_SBDen_Code = cHUYENBAY.DUONGBAY.SANBAY.VietTat.ToString();
+                    print_SBDen = chuyenbay.DUONGBAY.SANBAY.TenSanBay.ToString().ToUpper();
 
-            print_TGB = cHUYENBAY.DUONGBAY.ThoiGianBay.ToString();
+                    print_SBDen_Code = "/" + chuyenbay.DUONGBAY.SANBAY.VietTat.ToString();
 
-            print_MaChuyenBay = print_SBDi_Code + print_SBDen_Code + "-" + cHUYENBAY.MaChuyenBay.ToString();
+                    print_TGB = chuyenbay.DUONGBAY.ThoiGianBay.ToString();
 
+                    print_MaChuyenBay = print_SBDi_Code + print_SBDen_Code + "-" + chuyenbay.MaChuyenBay.ToString();
+                }
+                catch (EntityException e)
+                {
+                    NotifyHelper.ShowEntityException(e); ;
+                }
+            }
         }
 
     }
