@@ -9,7 +9,8 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
         xmlns:models="clr-namespace:FlightTicketSell.Models"
-        xmlns:viewmodels="clr-namespace:FlightTicketSell.ViewModels"
+        xmlns:viewmodels="clr-namespace:FlightTicketSell.ViewModels" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
         mc:Ignorable="d"
         Title="SellTicketApp" Height="720" Width="1366"
         WindowStartupLocation="CenterScreen"
@@ -19,6 +20,10 @@
         Icon="pack://application:,,,/Images/Logo_Icon.ico"
         >
 
+    <Window.DataContext>
+        <vm:MainWindowViewModel />
+    </Window.DataContext>
+
     <Window.Resources>
         <Style x:Key="NavigationContentStyle" TargetType="ContentControl">
             <Setter Property="Content" Value="{Binding ApplicationViewModel.CurrentView,
@@ -26,6 +31,12 @@
                                                Converter={valueConverters:AppViewToContentTemplate}}" />
         </Style>
     </Window.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid Background="{StaticResource LightGrayBrush}">
         <Border CornerRadius="12"

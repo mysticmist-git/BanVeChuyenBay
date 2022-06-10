@@ -261,6 +261,7 @@
     <Compile Include="Models\Roles\User.cs" />
     <Compile Include="Models\Roles\UserGroup.cs" />
     <Compile Include="Models\Roles\UserGroupModified.cs" />
+    <Compile Include="Models\Roles\UserGroupModifiedWithUsers.cs" />
     <Compile Include="Models\SANBAY.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -278,6 +279,7 @@
     <Compile Include="ValueConverters\Base\BaseMultiValueConverter.cs" />
     <Compile Include="ValueConverters\BooleanInvertConverter.cs" />
     <Compile Include="ValueConverters\General\BooleanToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\NavigationBar\PermissionToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\Search\BooleanToVisuable.cs" />
     <Compile Include="ValueConverters\Search\EditCumstomerInforToColor.cs" />
     <Compile Include="ValueConverters\Search\SeatLeftToColorConverter.cs" />
@@ -287,6 +289,7 @@
     <Compile Include="ValueConverters\Setting\StatusTicketClass_BooleanToColor.cs" />
     <Compile Include="ValueConverters\Setting\StatusTicketClass_BooleanToString.cs" />
     <Compile Include="ValueConverters\Setting\TicketClass_BooleanToString.cs" />
+    <Compile Include="ViewModels\Application\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Base\ActionCommand.cs" />
     <Compile Include="ViewModels\Base\EventToCommandBehavior.cs" />
     <Compile Include="ViewModels\Book\CustomerBookVariant.cs" />

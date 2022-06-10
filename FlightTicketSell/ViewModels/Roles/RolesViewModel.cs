@@ -21,7 +21,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The user group list
         /// </summary>
-        public ObservableCollection<UserGroupModified> UserGroupList { get; set; }
+        public ObservableCollection<UserGroupModifiedWithUsers> UserGroupList { get; set; }
 
         /// <summary>
         /// The current user group is being selected
@@ -87,7 +87,7 @@ namespace FlightTicketSell.ViewModels
             using (var context = new FlightTicketSellEntities())
             {
                 var userGroups = await context.NHOMNGUOIDUNGs
-                    .Select(nng => new UserGroupModified()
+                    .Select(nng => new UserGroupModifiedWithUsers()
                     {
                         Code = nng.MaNhom,
                         Name = nng.TenNhom,
@@ -102,7 +102,7 @@ namespace FlightTicketSell.ViewModels
                     })
                     .ToListAsync();
 
-                UserGroupList = new ObservableCollection<UserGroupModified>(userGroups);
+                UserGroupList = new ObservableCollection<UserGroupModifiedWithUsers>(userGroups);
             }
         }
 
@@ -191,7 +191,6 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         /// <param name="userGroupCode">The user group code has permission being removed</param>
         /// <param name="permissionCode">The code of the permission to be removed </param>
-
         private async Task RemovePermission(string userGroupCode, string permissionCode)
         {
             using (var context = new FlightTicketSellEntities())

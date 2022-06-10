@@ -6,6 +6,10 @@
     public enum AppView
     {
         /// <summary>
+        /// None
+        /// </summary>
+        None,
+        /// <summary>
         /// The plane search view
         /// </summary>
         Search,

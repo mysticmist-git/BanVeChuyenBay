@@ -17,6 +17,6 @@ namespace FlightTicketSell.Models
         public string UserGroupID { get; set; }
 
         #endregion
-    }
+}
 
 }

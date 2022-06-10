@@ -9,6 +9,7 @@ namespace FlightTicketSell.ViewModels
         #region Public Properties
         
 
+
         #endregion
 
         #region Commands

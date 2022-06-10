@@ -51,6 +51,7 @@ namespace FlightTicketSell.ViewModels
                 switch (loginResult)
                 {
                     case LoginResult.Success:
+                        await LoadUser();
                         p.ShowMainWindow();
                         return;
                     case LoginResult.Fail:
@@ -64,7 +65,6 @@ namespace FlightTicketSell.ViewModels
                 }
             });
         }
-
 
         #endregion
 
@@ -91,6 +91,64 @@ namespace FlightTicketSell.ViewModels
                 };
             }
 
+        }
+
+        /// <summary>
+        /// Load the user that logged into the application
+        /// </summary>
+        private async Task LoadUser()
+        {
+            using (var context = new FlightTicketSellEntities())
+            {
+                try
+                {
+                    var user = await context.NGUOIDUNGs
+                                .Where(ng => ng.TenDangNhap == Username)
+                                .FirstOrDefaultAsync();
+
+                    IoC.IoC.Get<ApplicationViewModel>().CurrentUser = new User()
+                    {
+                        Username = user.TenDangNhap,
+                        Password = user.MatKhau,
+                        UserGroupID = user.MaNhom
+                    };
+
+                    IoC.IoC.Get<ApplicationViewModel>().CurrentUserGroup = await LoadUserGroup(user.MaNhom);
+                }
+                catch (EntityException e)
+                {;
+                    NotifyHelper.ShowEntityException(e);
+                };
+            }
+        }
+
+        /// <summary>
+        /// Loads user group with a input user group code 
+        /// </summary>
+        /// <returns>A user group </returns>
+        private async Task<UserGroupModified> LoadUserGroup(string userGroupCode)
+        {
+            using (var context = new FlightTicketSellEntities())
+            {
+                var userGroup = await context.NHOMNGUOIDUNGs
+                    .Where(nnd => nnd.MaNhom == userGroupCode)
+                    .Select(nnd => new UserGroupModifiedWithUsers()
+                    {
+                        Code = nnd.MaNhom,
+                        Name = nnd.TenNhom,
+                        CanSearchFlight = nnd.CHUCNANGs.Where(cn => cn.MaChucNang=="TRC").Count() > 0,
+                        CanEditFlight = nnd.CHUCNANGs.Where(cn => cn.MaChucNang=="QLCB").Count() > 0,
+                        CanScheduleFlight = nnd.CHUCNANGs.Where(cn => cn.MaChucNang=="NLCB").Count() > 0,
+                        CanViewReport = nnd.CHUCNANGs.Where(cn => cn.MaChucNang=="BCDT").Count() > 0,
+                        CanSettings = nnd.CHUCNANGs.Where(cn => cn.MaChucNang=="CD").Count() > 0,
+                        CanManageUser = nnd.CHUCNANGs.Where(cn => cn.MaChucNang=="PHQ").Count() > 0,
+                        UserCount = nnd.NGUOIDUNGs.Count(),
+                        IsPermissionChanged = false
+                    })
+                    .FirstOrDefaultAsync();
+
+                return userGroup;
+            }
         }
 
         #endregion

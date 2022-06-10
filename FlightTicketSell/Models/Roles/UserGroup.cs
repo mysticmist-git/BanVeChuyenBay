@@ -1,6 +1,6 @@
 ﻿using FlightTicketSell.ViewModels;
 
-namespace FlightTicketSell.Models.Roles
+namespace FlightTicketSell.Models
 {
     public class UserGroup : BaseViewModel
     {
