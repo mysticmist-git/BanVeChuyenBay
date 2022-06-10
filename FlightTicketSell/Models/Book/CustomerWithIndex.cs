@@ -1,4 +1,5 @@
 ﻿using FlightTicketSell.Helpers;
+using FlightTicketSell.Models.Enums;
 using FlightTicketSell.ViewModels;
 using System.Data.Entity.Core;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace FlightTicketSell.Models
         public int Index { get; set; }
         public string DisplayIndex { get => "Khách hàng " + Index; }
         private bool IsChanged = false;
+        public static CustomerDetailType CustomerDetailType { get; set; }
         public bool IsRead { get; set; }
         #endregion
 
@@ -47,7 +49,9 @@ namespace FlightTicketSell.Models
             IsRead = true;
             EditCustomerInfor_Command = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                IsRead = false;
+                if (CustomerDetailType == CustomerDetailType.Reservation)
+                    IsRead = false;
+                   
             });
             SaveCustomerInfor_Command = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -58,6 +62,20 @@ namespace FlightTicketSell.Models
 
                 if (IsChanged)
                 {
+                    if (string.IsNullOrEmpty(HoTen_Display))
+                    {
+                        MessageBox.Show("Họ tên không được để trống!", "Cảnh báo");
+                        HoTen_Display = HoTen;
+                        return;
+                    }
+
+                    if (string.IsNullOrEmpty(CMND_Display))
+                    {
+                        MessageBox.Show("CMND không được để trống!", "Cảnh báo");
+                        CMND_Display =CMND;
+                        return;
+                    }
+
                     using (var context = new FlightTicketSellEntities())
                     {
                         try

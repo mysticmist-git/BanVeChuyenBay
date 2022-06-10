@@ -6,6 +6,7 @@ using FlightTicketSell.ViewModels;
 using FlightTicketSell.Helpers;
 using FlightTicketSell.Views;
 using MaterialDesignThemes.Wpf;
+using FlightTicketSell.Models;
 
 namespace FlightTicketSell.ViewModels.Search
 {
@@ -81,6 +82,7 @@ namespace FlightTicketSell.ViewModels.Search
                         Info = (this as object)
                     }
                 };
+                CustomerWithIndex.CustomerDetailType = Models.Enums.CustomerDetailType.Ticket;
                 var result = await DialogHost.Show(view, "RootDialog");
 
             });

@@ -9,17 +9,25 @@ using FlightTicketSell.Models.SearchRelated;
 using System.Data.Entity;
 using System.Globalization;
 using FlightTicketSell.Models.Enums;
-using iText.Kernel.Pdf;
-using iText.Layout;
-using iText.Layout.Element;
-using Paragraph = iText.Layout.Element.Paragraph;
-using iText.Kernel.Pdf.Canvas.Draw;
 using FlightTicketSell.Helpers;
+using FlightTicketSell.ViewModels.Search;
+using System.Windows.Controls;
+using FlightTicketSell.Views;
+using System.Printing;
+using System.Drawing.Printing;
 
 namespace FlightTicketSell.ViewModels
 {
     public class ChangeTicketViewModel : BaseViewModel
     {
+        #region Print
+        public HANGVE print_HANGVE { get; set; }
+        public ObservableCollection<KHACHHANG> print_KHACHHANG { get; set; } = new ObservableCollection<KHACHHANG>();
+        public CHUYENBAY print_CHUYENBAY { get; set; }
+        public ObservableCollection<PrintTicket> list_printTickets { get; set; } = new ObservableCollection<PrintTicket>();
+        public ICommand PrintLoadCommand { get; set; }
+        #endregion
+
         #region Private Members
 
         /// <summary>
@@ -92,7 +100,7 @@ namespace FlightTicketSell.ViewModels
         public string DisplayCancelDeadline { get => HanChotHuyVe.ToString("HH:mm dd/MM/yyyy", new CultureInfo("vi-VN")); }
 
         #region Boolean stuffs
-        
+
         /// <summary>
         /// Indicates if this booking is already changed for tickets
         /// </summary>
@@ -111,7 +119,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// Indicates if this booking can be interacted
         /// </summary>
-        public bool IsInteractable { get => !IsBookCanceled && !BookPrinted && !IsBookCancelDeadlinePassed; } 
+        public bool IsInteractable { get => !IsBookCanceled && !BookPrinted && !IsBookCancelDeadlinePassed; }
 
         #endregion
 
@@ -124,6 +132,10 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ChangeTicketViewModel()
         {
+            PrintLoadCommand = new RelayCommand<object>((p) => true, (p) =>
+            {
+
+            });
             // Create commands
 
             ReturnCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = Models.AppView.TicketSoldOrBooked);
@@ -135,7 +147,7 @@ namespace FlightTicketSell.ViewModels
                 // Stop if the booking has been already changed for tickets
                 if (BookingInfo.BookingState == BookingState.Changed)
                     return;
-                
+
                 // Update booking's state
                 using (var context = new FlightTicketSellEntities())
                 {
@@ -153,7 +165,7 @@ namespace FlightTicketSell.ViewModels
                     }
                     catch (EntityException e)
                     {
-                        NotifyHelper.ShowEntityException(e);;
+                        NotifyHelper.ShowEntityException(e); ;
                     }
                 }
             });
@@ -166,7 +178,8 @@ namespace FlightTicketSell.ViewModels
                 {
                     try
                     {
-                        
+                        print_CHUYENBAY = context.CHUYENBAYs.Where(h => h.MaChuyenBay == FlightInfo.MaChuyenBay).FirstOrDefault();
+                        print_HANGVE = context.HANGVEs.Where(h => h.TenHangVe == BookingInfo.TenHangVe).FirstOrDefault();
                         // Get deadline to cancel the booking
                         _cancelDays = context.THAMSOes.Where(ts => ts.TenThamSo == "ThoiGianHuyDatVe").FirstOrDefault().GiaTri;
                         OnPropertyChanged(nameof(DisplayCancelDeadline));
@@ -178,11 +191,12 @@ namespace FlightTicketSell.ViewModels
                                     .Select(ctdc => ctdc.KHACHHANG)
                                     )
                                 .FirstOrDefaultAsync();
+                        print_KHACHHANG = new ObservableCollection<KHACHHANG>(result);
 
                         // Convert KHACHHANG to Customer and add it to Customers list
                         Customers = new ObservableCollection<CustomerWithIndex>();
                         for (int i = 1; i <= result.Count(); i++)
-                            Customers.Add(new CustomerWithIndex() 
+                            Customers.Add(new CustomerWithIndex()
                             {
                                 Index = i,
                                 HoTen = result.ElementAt(i - 1).HoTen,
@@ -193,7 +207,7 @@ namespace FlightTicketSell.ViewModels
                     }
                     catch (EntityException e)
                     {
-                        NotifyHelper.ShowEntityException(e);;
+                        NotifyHelper.ShowEntityException(e); ;
                     }
                 }
             });
@@ -208,7 +222,7 @@ namespace FlightTicketSell.ViewModels
                         var datCho = await context.DATCHOes
                             .Where(dc => dc.MaDatCho == BookingInfo.MaDatCho)
                             .FirstOrDefaultAsync();
-                        
+
                         datCho.TrangThai = BookHelper.BookingStateToString(BookingState.Cancel);
                         await context.SaveChangesAsync();
 
@@ -220,11 +234,11 @@ namespace FlightTicketSell.ViewModels
                     }
                     catch (EntityException e)
                     {
-                        NotifyHelper.ShowEntityException(e);;
+                        NotifyHelper.ShowEntityException(e); ;
                     }
                 }
 
-        });
+            });
 
         }
 
@@ -237,39 +251,26 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         private void PrintTicket()
         {
-
-            PdfWriter writer = new PdfWriter("demo.pdf");
-            PdfDocument pdf = new PdfDocument(writer);
-            Document document = new Document(pdf);
-
-
-            Paragraph header = new Paragraph("FLIGHT TICKET").SetBold()
-               .SetFontSize(16).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
-
-            document.Add(header);
-            LineSeparator ls = new LineSeparator(new SolidLine());
-
-            Paragraph NAME = new Paragraph($"BOOKER NAME:   {BookHelper.convertText(BookingInfo.ThongTinNguoiDat.HoTen)}                    BOOK ID: {BookingInfo.MaDatCho}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
-            Paragraph FROM = new Paragraph($"FROM:   {BookHelper.convertText(FlightInfo.SanBayDi)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
-            Paragraph TO = new Paragraph($"TO:   {BookHelper.convertText(FlightInfo.SanBayDen)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
-            Paragraph NUMBER_OF_SEATS = new Paragraph($"NUMBER OF SEATS:   {BookingInfo.SoVeDat}       ").SetTextAlignment(iText.Layout.Properties.TextAlignment.LEFT).SetFontSize(14);
-            document.Add(NAME);
-            document.Add(FROM);
-            document.Add(TO);
-            document.Add(NUMBER_OF_SEATS);
-
-            document.Add(ls);
-            Paragraph DETAIL_HEADER = new Paragraph("FLIGHT CODE              DATE              CLASS").SetBold().SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(14);
-            document.Add(DETAIL_HEADER);
-            Paragraph DETAIL = new Paragraph($"{FlightInfo.DisplayFlightCode}           {FlightInfo.DisplayDepartDate}           {BookHelper.convertText(BookingInfo.TenHangVe)}").SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetFontSize(14);
-            document.Add(DETAIL);
-
-            document.Add(ls);
-            document.Close();
-            System.Diagnostics.Process.Start("demo.pdf");
+            list_printTickets.Clear();
+            PrintMultipleTicket printMultipleTicket = new PrintMultipleTicket() { DataContext = this };
+            
+            foreach (var item in print_KHACHHANG)
+            {
+                PrintTicket temp = new PrintTicket(print_HANGVE, item, print_CHUYENBAY);
+                list_printTickets.Add(temp);
+            }
+            printMultipleTicket.Show();
+            
+            PrintDialog printDialog = new PrintDialog();
+            PrinterSettings settings = new PrinterSettings();
+            printDialog.PrintQueue = new PrintQueue(new PrintServer(), settings.PrinterName);
+            printDialog.PrintVisual(printMultipleTicket, "In vé");
+            printMultipleTicket.Close();
         }
 
         #endregion
 
     }
+
+
 }

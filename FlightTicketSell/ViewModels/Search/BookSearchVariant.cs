@@ -47,6 +47,7 @@ namespace FlightTicketSell.ViewModels
                         Info = (this as object)
                     }
                 };
+                CustomerWithIndex.CustomerDetailType = Models.Enums.CustomerDetailType.Reservation;
                 var result = await DialogHost.Show(view, "RootDialog");
 
             });

@@ -492,7 +492,7 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Command="{Binding PayCommand}"    
-                     Width="250"
+                     Width="320"
                     BorderBrush="{StaticResource GreenBrush}"                    
                         Style="{StaticResource HoverButton}"
                     materialDesign:ButtonAssist.CornerRadius="7"
@@ -502,7 +502,7 @@
                         <materialDesign:PackIcon Kind="CheckBold" 
                                                  Margin="0 -2 0 2"
                                                  VerticalAlignment="Center" Width="35" Height="35" />
-                        <TextBlock Text="Thanh toán" Margin="5 0 0 0"  FontSize="{StaticResource Regular}" VerticalAlignment="Center" />
+                        <TextBlock Text="Thanh toán và In vé" Margin="5 0 0 0"  FontSize="{StaticResource Regular}" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
             </Border>
