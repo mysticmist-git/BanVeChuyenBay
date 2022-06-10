@@ -143,7 +143,6 @@ namespace FlightTicketSell.ViewModels
                         CanSettings = nnd.CHUCNANGs.Where(cn => cn.MaChucNang=="CD").Count() > 0,
                         CanManageUser = nnd.CHUCNANGs.Where(cn => cn.MaChucNang=="PHQ").Count() > 0,
                         UserCount = nnd.NGUOIDUNGs.Count(),
-                        IsPermissionChanged = false
                     })
                     .FirstOrDefaultAsync();
 

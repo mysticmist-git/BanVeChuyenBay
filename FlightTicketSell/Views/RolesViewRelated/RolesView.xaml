@@ -67,6 +67,8 @@
                     <RowDefinition Height="Auto" />
                     <!-- The user group list -->
                     <RowDefinition Height="*" />
+                    <!-- The buttons -->
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <!--Header-->
@@ -76,27 +78,45 @@
                    FontFamily="{StaticResource RobotoBlack}" 
                    FontSize="{StaticResource Regular}" />
 
+                <!-- User group list-->
                 <ListView Grid.Row="1" 
                           ItemsSource="{Binding UserGroupList}"
                           d:ItemsSource="{d:SampleData ItemCount=4}"
                           SelectedItem="{Binding CurrentUserGroup}"
+                          SelectionMode="Single"
                           Background="Transparent">
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding UserGroupChanged}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
 
                     <!-- Item Container style -->
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" /> 
                         </Style>
                     </ListView.ItemContainerStyle>
 
+                    <!-- Item template -->
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Border Background="{StaticResource VeryLightGrayBrush}"
                                     Opacity="0.6"
                                     Padding="10 5"
                                     Height="60">
-                                <Grid>
 
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                        <i:InvokeCommandAction 
+                                            Command="{Binding RelativeSource={RelativeSource 
+                                                                        AncestorType={x:Type UserControl}}, 
+                                                                        Path=DataContext.PermissionResetCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+
+                                <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="5*" />
                                         <ColumnDefinition Width="*" />
@@ -122,6 +142,47 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+
+                <!--Nút thêm sửa xóa-->
+                <StackPanel Orientation="Horizontal" 
+                                     Grid.Row="3" Grid.Column="1" 
+                                    HorizontalAlignment="Right">
+                    <!--Nút xóa-->
+                    <Button Margin="7 0 0 0" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource RedBrush}"
+                                Command="{Binding Delete_EnteredTicketClass_Command}">
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Delete" Margin="0 0 10 0" VerticalAlignment="Center" Height="19" Width="19"/>
+                                <TextBlock Text="Xóa" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
+
+                    <!--Nút sửa-->
+                    <Button Margin="7 0 0 0" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource OrangeBrush}"
+                                    Command="{Binding Open_Window_EditTicketClass_Command}"
+                                materialDesign:ShadowAssist.Darken="True"
+                                   >
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Pencil" Margin="0 -1 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                                <TextBlock Text="Sửa" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
+
+                    <!--Nút thêm-->
+                    <Button Margin="7 0 10 0" Content="+ Thêm" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource BlueBrush}"
+                                Command="{Binding Open_Window_EnterTicketClass_Command}"
+                                materialDesign:ShadowAssist.Darken="True"
+                                    />
+                </StackPanel>
 
             </Grid>
 
@@ -186,7 +247,10 @@
                                       Grid.Column="2"
                                       Margin="0,8,0,3"
                                       Background="{StaticResource LightBlueBrush}"
-                                      HorizontalAlignment="Center" Height="17" Width="33">
+                                      HorizontalAlignment="Center" 
+                                      Height="17" 
+                                      Width="33"
+                                      Command="{Binding PermissionChangedCommand}">
                             <ToggleButton.Style>
                                 <Style TargetType="{x:Type ToggleButton}"
                                        BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
@@ -212,7 +276,8 @@
                                       Grid.Column="1"
                                       Margin="0 5 0 0"
                                       Background="{StaticResource LightBlueBrush}"
-                                      HorizontalAlignment="Right" Height="17" Width="33">
+                                      HorizontalAlignment="Right" Height="17" Width="33"
+                                      Command="{Binding PermissionChangedCommand}">
                             <ToggleButton.Style>
                                 <Style TargetType="{x:Type ToggleButton}"
                                        BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
@@ -238,7 +303,8 @@
                                       Grid.Column="1"
                                       Margin="0 5 0 0"
                                       Background="{StaticResource LightBlueBrush}"
-                                      HorizontalAlignment="Right" Height="17" Width="33">
+                                      HorizontalAlignment="Right" Height="17" Width="33"
+                                      Command="{Binding PermissionChangedCommand}">
                             <ToggleButton.Style>
                                 <Style TargetType="{x:Type ToggleButton}"
                                        BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
@@ -264,7 +330,8 @@
                                       Grid.Column="1"
                                       Margin="0 5 0 0"
                                       Background="{StaticResource LightBlueBrush}"
-                                      HorizontalAlignment="Right" Height="17" Width="33">
+                                      HorizontalAlignment="Right" Height="17" Width="33"
+                                      Command="{Binding PermissionChangedCommand}">
                             <ToggleButton.Style>
                                 <Style TargetType="{x:Type ToggleButton}"
                                        BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
@@ -290,7 +357,8 @@
                                       Grid.Column="1"
                                       Margin="0 5 0 0"
                                       Background="{StaticResource LightBlueBrush}"
-                                      HorizontalAlignment="Right" Height="17" Width="33">
+                                      HorizontalAlignment="Right" Height="17" Width="33"
+                                      Command="{Binding PermissionChangedCommand}">
                             <ToggleButton.Style>
                                 <Style TargetType="{x:Type ToggleButton}"
                                        BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
@@ -316,7 +384,8 @@
                                       Grid.Column="1"
                                       Margin="0 5 0 0"
                                       Background="{StaticResource LightBlueBrush}"
-                                      HorizontalAlignment="Right" Height="17" Width="33">
+                                      HorizontalAlignment="Right" Height="17" Width="33"
+                                      Command="{Binding PermissionChangedCommand}">
                             <ToggleButton.Style>
                                 <Style TargetType="{x:Type ToggleButton}"
                                        BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
@@ -327,41 +396,42 @@
 
                 </StackPanel>
 
+                <!-- Các nút -->
                 <StackPanel Grid.Row="2"
                             Orientation="Horizontal"
                             HorizontalAlignment="Right">
 
-                <!-- Nút đặt lai -->
-                <Button 
+                    <!-- Nút đặt lai -->
+                    <Button 
                         Style="{StaticResource HoverButton}"
-                        IsEnabled="{Binding CurrentUserGroup.IsPermissionChanged}"
+                        IsEnabled="{Binding IsPermissionChanged}"
                         BorderBrush="{StaticResource RedBrush}"
                         Command="{Binding PermissionResetCommand}"
                         Height="30">
-                    <ContentControl>
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="CloseThick" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
-                            <TextBlock Text="Đặt lại" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </ContentControl>
-                </Button>
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="CloseThick" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                                <TextBlock Text="Đặt lại" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
 
 
-                <!-- Nút lưu -->
-                <Button Margin="10 0 0 0" 
+                    <!-- Nút lưu -->
+                    <Button Margin="10 0 0 0" 
                         Style="{StaticResource HoverButton}"
-                        IsEnabled="{Binding CurrentUserGroup.IsPermissionChanged}"
+                        IsEnabled="{Binding IsPermissionChanged}"
                         BorderBrush="{StaticResource GreenBrush}"
                         Command="{Binding PermissionSaveCommand}"
                         materialDesign:ShadowAssist.Darken="True"
                         Height="30">
-                    <ContentControl>
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="ContentSave" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
-                            <TextBlock Text="Lưu" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </ContentControl>
-                </Button>
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ContentSave" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                                <TextBlock Text="Lưu" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
 
                 </StackPanel>
 
@@ -369,5 +439,124 @@
 
         </Border>
 
+        <!-- Users -->
+        <Border Grid.Column="9" Grid.Row="1"
+                Grid.ColumnSpan="4" Grid.RowSpan="8"
+                Background="White"
+                CornerRadius="8"
+                Margin="20 0 0 0"
+                Padding="40 20 40 20"
+                Style="{StaticResource DropShadow}">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <!-- The header -->
+                    <RowDefinition Height="Auto" />
+                    <!-- The user list -->
+                    <RowDefinition Height="*" />
+                    <!-- Buttons -->
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--Header-->
+                <TextBlock Grid.Row="0" 
+                   Text="Danh sách người dùng"
+                   VerticalAlignment="Bottom" 
+                   FontFamily="{StaticResource RobotoBlack}" 
+                   FontSize="{StaticResource Regular}" />
+
+                <!-- Danh sách người dùng -->
+                <ListView Grid.Row="1" 
+                          ItemsSource="{Binding CurrentUserGroup.Users}"
+                          d:ItemsSource="{d:SampleData ItemCount=4}"
+                          SelectedItem="{Binding CurrentUserGroup}"
+                          Background="Transparent">
+
+                    <!-- Item Container style -->
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{StaticResource VeryLightGrayBrush}"
+                                    Opacity="0.6"
+                                    Padding="10 5"
+                                    Height="60">
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="5*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="{Binding Name}" 
+                                               d:Text="Admin" 
+                                               Grid.Column="0" 
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"
+                                               Foreground="Black"
+                                               FontSize="16"/>
+
+                                    <StackPanel Grid.Column="1" 
+                                                VerticalAlignment="Center" 
+                                                Orientation="Horizontal">
+                                        <TextBlock Text="Số lượng: " />
+                                        <TextBlock Text="{Binding UserCount}" d:Text="5" />
+                                    </StackPanel>
+
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
+                <!-- Các nút -->
+                <StackPanel Grid.Row="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+
+                    <!-- Nút đặt lai -->
+                    <Button 
+                        Style="{StaticResource HoverButton}"
+                        IsEnabled="{Binding IsPermissionChanged}"
+                        BorderBrush="{StaticResource RedBrush}"
+                        Command="{Binding PermissionResetCommand}"
+                        Height="30">
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="CloseThick" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                                <TextBlock Text="Đặt lại" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
+
+
+                    <!-- Nút lưu -->
+                    <Button Margin="10 0 0 0" 
+                        Style="{StaticResource HoverButton}"
+                        IsEnabled="{Binding IsPermissionChanged}"
+                        BorderBrush="{StaticResource GreenBrush}"
+                        Command="{Binding PermissionSaveCommand}"
+                        materialDesign:ShadowAssist.Darken="True"
+                        Height="30">
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ContentSave" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                                <TextBlock Text="Lưu" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Border>
     </Grid>
 </UserControl>

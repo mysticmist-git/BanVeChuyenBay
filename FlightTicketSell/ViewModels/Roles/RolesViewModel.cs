@@ -16,6 +16,44 @@ namespace FlightTicketSell.ViewModels
     /// </summary>
     public class RolesViewModel : BaseViewModel
     {
+        #region Private Members
+
+        #region User Group Private Members
+
+        /// <summary>
+        /// Indicates if this user group can search for flights
+        /// </summary>
+        private bool _canSearchFlightBuffer;
+
+        /// <summary>
+        /// Indicates if this user group can search for flights
+        /// </summary>
+        private bool _canEditFlightBuffer;
+
+        /// <summary>
+        /// Indicates if this user group can schedule flights
+        /// </summary>
+        private bool _canScheduleFlightBuffer;
+
+        /// <summary>
+        /// Indicates if this user group can view reports
+        /// </summary>
+        private bool _canViewReportBuffer;
+
+        /// <summary>
+        /// Indicates if this user group can change settings
+        /// </summary>
+        private bool _canSettingsBuffer;
+
+        /// <summary>
+        /// Indicates if this user group can manage users
+        /// </summary>
+        private bool _canManageUserBuffer;
+
+        #endregion
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -26,16 +64,51 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The current user group is being selected
         /// </summary>
-        public UserGroupModified CurrentUserGroup { get; set; }
+        public UserGroupModifiedWithUsers CurrentUserGroup { get; set; }
+
+        /// <summary>
+        /// Indicates if the permisison of the current user group is changed
+        /// </summary>
+        public bool IsPermissionChanged
+        {
+            get
+            {
+                if (CurrentUserGroup is null)
+                    return false;
+
+                return
+                    CurrentUserGroup.CanSearchFlight != _canSearchFlightBuffer ||
+                    CurrentUserGroup.CanEditFlight != _canEditFlightBuffer ||
+                    CurrentUserGroup.CanScheduleFlight != _canScheduleFlightBuffer ||
+                    CurrentUserGroup.CanViewReport != _canViewReportBuffer ||
+                    CurrentUserGroup.CanSettings != _canSettingsBuffer ||
+                    CurrentUserGroup.CanManageUser != _canManageUserBuffer;
+            }
+        }
 
         #endregion
 
         #region Commands
 
+        #region Global Commands
+
         /// <summary>
         /// The load command
         /// </summary>
         public ICommand LoadCommand { get; set; }
+
+        #endregion
+
+        #region User Group Commands
+
+        /// <summary>
+        /// Executes when user choose another user group
+        /// </summary>
+        public ICommand UserGroupChanged { get; set; }
+
+        #endregion
+
+        #region Permission Commands
 
         /// <summary>
         /// The to save permission to this user group
@@ -47,27 +120,86 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand PermissionResetCommand { get; set; }
 
+        /// <summary>
+        /// Executes when permission the current user group is changed
+        /// </summary>
+        public ICommand PermissionChangedCommand { get; set; }
+
+        #endregion
+
         #endregion
 
         #region Constructor
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public RolesViewModel()
         {
-            // Create commands
+            #region Create commands
+
+            #region Global Commands
+
             LoadCommand = new RelayCommand<object>(p => true, async p =>
             {
                 await LoadData();
             });
 
+            #endregion
+
+            #region User Group Commands
+
+            UserGroupChanged = new RelayCommand<object>(p => true, p =>
+            {
+                // Re-buffer permission
+                BufferPermission();
+            });
+
+            #endregion
+
+            #region Permisison Commands
+
             PermissionResetCommand = new RelayCommand<object>(p => true, async p =>
             {
-                await LoadData();
+                ReloadPermission();
             });
 
             PermissionSaveCommand = new RelayCommand<object>(p => true, async p =>
             {
                 await SavePermission();
+                BufferPermission();
             });
+
+            PermissionChangedCommand = new RelayCommand<object>(p => true, async p =>
+            {
+                OnPropertyChanged(nameof(IsPermissionChanged));
+            });
+
+            #endregion
+
+            #endregion
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Load the buffer permission to the current permission
+        /// </summary>
+        private void ReloadPermission()
+        {
+            if (CurrentUserGroup is null)
+                return;
+
+            CurrentUserGroup.CanSearchFlight = _canSearchFlightBuffer;
+            CurrentUserGroup.CanEditFlight = _canEditFlightBuffer;
+            CurrentUserGroup.CanScheduleFlight = _canScheduleFlightBuffer;
+            CurrentUserGroup.CanViewReport = _canViewReportBuffer;
+            CurrentUserGroup.CanSettings = _canSettingsBuffer;
+            CurrentUserGroup.CanManageUser = _canManageUserBuffer;
+
+            OnPropertyChanged(nameof(IsPermissionChanged)); 
         }
 
         /// <summary>
@@ -91,19 +223,39 @@ namespace FlightTicketSell.ViewModels
                     {
                         Code = nng.MaNhom,
                         Name = nng.TenNhom,
-                        CanSearchFlight = nng.CHUCNANGs.Where(cn => cn.MaChucNang=="TRC").Count() > 0,
-                        CanEditFlight = nng.CHUCNANGs.Where(cn => cn.MaChucNang=="QLCB").Count() > 0,
-                        CanScheduleFlight = nng.CHUCNANGs.Where(cn => cn.MaChucNang=="NLCB").Count() > 0,
-                        CanViewReport = nng.CHUCNANGs.Where(cn => cn.MaChucNang=="BCDT").Count() > 0,
-                        CanSettings = nng.CHUCNANGs.Where(cn => cn.MaChucNang=="CD").Count() > 0,
-                        CanManageUser = nng.CHUCNANGs.Where(cn => cn.MaChucNang=="PHQ").Count() > 0,
+                        CanSearchFlight = nng.CHUCNANGs.Where(cn => cn.MaChucNang == "TRC").Count() > 0,
+                        CanEditFlight = nng.CHUCNANGs.Where(cn => cn.MaChucNang == "QLCB").Count() > 0,
+                        CanScheduleFlight = nng.CHUCNANGs.Where(cn => cn.MaChucNang == "NLCB").Count() > 0,
+                        CanViewReport = nng.CHUCNANGs.Where(cn => cn.MaChucNang == "BCDT").Count() > 0,
+                        CanSettings = nng.CHUCNANGs.Where(cn => cn.MaChucNang == "CD").Count() > 0,
+                        CanManageUser = nng.CHUCNANGs.Where(cn => cn.MaChucNang == "PHQ").Count() > 0,
                         UserCount = nng.NGUOIDUNGs.Count(),
-                        IsPermissionChanged = false
                     })
                     .ToListAsync();
 
                 UserGroupList = new ObservableCollection<UserGroupModifiedWithUsers>(userGroups);
+
+                if (UserGroupList.Count > 0)
+                {
+                    CurrentUserGroup = UserGroupList[0];
+                    BufferPermission();
+                }
             }
+        }
+
+        /// <summary>
+        /// Buffer the current user group permission, so we can check if changed later
+        /// </summary>
+        private void BufferPermission()
+        {
+            _canSearchFlightBuffer = CurrentUserGroup.CanSearchFlight;
+            _canEditFlightBuffer = CurrentUserGroup.CanEditFlight;
+            _canScheduleFlightBuffer = CurrentUserGroup.CanScheduleFlight;
+            _canViewReportBuffer = CurrentUserGroup.CanViewReport;
+            _canSettingsBuffer = CurrentUserGroup.CanSettings;
+            _canManageUserBuffer = CurrentUserGroup.CanManageUser;
+
+            OnPropertyChanged(nameof(IsPermissionChanged));
         }
 
         /// <summary>
@@ -150,8 +302,6 @@ namespace FlightTicketSell.ViewModels
                 {
                     NotifyHelper.ShowEntityException(ex);
                 }
-
-                CurrentUserGroup.IsPermissionChanged = false;
             }
         }
 
@@ -216,15 +366,6 @@ namespace FlightTicketSell.ViewModels
                 }
             }
         }
-
-        #endregion
-
-        #region Helper
-
-        #region Permission
-
-
-        #endregion
 
         #endregion
     }
