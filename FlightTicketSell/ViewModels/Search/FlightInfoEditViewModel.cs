@@ -817,24 +817,25 @@ namespace FlightTicketSell.ViewModels
                             .Where(cthv => cthv.MaChuyenBay == ActualFlightCode)
                             .ToListAsync();
 
+
                          // Remove all ticket tier  that isn't included in the selection
                          for (int i = 0; i < currentTicketTiers.Count; i++)
                              context.CHITIETHANGVEs.Remove(currentTicketTiers[i]);
                          await context.SaveChangesAsync();
 
                          // Add new ticket tiers
+                         var theFlight = await context.CHUYENBAYs.Where(cb => cb.MaChuyenBay == ActualFlightCode).FirstOrDefaultAsync();
                          foreach (var item in List_TicketClass)
                          {
                              CHITIETHANGVE cHITIETHANGVE = new CHITIETHANGVE()
                              {
                                  MaHangVe = item.Id_TicketClass,
                                  MaChuyenBay = ActualFlightCode,
-                                 SoGhe = item.Seats
+                                 SoGhe = item.Seats + theFlight.VEs.Count() + theFlight.DATCHOes.Select(dc => dc.SoVeDat).DefaultIfEmpty(0).Sum()
                              };
                              context.CHITIETHANGVEs.Add(cHITIETHANGVE);
                          }
 
-                         var theFlight = await context.CHUYENBAYs.Where(cb => cb.MaChuyenBay == ActualFlightCode).FirstOrDefaultAsync();
                          theFlight.DUONGBAY.MaSanBayDi = DepartureAirport.Id;
                          theFlight.DUONGBAY.MaSanBayDen = LandingAirport.Id;
                          theFlight.GiaVe = Convert.ToDecimal(Regex.Replace(Airfares, @"[^a-zA-Z0-9]", string.Empty));

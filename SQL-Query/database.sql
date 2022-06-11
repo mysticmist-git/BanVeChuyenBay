@@ -20,9 +20,36 @@ alter table chuyenbay add TrangThai INT NULL DEFAULT 1
 -- 2: da khoi hanh
 -- 3: Da huy
 
+delete from  chuyenbay
+where MaChuyenBay=9
+
+delete from DOANHTHUCHUYENBAY 
+where machuyenbay=9
+
+delete from CHITIETHANGVE
+where MaChuyenBay =9
+
+delete from ve
+where MaChuyenBay=9
+
 update chuyenbay
-set trangthai=1
+set trangthai=
 where trangthai=0
+
+update datcho
+set trangthai='DaHuy'
+where MaChuyenBay in (16, 18,19,20)
+
+select *  from chitiethangve
+
+select * from DATCHO
+where machuyenbay=17
+
+delete from CHITIETDATCHO
+where MaDatCho =9
+
+delete from datcho
+where MaDatCho = 9
 
 -- Bảng Sân bay
 CREATE TABLE SANBAY
