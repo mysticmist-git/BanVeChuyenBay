@@ -69,6 +69,10 @@ namespace FlightTicketSell.ViewModels
                         MessageBox.Show("Đã có lỗi xảy ra, vui lòng báo cáo với người quản trị để được giúp đỡ!", "Lỗi!", MessageBoxButton.OK, MessageBoxImage.Error);
                         p.UnlockLogin();
                         return;
+                    case LoginResult.NoAccess:
+                        MessageBox.Show("Người dùng này chưa được cấp quyền!", "Không thể truy cập!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        p.UnlockLogin();
+                        return;
                 }
             });
         }
@@ -90,8 +94,18 @@ namespace FlightTicketSell.ViewModels
                     var password = SecureHelper.SecureStringToString(Password);
                     var loginResult = await context.NGUOIDUNGs.Where(nd => nd.TenDangNhap == Username && nd.MatKhau == password).CountAsync();
 
+                    
+
                     if (loginResult > 0)
+                    {
+                        var user = await context.NGUOIDUNGs.Where(nd => nd.TenDangNhap == Username && nd.MatKhau == password).FirstOrDefaultAsync();
+
+                        if (user.NHOMNGUOIDUNG.CHUCNANGs.Count <= 0)
+                            return LoginResult.NoAccess;
+
                         return LoginResult.Success;
+                    }
+                        
 
                     return LoginResult.Fail;
                 }

@@ -12,7 +12,7 @@ namespace FlightTicketSell.ValueConverters
             switch ((AppView)parameter)
             {
                 case AppView.Search:
-                    return new[] { AppView.Search, AppView.FlightDetail, AppView.TicketSoldOrBooked, AppView.Customer }.Any(x => x == (AppView)value);
+                    return new[] { AppView.Search, AppView.FlightDetail, AppView.TicketSoldOrBooked, AppView.Customer, AppView.FlightInfoEdit, AppView.BookDetail, AppView.BookPay, AppView.TicketInfoFilling, AppView.SellPay}.Any(x => x == (AppView)value);
                 case AppView.Customer:
                     return new[] { AppView.Customer }.Any(x => x == (AppView)value);
                 case AppView.Book:

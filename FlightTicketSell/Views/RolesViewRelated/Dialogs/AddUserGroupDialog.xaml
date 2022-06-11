@@ -70,6 +70,7 @@
                 <Button
                     Style="{StaticResource HoverButton}"
                     Margin="0 0 10 0"
+                    IsEnabled="{Binding IsInteractable}"
                     BorderBrush="{StaticResource RedBrush}"
                     Command="{Binding CancelCommand}"
                     CommandParameter="{Binding ElementName=uc}"
@@ -88,6 +89,7 @@
 
                 <Button
                     Margin="10 0 0 0"
+                    IsEnabled="{Binding IsInteractable}"
                     Command="{Binding SaveCommand}"
                     CommandParameter="{Binding ElementName=uc}"
                     Style="{StaticResource HoverButton}"

@@ -92,7 +92,8 @@
 
                     <Button ToolTip="TRA CỨU" 
                             Command="{Binding SearchCommand}" 
-                            Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Search}}"
+                            Style="{StaticResource NavigationButton}" 
+                            attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Search}}"
                             Visibility="{Binding ApplicationViewModel.CurrentUserGroup.CanSearchFlight, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:PermissionToVisibilityConverter}}"
                             >
                         <ContentControl>

@@ -32,6 +32,8 @@ namespace FlightTicketSell.ViewModels
 
         public bool IsCancelable { get; set; } = true;
 
+        public bool IsInteractable { get; set; } = true;
+
         #region Commands
 
         /// <summary>
@@ -54,13 +56,16 @@ namespace FlightTicketSell.ViewModels
             CancelCommand = new RelayCommand<object>(p => true, p =>
             {
                 IsCancelable = false;
+                IsInteractable = false;
                 DialogHost.GetDialogSession("RootDialog").Close();
+                IsInteractable = true;
                 IsCancelable = true;
             });
 
             SaveCommand = new RelayCommand<object>(p => true, async p =>
             {
                 IsSaveAble = false;
+                IsInteractable = false;
 
                 var result = await SaveUser();
 
@@ -80,7 +85,8 @@ namespace FlightTicketSell.ViewModels
                         MessageBox.Show("Xin nhập đủ thông tin", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                         break;
                 }
-
+                
+                IsInteractable = true;
                 IsSaveAble = true;
             });
         }

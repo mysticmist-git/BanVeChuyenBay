@@ -1304,6 +1304,12 @@ namespace FlightTicketSell.ViewModels
                         }
                     ).ToListAsync();
 
+                layoverAirportList.ForEach(airport =>
+                {
+                    if (airport.Note is null)
+                        airport.Note = string.Empty;
+                });
+
                 if (List_LayoverAirport.Count != layoverAirportList.Count)
                     return true;
 

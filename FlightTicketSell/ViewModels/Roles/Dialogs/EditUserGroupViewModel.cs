@@ -33,6 +33,8 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public string UserGroupName { get; set; }
 
+        public bool IsInteractable { get; set; } = true;
+
         #endregion
 
         #region Commands
@@ -62,16 +64,27 @@ namespace FlightTicketSell.ViewModels
 
             LoadCommand = new RelayCommand<object>(p => true, p =>
             {
-                OldUserGroupName= ParentViewModel.CurrentUserGroup.Name;
+                IsInteractable = false;
+
+                OldUserGroupName = ParentViewModel.CurrentUserGroup.Name;
+
+                IsInteractable = true;
             });
 
             CancelCommand = new RelayCommand<IEditUserGroupDialog>(p => true, p =>
             {
+                IsInteractable = false;
+
+
                 p.Close();
+
+                IsInteractable = true;
             });
 
             SaveCommand = new RelayCommand<IEditUserGroupDialog>(p => true, async p =>
             {
+                IsInteractable = false;
+
                 var result = await SaveUserGroup();
 
                 switch (result)
@@ -90,6 +103,8 @@ namespace FlightTicketSell.ViewModels
                         p.Notify(result);
                         break;
                 }
+
+                IsInteractable = true;
             });
         }
 

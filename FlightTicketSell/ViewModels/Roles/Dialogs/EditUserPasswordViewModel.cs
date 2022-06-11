@@ -26,6 +26,8 @@ namespace FlightTicketSell.ViewModels
         public bool IsSaveAble { get; set; } = true;
 
         public bool IsCancelable { get; set; } = true;
+        public bool IsInteractable { get; set; } = true;
+
 
         #endregion
 
@@ -36,13 +38,16 @@ namespace FlightTicketSell.ViewModels
             CancelCommand = new RelayCommand<object>(p => true, p =>
             {
                 IsCancelable = false;
+                IsInteractable = false;
                 DialogHost.GetDialogSession("RootDialog").Close();
                 IsCancelable = true;
+                IsInteractable = true;
             });
 
             SaveCommand = new RelayCommand<object>(p => true, async p =>
             {
                 IsSaveAble = false;
+                IsInteractable = false;
 
                 if (NewPassword is null || string.IsNullOrEmpty(SecureHelper.SecureStringToString(NewPassword)))
                 {
@@ -69,6 +74,7 @@ namespace FlightTicketSell.ViewModels
                 }
 
                 IsSaveAble = true;
+                IsInteractable = true;
             });
         }
 

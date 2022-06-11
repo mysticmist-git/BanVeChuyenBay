@@ -34,6 +34,11 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public string UserGroupName { get; set; }
 
+        public bool IsSavable { get; set; } = true;
+        public bool IsCancelable { get; set; } = true;
+
+        public bool IsInteractable { get; set; } = true;
+
         #endregion
 
         #region Commands
@@ -60,6 +65,9 @@ namespace FlightTicketSell.ViewModels
             // Create commands
             CancelCommand = new RelayCommand<IAddUserGroupDialog>(p => true, p =>
             {
+                IsCancelable = false;
+                IsInteractable = false;
+
                 if (string.IsNullOrEmpty(UserGroupName) && string.IsNullOrEmpty(UserGroupCode))
                 {
                     p.Close();
@@ -79,10 +87,16 @@ namespace FlightTicketSell.ViewModels
                         p.Close();
                         break;
                 }
+
+                IsCancelable = true;
+                IsInteractable = true;
             });
 
             SaveCommand = new RelayCommand<IAddUserGroupDialog>(p => true, async p =>
             {
+                IsSavable = false;
+                IsInteractable = false;
+
                 var result = await SaveUserGroup();
 
                 switch (result)
@@ -101,6 +115,9 @@ namespace FlightTicketSell.ViewModels
                         p.Notify(result);
                         break;
                 }
+
+                IsSavable = true;
+                IsInteractable = true;
             });
         }
 
