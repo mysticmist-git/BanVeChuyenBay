@@ -11,7 +11,7 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Title="LoginWIndow" Height="280" Width="400"
+        Title="LoginWIndow" Height="370" Width="450"
         Icon="pack://application:,,,/Images/Logo_Icon.ico"
         x:Name="window">
 
@@ -19,7 +19,15 @@
         <vm:LoginViewModel />
     </Window.DataContext>
 
-    <Border Background="Transparent">
+    <Border>
+        <Border.Background>
+            <!--Hình nền -->
+            <ImageBrush 
+                    ImageSource="pack://application:,,,/Images/background_ticket.jpg" 
+                    RenderOptions.BitmapScalingMode="HighQuality"
+                    Stretch="UniformToFill">
+            </ImageBrush>
+        </Border.Background>
         <Grid>
             <Button Content="X" 
                     Foreground="{StaticResource BlueBrush}"
@@ -31,38 +39,122 @@
                     HorizontalAlignment="Right" 
                     Click="Button_Click"/>
 
-            <Border Padding="50">
-                <StackPanel VerticalAlignment="Center">
+            <Border >
+                <StackPanel 
+                    Width="300"
+                    Margin="0 0 0 10"
+                    VerticalAlignment="Center"
+                            >
 
                     <TextBlock Text="Đăng nhập"
                        HorizontalAlignment="Center"
-                       FontWeight="Bold"
-                       FontSize="30"
+                       FontWeight="Black"
+                               Foreground="{StaticResource BlueBrush}"
+                       FontSize="45"
+                               Margin="0 0 0 10"
                        FontFamily="{StaticResource Pacifico}"
                        Opacity="0.8"
                        />
-                    <TextBox materialDesign:HintAssist.Hint="Tên đăng nhập"
-                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                     VerticalAlignment="Center"
-                     Text="{Binding Username}"
-                     materialDesign:TextFieldAssist.HasClearButton="True" />
-                    <PasswordBox x:Name="FloatingPasswordBox" 
+
+                    <Grid Margin="0 15" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="6*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0"
+                                Background="Transparent"
+                                BorderThickness="0.8"
+                                BorderBrush="{StaticResource BlueBrush}"
+                                CornerRadius="5"
+                                Height="54"
+                                VerticalAlignment="Center"
+                                Width="54"
+                                >
+                            <materialDesign:PackIcon 
+                                Kind="Account"
+                                    VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Foreground="{StaticResource BlueBrush}" Height="30" Width="30" />
+                        </Border>
+                        <TextBox 
+                            Grid.Column="1" 
+                            materialDesign:TextFieldAssist.TextFieldCornerRadius="5"
+                            materialDesign:TextFieldAssist.HasOutlinedTextField="True"
+                            BorderBrush="{StaticResource BlueBrush}"
+                            materialDesign:HintAssist.Background="Transparent"
+                            Margin="15 0 0 0"
+                             materialDesign:HintAssist.IsFloating="False"
+                            FontSize="15"
+                            materialDesign:HintAssist.Hint="Tên đăng nhập"
+                            Foreground="{StaticResource BlueBrush}"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             VerticalAlignment="Center"
+                             Text="{Binding Username}"
+                            FontWeight="ExtraBold"
+                             materialDesign:TextFieldAssist.HasClearButton="True" />
+                    </Grid>
+
+                    <Grid Margin="0 15" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="6*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0"
+                                Background="Transparent"
+                                BorderThickness="0.8"
+                                BorderBrush="{StaticResource BlueBrush}"
+                                CornerRadius="5"
+                                Height="54"
+                                Width="54"
+                                VerticalAlignment="Center"
+                                >
+                            <materialDesign:PackIcon 
+                                Kind="Key"
+                                    VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Foreground="{StaticResource BlueBrush}" Height="23" Width="23" />
+                        </Border>
+
+                        <PasswordBox x:Name="FloatingPasswordBox" 
+                                     Grid.Column="1"
+                                     FontSize="15"
+                                     BorderBrush="{StaticResource BlueBrush}"
+                                     Foreground="{StaticResource BlueBrush}"
+                                     Margin="15 0 0 0"
+                                     materialDesign:HintAssist.Background="Transparent"
+                                     materialDesign:HintAssist.IsFloating="False"
+                                      materialDesign:TextFieldAssist.TextFieldCornerRadius="5"
+                            materialDesign:TextFieldAssist.HasOutlinedTextField="True"
                          materialDesign:HintAssist.Hint="Mật khẩu" 
+                                     FontWeight="ExtraBold"
                          Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
                          PasswordChanged="PasswordChanged"
                          materialDesign:TextFieldAssist.HasClearButton="True"
                          />
+                    </Grid>
 
-                    <Button Content="Đăng nhập" 
+
+                    <Button 
                     IsDefault="True"
                     x:Name="loginBtn"
-                    Margin="0 20 0 0"
-                    Style="{StaticResource MaterialDesignFlatDarkBgButton}"
-                    Background="{StaticResource BlueBrush}"
+                        Height="37"
+                        Width="200"
+                    Margin="0 10 0 0"
                     BorderBrush="{StaticResource BlueBrush}"
-                    materialDesign:ButtonAssist.CornerRadius="10"
+                        Foreground="White"
+                    materialDesign:ButtonAssist.CornerRadius="5"
                     Command="{Binding LoginCommand}"
-                    CommandParameter="{Binding ElementName=window}" />
+                    CommandParameter="{Binding ElementName=window}" >
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal" 
+                                        HorizontalAlignment="Center">
+                                <TextBlock Text="Đăng nhập" VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center" FontWeight="SemiBold"
+                                       Margin="5 0 0 0"/>
+                                <materialDesign:PackIcon Kind="ArrowRightThick" Margin="5 0 0 0" VerticalAlignment="Center" Height="20" Width="20"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
 
 
                 </StackPanel>

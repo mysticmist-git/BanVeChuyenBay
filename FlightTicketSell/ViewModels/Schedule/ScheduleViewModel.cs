@@ -430,11 +430,11 @@ namespace FlightTicketSell.ViewModels
                    if (FirstLoad)
                    {
                        // TEST: Cho mục đích test
-                       DateFlight = DateTime.Now;
-                       DisplayDateStart = DateTime.Now;
+                       //DateFlight = DateTime.Now;
+                       //DisplayDateStart = DateTime.Now;
                        // Thực tế
-                       //DateFlight = DateTime.Now.AddDays(2);
-                       //DisplayDateStart = DateTime.Now.AddDays(2);
+                       DateFlight = DateTime.Now.AddDays(2);
+                       DisplayDateStart = DateTime.Now.AddDays(2);
 
                        TimeFlight = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day, 0, 0, 0);
                        FirstLoad = false;
@@ -821,9 +821,9 @@ namespace FlightTicketSell.ViewModels
                 (p) =>
                 {
                     // TEST: Cho mục đích test
-                    DateFlight = DateTime.Now;
+                    //DateFlight = DateTime.Now;
                     // Thực tế
-                    //DateFlight = DateTime.Now.AddDays(2);
+                    DateFlight = DateTime.Now.AddDays(2);
 
                     TimeFlight = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day, 0, 0, 0);
                     DepartureAirport = null;
@@ -942,17 +942,17 @@ namespace FlightTicketSell.ViewModels
                 // Rỗng
 
                 // Thực tế
-                //DateTime a = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day);
-                //DateTime b = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-                //if (a != b)
-                //    return;
-                //DateTime c = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day, TimeFlight.Hour, TimeFlight.Minute, TimeFlight.Second);
-                //DateTime d = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-                //if (c < d)
-                //{
-                //    MessageBox.Show("Thời gian không hợp lệ!", "Cảnh báo");
-                //    TimeFlight = DateTime.Now;
-                //}
+                DateTime a = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day);
+                DateTime b = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                if (a != b)
+                    return;
+                DateTime c = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day, TimeFlight.Hour, TimeFlight.Minute, TimeFlight.Second);
+                DateTime d = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                if (c < d)
+                {
+                    MessageBox.Show("Thời gian không hợp lệ!", "Cảnh báo");
+                    TimeFlight = DateTime.Now;
+                }
             });
             CheckFlightTime = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
