@@ -389,7 +389,7 @@ namespace FlightTicketSell.ViewModels
                                                                 importFromExcelClass.GioBay.Minute,
                                                                 importFromExcelClass.GioBay.Second),
                         DaKhoiHanh = false,
-                        TrangThai = 0
+                        TrangThai = 1
                     };
                     context.CHUYENBAYs.Add(cHUYENBAY);
                     context.SaveChanges();
