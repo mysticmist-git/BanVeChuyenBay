@@ -10,10 +10,12 @@ namespace FlightTicketSell.ValueConverters
         {
             switch (value)
             {
-                case true:
+                case 2:
                     return "Đã khởi hành";
-                case false:
+                case 1:
                     return "Chưa khởi hành";
+                case 3:
+                    return "Đã hủy";
                 default:
                     return "Lỗi";
             }

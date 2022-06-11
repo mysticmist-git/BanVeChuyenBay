@@ -8,7 +8,7 @@
         xmlns:vm="clr-namespace:FlightTicketSell.ViewModels" xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
         xmlns:attachedProperties="clr-namespace:FlightTicketSell.AttachedProperties" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Height="600" Width="535.5">
+        Height="600" Width="600">
 
     <UserControl.DataContext>
         <vm:ReportPrintViewModel />

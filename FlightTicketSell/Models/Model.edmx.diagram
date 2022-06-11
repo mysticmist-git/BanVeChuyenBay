@@ -8,7 +8,6 @@
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHITIETDATCHO" Width="1.5" PointX="12.75" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHITIETHANGVE" Width="1.5" PointX="7.5" PointY="9" IsExpanded="true" />
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHUCNANG" Width="1.5" PointX="9.75" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHUYENBAY" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.DATCHO" Width="1.5" PointX="10.5" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.DOANHTHUCHUYENBAY" Width="1.5" PointX="7.5" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.DOANHTHUNAM" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
@@ -24,12 +23,7 @@
         <EntityTypeShape EntityType="BANVECHUYENBAYModel.VE" Width="1.5" PointX="7.5" PointY="12.625" IsExpanded="true" />
         <AssociationConnector Association="BANVECHUYENBAYModel.FK_CHITIETDATCHO_MaDatCho" ManuallyRouted="false" />
         <AssociationConnector Association="BANVECHUYENBAYModel.FK_CHITIETDATCHO_MaKhachHang" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_CHITIETHANGVE_MaChuyenBay" ManuallyRouted="false" />
         <AssociationConnector Association="BANVECHUYENBAYModel.FK_CHITIETHANGVE_MaHangVe" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_CHUYENBAY_MaDuongBay" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_DATCHO_MaChuyenBay" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_DOANHTHUCHUYENBAY_MaChuyenBay" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_VE_MaChuyenBay" ManuallyRouted="false" />
         <AssociationConnector Association="BANVECHUYENBAYModel.FK_DATCHO_MaHangVe" ManuallyRouted="false" />
         <AssociationConnector Association="BANVECHUYENBAYModel.FK_DATCHO_MaNguoiDat" ManuallyRouted="false" />
         <AssociationConnector Association="BANVECHUYENBAYModel.FK_DOANHTHUCHUYENBAY_MaDoanhThuThang" ManuallyRouted="false" />
@@ -42,6 +36,12 @@
         <AssociationConnector Association="BANVECHUYENBAYModel.FK_NGUOIDUNG_MaNhom" ManuallyRouted="false" />
         <AssociationConnector Association="BANVECHUYENBAYModel.FK_SANBAYTG_MaSanBay" ManuallyRouted="false" />
         <AssociationConnector Association="BANVECHUYENBAYModel.PHANQUYEN" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHUYENBAY" Width="1.5" PointX="5.25" PointY="8.5" />
+        <AssociationConnector Association="BANVECHUYENBAYModel.FK_CHITIETHANGVE_MaChuyenBay" />
+        <AssociationConnector Association="BANVECHUYENBAYModel.FK_CHUYENBAY_MaDuongBay" />
+        <AssociationConnector Association="BANVECHUYENBAYModel.FK_DATCHO_MaChuyenBay" />
+        <AssociationConnector Association="BANVECHUYENBAYModel.FK_DOANHTHUCHUYENBAY_MaChuyenBay" />
+        <AssociationConnector Association="BANVECHUYENBAYModel.FK_VE_MaChuyenBay" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

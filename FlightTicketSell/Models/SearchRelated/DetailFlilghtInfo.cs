@@ -28,7 +28,7 @@ namespace FlightTicketSell.Models.SearchRelated
         /// <summary>
         /// Indicates if it is able to sell and book
         /// </summary>
-        public bool IsAbleToSellAndBook { get => AnySeatLeft && DaKhoiHanh == false; }
+        public bool IsAbleToSellAndBook { get => AnySeatLeft && TrangThai == 1; }
 
         #endregion
 
@@ -54,6 +54,7 @@ namespace FlightTicketSell.Models.SearchRelated
             GiaVe = flight.GiaVe;
             GheTrong = flight.GheTrong;
             DaKhoiHanh = flight.DaKhoiHanh;
+            TrangThai = flight.TrangThai;
         }
 
         /// <summary>

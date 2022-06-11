@@ -13,10 +13,12 @@ namespace FlightTicketSell.ValueConverters
             var converter = new BrushConverter();
             switch (value)
             {
-                case true:
+                case 2:
                     return (System.Windows.Media.Brush)converter.ConvertFromString("#C7282A");
-                case false:
+                case 1:
                     return (System.Windows.Media.Brush)converter.ConvertFromString("#24B44C");
+                case 3:
+                    return (System.Windows.Media.Brush)converter.ConvertFromString("#06b4f4");
                 default:
                     return System.Drawing.Brushes.DeepPink;
             }

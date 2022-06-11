@@ -82,6 +82,8 @@ namespace FlightTicketSell.Models
         /// </summary>
         public bool DaKhoiHanh { get; set; }
 
+        public Nullable<int> TrangThai { get; set; }
+
         /// <summary>
         /// The flight code
         /// </summary>
@@ -137,7 +139,7 @@ namespace FlightTicketSell.Models
                 SoGheDat = result.SoGheDat;
             }
             GheTrong = result.GheTrong;
-            DaKhoiHanh = result.DaKhoiHanh;
+            TrangThai = result.TrangThai;
         }
 
         /// <summary>

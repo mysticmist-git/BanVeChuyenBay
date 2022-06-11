@@ -489,7 +489,8 @@
                     Grid.Column="0" Grid.ColumnSpan="10"
                     Margin="0 10 0 -10">
                 <Button 
-                    Command="{Binding BookPay}"                
+                    Command="{Binding BookPay}"   
+                    IsEnabled="{Binding IsBookable}"
                     Style="{StaticResource HoverButton}"
                     VerticalAlignment="Center"
                     Width="250"

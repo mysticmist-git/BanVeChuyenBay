@@ -28,6 +28,7 @@ namespace FlightTicketSell.Models
         public decimal GiaVe { get; set; }
         public System.DateTime NgayGio { get; set; }
         public bool DaKhoiHanh { get; set; }
+        public Nullable<int> TrangThai { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHITIETHANGVE> CHITIETHANGVEs { get; set; }

@@ -15,6 +15,15 @@ CREATE TABLE CHUYENBAY
 )
 GO
 
+alter table chuyenbay add TrangThai INT NULL DEFAULT 1
+-- 1: Chua khoi hanh
+-- 2: da khoi hanh
+-- 3: Da huy
+
+update chuyenbay
+set trangthai=1
+where trangthai=0
+
 -- Bảng Sân bay
 CREATE TABLE SANBAY
 (

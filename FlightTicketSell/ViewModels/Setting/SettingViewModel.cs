@@ -676,7 +676,7 @@ namespace FlightTicketSell.ViewModels
                                 foreach (var item in existDB)
                                 {
                                     var check = context.CHUYENBAYs.Where(h => h.MaDuongBay == item.MaDuongBay).FirstOrDefault();
-                                    if (check.DaKhoiHanh == false)
+                                    if (check.TrangThai == 1)
                                     {
                                         var code1 = check.DUONGBAY.SANBAY1.VietTat;
                                         var code2 = check.DUONGBAY.SANBAY.VietTat;

@@ -62,6 +62,8 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public bool IsDisplayDeparted { get; set; } = false;
 
+        public bool IsDisplayCanceled { get; set; } = false;
+
         /// <summary>
         /// Flight list
         /// </summary>
@@ -77,10 +79,17 @@ namespace FlightTicketSell.ViewModels
                 if (Flights is null)
                     return null;
 
-                ObservableCollection<FlightInfo> flightInfos = (IsDisplayDeparted ?
-                                Flights :
-                                new ObservableCollection<FlightInfo>(Flights.Where(f => f.DaKhoiHanh == false).ToList()));
-                return flightInfos;
+                if (IsDisplayCanceled && IsDisplayDeparted)
+                    return Flights;
+                if (!IsDisplayCanceled && IsDisplayDeparted)
+                    return new ObservableCollection<FlightInfo>(Flights.Where(cb => cb.TrangThai == 1 || cb.TrangThai == 2).ToList());
+                if (IsDisplayCanceled && !IsDisplayDeparted)
+                    return new ObservableCollection<FlightInfo>(Flights.Where(cb => cb.TrangThai == 1 || cb.TrangThai == 3).ToList());
+
+                //if (!IsDisplayCanceled && !IsDisplayDeparted)
+                return new ObservableCollection<FlightInfo>(Flights.Where(cb => cb.TrangThai == 1).ToList());
+
+
             }
         }
 

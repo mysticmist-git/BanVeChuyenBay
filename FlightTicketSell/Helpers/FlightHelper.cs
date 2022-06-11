@@ -37,7 +37,7 @@ namespace FlightTicketSell.Helpers
                 {
                     // Find flight that departed but didn't have a report
                     var flights = await context.CHUYENBAYs
-                        .Where(p => p.DaKhoiHanh == false && p.NgayGio <= DateTime.Now)
+                        .Where(p => p.TrangThai == 1 && p.NgayGio <= DateTime.Now)
                         .ToListAsync();
 
                     // Stop if there's none
@@ -75,7 +75,7 @@ namespace FlightTicketSell.Helpers
                         #endregion
 
                         // Update flight's depart flag
-                        item.DaKhoiHanh = true;
+                        item.TrangThai = 2;
                         await context.SaveChangesAsync();
 
                         // Cancel all bookings
@@ -165,7 +165,7 @@ namespace FlightTicketSell.Helpers
                         if (await context.DOANHTHUCHUYENBAYs.Where(dtcb => dtcb.MaChuyenBay == newFlightReport.MaChuyenBay).CountAsync() > 0)
                         {
                             _isFlightDepartedRefreshFinish = true;
-                            return;
+                            continue;
                         }
 
                         context.DOANHTHUCHUYENBAYs.Add(newFlightReport);

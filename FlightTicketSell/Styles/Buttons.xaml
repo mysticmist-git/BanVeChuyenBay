@@ -176,4 +176,30 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="FlightCancelButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="{StaticResource OrangeBrush}" />
+        <Setter Property="FontFamily" Value="{StaticResource Roboto}" />
+        <Setter Property="FontWeight" Value="UltraBold"/>
+        <Setter Property="FontSize" Value="{StaticResource Small}" />
+        <Setter Property="Height" Value="35" />
+        <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="7"/>
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth0" />
+        <Style.Triggers>
+
+            <Trigger Property="IsMouseOver" Value="True">
+
+                <Setter Property="Background" Value="{StaticResource RedBrush}"/>
+                
+            </Trigger>
+            
+            <Trigger Property="IsMouseOver" Value="False">
+                
+                <Setter Property="Background"  Value="{StaticResource OrangeBrush}"/>
+                
+            </Trigger>
+            
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

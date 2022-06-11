@@ -350,7 +350,8 @@
             </Border>
 
             <!-- Booking state-->
-            <Border CornerRadius="10" 
+            <Border CornerRadius="10 10 10 10" 
+                    x:Name="container"
                     Grid.Row="2"
                     Grid.Column="5" Grid.ColumnSpan="2"
                     Margin="-20 20 0 0"
@@ -365,6 +366,8 @@
                         <ColumnDefinition Width="Auto" />
                         <!-- State -->
                         <ColumnDefinition Width="*" />
+                        <!-- Cancel Button -->
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
                     <!-- Label -->
@@ -378,16 +381,33 @@
 
                     <!-- Time -->
                     <TextBlock d:Text="Chưa khởi hành"
-                               Text="{Binding FlightInfo.DaKhoiHanh, Converter={valueConverters:FlightStateToStringConverter}}"
+                               Text="{Binding FlightInfo.TrangThai, Converter={valueConverters:FlightStateToStringConverter}}"
                                d:Foreground="ForestGreen"
-                               Foreground="{Binding FlightInfo.DaKhoiHanh,Converter={valueConverters:FlightStateToColorConverter}}"
+                               Foreground="{Binding FlightInfo.TrangThai,Converter={valueConverters:FlightStateToColorConverter}}"
                                HorizontalAlignment="Right"
                                VerticalAlignment="Center"
                                Grid.Column="1"
                                FontFamily="{StaticResource Roboto}"                               
                                FontWeight="Bold"                               
                                FontSize="{StaticResource Small}" 
-                               Margin="0 0 20 0"/>
+                               Margin="0 0 10 0"/>
+
+                    <Border Grid.Column="2" 
+                            Background="{StaticResource OrangeBrush}"
+                            CornerRadius="0 10 10 0"
+                            BorderThickness="0" 
+                            BorderBrush="{StaticResource OrangeBrush}"
+                            >
+                        <Button Content="HỦY" 
+                                IsEnabled="{Binding IsCancelable}"
+                                Height="{Binding ElementName=container, Path=ActualHeight}"
+                                materialDesign:ButtonAssist.CornerRadius="0 10 10 0"
+                                Style="{StaticResource FlightCancelButton}"
+                                Command="{Binding CancelFlightCommand}"
+                                />
+                    </Border>
+                    
+                    
                 </Grid>
             </Border>
 

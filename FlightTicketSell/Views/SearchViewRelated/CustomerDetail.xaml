@@ -164,7 +164,7 @@
                                             <!--Nút Edit-->
                                             <Button
                                             Style="{StaticResource HoverButton}"
-                                            IsEnabled="{Binding ApplicationViewModel.CurrentUserGroup.CanEditFlight, Source={x:Static vm:ViewModelLocator.Instance}}"
+                                            IsEnabled="{Binding IsEditable}"
                                             BorderBrush="{StaticResource OrangeBrush}"
                                             FontSize="10"
                                             BorderThickness="2"

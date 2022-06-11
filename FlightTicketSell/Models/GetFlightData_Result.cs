@@ -26,6 +26,6 @@ namespace FlightTicketSell.Models
         public decimal GiaVe { get; set; }
         public Nullable<int> GheTrong { get; set; }
         public Nullable<int> SoGheDat { get; set; }
-        public bool DaKhoiHanh { get; set; }
+        public Nullable<int> TrangThai { get; set; }
     }
 }

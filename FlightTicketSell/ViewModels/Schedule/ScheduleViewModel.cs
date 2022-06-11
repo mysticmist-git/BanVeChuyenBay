@@ -388,7 +388,8 @@ namespace FlightTicketSell.ViewModels
                                                                 importFromExcelClass.GioBay.Hour,
                                                                 importFromExcelClass.GioBay.Minute,
                                                                 importFromExcelClass.GioBay.Second),
-                        DaKhoiHanh = false
+                        DaKhoiHanh = false,
+                        TrangThai = 0
                     };
                     context.CHUYENBAYs.Add(cHUYENBAY);
                     context.SaveChanges();
@@ -782,7 +783,8 @@ namespace FlightTicketSell.ViewModels
                              MaDuongBay = dUONGBAY.MaDuongBay,
                              GiaVe = int.Parse(Regex.Replace(Airfares, @"[^a-zA-Z0-9]", string.Empty)),
                              NgayGio = new DateTime(DateFlight.Year, DateFlight.Month, DateFlight.Day, TimeFlight.Hour, TimeFlight.Minute, TimeFlight.Second),
-                             DaKhoiHanh = false
+                             DaKhoiHanh = false,
+                             TrangThai = 1
                          };
                          context.CHUYENBAYs.Add(cHUYENBAY);
                          context.SaveChanges();

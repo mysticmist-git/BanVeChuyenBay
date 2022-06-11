@@ -42,11 +42,13 @@ namespace FlightTicketSell.ViewModels
                     return false;
 
                 return 
-                    !FlightInfo.DaKhoiHanh &&
+                    (FlightInfo.TrangThai == 1)  &&
                     IoC.IoC.Get<ApplicationViewModel>().CurrentUserGroup.CanEditFlight;
             }
                 
         }
+
+        public bool IsCancelable { get => FlightInfo is null ? false : FlightInfo.TrangThai == 1; }
 
         public bool IsAbleToSellAndBook
         {
@@ -96,6 +98,11 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public ICommand EditCommand { get; set; }
 
+        /// <summary>
+        /// Cancel flight command
+        /// </summary>
+        public ICommand CancelFlightCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -133,21 +140,31 @@ namespace FlightTicketSell.ViewModels
 
                         if (IsJustEdited)
                         {
-                            var flight = await context.CHUYENBAYs.Where(cb => cb.MaChuyenBay == FlightInfo.MaChuyenBay).FirstOrDefaultAsync();
+                            
+                            
+                            //var flight = await context.CHUYENBAYs.Where(cb => cb.MaChuyenBay == FlightInfo.MaChuyenBay).FirstOrDefaultAsync();
 
-                            FlightInfo.MaSanBayDi = flight.DUONGBAY.MaSanBayDi;
-                            FlightInfo.MaSanBayDen = flight.DUONGBAY.MaSanBayDen;
-                            FlightInfo.SanBayDen = flight.DUONGBAY.SANBAY.TenSanBay;
-                            FlightInfo.SanBayDi = flight.DUONGBAY.SANBAY1.TenSanBay;
-                            FlightInfo.SanBayDenVietTat = flight.DUONGBAY.SANBAY.VietTat;
-                            FlightInfo.SanBayDiVietTat = flight.DUONGBAY.SANBAY1.VietTat;
+                            //FlightInfo.GiaVe = flight.GiaVe;
+                            //FlightInfo.MaSanBayDi = flight.DUONGBAY.MaSanBayDi;
+                            //FlightInfo.MaSanBayDen = flight.DUONGBAY.MaSanBayDen;
+                            //FlightInfo.SanBayDen = flight.DUONGBAY.SANBAY.TenSanBay;
+                            //FlightInfo.SanBayDi = flight.DUONGBAY.SANBAY1.TenSanBay;
+                            //FlightInfo.SanBayDenVietTat = flight.DUONGBAY.SANBAY.VietTat;
+                            //FlightInfo.SanBayDiVietTat = flight.DUONGBAY.SANBAY1.VietTat;
 
-                            //FlightInfo.GheTrong = TicketTier.Sum(tt => tt.GheTrong);
-                            FlightInfo.GheTrong = await context.CHITIETHANGVEs.Where(cthv => cthv.MaChuyenBay == FlightInfo.MaChuyenBay).SumAsync(cthv => cthv.SoGhe);
+                            ////FlightInfo.GheTrong = TicketTier.Sum(tt => tt.GheTrong);
+                            //FlightInfo.GheTrong =
+                            //    flight.CHITIETHANGVEs.Select(cthv => cthv.SoGhe).DefaultIfEmpty(0).Sum() -
+                            //    flight.DATCHOes.Select(dc => dc.SoVeDat).DefaultIfEmpty(0).Sum() -
+                            //    flight.VEs.Count;
 
-                            FlightInfo.NgayGio = await context.CHUYENBAYs.Where(cb => cb.MaChuyenBay == FlightInfo.MaChuyenBay).Select(cb => cb.NgayGio).FirstOrDefaultAsync();
+                            //FlightInfo.NgayGio = await context.CHUYENBAYs.Where(cb => cb.MaChuyenBay == FlightInfo.MaChuyenBay).Select(cb => cb.NgayGio).FirstOrDefaultAsync();
 
-                            IsJustEdited = false;
+                            //IsJustEdited = false;
+
+                            //OnPropertyChanged(nameof(FlightInfo));
+                            //OnPropertyChanged(nameof(TicketTier));
+                            //OnPropertyChanged(nameof(OverlayAirport));
                         }
 
                         OverlayAirport = new ObservableCollection<OverlayAirport_Search>(
@@ -193,6 +210,41 @@ namespace FlightTicketSell.ViewModels
             });
 
             EditCommand = new RelayCommand<object>((p) => true, (p) => IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.FlightInfoEdit);
+
+            CancelFlightCommand = new RelayCommand<object>(p => true, async p =>
+            {
+                var result = MessageBox.Show("Bạn có chắc muốn hủy chuyến bay này?", "Hủy chuyến bay", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.No)
+                    return;
+
+                using (var context = new FlightTicketSellEntities())
+                {
+                    try
+                    {
+                        var flight = await context.CHUYENBAYs.Where(cb => cb.MaChuyenBay == FlightInfo.MaChuyenBay).FirstOrDefaultAsync();
+
+                        // Cập nhật trạng thái
+                        flight.TrangThai = 3;
+
+                        foreach (var book in flight.DATCHOes)
+                            book.TrangThai = BookHelper.BookingStateToString(Models.Enums.BookingState.Cancel);
+
+                        await context.SaveChangesAsync();
+
+                        FlightInfo.TrangThai = 3;
+                    }
+                    catch (EntityException ex)
+                    {
+                        NotifyHelper.ShowEntityException(ex);
+                    }
+                }
+
+                OnPropertyChanged(nameof(IsAbleToModify));
+                OnPropertyChanged(nameof(IsAbleToSellAndBook));
+                OnPropertyChanged(nameof(IsCancelable));
+
+            });
         }
 
         #endregion

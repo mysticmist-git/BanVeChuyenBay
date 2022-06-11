@@ -67,6 +67,8 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public TicketTier CurrentTicketTier { get => IoC.IoC.Get<TicketInfoFillingViewModel>().CurrentTicketTier; }
 
+        public bool IsSellable { get; set; } = true;
+
         #endregion
 
         #region Print
@@ -85,6 +87,8 @@ namespace FlightTicketSell.ViewModels
         {
             LoadCommand = new RelayCommand<object>((p) => true, (p) =>
             {
+                IsSellable = false;
+
                 using (var context = new FlightTicketSellEntities())
                 {
                     try
@@ -101,6 +105,8 @@ namespace FlightTicketSell.ViewModels
                         NotifyHelper.ShowEntityException(e);
                     }
                 }
+
+                IsSellable = true;
             });
 
             // Create commands
@@ -112,6 +118,8 @@ namespace FlightTicketSell.ViewModels
 
             PayCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
+                IsSellable = false;
+
                 // Save things
                 await SaveTicketInformation();
                 PrintTicket();
@@ -125,6 +133,8 @@ namespace FlightTicketSell.ViewModels
 
                 // Send mail
                 //await SendMail(flightInfo, customer);
+
+                IsSellable = true;
             });
         }
 

@@ -28,6 +28,18 @@ namespace FlightTicketSell.Models
         private bool IsChanged = false;
         public static CustomerDetailType CustomerDetailType { get; set; }
         public bool IsRead { get; set; }
+
+        public bool IsEditable
+        {
+            get
+            {
+                return
+                    IoC.IoC.Get<ApplicationViewModel>().CurrentUserGroup.CanEditFlight &&
+                    IoC.IoC.Get<FlightDetailViewModel>().FlightInfo.TrangThai == 1 &&
+                    this.IsChanged == false;
+            }
+        }
+
         #endregion
 
         #region Command

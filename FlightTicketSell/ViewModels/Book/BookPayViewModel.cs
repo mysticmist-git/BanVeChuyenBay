@@ -65,6 +65,8 @@ namespace FlightTicketSell.ViewModels
 
         public Book BookInfo { get => IoC.IoC.Get<BookDetailViewModel>().BookInfo; }
 
+        public bool IsBookable { get; set; } = true;
+
         public BookPayViewModel()
         {
         
@@ -73,6 +75,8 @@ namespace FlightTicketSell.ViewModels
 
             LoadCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
+                IsBookable = false;
+
                 using (var context = new FlightTicketSellEntities())
                 {
                     try
@@ -86,10 +90,14 @@ namespace FlightTicketSell.ViewModels
                         NotifyHelper.ShowEntityException(e);
                     }
                 }
+
+                IsBookable = true;
             });
 
             BookPay = new RelayCommand<object>((p) => true, async (p) =>
             {
+                IsBookable = false;
+
                 using (var context = new FlightTicketSellEntities())
                 {
                     try
@@ -167,6 +175,8 @@ namespace FlightTicketSell.ViewModels
                         NotifyHelper.ShowEntityException(e);;
                     }
                 }
+
+                IsBookable = true;
             });
         }
         #endregion

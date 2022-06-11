@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using FlightTicketSell.Helpers;
+using FlightTicketSell.Models.SearchRelated;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -858,6 +859,7 @@ namespace FlightTicketSell.ViewModels
                          OldTimeFlight= TimeFlight;
 
                          IoC.IoC.Get<FlightDetailViewModel>().IsJustEdited = true;
+                         IoC.IoC.Get<ApplicationViewModel>().CurrentView = AppView.Search;
                      }
                  }
                  catch (EntityException e)
@@ -1333,7 +1335,18 @@ namespace FlightTicketSell.ViewModels
                 // Check if ticket class list changed     
                 var ticketClassList = await context.CHITIETHANGVEs
                     .Where(cthv => cthv.MaChuyenBay == ActualFlightCode)
+                    .Select(cthv => new TicketClassDetail()
+                    {
+                        Id = cthv.MaCTHV,
+                        Id_TicketClass = cthv.MaHangVe,
+                        Seats = 
+                            cthv.SoGhe - 
+                            cthv.CHUYENBAY.VEs.Where(ve => ve.MaHangVe == cthv.MaHangVe).Count()  - 
+                            cthv.CHUYENBAY.DATCHOes.Where(dc => dc.MaHangVe == cthv.MaHangVe).Select(dc => dc.SoVeDat).DefaultIfEmpty(0).Sum()
+                     })
                     .ToListAsync();
+
+                
 
                 if (List_TicketClass.Count != ticketClassList.Count)
                     return true;
@@ -1345,7 +1358,7 @@ namespace FlightTicketSell.ViewModels
                     for (int j = 0; j < ticketClassList.Count; j++)
                     {
                         // Check if it's in the database
-                        if (List_TicketClass[i].Id_TicketClass != ticketClassList[j].MaHangVe)
+                        if (List_TicketClass[i].Id_TicketClass != ticketClassList[j].Id_TicketClass)
                         {
                             if (j + 1 < ticketClassList.Count)
                                 continue;
@@ -1354,7 +1367,7 @@ namespace FlightTicketSell.ViewModels
                         }
                         else
                         {
-                            if (List_TicketClass[i].Seats != ticketClassList[j].SoGhe)
+                            if (List_TicketClass[i].Seats != ticketClassList[j].Seats)
                                 return true;
                             else
                                 break;
