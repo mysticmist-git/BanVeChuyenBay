@@ -194,16 +194,20 @@
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\Book\IsValidProperty.cs" />
     <Compile Include="AttachedProperties\ReportTypeProperty.cs" />
+    <Compile Include="Helpers\DatabaseHelper.cs" />
     <Compile Include="Helpers\BookHelper.cs" />
     <Compile Include="Helpers\FlightHelper.cs" />
     <Compile Include="Helpers\FormatHelper.cs" />
     <Compile Include="Helpers\NotifyHelper.cs" />
     <Compile Include="Helpers\SecureHelper.cs" />
     <Compile Include="Interface\Book\IBookDetail.cs" />
+    <Compile Include="Interface\Roles\Dialogs\IEditUserGroupDialog.cs" />
+    <Compile Include="Interface\Roles\Dialogs\IAddUserGroupDialog.cs" />
     <Compile Include="Interface\ITicketInfoFilling.cs" />
     <Compile Include="Interface\Login\ILogin.cs" />
     <Compile Include="Interface\Report\IReport.cs" />
     <Compile Include="Interface\Report\IReportPrintPreview.cs" />
+    <Compile Include="Interface\Roles\IRole.cs" />
     <Compile Include="Interface\Search\ICustomerDetail.cs" />
     <Compile Include="Models\Book\Book.cs" />
     <Compile Include="Models\CHITIETDATCHO.cs">
@@ -233,8 +237,12 @@
     <Compile Include="Models\DUONGBAY.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Enums\Roles\AddUserGroupDialogResult.cs" />
+    <Compile Include="Models\Enums\Roles\DecisionIcon.cs" />
+    <Compile Include="Models\Enums\Roles\DecisionResult.cs" />
     <Compile Include="Models\Enums\General\Parameter.cs" />
-    <Compile Include="Models\Enums\LoginResult.cs" />
+    <Compile Include="Models\Enums\Roles\DecisionType.cs" />
+    <Compile Include="Models\Enums\Roles\LoginResult.cs" />
     <Compile Include="Models\Enums\ViewType.cs" />
     <Compile Include="Models\GetFlightData_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -322,6 +330,9 @@
     <Compile Include="ValueConverters\Search\BookingStateToStringConverter.cs" />
     <Compile Include="ValueConverters\Application\ViewToInterfaceConverter.cs" />
     <Compile Include="ViewModels\Book\BookPayViewModel.cs" />
+    <Compile Include="ViewModels\Roles\Dialogs\AddUserGroupViewModel.cs" />
+    <Compile Include="ViewModels\Roles\Dialogs\EditUserGroupViewModel.cs" />
+    <Compile Include="ViewModels\Roles\Dialogs\ExceptionEntity.cs" />
     <Compile Include="ViewModels\Roles\LoginViewModel.cs" />
     <Compile Include="ViewModels\Schedule\ImportFromExcelClass.cs" />
     <Compile Include="ViewModels\Roles\RolesViewModel.cs" />
@@ -386,6 +397,12 @@
     </Compile>
     <Compile Include="Views\BookViewRelated\PrintMultipleTicket.xaml.cs">
       <DependentUpon>PrintMultipleTicket.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RolesViewRelated\Dialogs\AddUserGroupDialog.xaml.cs">
+      <DependentUpon>AddUserGroupDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RolesViewRelated\Dialogs\EditUserGroupDialog.xaml.cs">
+      <DependentUpon>EditUserGroupDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RolesViewRelated\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -528,6 +545,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BookViewRelated\PrintMultipleTicket.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RolesViewRelated\Dialogs\AddUserGroupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RolesViewRelated\Dialogs\EditUserGroupDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -716,6 +741,7 @@
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

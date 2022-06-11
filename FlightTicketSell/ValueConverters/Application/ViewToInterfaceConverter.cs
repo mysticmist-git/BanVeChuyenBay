@@ -13,9 +13,17 @@ namespace FlightTicketSell.ValueConverters
         Report,
         BookDetail,
         CustomerDetail_Search,
-        Login
+        Login,
+
+        #region Role
+
+        Role,
+        AddUserGroupDialog,
+        EditUserGroupDialog
+
+        #endregion
     }
-    
+
     public class ViewToInterfaceConverter : BaseValueConverter<ViewToInterfaceConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -32,6 +40,14 @@ namespace FlightTicketSell.ValueConverters
                     return value as ICustomerDetail;
                 case ViewInterface.Login:
                     return value as ILogin;
+
+                // Roles
+                case ViewInterface.Role:
+                    return value as IRole;
+                case ViewInterface.AddUserGroupDialog:
+                    return value as IAddUserGroupDialog;
+                case ViewInterface.EditUserGroupDialog:
+                    return value as IEditUserGroupDialog;
             }
 
             return null;

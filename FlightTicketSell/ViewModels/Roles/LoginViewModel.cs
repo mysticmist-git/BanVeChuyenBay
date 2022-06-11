@@ -39,6 +39,9 @@ namespace FlightTicketSell.ViewModels
 
         #region Constructor
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public LoginViewModel()
         {
             // Create commands
@@ -70,6 +73,10 @@ namespace FlightTicketSell.ViewModels
 
         #region Methods
 
+        /// <summary>
+        /// Log the user in
+        /// </summary>
+        /// <returns></returns>
         private async Task<LoginResult> Login()
         {
             using (var context = new FlightTicketSellEntities())
@@ -113,7 +120,7 @@ namespace FlightTicketSell.ViewModels
                         UserGroupID = user.MaNhom
                     };
 
-                    IoC.IoC.Get<ApplicationViewModel>().CurrentUserGroup = await LoadUserGroup(user.MaNhom);
+                    IoC.IoC.Get<ApplicationViewModel>().CurrentUserGroup = (await DatabaseHelper.LoadUserGroup(user.MaNhom, UserGroupType.Modified) as UserGroupModified);
                 }
                 catch (EntityException e)
                 {;
@@ -122,34 +129,7 @@ namespace FlightTicketSell.ViewModels
             }
         }
 
-        /// <summary>
-        /// Loads user group with a input user group code 
-        /// </summary>
-        /// <returns>A user group </returns>
-        private async Task<UserGroupModified> LoadUserGroup(string userGroupCode)
-        {
-            using (var context = new FlightTicketSellEntities())
-            {
-                var userGroup = await context.NHOMNGUOIDUNGs
-                    .Where(nnd => nnd.MaNhom == userGroupCode)
-                    .Select(nnd => new UserGroupModifiedWithUsers()
-                    {
-                        Code = nnd.MaNhom,
-                        Name = nnd.TenNhom,
-                        CanSearchFlight = nnd.CHUCNANGs.Where(cn => cn.MaChucNang=="TRC").Count() > 0,
-                        CanEditFlight = nnd.CHUCNANGs.Where(cn => cn.MaChucNang=="QLCB").Count() > 0,
-                        CanScheduleFlight = nnd.CHUCNANGs.Where(cn => cn.MaChucNang=="NLCB").Count() > 0,
-                        CanViewReport = nnd.CHUCNANGs.Where(cn => cn.MaChucNang=="BCDT").Count() > 0,
-                        CanSettings = nnd.CHUCNANGs.Where(cn => cn.MaChucNang=="CD").Count() > 0,
-                        CanManageUser = nnd.CHUCNANGs.Where(cn => cn.MaChucNang=="PHQ").Count() > 0,
-                        UserCount = nnd.NGUOIDUNGs.Count(),
-                    })
-                    .FirstOrDefaultAsync();
-
-                return userGroup;
-            }
-        }
-
         #endregion
     }
+
 }

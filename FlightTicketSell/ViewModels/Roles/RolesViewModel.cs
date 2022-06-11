@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using FlightTicketSell.Models.Roles;
 using System.Data.Entity.Core;
 using FlightTicketSell.Helpers;
+using FlightTicketSell.Views;
+using FlightTicketSell.Interface;
+using FlightTicketSell.Models.Enums;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -56,6 +59,8 @@ namespace FlightTicketSell.ViewModels
 
         #region Public Properties
 
+        #region User Group Public Properties
+
         /// <summary>
         /// The user group list
         /// </summary>
@@ -65,6 +70,10 @@ namespace FlightTicketSell.ViewModels
         /// The current user group is being selected
         /// </summary>
         public UserGroupModifiedWithUsers CurrentUserGroup { get; set; }
+
+        #endregion
+
+        #region Permission Public Properties
 
         /// <summary>
         /// Indicates if the permisison of the current user group is changed
@@ -88,6 +97,8 @@ namespace FlightTicketSell.ViewModels
 
         #endregion
 
+        #endregion
+
         #region Commands
 
         #region Global Commands
@@ -102,9 +113,24 @@ namespace FlightTicketSell.ViewModels
         #region User Group Commands
 
         /// <summary>
-        /// Executes when user choose another user group
+        /// Executes when current user group changed
         /// </summary>
         public ICommand UserGroupChanged { get; set; }
+
+        /// <summary>
+        /// Add a new user group
+        /// </summary>
+        public ICommand AddUserGroupCommand { get; set; }
+
+        /// <summary>
+        /// Edit current user group
+        /// </summary>
+        public ICommand EditUserGroupCommand { get; set; }
+
+        /// <summary>
+        /// Remove current user group
+        /// </summary>
+        public ICommand RemoveUserGroupCommand { get; set; }
 
         #endregion
 
@@ -155,11 +181,74 @@ namespace FlightTicketSell.ViewModels
                 BufferPermission();
             });
 
+            AddUserGroupCommand = new RelayCommand<IRole>(p => true, p =>
+            {
+                if (p is null)
+                    return;
+
+                p.OpenAddUserGroupDialog();
+            });
+
+            EditUserGroupCommand = new RelayCommand<IRole>(p => true, p =>
+            {
+                if (p is null)
+                    return;
+
+                p.OpenEditUserGroupDialog();
+            });
+
+            RemoveUserGroupCommand = new RelayCommand<IRole>(p => true, async p =>
+            {
+                if (UserGroupList.Where(u => u.CanManageUser == true).Count() == 1 &&
+                    CurrentUserGroup.CanManageUser == true)
+                {
+                    p.RemoveUserGroupNotify(
+                        "Phải có ít nhất một nhóm người dùng có khả năng phân quyền!",
+                        "Hành động bị cấm",
+                        DecisionType.OK,
+                        DecisionIcon.Information
+                        );
+
+                    return;
+                }
+
+                var result = p.RemoveUserGroupNotify(
+                    "Bạn có chắc muốn xóa nhóm người dùng này?",
+                    "Xác nhận",
+                    DecisionType.YesNo,
+                    DecisionIcon.Question
+                    );
+
+                if (result == DecisionResult.No)
+                    return;
+
+                 result = p.RemoveUserGroupNotify(
+                    "Hành động này sẽ xóa toàn bộ người dùng trong nhóm, bạn vẫn muốn tiếp tục?",
+                    "Xác nhận",
+                    DecisionType.YesNo,
+                    DecisionIcon.Warning
+                    );
+
+                if (result  == DecisionResult.No)
+                    return;
+
+                var actionResult = await this.RemoveSelectedUserGroup();
+
+                if (actionResult == ActionResult.Succcesful)
+                {
+                    UserGroupList.Remove(CurrentUserGroup);
+                    CurrentUserGroup = UserGroupList.Count > 0 ? UserGroupList[0] : null;
+                }
+
+                p.RemoveUserGroupNotify(actionResult);
+            });
+
+
             #endregion
 
             #region Permisison Commands
 
-            PermissionResetCommand = new RelayCommand<object>(p => true, async p =>
+            PermissionResetCommand = new RelayCommand<object>(p => true, p =>
             {
                 ReloadPermission();
             });
@@ -170,7 +259,7 @@ namespace FlightTicketSell.ViewModels
                 BufferPermission();
             });
 
-            PermissionChangedCommand = new RelayCommand<object>(p => true, async p =>
+            PermissionChangedCommand = new RelayCommand<object>(p => true, p =>
             {
                 OnPropertyChanged(nameof(IsPermissionChanged));
             });
@@ -184,23 +273,7 @@ namespace FlightTicketSell.ViewModels
 
         #region Methods
 
-        /// <summary>
-        /// Load the buffer permission to the current permission
-        /// </summary>
-        private void ReloadPermission()
-        {
-            if (CurrentUserGroup is null)
-                return;
-
-            CurrentUserGroup.CanSearchFlight = _canSearchFlightBuffer;
-            CurrentUserGroup.CanEditFlight = _canEditFlightBuffer;
-            CurrentUserGroup.CanScheduleFlight = _canScheduleFlightBuffer;
-            CurrentUserGroup.CanViewReport = _canViewReportBuffer;
-            CurrentUserGroup.CanSettings = _canSettingsBuffer;
-            CurrentUserGroup.CanManageUser = _canManageUserBuffer;
-
-            OnPropertyChanged(nameof(IsPermissionChanged)); 
-        }
+        #region User Group Methods
 
         /// <summary>
         /// Loads data of the view
@@ -244,10 +317,58 @@ namespace FlightTicketSell.ViewModels
         }
 
         /// <summary>
+        /// Remove the user group from the database
+        /// </summary>
+        /// <returns>Errors: null</returns>
+        private async Task<ActionResult> RemoveSelectedUserGroup()
+        {
+            if (CurrentUserGroup is null)
+                return ActionResult.Error;
+
+            var result = await DatabaseHelper.RemoveUserGroup(CurrentUserGroup);
+
+            return result;
+        }
+
+        #endregion
+
+        #region Permission Methods
+
+        /// <summary>
+        /// Load the buffer permission to the current permission
+        /// </summary>
+        private void ReloadPermission()
+        {
+            if (CurrentUserGroup is null)
+                return;
+
+            CurrentUserGroup.CanSearchFlight = _canSearchFlightBuffer;
+            CurrentUserGroup.CanEditFlight = _canEditFlightBuffer;
+            CurrentUserGroup.CanScheduleFlight = _canScheduleFlightBuffer;
+            CurrentUserGroup.CanViewReport = _canViewReportBuffer;
+            CurrentUserGroup.CanSettings = _canSettingsBuffer;
+            CurrentUserGroup.CanManageUser = _canManageUserBuffer;
+
+            OnPropertyChanged(nameof(IsPermissionChanged)); 
+        }
+
+        /// <summary>
         /// Buffer the current user group permission, so we can check if changed later
         /// </summary>
         private void BufferPermission()
         {
+            if (CurrentUserGroup is null)
+            {
+                _canSearchFlightBuffer = false;
+                _canEditFlightBuffer = false;
+                _canScheduleFlightBuffer = false;
+                _canViewReportBuffer = false;
+                _canSettingsBuffer = false;
+                _canManageUserBuffer = false;
+
+                return;
+            }
+
             _canSearchFlightBuffer = CurrentUserGroup.CanSearchFlight;
             _canEditFlightBuffer = CurrentUserGroup.CanEditFlight;
             _canScheduleFlightBuffer = CurrentUserGroup.CanScheduleFlight;
@@ -366,6 +487,8 @@ namespace FlightTicketSell.ViewModels
                 }
             }
         }
+
+        #endregion
 
         #endregion
     }

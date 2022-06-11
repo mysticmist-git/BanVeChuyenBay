@@ -6,8 +6,10 @@
              xmlns:local="clr-namespace:FlightTicketSell.Views"
              xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:valueConverter="clr-namespace:FlightTicketSell.ValueConverters"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
+             x:Name="uc"
              d:DesignHeight="720" d:DesignWidth="1366">
 
     <UserControl.DataContext>
@@ -20,7 +22,8 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid d:Background="{StaticResource LightGrayBrush}">
+    <materialDesign:DialogHost Identifier="RootDialog">
+        <Grid d:Background="{StaticResource LightGrayBrush}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -148,11 +151,12 @@
                                      Grid.Row="3" Grid.Column="1" 
                                     HorizontalAlignment="Right">
                     <!--Nút xóa-->
-                    <Button Margin="7 0 0 0" 
-                                    Style="{StaticResource HoverButton}"
-                                    BorderBrush="{StaticResource RedBrush}"
-                                Command="{Binding Delete_EnteredTicketClass_Command}">
-                        <ContentControl>
+                        <Button Margin="7 0 0 0" 
+                            Style="{StaticResource HoverButton}"
+                            BorderBrush="{StaticResource RedBrush}"
+                            Command="{Binding RemoveUserGroupCommand}"
+                            CommandParameter="{Binding ElementName=uc, Converter={valueConverter:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverter:ViewInterface.Role}}">
+                            <ContentControl>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Delete" Margin="0 0 10 0" VerticalAlignment="Center" Height="19" Width="19"/>
                                 <TextBlock Text="Xóa" VerticalAlignment="Center"/>
@@ -164,7 +168,8 @@
                     <Button Margin="7 0 0 0" 
                                     Style="{StaticResource HoverButton}"
                                     BorderBrush="{StaticResource OrangeBrush}"
-                                    Command="{Binding Open_Window_EditTicketClass_Command}"
+                                    Command="{Binding EditUserGroupCommand}"
+                                    CommandParameter="{Binding ElementName=uc}"
                                 materialDesign:ShadowAssist.Darken="True"
                                    >
                         <ContentControl>
@@ -177,11 +182,11 @@
 
                     <!--Nút thêm-->
                     <Button Margin="7 0 10 0" Content="+ Thêm" 
-                                    Style="{StaticResource HoverButton}"
-                                    BorderBrush="{StaticResource BlueBrush}"
-                                Command="{Binding Open_Window_EnterTicketClass_Command}"
-                                materialDesign:ShadowAssist.Darken="True"
-                                    />
+                            Style="{StaticResource HoverButton}"
+                            BorderBrush="{StaticResource BlueBrush}"
+                            Command="{Binding AddUserGroupCommand}"
+                            CommandParameter="{Binding ElementName=uc, Converter={valueConverter:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverter:ViewInterface.Role}}"
+                            materialDesign:ShadowAssist.Darken="True" />
                 </StackPanel>
 
             </Grid>
@@ -559,4 +564,5 @@
 
         </Border>
     </Grid>
+    </materialDesign:DialogHost>
 </UserControl>
