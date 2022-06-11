@@ -583,7 +583,7 @@
                         BorderBrush="{StaticResource BlueBrush}"
                        
                         Command="{Binding ContinueCommand}" 
-                        CommandParameter="{Binding ElementName=uc, Converter={valueConverters:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverters:ViewInterface.BookDetail}}"
+                        CommandParameter="{Binding ElementName=uc}"
                         FontSize="{StaticResource Regular}"
                         materialDesign:ButtonAssist.CornerRadius="7"
                         >

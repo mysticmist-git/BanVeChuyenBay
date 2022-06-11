@@ -201,7 +201,8 @@ namespace FlightTicketSell.ViewModels
 
             PrintCommand = new RelayCommand<object>(p => true, async p =>
             {
-                await (p as IReport).OpenPrintPreview();
+            
+                await ((IReport)p).OpenPrintPreview();
             });
         }
 

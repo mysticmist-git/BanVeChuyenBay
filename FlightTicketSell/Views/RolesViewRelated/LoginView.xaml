@@ -18,29 +18,42 @@
         <vm:LoginViewModel />
     </Window.DataContext>
 
-    <Border Background="Transparent" Padding="50">
-        <StackPanel VerticalAlignment="Center">
+    <Border Background="Transparent">
+        <Grid>
+            <Button Content="X" 
+                    Foreground="{StaticResource BlueBrush}"
+                    FontWeight="Bold"
+                    FontSize="20"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right" 
+                    Click="Button_Click"/>
 
-            <TextBlock Text="Đăng nhập"
+            <Border Padding="50">
+                <StackPanel VerticalAlignment="Center">
+
+                    <TextBlock Text="Đăng nhập"
                        HorizontalAlignment="Center"
                        FontWeight="Bold"
                        FontSize="30"
                        FontFamily="{StaticResource Pacifico}"
                        Opacity="0.8"
                        />
-            <TextBox materialDesign:HintAssist.Hint="Tên đăng nhập"
+                    <TextBox materialDesign:HintAssist.Hint="Tên đăng nhập"
                      Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                      VerticalAlignment="Center"
                      Text="{Binding Username}"
                      materialDesign:TextFieldAssist.HasClearButton="True" />
-            <PasswordBox x:Name="FloatingPasswordBox" 
+                    <PasswordBox x:Name="FloatingPasswordBox" 
                          materialDesign:HintAssist.Hint="Mật khẩu" 
                          Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
                          PasswordChanged="PasswordChanged"
                          materialDesign:TextFieldAssist.HasClearButton="True"
                          />
 
-            <Button Content="Login" 
+                    <Button Content="Đăng nhập" 
+                    IsDefault="True"
                     x:Name="loginBtn"
                     Margin="0 20 0 0"
                     Style="{StaticResource MaterialDesignFlatDarkBgButton}"
@@ -48,8 +61,11 @@
                     BorderBrush="{StaticResource BlueBrush}"
                     materialDesign:ButtonAssist.CornerRadius="10"
                     Command="{Binding LoginCommand}"
-                    CommandParameter="{Binding ElementName=window, Converter={valueConverters:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverters:ViewInterface.Login}}"/>
+                    CommandParameter="{Binding ElementName=window}" />
 
-        </StackPanel>
+
+                </StackPanel>
+            </Border>
+        </Grid>
     </Border>
 </Window>

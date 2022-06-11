@@ -2,6 +2,9 @@
 using FlightTicketSell.Interface;
 using FlightTicketSell.Models;
 using FlightTicketSell.Models.Enums;
+using System.Data.Entity;
+using System.Data.Entity.Core;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -21,19 +24,9 @@ namespace FlightTicketSell.ViewModels
         #region Public Properties
 
         /// <summary>
-        /// The old user group code
-        /// </summary>
-        public string OldUserGroupCode { get; set; }
-
-        /// <summary>
         /// The old user group name
         /// </summary>
         public string OldUserGroupName { get; set; }
-
-        /// <summary>
-        /// The user group code
-        /// </summary>
-        public string UserGroupCode { get; set; }
 
         /// <summary>
         /// The user group name
@@ -54,6 +47,8 @@ namespace FlightTicketSell.ViewModels
         /// </summar
         public ICommand CancelCommand { get; set; }
 
+        public ICommand LoadCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -64,6 +59,12 @@ namespace FlightTicketSell.ViewModels
         public EditUserGroupViewModel()
         {
             // Create commands
+
+            LoadCommand = new RelayCommand<object>(p => true, p =>
+            {
+                OldUserGroupName= ParentViewModel.CurrentUserGroup.Name;
+            });
+
             CancelCommand = new RelayCommand<IEditUserGroupDialog>(p => true, p =>
             {
                 p.Close();
@@ -76,7 +77,7 @@ namespace FlightTicketSell.ViewModels
                 switch (result)
                 {
                     case ActionResult.Duplicate:
-                        p.Notify(result, await DatabaseHelper.LoadUserGroup(UserGroupCode, UserGroupType.Normal));
+                        p.Notify(result, await DatabaseHelper.LoadUserGroup(ParentViewModel.CurrentUserGroup.Code, UserGroupType.Normal));
                         break;
                     case ActionResult.Succcesful:
                         p.Notify(result);
@@ -102,32 +103,33 @@ namespace FlightTicketSell.ViewModels
         /// <returns></returns>
         private async Task<ActionResult> SaveUserGroup()
         {
-            if (string.IsNullOrEmpty(UserGroupName) || string.IsNullOrEmpty(UserGroupCode))
+            if (string.IsNullOrEmpty(UserGroupName))
             {
                 return ActionResult.NotEnoughInformationForAction;
             }
 
-            var userGroup = this.CreateUserGroup();
-            var result = await DatabaseHelper.SaveUserGroup(userGroup);
-            ParentViewModel.UserGroupList.Add((UserGroupModifiedWithUsers)await DatabaseHelper.LoadUserGroup(userGroup.Code, UserGroupType.ModifiedWithUsers));
-
-            return result;
-        }
-
-        /// <summary>
-        /// Create user group with <see cref="UserGroupCode"/> and <see cref="UserGroupName"/>
-        /// </summary>
-        /// <returns></returns>
-        private UserGroup CreateUserGroup()
-        {
-            if (UserGroupCode is null)
-                return null;
-
-            return new UserGroup()
+            // TODO: Clean this
+            using (var context = new FlightTicketSellEntities())
             {
-                Code = UserGroupCode,
-                Name = UserGroupName
-            };
+                try
+                {
+                    var userGroup = await context.NHOMNGUOIDUNGs.Where(nnd => nnd.MaNhom == ParentViewModel.CurrentUserGroup.Code).FirstOrDefaultAsync();
+
+                    userGroup.TenNhom = UserGroupName;
+                    await context.SaveChangesAsync();
+
+                    ParentViewModel.UserGroupList.Where(nnd => nnd.Code == ParentViewModel.CurrentUserGroup.Code).FirstOrDefault().Name = UserGroupName;
+
+                    return ActionResult.Succcesful;
+                }
+                catch (EntityException ex)
+                {
+                    NotifyHelper.ShowEntityException(ex);
+                    return ActionResult.Fail;
+                }
+            }
+
+            
         }
 
         #endregion

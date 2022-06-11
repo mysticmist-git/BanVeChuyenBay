@@ -145,9 +145,11 @@
 
                     <Button  
                         ToolTip="CÀI ĐẶT"
-                            Margin="10 0 20 0"
-                            Command="{Binding SettingCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}"
-                            Visibility="{Binding ApplicationViewModel.CurrentUserGroup.CanSettings, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:PermissionToVisibilityConverter}}"
+                        Margin="10 0 20 0"
+                        Command="{Binding SettingCommand}" 
+                        Style="{StaticResource NavigationButton}" 
+                        attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}"
+                        Visibility="{Binding ApplicationViewModel.CurrentUserGroup.CanSettings, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:PermissionToVisibilityConverter}}"
                             >
                         <ContentControl>
                             <StackPanel Orientation="Horizontal">
@@ -165,8 +167,8 @@
                         ToolTip="PHÂN QUYỀN"
                         Command="{Binding RolesCommand}" 
                         Style="{StaticResource NavigationButton}" 
-                            Visibility="{Binding ApplicationViewModel.CurrentUserGroup.CanManageUser, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:PermissionToVisibilityConverter}}"
-                        attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}" >
+                        Visibility="{Binding ApplicationViewModel.CurrentUserGroup.CanManageUser, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:PermissionToVisibilityConverter}}"
+                        attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Roles}}" >
                         <ContentControl>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="ShieldLock" 

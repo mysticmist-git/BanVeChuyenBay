@@ -12,6 +12,9 @@ namespace FlightTicketSell.Helpers
     {
         #region Flight Check
 
+        private static bool _isFlightDepartedRefreshFinish = true;
+
+
         /// <summary>
         /// Check if the year report, month report existed
         /// Because flight report can only be added when there's
@@ -23,6 +26,11 @@ namespace FlightTicketSell.Helpers
         /// </summary>
         public async static Task FlightDepartedRefresh()
         {
+            if (_isFlightDepartedRefreshFinish == false)
+                return;
+
+            _isFlightDepartedRefreshFinish = false;
+
             using (var context = new FlightTicketSellEntities())
             {
                 try
@@ -125,6 +133,9 @@ namespace FlightTicketSell.Helpers
                             }
 
                             monthReports[monthReports.Count - 1].TiLe = Math.Round(1.0m - tempp, 2);
+
+                            if (tempp + monthReports[monthReports.Count - 1].TiLe != 1.0m)
+                                monthReports[monthReports.Count - 1].TiLe += 0.01m;
                         }
 
 
@@ -147,6 +158,16 @@ namespace FlightTicketSell.Helpers
                         // Add new flight report
                         //newFlightReport.TiLe = monthReport.DoanhThu == (decimal)0.0 ? (decimal)0.0 : newFlightReport.DoanhThu / monthReport.DoanhThu;
                         newFlightReport.TiLe = Math.Round(1.0m - temp2, 2);
+
+                        if (temp2 + newFlightReport.TiLe != 1.0m)
+                            newFlightReport.TiLe += 0.01m;
+
+                        if (await context.DOANHTHUCHUYENBAYs.Where(dtcb => dtcb.MaChuyenBay == newFlightReport.MaChuyenBay).CountAsync() > 0)
+                        {
+                            _isFlightDepartedRefreshFinish = true;
+                            return;
+                        }
+
                         context.DOANHTHUCHUYENBAYs.Add(newFlightReport);
                         
                         /// Save changes down to database
@@ -157,6 +178,8 @@ namespace FlightTicketSell.Helpers
                 {
                     MessageBox.Show("Database access failed!", string.Format($"Exception: {e.Message}"), MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 }
+
+                _isFlightDepartedRefreshFinish = true;
             }
         }
 

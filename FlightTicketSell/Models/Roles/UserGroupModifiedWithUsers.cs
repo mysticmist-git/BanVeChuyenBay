@@ -17,7 +17,7 @@ namespace FlightTicketSell.Models
             /// <summary>
             /// The user list of this user group
             /// </summary>
-            public ObservableCollection<User> Users { get; set; }
+            public ObservableCollection<User> Users { get; set; } = new ObservableCollection<User>();
 
             #endregion    
         }

@@ -30,6 +30,8 @@ namespace FlightTicketSell.Helpers
 
         #region Roles
 
+        #region User Group
+
         /// <summary>
         /// Save user group down database
         /// </summary>
@@ -171,6 +173,80 @@ namespace FlightTicketSell.Helpers
         }
 
         #endregion
+
+        #region Users
+
+        /// <summary>
+        /// Save user group down database
+        /// </summary>
+        /// <returns>Result of the ation</returns>
+        public async static Task<ActionResult> SaveUser(User user)
+        {
+            using (var context = new FlightTicketSellEntities())
+            {
+                try
+                {
+                    if (await context.NGUOIDUNGs.Where(nd => nd.TenDangNhap == user.Username).CountAsync() > 0)
+                        return ActionResult.Duplicate;
+
+                    context.NGUOIDUNGs.Add(new NGUOIDUNG()
+                    {
+                        TenDangNhap = user.Username,
+                        MatKhau = user.Password,
+                        MaNhom = user.UserGroupID
+                    });
+
+                    await context.SaveChangesAsync();
+
+                    return ActionResult.Succcesful;
+                }
+                catch (EntityException ex)
+                {
+                    NotifyHelper.ShowEntityException(ex);
+                    return ActionResult.Error;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Remove user group from database
+        /// </summary>
+        /// <returns>
+        /// Result of the ation, Fail means not exists, Error means something wrong
+        /// Succesful is what it is
+        /// </returns>
+        public async static Task<ActionResult> RemoveUser(User user)
+        {
+            using (var context = new FlightTicketSellEntities())
+            {
+                try
+                {
+                    if (await context.NGUOIDUNGs.Where(nnd => nnd.TenDangNhap == user.Username).CountAsync() <= 0)
+                        return ActionResult.Fail;
+
+                    // Removes all permission
+                    var userToRemove = await context.NGUOIDUNGs
+                        .Where(nndung => nndung.TenDangNhap == user.Username)
+                        .FirstOrDefaultAsync();
+                    // Remove user group
+                    context.NGUOIDUNGs.Remove(userToRemove);
+
+                    await context.SaveChangesAsync();
+
+                    return ActionResult.Succcesful;
+                }
+                catch (EntityException ex)
+                {
+                    NotifyHelper.ShowEntityException(ex);
+                    return ActionResult.Error;
+                }
+            }
+        }
+
+        #endregion
+
+        #endregion
+
     }
 }
 

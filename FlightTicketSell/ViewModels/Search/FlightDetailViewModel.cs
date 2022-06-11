@@ -34,6 +34,34 @@ namespace FlightTicketSell.ViewModels
 
         public bool IsJustEdited { get; set; } = false;
 
+        public bool IsAbleToModify 
+        {
+            get
+            {
+                if (FlightInfo is null || IoC.IoC.Get<ApplicationViewModel>().CurrentUserGroup is null)
+                    return false;
+
+                return 
+                    !FlightInfo.DaKhoiHanh &&
+                    IoC.IoC.Get<ApplicationViewModel>().CurrentUserGroup.CanEditFlight;
+            }
+                
+        }
+
+        public bool IsAbleToSellAndBook
+        {
+            get
+            {
+                if (FlightInfo is null || IoC.IoC.Get<ApplicationViewModel>().CurrentUserGroup is null)
+                    return false;
+
+                return
+                    FlightInfo.IsAbleToSellAndBook &&
+                    IoC.IoC.Get<ApplicationViewModel>().CurrentUserGroup.CanEditFlight;
+            }
+                
+        }
+
         #endregion
 
         #region Commands

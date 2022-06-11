@@ -1295,12 +1295,12 @@ namespace FlightTicketSell.ViewModels
                         context.SANBAYTGs,
                         mdb => mdb,
                         sbtg => sbtg.MaDuongBay,
-                        (mdb, sbtg) => new
+                        (mdb, sbtg) => new LayoverAirport
                         {
-                            sbtg.MaSanBay,
-                            sbtg.ThuTu,
-                            sbtg.ThoiGianDung,
-                            sbtg.GhiChu
+                            Id_Airport = sbtg.MaSanBay,
+                            Order = sbtg.ThuTu,
+                            StopTime = sbtg.ThoiGianDung,
+                            Note = sbtg.GhiChu
                         }
                     ).ToListAsync();
 
@@ -1313,12 +1313,12 @@ namespace FlightTicketSell.ViewModels
 
                     for (int j = 0; j < layoverAirportList.Count; j++)
                     {
-                        if (layoverAirportList[j].ThuTu != i + 1)
+                        if (layoverAirportList[j].Order != i + 1)
                             continue;
 
                         if (
-                            List_LayoverAirport[i].Note != layoverAirportList[j].GhiChu ||
-                            List_LayoverAirport[i].StopTime != layoverAirportList[j].ThoiGianDung
+                            List_LayoverAirport[i].Note != layoverAirportList[j].Note ||
+                            List_LayoverAirport[i].StopTime != layoverAirportList[j].StopTime
                             )
                             return true;
                     }

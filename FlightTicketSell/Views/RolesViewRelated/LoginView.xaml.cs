@@ -1,4 +1,5 @@
 ﻿using FlightTicketSell.Interface;
+using FlightTicketSell.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,9 @@ namespace FlightTicketSell.Views
 
         public void ShowMainWindow()
         {
-            new MainWindow().Show();
+            var view = new MainWindow();
+            Application.Current.MainWindow = view;
+            Application.Current.MainWindow.Show();
             this.Close();
         }
 
@@ -53,6 +56,9 @@ namespace FlightTicketSell.Views
             ((dynamic)this.DataContext).Password = (sender as PasswordBox).SecurePassword;
         }
 
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

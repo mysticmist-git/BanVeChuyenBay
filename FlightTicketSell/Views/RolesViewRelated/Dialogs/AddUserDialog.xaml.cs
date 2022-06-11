@@ -1,5 +1,4 @@
-﻿using FlightTicketSell.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,21 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FlightTicketSell
+namespace FlightTicketSell.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AddUserDialog.xaml
     /// </summary>
-    public partial class MainWindow : Window, IMainWindow
+    public partial class AddUserDialog : UserControl
     {
-        public MainWindow()
+        public AddUserDialog()
         {
             InitializeComponent();
         }
 
-        public void CloseWindow()
+        private void PasswordChanged(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            ((dynamic)this.DataContext).Password = (sender as PasswordBox).SecurePassword;
         }
     }
 }

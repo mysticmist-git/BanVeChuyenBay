@@ -1,12 +1,18 @@
-﻿using FlightTicketSell.Models;
+﻿using FlightTicketSell.Interface;
+using FlightTicketSell.Models;
 using FlightTicketSell.Models.Roles;
+using FlightTicketSell.Views;
 using System;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace FlightTicketSell.ViewModels
 {
     public class ApplicationViewModel : BaseViewModel
     {
+        public IMainWindow MainWindowInterface { get; set; }
+        
         #region Public Properites
 
         /// <summary>
@@ -26,7 +32,26 @@ namespace FlightTicketSell.ViewModels
 
         #endregion
 
+        #region Commands
+
+        
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public ApplicationViewModel()
+        {
+            
+        }
+
+        #endregion
+
         #region Methods
+
         public void LoadFirstAvailableView()
         {
             if (CurrentUserGroup is null)

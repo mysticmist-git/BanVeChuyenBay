@@ -11,6 +11,8 @@ using FlightTicketSell.Helpers;
 using FlightTicketSell.Views;
 using FlightTicketSell.Interface;
 using FlightTicketSell.Models.Enums;
+using MaterialDesignThemes.Wpf;
+using System.Windows;
 
 namespace FlightTicketSell.ViewModels
 {
@@ -64,7 +66,7 @@ namespace FlightTicketSell.ViewModels
         /// <summary>
         /// The user group list
         /// </summary>
-        public ObservableCollection<UserGroupModifiedWithUsers> UserGroupList { get; set; }
+        public ObservableCollection<UserGroupModifiedWithUsers> UserGroupList { get; set; } = new ObservableCollection<UserGroupModifiedWithUsers>();
 
         /// <summary>
         /// The current user group is being selected
@@ -96,6 +98,15 @@ namespace FlightTicketSell.ViewModels
         }
 
         #endregion
+
+        #region User Public Properties
+        
+        public User CurrentUser { get; set; }
+
+        public bool IsUserListNotEmpty { get => CurrentUserGroup is null ? false : CurrentUserGroup.Users.Count > 0; }
+
+        #endregion
+
 
         #endregion
 
@@ -150,6 +161,17 @@ namespace FlightTicketSell.ViewModels
         /// Executes when permission the current user group is changed
         /// </summary>
         public ICommand PermissionChangedCommand { get; set; }
+
+        #endregion
+
+        #region User Command
+
+        public ICommand AddUserCommand { get; set; }
+
+        public ICommand EditUserPasswordCommand { get; set; }
+
+        public ICommand RemoveUserCommand { get; set; }
+
 
         #endregion
 
@@ -266,6 +288,77 @@ namespace FlightTicketSell.ViewModels
 
             #endregion
 
+            #region User Command
+
+            AddUserCommand = new RelayCommand<object>(p => true, async p =>
+            {
+                AddUserDialog view = new AddUserDialog();
+                (view.DataContext as AddUserViewModel).ParentViewModel = this;
+
+                await DialogHost.Show(view, "RootDialog");
+            });
+
+            EditUserPasswordCommand = new RelayCommand<object>(p => true, async p =>
+            {
+                EditUserPasswordDialog view = new EditUserPasswordDialog();
+                (view.DataContext as EditUserPasswordViewModel).ParentViewModel = this;
+
+                await DialogHost.Show(view, "RootDialog");
+            });
+
+            RemoveUserCommand = new RelayCommand<object> (p => true, async p =>
+            {
+                if (CurrentUser is null)
+                    return;
+
+                if (UserGroupList.Where(u => u.CanManageUser == true).Count() == 1 &&
+                    CurrentUserGroup.CanManageUser == true &&
+                    CurrentUserGroup.Users.Count == 1)
+                {
+                    MessageBox.Show(
+                        "Phải có ít nhất một nhóm người dùng có khả năng phân quyền!",
+                        "Hành động bị cấm",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information
+                        );
+
+                    return;
+                }
+
+                var result = MessageBox.Show("Bạn có chắc muốn xóa người dùng", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.No)
+                    return;
+
+                var actionResult = await RemoveSelectedUser();
+
+                switch (actionResult)
+                {
+                    case ActionResult.Succcesful:
+                        MessageBox.Show("Xóa người dùng thành công!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                        var currentSelectedUserUsername = CurrentUser.Username;
+                        CurrentUserGroup.Users.Remove(CurrentUser);
+                        if (IoC.IoC.Get<ApplicationViewModel>().CurrentUser.Username == currentSelectedUserUsername)
+                        {
+                            Application.Current.MainWindow.Close();
+                            new LoginView().Show();
+                        }
+
+
+                        break;
+                    case ActionResult.Error:
+                        MessageBox.Show("Đã có lỗi xảy ra!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+                    case ActionResult.Fail:
+                        MessageBox.Show("Xóa người dùng thất bại!", "Thất bại", MessageBoxButton.OK, MessageBoxImage.Information);
+                        break;
+
+                }
+            });
+
+
+            #endregion
+
             #endregion
         }
 
@@ -307,12 +400,29 @@ namespace FlightTicketSell.ViewModels
                     .ToListAsync();
 
                 UserGroupList = new ObservableCollection<UserGroupModifiedWithUsers>(userGroups);
+                foreach (var item in UserGroupList)
+                {
+                    item.Users = new ObservableCollection<User>(await context.NGUOIDUNGs
+                        .Where(nd => nd.MaNhom == item.Code)
+                        .Select(nd => new User()
+                        {
+                            Username = nd.TenDangNhap,
+                            Password = nd.MatKhau,
+                            UserGroupID = nd.MaNhom
+                        })
+                        .ToListAsync());
+                };
 
                 if (UserGroupList.Count > 0)
                 {
                     CurrentUserGroup = UserGroupList[0];
                     BufferPermission();
                 }
+
+                if (CurrentUserGroup is null)
+                    return;
+
+                CurrentUser = CurrentUserGroup.UserCount > 0 ? CurrentUserGroup.Users[0] : null;
             }
         }
 
@@ -490,6 +600,21 @@ namespace FlightTicketSell.ViewModels
 
         #endregion
 
+        #region User Methods
+
+        private async Task<ActionResult> RemoveSelectedUser()
+        {
+            if (CurrentUser is null)
+                return ActionResult.Error;
+
+            var result = await DatabaseHelper.RemoveUser(CurrentUser);
+
+            return result;
+        }
+
         #endregion
+
+        #endregion
+
     }
 }

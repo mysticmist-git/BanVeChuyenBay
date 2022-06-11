@@ -77,7 +77,7 @@
             Width="230"
             Height="35"
             Command="{Binding CloseCommand}"
-            CommandParameter="{Binding ElementName=uc, Converter={valueConverters:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverters:ViewInterface.CustomerDetail_Search}}"
+            CommandParameter="{Binding ElementName=uc}"
                 >
                 <ContentControl>
                     <StackPanel Orientation="Horizontal">
@@ -164,6 +164,7 @@
                                             <!--Nút Edit-->
                                             <Button
                                             Style="{StaticResource HoverButton}"
+                                            IsEnabled="{Binding ApplicationViewModel.CurrentUserGroup.CanEditFlight, Source={x:Static vm:ViewModelLocator.Instance}}"
                                             BorderBrush="{StaticResource OrangeBrush}"
                                             FontSize="10"
                                             BorderThickness="2"
@@ -172,7 +173,7 @@
                                             Width="65"
                                             Height="23"
                                             Margin="0 0 5 0"
-                                              Visibility="{Binding IsRead,Converter={valueConverters:CustomerDetailTypeToVisuable}}"
+                                            Visibility="{Binding IsRead,Converter={valueConverters:CustomerDetailTypeToVisuable}}"
                                             Command="{Binding EditCustomerInfor_Command}"
                                             >
                                                 <ContentControl>

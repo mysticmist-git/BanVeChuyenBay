@@ -83,12 +83,12 @@ namespace FlightTicketSell.ViewModels
         public TicketInfoFillingViewModel()
         {
             // Create commands
-            ContinueCommand = new RelayCommand<ITicketInfoFilling>((p) => true, async (p) =>
+            ContinueCommand = new RelayCommand<object>((p) => true, async (p) =>
             {
                 // Check if all field filled
-                if (!p.IsValid)
+                if (!((ITicketInfoFilling)p).IsValid)
                 {
-                    p.ForceUpdateSource();
+                    ((ITicketInfoFilling)p).ForceUpdateSource();
                     MessageBox.Show("Vui lòng nhập đủ thông tin khách hàng!", "Thiếu thông tin", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }

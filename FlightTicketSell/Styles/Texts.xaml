@@ -41,6 +41,13 @@
         <Setter Property="Foreground" Value="Black"/>
     </Style>
 
+    <!--Custom PasswordBox-->
+    <Style x:Key="CustomPasswordBox" BasedOn="{StaticResource MaterialDesignFloatingHintPasswordBox}" TargetType="{x:Type PasswordBox}">
+        <Setter Property="FontFamily" Value="{StaticResource Roboto}" />
+        <Setter Property="FontSize" Value="{StaticResource Small}"/>
+        <Setter Property="Foreground" Value="Black"/>
+    </Style>
+
     <!--GridViewColumn.Header-->
     <Style x:Key="Custom_GridviewHeader" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{StaticResource RobotoMedium}" />

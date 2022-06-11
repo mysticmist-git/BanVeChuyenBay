@@ -200,6 +200,7 @@
     <Compile Include="Helpers\FormatHelper.cs" />
     <Compile Include="Helpers\NotifyHelper.cs" />
     <Compile Include="Helpers\SecureHelper.cs" />
+    <Compile Include="Interface\Application\IMainWindow.cs" />
     <Compile Include="Interface\Book\IBookDetail.cs" />
     <Compile Include="Interface\Roles\Dialogs\IEditUserGroupDialog.cs" />
     <Compile Include="Interface\Roles\Dialogs\IAddUserGroupDialog.cs" />
@@ -328,10 +329,11 @@
     <Compile Include="ValueConverters\Search\BookingStateToColorConverter.cs" />
     <Compile Include="ValueConverters\Search\FlightStateToStringConverter.cs" />
     <Compile Include="ValueConverters\Search\BookingStateToStringConverter.cs" />
-    <Compile Include="ValueConverters\Application\ViewToInterfaceConverter.cs" />
     <Compile Include="ViewModels\Book\BookPayViewModel.cs" />
+    <Compile Include="ViewModels\Roles\Dialogs\AddUserViewModel.cs" />
     <Compile Include="ViewModels\Roles\Dialogs\AddUserGroupViewModel.cs" />
     <Compile Include="ViewModels\Roles\Dialogs\EditUserGroupViewModel.cs" />
+    <Compile Include="ViewModels\Roles\Dialogs\EditUserPasswordViewModel.cs" />
     <Compile Include="ViewModels\Roles\Dialogs\ExceptionEntity.cs" />
     <Compile Include="ViewModels\Roles\LoginViewModel.cs" />
     <Compile Include="ViewModels\Schedule\ImportFromExcelClass.cs" />
@@ -398,11 +400,17 @@
     <Compile Include="Views\BookViewRelated\PrintMultipleTicket.xaml.cs">
       <DependentUpon>PrintMultipleTicket.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RolesViewRelated\Dialogs\AddUserDialog.xaml.cs">
+      <DependentUpon>AddUserDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RolesViewRelated\Dialogs\AddUserGroupDialog.xaml.cs">
       <DependentUpon>AddUserGroupDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RolesViewRelated\Dialogs\EditUserGroupDialog.xaml.cs">
       <DependentUpon>EditUserGroupDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RolesViewRelated\Dialogs\EditUserPasswordDialog.xaml.cs">
+      <DependentUpon>EditUserPasswordDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RolesViewRelated\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -548,11 +556,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\RolesViewRelated\Dialogs\AddUserDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RolesViewRelated\Dialogs\AddUserGroupDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RolesViewRelated\Dialogs\EditUserGroupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RolesViewRelated\Dialogs\EditUserPasswordDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

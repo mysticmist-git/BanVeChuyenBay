@@ -56,6 +56,10 @@ namespace FlightTicketSell.ViewModels
                     case LoginResult.Success:
                         await LoadUser();
                         p.ShowMainWindow();
+                        p.UnlockLogin();
+                        Username = string.Empty;
+                        Password.Clear();
+                        OnPropertyChanged(nameof(Password));
                         return;
                     case LoginResult.Fail:
                         MessageBox.Show("Tên đăng nhập hoặc mật khẩu sai", "Đăng nhập thất bại!", MessageBoxButton.OK);

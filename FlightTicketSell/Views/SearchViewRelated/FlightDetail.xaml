@@ -471,7 +471,7 @@
                 <!-- Edit flight info button -->
                 <Button 
                     Grid.Column="4"
-                    IsEnabled="{Binding FlightInfo.DaKhoiHanh, Converter={valueConverters:BooleanInvertConverter}}"
+                    IsEnabled="{Binding IsAbleToModify}"
                     BorderBrush="{StaticResource OrangeBrush}"
                     Style="{StaticResource HoverButton}"
                     Height="45"
@@ -489,7 +489,7 @@
                 <!-- Buy ticket button -->
                 <Button 
                     Grid.Column="0" 
-                    IsEnabled="{Binding FlightInfo.IsAbleToSellAndBook}"
+                    IsEnabled="{Binding IsAbleToSellAndBook}"
                     BorderBrush="{StaticResource GreenBrush}"
                     Style="{StaticResource HoverButton}"
                     Height="45"
@@ -507,7 +507,7 @@
                 <!-- Place Reservation book button -->
                 <Button 
                     Grid.Column="2"
-                    IsEnabled="{Binding FlightInfo.IsAbleToSellAndBook}"
+                    IsEnabled="{Binding IsAbleToSellAndBook}"
                     BorderBrush="{StaticResource RedBrush}"
                     Style="{StaticResource HoverButton}"
                     Height="45"
