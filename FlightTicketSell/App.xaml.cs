@@ -1,4 +1,5 @@
 ﻿using FlightTicketSell.IoC;
+using FlightTicketSell.Views;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -26,7 +27,7 @@ namespace FlightTicketSell
             IoC.IoC.Setup();
 
             // Show the main window
-            Current.MainWindow = new MainWindow();
+            Current.MainWindow = new LoginView();
             Current.MainWindow.Show();
         }
     }

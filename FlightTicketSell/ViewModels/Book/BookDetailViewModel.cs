@@ -153,12 +153,12 @@ namespace FlightTicketSell.ViewModels
             });
 
             // Create command
-            ContinueCommand = new RelayCommand<IBookDetail>((p) => true, async (p) =>
+            ContinueCommand = new RelayCommand<object>((p) => true, async (p) =>
              {
                  // Check if all field filled
-                 if (!p.IsValid)
+                 if (!((IBookDetail)p).IsValid)
                  {
-                     p.ForceUpdateSource();
+                     ((IBookDetail)p).ForceUpdateSource();
                      MessageBox.Show("Vui lòng nhập đủ thông tin người đặt / người thụ hưởng!", "Thiếu thông tin", MessageBoxButton.OK, MessageBoxImage.Information);
                      return;
                  }

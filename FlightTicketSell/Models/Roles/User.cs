@@ -1,4 +1,5 @@
 ﻿using FlightTicketSell.ViewModels;
+using System.Collections.ObjectModel;
 
 namespace FlightTicketSell.Models
 {
@@ -16,5 +17,6 @@ namespace FlightTicketSell.Models
         public string UserGroupID { get; set; }
 
         #endregion
-    }
+}
+
 }

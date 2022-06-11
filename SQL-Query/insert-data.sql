@@ -78,18 +78,39 @@ INSERT INTO SANBAY (TenSanBay, VietTat, TinhThanh, TrangThai) VALUES
 --INSERT INTO KHACHHANG (HoTen, CMND, SDT, Email) VALUES (N'Trần Nguyễn Nhật Tân', '111222333', '0000000004', 'tan@mail.com')
 --INSERT INTO KHACHHANG (HoTen, CMND, SDT, Email) VALUES (N'Nguyễn Đình Thi', '444555666', '0000000005', 'thi@mail.com')
 
----- Nhập Phân quyền
-INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('PHQ', 'PhanQuyen', 'PhanQuyen')
-INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('BCDT', 'BaoCaoDoanhThu', 'BaoCaoDoanhThu')
-INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('TRC', 'TraCuu', 'TraCuu')
-INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('NHL', 'NhanLich', 'NhanLich')
+---- Nhập Chức năng
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('PHQ', 'Phân quyền', 'PhanQuyen')
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('BCDT', 'Báo cáo doanh thu', 'BaoCaoDoanhThu')
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('TRC', 'Tra cứu chuyến bay', 'Tracuu')
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('QLCB', 'Quản lý chuyến bay', 'QuanLyChuyenBay')
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('NLCB', 'Nhận lịch chuyến bay', 'NhanLich')
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('CD', 'Cài đặt', 'Cài đặt')
 
 -- Nhập nhóm người dùng
 INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('ADM', 'Admin')
-INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('NV', 'NhanVien')
-INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('CDN', 'ChuDoanhNghiep')
+INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('NV', 'Nhân viên')
+INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('CDN', 'Chủ doanh nghiệp')
+
+
+
+-- Nhập Phân quyền
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('ADM', 'PHQ')
+
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('CDN', 'BCDT')
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('CDN', 'CD')
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('CDN', 'TRC')
+
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('NV', 'TRC')
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('NV', 'QLCB')
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('NV', 'NLCB')
 
 -- Nhập người dùng
-select * from nguoidung
 INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('admin','admin','ADM')
+
+INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('nv1','nv1','NV')
+INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('nv2','nv2','NV')
+INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('nv3','nv3','NV')
+
+INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('cdn','cdn','CDN')
+
 

@@ -6,8 +6,12 @@
              xmlns:local="clr-namespace:FlightTicketSell.Views"
              xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:valueConverter="clr-namespace:FlightTicketSell.ValueConverters"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
+             x:Name="uc"
              d:DesignHeight="720" d:DesignWidth="1366">
+
     <UserControl.DataContext>
         <vm:RolesViewModel />
     </UserControl.DataContext>
@@ -18,8 +22,8 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-
-    <Grid Background="{StaticResource LightGrayBrush}">
+    <materialDesign:DialogHost Identifier="RootDialog">
+        <Grid d:Background="{StaticResource LightGrayBrush}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -53,7 +57,7 @@
 
         <!-- User Group List -->
         <Border Grid.Column="1" Grid.Row="1"
-                Grid.ColumnSpan="3" Grid.RowSpan="8"
+                Grid.ColumnSpan="4" Grid.RowSpan="8"
                 Background="White"
                 CornerRadius="8"
                 Padding="40 20 40 20"
@@ -66,19 +70,426 @@
                     <RowDefinition Height="Auto" />
                     <!-- The user group list -->
                     <RowDefinition Height="*" />
-                </Grid.RowDefinitions> 
-                
+                    <!-- The buttons -->
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
                 <!--Header-->
                 <TextBlock Grid.Row="0" 
                    Text="Nhóm người dùng"
                    VerticalAlignment="Bottom" 
                    FontFamily="{StaticResource RobotoBlack}" 
-                   FontSize="{StaticResource Small}" />
+                   FontSize="{StaticResource Regular}" />
 
-
-                <ListView Grid.Row="1"
+                <!-- User group list-->
+                <ListView Grid.Row="1" 
+                          Style="{StaticResource MaterialDesignCardsListBox}"
                           ItemsSource="{Binding UserGroupList}"
-                          d:ItemsSource="{d:SampleData ItemCount=4}">
+                          d:ItemsSource="{d:SampleData ItemCount=4}"
+                          SelectedItem="{Binding CurrentUserGroup}"
+                          SelectionMode="Single"
+                          Background="Transparent">
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding UserGroupChanged}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                    <!-- Item Container style -->
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" /> 
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <!-- Item template -->
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{StaticResource VeryLightGrayBrush}"
+                                    Opacity="0.6"
+                                    Padding="10 5"
+                                    Height="60">
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                        <i:InvokeCommandAction 
+                                            Command="{Binding RelativeSource={RelativeSource 
+                                                                        AncestorType={x:Type UserControl}}, 
+                                                                        Path=DataContext.PermissionResetCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="6*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="{Binding Code}" 
+                                               d:Text="ADM" 
+                                                   Foreground="{StaticResource BlueBrush}"
+                                               Grid.Column="0" 
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"
+                                               FontSize="16"/>
+
+                                        <TextBlock Text="{Binding Name}" 
+                                                   Margin="20 0 0 0"
+                                               d:Text="Admin" 
+                                               Grid.Column="1" 
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"
+                                               Foreground="Black"
+                                               FontSize="14"/>
+
+                                    <StackPanel Grid.Column="2" 
+                                                VerticalAlignment="Center" 
+                                                Orientation="Horizontal">
+                                        <TextBlock Text="Số lượng: " />
+                                        <TextBlock Text="{Binding UserCount}" d:Text="5" />
+                                    </StackPanel>
+
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <!--Nút thêm sửa xóa-->
+                <StackPanel Orientation="Horizontal" 
+                                     Grid.Row="3" Grid.Column="1" 
+                                    HorizontalAlignment="Right">
+                    <!--Nút xóa-->
+                        <Button Margin="7 0 0 0" 
+                            Style="{StaticResource HoverButton}"
+                            BorderBrush="{StaticResource RedBrush}"
+                            Command="{Binding RemoveUserGroupCommand}"
+                            CommandParameter="{Binding ElementName=uc}">
+                            <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Delete" Margin="0 0 10 0" VerticalAlignment="Center" Height="19" Width="19"/>
+                                <TextBlock Text="Xóa" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
+
+                    <!--Nút sửa-->
+                    <Button Margin="7 0 0 0" 
+                                    Style="{StaticResource HoverButton}"
+                                    BorderBrush="{StaticResource OrangeBrush}"
+                                    Command="{Binding EditUserGroupCommand}"
+                                    CommandParameter="{Binding ElementName=uc}"
+                                materialDesign:ShadowAssist.Darken="True"
+                                   >
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Pencil" Margin="0 -1 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                                <TextBlock Text="Sửa" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
+
+                    <!--Nút thêm-->
+                    <Button Margin="7 0 10 0" Content="+ Thêm" 
+                            Style="{StaticResource HoverButton}"
+                            BorderBrush="{StaticResource BlueBrush}"
+                            Command="{Binding AddUserGroupCommand}"
+                            CommandParameter="{Binding ElementName=uc}"
+                            materialDesign:ShadowAssist.Darken="True" />
+                </StackPanel>
+
+            </Grid>
+
+        </Border>
+
+        <!-- User Group settings -->
+        <Border Grid.Column="5" Grid.Row="1"
+                Grid.ColumnSpan="4" Grid.RowSpan="8"
+                Background="White"
+                CornerRadius="8"
+                Margin="20 0 0 0"
+                Padding="40 20 40 20"
+                Style="{StaticResource DropShadow}">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <!-- The header -->
+                    <RowDefinition Height="Auto" />
+                    <!-- The user list -->
+                    <RowDefinition Height="*" />
+                    <!-- Buttons -->
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--Header-->
+                <TextBlock Grid.Row="0" 
+                   Text="Chức năng"
+                   VerticalAlignment="Bottom" 
+                   FontFamily="{StaticResource RobotoBlack}" 
+                   FontSize="{StaticResource Regular}" />
+
+                <!-- Các chức năng -->
+                <StackPanel Grid.Row="1">
+
+                    <StackPanel.Resources>
+                    
+                        <Style TargetType="{x:Type TextBlock}" 
+                               BasedOn="{StaticResource MaterialDesignTextBlock}">
+                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="Margin" Value="0 10" />
+                        </Style>
+
+                    </StackPanel.Resources>
+
+                    <!-- Tra cứu chuyến bay -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <!-- Tên chức năng -->
+                            <ColumnDefinition Width="41*" />
+                            <ColumnDefinition Width="217*"/>
+                            <!-- Toggle button -->
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Tên chức năng -->
+                        <TextBlock Text="Tra cứu chuyến bay" 
+                                   Grid.Column="0" Grid.ColumnSpan="2" />
+
+                        <!-- Toggle button -->
+                        <ToggleButton IsChecked="{Binding CurrentUserGroup.CanSearchFlight}" 
+                                      Grid.Column="2"
+                                      Margin="0,8,0,3"
+                                      Background="{StaticResource LightBlueBrush}"
+                                      HorizontalAlignment="Center" 
+                                      Height="17" 
+                                      Width="33"
+                                      Command="{Binding PermissionChangedCommand}">
+                            <ToggleButton.Style>
+                                <Style TargetType="{x:Type ToggleButton}"
+                                       BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
+                    </Grid>
+
+                    <!-- Chỉnh sửa chuyến bay -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <!-- Tên chức năng -->
+                            <ColumnDefinition Width="*" />
+                            <!-- Toggle button -->
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Tên chức năng -->
+                        <TextBlock Text="Chỉnh sửa chuyến bay" Grid.Column="0" />
+
+                        <!-- Toggle button -->
+                        <ToggleButton IsChecked="{Binding CurrentUserGroup.CanEditFlight}" 
+                                      Grid.Column="1"
+                                      Margin="0 5 0 0"
+                                      Background="{StaticResource LightBlueBrush}"
+                                      HorizontalAlignment="Right" Height="17" Width="33"
+                                      Command="{Binding PermissionChangedCommand}">
+                            <ToggleButton.Style>
+                                <Style TargetType="{x:Type ToggleButton}"
+                                       BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
+                    </Grid>
+
+                    <!-- Nhận lịch -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <!-- Tên chức năng -->
+                            <ColumnDefinition Width="*" />
+                            <!-- Toggle button -->
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Tên chức năng -->
+                        <TextBlock Text="Nhận lịch" Grid.Column="0" />
+
+                        <!-- Toggle button -->
+                        <ToggleButton IsChecked="{Binding CurrentUserGroup.CanScheduleFlight}" 
+                                      Grid.Column="1"
+                                      Margin="0 5 0 0"
+                                      Background="{StaticResource LightBlueBrush}"
+                                      HorizontalAlignment="Right" Height="17" Width="33"
+                                      Command="{Binding PermissionChangedCommand}">
+                            <ToggleButton.Style>
+                                <Style TargetType="{x:Type ToggleButton}"
+                                       BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
+                    </Grid>
+
+                    <!-- Xem báo cáo -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <!-- Tên chức năng -->
+                            <ColumnDefinition Width="*" />
+                            <!-- Toggle button -->
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Tên chức năng -->
+                        <TextBlock Text="Xem báo cáo" Grid.Column="0" />
+
+                        <!-- Toggle button -->
+                        <ToggleButton IsChecked="{Binding CurrentUserGroup.CanViewReport}" 
+                                      Grid.Column="1"
+                                      Margin="0 5 0 0"
+                                      Background="{StaticResource LightBlueBrush}"
+                                      HorizontalAlignment="Right" Height="17" Width="33"
+                                      Command="{Binding PermissionChangedCommand}">
+                            <ToggleButton.Style>
+                                <Style TargetType="{x:Type ToggleButton}"
+                                       BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
+                    </Grid>
+
+                    <!-- Cài đặt -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <!-- Tên chức năng -->
+                            <ColumnDefinition Width="*" />
+                            <!-- Toggle button -->
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Tên chức năng -->
+                        <TextBlock Text="Cài đặt" Grid.Column="0" />
+
+                        <!-- Toggle button -->
+                        <ToggleButton IsChecked="{Binding CurrentUserGroup.CanSettings}" 
+                                      Grid.Column="1"
+                                      Margin="0 5 0 0"
+                                      Background="{StaticResource LightBlueBrush}"
+                                      HorizontalAlignment="Right" Height="17" Width="33"
+                                      Command="{Binding PermissionChangedCommand}">
+                            <ToggleButton.Style>
+                                <Style TargetType="{x:Type ToggleButton}"
+                                       BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
+                    </Grid>
+
+                    <!-- Phân quyền -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <!-- Tên chức năng -->
+                            <ColumnDefinition Width="*" />
+                            <!-- Toggle button -->
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Tên chức năng -->
+                        <TextBlock Text="Phân quyền" Grid.Column="0" />
+
+                        <!-- Toggle button -->
+                        <ToggleButton IsChecked="{Binding CurrentUserGroup.CanManageUser}" 
+                                      Grid.Column="1"
+                                      Margin="0 5 0 0"
+                                      Background="{StaticResource LightBlueBrush}"
+                                      HorizontalAlignment="Right" Height="17" Width="33"
+                                      Command="{Binding PermissionChangedCommand}">
+                            <ToggleButton.Style>
+                                <Style TargetType="{x:Type ToggleButton}"
+                                       BasedOn="{StaticResource MaterialDesignSwitchAccentToggleButton}">
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
+                    </Grid>
+
+                </StackPanel>
+
+                <!-- Các nút -->
+                <StackPanel Grid.Row="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+
+                    <!-- Nút đặt lai -->
+                    <Button 
+                        Style="{StaticResource HoverButton}"
+                        IsEnabled="{Binding IsPermissionChanged}"
+                        BorderBrush="{StaticResource RedBrush}"
+                        Command="{Binding PermissionResetCommand}"
+                        Height="30">
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="CloseThick" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                                <TextBlock Text="Đặt lại" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
+
+
+                    <!-- Nút lưu -->
+                    <Button Margin="10 0 0 0" 
+                        Style="{StaticResource HoverButton}"
+                        IsEnabled="{Binding IsPermissionChanged}"
+                        BorderBrush="{StaticResource GreenBrush}"
+                        Command="{Binding PermissionSaveCommand}"
+                        materialDesign:ShadowAssist.Darken="True"
+                        Height="30">
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="ContentSave" Margin="0 0 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                                <TextBlock Text="Lưu" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Border>
+
+        <!-- Users -->
+        <Border Grid.Column="9" Grid.Row="1"
+                Grid.ColumnSpan="4" Grid.RowSpan="8"
+                Background="White"
+                CornerRadius="8"
+                Margin="20 0 0 0"
+                Padding="40 20 40 20"
+                Style="{StaticResource DropShadow}">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <!-- The header -->
+                    <RowDefinition Height="Auto" />
+                    <!-- The user list -->
+                    <RowDefinition Height="*" />
+                    <!-- Buttons -->
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--Header-->
+                <TextBlock Grid.Row="0" 
+                   Text="Danh sách người dùng"
+                   VerticalAlignment="Bottom" 
+                   FontFamily="{StaticResource RobotoBlack}" 
+                   FontSize="{StaticResource Regular}" />
+
+                <!-- Danh sách người dùng -->
+                <ListView Grid.Row="1" 
+                          Style="{StaticResource MaterialDesignCardsListBox}"
+                          ItemsSource="{Binding CurrentUserGroup.Users}"
+                          d:ItemsSource="{d:SampleData ItemCount=4}"
+                          SelectedItem="{Binding CurrentUser}"
+                          SelectionMode="Single"
+                          Background="Transparent">
 
                     <!-- Item Container style -->
                     <ListView.ItemContainerStyle>
@@ -96,45 +507,83 @@
                                 <Grid>
 
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
                                         <ColumnDefinition Width="5*" />
-                                        <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Text="{Binding Name}" 
+                                    <TextBlock Text="{Binding Username}" 
+                                               HorizontalAlignment="Center"
                                                d:Text="Admin" 
                                                Grid.Column="0" 
                                                VerticalAlignment="Center"
                                                FontWeight="Bold"
-                                               Foreground="Black"/>
+                                               Foreground="{StaticResource BlueBrush}"
+                                               FontSize="16"/>
 
-                                    <StackPanel Grid.Column="1" 
-                                                VerticalAlignment="Center" 
-                                                Orientation="Horizontal">
-                                        <TextBlock Text="Số lượng: " />
-                                        <TextBlock Text="{Binding UserCount}" d:Text="5" />
-                                    </StackPanel>
+                                        <TextBlock Text="{Binding Password}" 
+                                               HorizontalAlignment="Center"
+                                               d:Text="AdminPassword" 
+                                               Grid.Column="1"
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"
+                                               Foreground="{StaticResource BlueBrush}"
+                                               FontSize="16"/>
 
-                                </Grid>
+                                    </Grid>
                             </Border>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
 
-            </Grid>
+
+                    <!--Nút thêm sửa xóa-->
+                    <StackPanel Orientation="Horizontal" 
+                                     Grid.Row="3" Grid.Column="1" 
+                                    HorizontalAlignment="Right">
+                        <!--Nút xóa-->
+                        <Button Margin="7 0 0 0" 
+                            Style="{StaticResource HoverButton}"
+                            IsEnabled="{Binding IsUserListNotEmpty}"
+                            BorderBrush="{StaticResource RedBrush}"
+                            Command="{Binding RemoveUserCommand}"
+                            CommandParameter="{Binding ElementName=uc}">
+                            <ContentControl>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Delete" Margin="0 0 10 0" VerticalAlignment="Center" Height="19" Width="19"/>
+                                    <TextBlock Text="Xóa" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </ContentControl>
+                        </Button>
+
+                        <!--Nút sửa-->
+                        <Button Margin="7 0 0 0" 
+                                    Style="{StaticResource HoverButton}"
+                                    IsEnabled="{Binding IsUserListNotEmpty}"
+                                    BorderBrush="{StaticResource OrangeBrush}"
+                                    Command="{Binding EditUserPasswordCommand}"
+                                    CommandParameter="{Binding ElementName=uc}"
+                                materialDesign:ShadowAssist.Darken="True"
+                                   >
+                            <ContentControl>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Pencil" Margin="0 -1 10 0" VerticalAlignment="Center" Height="21" Width="21"/>
+                                    <TextBlock Text="Sửa" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </ContentControl>
+                        </Button>
+
+                        <!--Nút thêm-->
+                        <Button Margin="7 0 10 0" Content="+ Thêm"
+                            Style="{StaticResource HoverButton}"
+                            BorderBrush="{StaticResource BlueBrush}"
+                            Command="{Binding AddUserCommand}"
+                            CommandParameter="{Binding ElementName=uc}"
+                            materialDesign:ShadowAssist.Darken="True" />
+                    </StackPanel>
+
+                </Grid>
 
         </Border>
-
-        <!-- User Group settings -->
-        <Border Grid.Column="4" Grid.Row="1"
-                Grid.ColumnSpan="9" Grid.RowSpan="8"
-                Background="White"
-                CornerRadius="8"
-                Margin="20 0 0 0"
-                Padding="40 20 40 20"
-                Style="{StaticResource DropShadow}">
-
-
-        </Border>
-
     </Grid>
+    </materialDesign:DialogHost>
 </UserControl>

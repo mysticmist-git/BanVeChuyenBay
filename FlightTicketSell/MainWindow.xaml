@@ -9,15 +9,21 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:valueConverters="clr-namespace:FlightTicketSell.ValueConverters"
         xmlns:models="clr-namespace:FlightTicketSell.Models"
-        xmlns:viewmodels="clr-namespace:FlightTicketSell.ViewModels"
+        xmlns:viewmodels="clr-namespace:FlightTicketSell.ViewModels" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:vm="clr-namespace:FlightTicketSell.ViewModels"
         mc:Ignorable="d"
         Title="SellTicketApp" Height="720" Width="1366"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
         MinWidth="600"
         MinHeight="600"
+        x:Name="window"
         Icon="pack://application:,,,/Images/Logo_Icon.ico"
         >
+
+    <Window.DataContext>
+        <vm:MainWindowViewModel />
+    </Window.DataContext>
 
     <Window.Resources>
         <Style x:Key="NavigationContentStyle" TargetType="ContentControl">
@@ -26,6 +32,12 @@
                                                Converter={valueConverters:AppViewToContentTemplate}}" />
         </Style>
     </Window.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid Background="{StaticResource LightGrayBrush}">
         <Border CornerRadius="12"
@@ -38,6 +50,8 @@
                 <RowDefinition Height="Auto" />
                 <!--Content Presenter-->
                 <RowDefinition Height="*" />
+                <!-- User info and logout button -->
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Border>
@@ -49,6 +63,49 @@
 
             <ContentControl Grid.Row="1" Style="{StaticResource NavigationContentStyle}"  />
 
+            <Border Grid.Row="2" Padding="20 5" Background="{StaticResource BlueBrush}">
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="{Binding DisplayUser}" 
+                               d:Text="cdn1 - Chủ doanh nghiệp"  
+                               FontWeight="Bold"
+                               Grid.Column="0" Grid.ColumnSpan="2"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="14"
+                               FontFamily="{StaticResource Roboto}"
+                               Foreground="White"/>
+
+                    <Button Margin="10 1 0 1" 
+                            Grid.Column="1"
+                            Padding="30 0 30 0"
+                            Height="20"
+                            Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                            materialDesign:ButtonAssist.CornerRadius="10"
+                            BorderThickness="0"
+                            Background="{StaticResource OrangeBrush}"
+                            Command="{Binding LogoutCommand}"
+                            CommandParameter="{Binding ElementName=window}"
+                            materialDesign:ShadowAssist.Darken="True"
+                                    >
+                        <ContentControl>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Logout" Margin="0 0 10 0" VerticalAlignment="Center" Height="14" Width="14"/>
+                                <TextBlock Text="Đăng xuất" VerticalAlignment="Center" FontSize="10"/>
+                            </StackPanel>
+                        </ContentControl>
+                    </Button>
+                    
+                </Grid>
+            </Border>
+
+            
+            
         </Grid>
     </Grid>
 

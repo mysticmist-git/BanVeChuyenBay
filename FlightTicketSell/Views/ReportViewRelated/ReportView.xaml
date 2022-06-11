@@ -13,7 +13,7 @@
              mc:Ignorable="d"
              d:DesignHeight="720" d:DesignWidth="1366"
              Loaded="UserControl_Loaded"
-             x:Name="UC"
+             x:Name="uc"
              DataContext="{Binding ReportViewModel, Source={x:Static vm:ViewModelLocator.Instance}}"
              d:Background="{StaticResource LightGrayBrush}"
              >
@@ -191,7 +191,7 @@
                     <!-- Print button -->
                 <Button 
                     Command="{Binding PrintCommand}"
-                    CommandParameter="{Binding ElementName=UC, Converter={valueConverters:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverters:ViewInterface.Report}}"
+                    CommandParameter="{Binding ElementName=uc}"
                     Grid.Row="3" 
                     HorizontalAlignment="Center" 
                     Width="180"

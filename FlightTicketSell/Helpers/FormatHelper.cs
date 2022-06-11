@@ -10,7 +10,7 @@ namespace FlightTicketSell.Helpers
         /// </summary>
         /// <param name="date"></param>
         /// <returns></returns>
-        public static string DateFormat(DateTime date) => date.ToString("hh:mm dd/mm/yyyy", new CultureInfo("vi-VN"));
+        public static string DateFormat(DateTime date) => date.ToString("hh:mm dd/MM/yyyy", new CultureInfo("vi-VN"));
 
         /// <summary>
         /// Convert a decimal value to a vietnam currency format money

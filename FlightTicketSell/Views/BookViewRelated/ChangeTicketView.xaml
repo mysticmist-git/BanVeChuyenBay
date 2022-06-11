@@ -542,7 +542,7 @@
                         <!-- Pay button -->
                         <Button
                          Grid.Column="0"
-                    IsEnabled="{Binding IsInteractable}"
+                    IsEnabled="{Binding IsCancelAble}"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Right"
                      Width="170"
@@ -561,7 +561,7 @@
                         </Button>
 
                         <Button Grid.Column="2"
-                            IsEnabled="{Binding IsBookCanceled, Converter={valueConverters:BooleanInvertConverter}}"
+                            IsEnabled="{Binding IsPrintAble}"
                     Command="{Binding PrintCommand}"                
                     BorderBrush="{StaticResource GreenBrush}"
                     Style="{StaticResource HoverButton}"

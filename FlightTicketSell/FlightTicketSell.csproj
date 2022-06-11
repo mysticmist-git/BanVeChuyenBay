@@ -194,14 +194,21 @@
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\Book\IsValidProperty.cs" />
     <Compile Include="AttachedProperties\ReportTypeProperty.cs" />
+    <Compile Include="Helpers\DatabaseHelper.cs" />
     <Compile Include="Helpers\BookHelper.cs" />
     <Compile Include="Helpers\FlightHelper.cs" />
     <Compile Include="Helpers\FormatHelper.cs" />
     <Compile Include="Helpers\NotifyHelper.cs" />
+    <Compile Include="Helpers\SecureHelper.cs" />
+    <Compile Include="Interface\Application\IMainWindow.cs" />
     <Compile Include="Interface\Book\IBookDetail.cs" />
+    <Compile Include="Interface\Roles\Dialogs\IEditUserGroupDialog.cs" />
+    <Compile Include="Interface\Roles\Dialogs\IAddUserGroupDialog.cs" />
     <Compile Include="Interface\ITicketInfoFilling.cs" />
+    <Compile Include="Interface\Login\ILogin.cs" />
     <Compile Include="Interface\Report\IReport.cs" />
     <Compile Include="Interface\Report\IReportPrintPreview.cs" />
+    <Compile Include="Interface\Roles\IRole.cs" />
     <Compile Include="Interface\Search\ICustomerDetail.cs" />
     <Compile Include="Models\Book\Book.cs" />
     <Compile Include="Models\CHITIETDATCHO.cs">
@@ -231,7 +238,12 @@
     <Compile Include="Models\DUONGBAY.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Enums\Roles\AddUserGroupDialogResult.cs" />
+    <Compile Include="Models\Enums\Roles\DecisionIcon.cs" />
+    <Compile Include="Models\Enums\Roles\DecisionResult.cs" />
     <Compile Include="Models\Enums\General\Parameter.cs" />
+    <Compile Include="Models\Enums\Roles\DecisionType.cs" />
+    <Compile Include="Models\Enums\Roles\LoginResult.cs" />
     <Compile Include="Models\Enums\ViewType.cs" />
     <Compile Include="Models\GetFlightData_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -267,7 +279,8 @@
     <Compile Include="Models\Roles\Permission.cs" />
     <Compile Include="Models\Roles\User.cs" />
     <Compile Include="Models\Roles\UserGroup.cs" />
-    <Compile Include="Models\Roles\UserGroupWithCount.cs" />
+    <Compile Include="Models\Roles\UserGroupModified.cs" />
+    <Compile Include="Models\Roles\UserGroupModifiedWithUsers.cs" />
     <Compile Include="Models\SANBAY.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -285,6 +298,7 @@
     <Compile Include="ValueConverters\Base\BaseMultiValueConverter.cs" />
     <Compile Include="ValueConverters\BooleanInvertConverter.cs" />
     <Compile Include="ValueConverters\General\BooleanToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\NavigationBar\PermissionToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\Search\BooleanToVisuable.cs" />
     <Compile Include="ValueConverters\Search\CustomerDetailTypeToVisuable.cs" />
     <Compile Include="ValueConverters\Search\EditCumstomerInforToColor.cs" />
@@ -295,6 +309,7 @@
     <Compile Include="ValueConverters\Setting\StatusTicketClass_BooleanToColor.cs" />
     <Compile Include="ValueConverters\Setting\StatusTicketClass_BooleanToString.cs" />
     <Compile Include="ValueConverters\Setting\TicketClass_BooleanToString.cs" />
+    <Compile Include="ViewModels\Application\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Base\ActionCommand.cs" />
     <Compile Include="ViewModels\Base\EventToCommandBehavior.cs" />
     <Compile Include="ViewModels\Book\CustomerBookVariant.cs" />
@@ -314,8 +329,13 @@
     <Compile Include="ValueConverters\Search\BookingStateToColorConverter.cs" />
     <Compile Include="ValueConverters\Search\FlightStateToStringConverter.cs" />
     <Compile Include="ValueConverters\Search\BookingStateToStringConverter.cs" />
-    <Compile Include="ValueConverters\Application\ViewToInterfaceConverter.cs" />
     <Compile Include="ViewModels\Book\BookPayViewModel.cs" />
+    <Compile Include="ViewModels\Roles\Dialogs\AddUserViewModel.cs" />
+    <Compile Include="ViewModels\Roles\Dialogs\AddUserGroupViewModel.cs" />
+    <Compile Include="ViewModels\Roles\Dialogs\EditUserGroupViewModel.cs" />
+    <Compile Include="ViewModels\Roles\Dialogs\EditUserPasswordViewModel.cs" />
+    <Compile Include="ViewModels\Roles\Dialogs\ExceptionEntity.cs" />
+    <Compile Include="ViewModels\Roles\LoginViewModel.cs" />
     <Compile Include="ViewModels\Schedule\ImportFromExcelClass.cs" />
     <Compile Include="ViewModels\Roles\RolesViewModel.cs" />
     <Compile Include="ViewModels\Schedule\LayoverAirport.cs" />
@@ -379,6 +399,21 @@
     </Compile>
     <Compile Include="Views\BookViewRelated\PrintMultipleTicket.xaml.cs">
       <DependentUpon>PrintMultipleTicket.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RolesViewRelated\Dialogs\AddUserDialog.xaml.cs">
+      <DependentUpon>AddUserDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RolesViewRelated\Dialogs\AddUserGroupDialog.xaml.cs">
+      <DependentUpon>AddUserGroupDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RolesViewRelated\Dialogs\EditUserGroupDialog.xaml.cs">
+      <DependentUpon>EditUserGroupDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RolesViewRelated\Dialogs\EditUserPasswordDialog.xaml.cs">
+      <DependentUpon>EditUserPasswordDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RolesViewRelated\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ScheduleViewRelated\ImportFromExcel.xaml.cs">
       <DependentUpon>ImportFromExcel.xaml</DependentUpon>
@@ -520,6 +555,26 @@
     <Page Include="Views\BookViewRelated\PrintMultipleTicket.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RolesViewRelated\Dialogs\AddUserDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RolesViewRelated\Dialogs\AddUserGroupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RolesViewRelated\Dialogs\EditUserGroupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RolesViewRelated\Dialogs\EditUserPasswordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RolesViewRelated\LoginView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ScheduleViewRelated\ImportFromExcel.xaml">
       <SubType>Designer</SubType>
@@ -702,6 +757,7 @@
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.4.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -99,6 +99,34 @@ namespace FlightTicketSell.ViewModels
         /// </summary>
         public string DisplayCancelDeadline { get => HanChotHuyVe.ToString("HH:mm dd/MM/yyyy", new CultureInfo("vi-VN")); }
 
+        public bool IsCancelAble
+        {
+            get
+            {
+                if (IoC.IoC.Get<ApplicationViewModel>().CurrentUserGroup is null)
+                    return false;
+
+                return
+                    IsInteractable &&
+                    IoC.IoC.Get<ApplicationViewModel>().CurrentUserGroup.CanEditFlight;
+
+            }
+        }
+
+
+        public bool IsPrintAble 
+        { 
+            get
+            {
+                if (IoC.IoC.Get<ApplicationViewModel>().CurrentUserGroup is null)
+                    return false;
+
+                return
+                    !IsBookCanceled &&
+                    IoC.IoC.Get<ApplicationViewModel>().CurrentUserGroup.CanEditFlight;
+            }
+        }
+
         #region Boolean stuffs
 
         /// <summary>

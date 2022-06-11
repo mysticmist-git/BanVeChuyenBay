@@ -410,7 +410,7 @@
                         VerticalAlignment="Bottom"
                         Width="200"
                         Command="{Binding ContinueCommand}" 
-                        CommandParameter="{Binding ElementName=uc, Converter={valueConverter:ViewToInterfaceConverter}, ConverterParameter={x:Static valueConverter:ViewInterface.TicketInfoFilling}}"
+                        CommandParameter="{Binding ElementName=uc}"
                         BorderBrush="{StaticResource BlueBrush}"
                         FontSize="{StaticResource Regular}"
                        Style="{StaticResource HoverButton}"

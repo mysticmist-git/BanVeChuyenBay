@@ -89,10 +89,11 @@
                      MaxHeight="{Binding ElementName=buttons, Path=ActualHeight}"
                      MaxWidth="{Binding ElementName=buttons, Path=ActualWidth}">
                 <StackPanel x:Name="buttons" Orientation="Horizontal">
-                    <Button 
-                        ToolTip="TRA CỨU"
+
+                    <Button ToolTip="TRA CỨU" 
                             Command="{Binding SearchCommand}" 
-                        Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Search}}"
+                            Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Search}}"
+                            Visibility="{Binding ApplicationViewModel.CurrentUserGroup.CanSearchFlight, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:PermissionToVisibilityConverter}}"
                             >
                         <ContentControl>
                             <StackPanel Orientation="Horizontal"
@@ -111,6 +112,7 @@
                             Margin="20 0 10 0"
                         ToolTip="NHẬN LỊCH"
                             Command="{Binding ScheduleCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Schedule}}"
+                            Visibility="{Binding ApplicationViewModel.CurrentUserGroup.CanScheduleFlight, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:PermissionToVisibilityConverter}}"
                             >
                         <ContentControl>
                             <StackPanel Orientation="Horizontal">
@@ -127,6 +129,7 @@
                             Margin="10 0 20 0"
                         ToolTip="DOANH THU"
                             Command="{Binding ReportCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Report}}"
+                            Visibility="{Binding ApplicationViewModel.CurrentUserGroup.CanViewReport, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:PermissionToVisibilityConverter}}"
                             >
                         <ContentControl>
                             <StackPanel Orientation="Horizontal">
@@ -142,8 +145,11 @@
 
                     <Button  
                         ToolTip="CÀI ĐẶT"
-                            Margin="10 0 20 0"
-                            Command="{Binding SettingCommand}" Style="{StaticResource NavigationButton}" attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}"
+                        Margin="10 0 20 0"
+                        Command="{Binding SettingCommand}" 
+                        Style="{StaticResource NavigationButton}" 
+                        attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}"
+                        Visibility="{Binding ApplicationViewModel.CurrentUserGroup.CanSettings, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:PermissionToVisibilityConverter}}"
                             >
                         <ContentControl>
                             <StackPanel Orientation="Horizontal">
@@ -161,7 +167,8 @@
                         ToolTip="PHÂN QUYỀN"
                         Command="{Binding RolesCommand}" 
                         Style="{StaticResource NavigationButton}" 
-                        attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Setting}}" >
+                        Visibility="{Binding ApplicationViewModel.CurrentUserGroup.CanManageUser, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:PermissionToVisibilityConverter}}"
+                        attachedProperties:IsButtonSelected.Value="{Binding ApplicationViewModel.CurrentView, Source={x:Static vm:ViewModelLocator.Instance}, Converter={valueConverters:AppViewToBooleanConverter}, ConverterParameter={x:Static models:AppView.Roles}}" >
                         <ContentControl>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="ShieldLock" 
