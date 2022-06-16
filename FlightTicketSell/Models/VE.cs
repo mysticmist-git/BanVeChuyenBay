@@ -21,8 +21,8 @@ namespace FlightTicketSell.Models
         public decimal GiaTien { get; set; }
         public System.DateTime NgayThanhToan { get; set; }
     
+        public virtual CHUYENBAY CHUYENBAY { get; set; }
         public virtual HANGVE HANGVE { get; set; }
         public virtual KHACHHANG KHACHHANG { get; set; }
-        public virtual CHUYENBAY CHUYENBAY { get; set; }
     }
 }

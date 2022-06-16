@@ -19,7 +19,7 @@ namespace FlightTicketSell.Models
         public int MaChuyenBay { get; set; }
         public int SoGhe { get; set; }
     
-        public virtual HANGVE HANGVE { get; set; }
         public virtual CHUYENBAY CHUYENBAY { get; set; }
+        public virtual HANGVE HANGVE { get; set; }
     }
 }

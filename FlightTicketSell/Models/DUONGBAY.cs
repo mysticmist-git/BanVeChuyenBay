@@ -17,8 +17,8 @@ namespace FlightTicketSell.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DUONGBAY()
         {
-            this.SANBAYTGs = new HashSet<SANBAYTG>();
             this.CHUYENBAYs = new HashSet<CHUYENBAY>();
+            this.SANBAYTGs = new HashSet<SANBAYTG>();
         }
     
         public int MaDuongBay { get; set; }
@@ -26,11 +26,11 @@ namespace FlightTicketSell.Models
         public int MaSanBayDen { get; set; }
         public int ThoiGianBay { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CHUYENBAY> CHUYENBAYs { get; set; }
         public virtual SANBAY SANBAY { get; set; }
         public virtual SANBAY SANBAY1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SANBAYTG> SANBAYTGs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CHUYENBAY> CHUYENBAYs { get; set; }
     }
 }
