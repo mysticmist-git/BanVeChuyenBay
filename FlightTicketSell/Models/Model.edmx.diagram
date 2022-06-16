@@ -4,44 +4,44 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4ed4c46cb89b4ef8a8a866a273fcb236" Name="Diagram1">
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHITIETDATCHO" Width="1.5" PointX="12.75" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHITIETHANGVE" Width="1.5" PointX="7.5" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHUCNANG" Width="1.5" PointX="9.75" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.DATCHO" Width="1.5" PointX="10.5" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.DOANHTHUCHUYENBAY" Width="1.5" PointX="7.5" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.DOANHTHUNAM" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.DOANHTHUTHANG" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.DUONGBAY" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.HANGVE" Width="1.5" PointX="5.25" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.KHACHHANG" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.NGUOIDUNG" Width="1.5" PointX="14.25" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.NHOMNGUOIDUNG" Width="1.5" PointX="12" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.SANBAY" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.SANBAYTG" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.THAMSO" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.VE" Width="1.5" PointX="7.5" PointY="12.625" IsExpanded="true" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_CHITIETDATCHO_MaDatCho" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_CHITIETDATCHO_MaKhachHang" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_CHITIETHANGVE_MaHangVe" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_DATCHO_MaHangVe" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_DATCHO_MaNguoiDat" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_DOANHTHUCHUYENBAY_MaDoanhThuThang" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_DOANHTHUTHANG_MaDoanhThuNam" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_DUONGBAY_MaSanBayDen" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_DUONGBAY_MaSanBayDi" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_SANBAYTG_MaDuongBay" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_VE_MaHangVe" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_VE_MaKhachHang" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_NGUOIDUNG_MaNhom" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_SANBAYTG_MaSanBay" ManuallyRouted="false" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.PHANQUYEN" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="BANVECHUYENBAYModel.CHUYENBAY" Width="1.5" PointX="5.25" PointY="8.5" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_CHITIETHANGVE_MaChuyenBay" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_CHUYENBAY_MaDuongBay" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_DATCHO_MaChuyenBay" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_DOANHTHUCHUYENBAY_MaChuyenBay" />
-        <AssociationConnector Association="BANVECHUYENBAYModel.FK_VE_MaChuyenBay" />
+      <Diagram DiagramId="041a16dd2b9f4021a3b924f60a6cc3ed" Name="Diagram1">
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.CHITIETDATCHO" Width="1.5" PointX="12.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.CHITIETHANGVE" Width="1.5" PointX="7.5" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.CHUCNANG" Width="1.5" PointX="9.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.CHUYENBAY" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.DATCHO" Width="1.5" PointX="10.5" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.DOANHTHUCHUYENBAY" Width="1.5" PointX="7.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.DOANHTHUNAM" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.DOANHTHUTHANG" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.DUONGBAY" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.HANGVE" Width="1.5" PointX="5.25" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.KHACHHANG" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.NGUOIDUNG" Width="1.5" PointX="14.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.NHOMNGUOIDUNG" Width="1.5" PointX="12" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.SANBAY" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.SANBAYTG" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.THAMSO" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightTicketSellEntitiesModel.VE" Width="1.5" PointX="7.5" PointY="12.625" IsExpanded="true" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_CHITIETDATCHO_MaDatCho" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_CHITIETDATCHO_MaKhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_CHITIETHANGVE_MaChuyenBay" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_CHITIETHANGVE_MaHangVe" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_CHUYENBAY_MaDuongBay" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_DATCHO_MaChuyenBay" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_DOANHTHUCHUYENBAY_MaChuyenBay" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_VE_MaChuyenBay" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_DATCHO_MaHangVe" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_DATCHO_MaNguoiDat" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_DOANHTHUCHUYENBAY_MaDoanhThuThang" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_DOANHTHUTHANG_MaDoanhThuNam" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_DUONGBAY_MaSanBayDen" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_DUONGBAY_MaSanBayDi" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_SANBAYTG_MaDuongBay" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_VE_MaHangVe" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_VE_MaKhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_NGUOIDUNG_MaNhom" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.FK_SANBAYTG_MaSanBay" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightTicketSellEntitiesModel.PHANQUYEN" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

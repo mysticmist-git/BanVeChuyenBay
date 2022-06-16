@@ -21,7 +21,7 @@ namespace FlightTicketSell.Models
         public decimal DoanhThu { get; set; }
         public decimal TiLe { get; set; }
     
-        public virtual DOANHTHUTHANG DOANHTHUTHANG { get; set; }
         public virtual CHUYENBAY CHUYENBAY { get; set; }
+        public virtual DOANHTHUTHANG DOANHTHUTHANG { get; set; }
     }
 }
