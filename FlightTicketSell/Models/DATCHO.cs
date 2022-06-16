@@ -31,8 +31,8 @@ namespace FlightTicketSell.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CHITIETDATCHO> CHITIETDATCHOes { get; set; }
-        public virtual CHUYENBAY CHUYENBAY { get; set; }
         public virtual HANGVE HANGVE { get; set; }
         public virtual KHACHHANG KHACHHANG { get; set; }
+        public virtual CHUYENBAY CHUYENBAY { get; set; }
     }
 }
