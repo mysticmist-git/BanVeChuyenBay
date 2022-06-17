@@ -661,7 +661,7 @@ namespace FlightTicketSell.ViewModels
                                 foreach (var item in existSBTG)
                                 {
                                     var check = context.CHUYENBAYs.Where(h => h.MaDuongBay == item.MaDuongBay).FirstOrDefault();
-                                    if (check.TrangThai == 0)
+                                    if (check.DaKhoiHanh == false)
                                     {
 
                                         var code1 = check.DUONGBAY.SANBAY1.VietTat;
@@ -911,7 +911,7 @@ namespace FlightTicketSell.ViewModels
                                  foreach (var item in list)
                                  {
                                      var exist = context.CHUYENBAYs.Where(h => h.MaChuyenBay == item.MaChuyenBay).FirstOrDefault();
-                                     if (!(exist.TrangThai == 2))
+                                     if (!exist.DaKhoiHanh)
                                      {
                                          var code1 = exist.DUONGBAY.SANBAY1.VietTat;
                                          var code2 = exist.DUONGBAY.SANBAY.VietTat;

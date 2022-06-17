@@ -13,9 +13,45 @@ CREATE TABLE CHUYENBAY
 	MaDuongBay INT NOT NULL,
 	GiaVe MONEY NOT NULL,
 	NgayGio DATETIME NOT NULL,
-	TrangThai INT NOT NULL
+	DaKhoiHanh BIT NOT NULL
 )
 GO
+
+alter table chuyenbay add TrangThai INT NULL DEFAULT 1
+-- 1: Chua khoi hanh
+-- 2: da khoi hanh
+-- 3: Da huy
+
+--delete from  chuyenbay
+--where MaChuyenBay=9
+
+--delete from DOANHTHUCHUYENBAY 
+--where machuyenbay=9
+
+--delete from CHITIETHANGVE
+--where MaChuyenBay =9
+
+--delete from ve
+--where MaChuyenBay=9
+
+--update chuyenbay
+--set trangthai=
+--where trangthai=0
+
+--update datcho
+--set trangthai='DaHuy'
+--where MaChuyenBay in (16, 18,19,20)
+
+--select *  from chitiethangve
+
+--select * from DATCHO
+--where machuyenbay=17
+
+--delete from CHITIETDATCHO
+--where MaDatCho =9
+
+--delete from datcho
+--where MaDatCho = 9
 
 -- Bảng Sân bay
 CREATE TABLE SANBAY
@@ -205,6 +241,9 @@ GO
 --ALTER TABLE CHUYENBAY ADD CONSTRAINT CK_CHUYENBAY_NgayGio CHECK (NgayGio>GETDATE())
 --GO
 
+------ DaKhoiHanh: mặc đinh là 0 (chưa khởi hành)
+ALTER TABLE CHUYENBAY ADD CONSTRAINT DF_CHUYENBAY_DaKhoiHanh DEFAULT 0 FOR DaKhoiHanh
+GO
 
 -- RÀNG BUỘC BẢNG SÂN BAY
 ------ VietTat Unique
