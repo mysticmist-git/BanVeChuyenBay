@@ -13,45 +13,9 @@ CREATE TABLE CHUYENBAY
 	MaDuongBay INT NOT NULL,
 	GiaVe MONEY NOT NULL,
 	NgayGio DATETIME NOT NULL,
-	DaKhoiHanh BIT NOT NULL
+	TrangThai INT NOT NULL
 )
 GO
-
-alter table chuyenbay add TrangThai INT NULL DEFAULT 1
--- 1: Chua khoi hanh
--- 2: da khoi hanh
--- 3: Da huy
-
---delete from  chuyenbay
---where MaChuyenBay=9
-
---delete from DOANHTHUCHUYENBAY 
---where machuyenbay=9
-
---delete from CHITIETHANGVE
---where MaChuyenBay =9
-
---delete from ve
---where MaChuyenBay=9
-
---update chuyenbay
---set trangthai=
---where trangthai=0
-
---update datcho
---set trangthai='DaHuy'
---where MaChuyenBay in (16, 18,19,20)
-
---select *  from chitiethangve
-
---select * from DATCHO
---where machuyenbay=17
-
---delete from CHITIETDATCHO
---where MaDatCho =9
-
---delete from datcho
---where MaDatCho = 9
 
 -- Bảng Sân bay
 CREATE TABLE SANBAY
@@ -241,9 +205,6 @@ GO
 --ALTER TABLE CHUYENBAY ADD CONSTRAINT CK_CHUYENBAY_NgayGio CHECK (NgayGio>GETDATE())
 --GO
 
------- DaKhoiHanh: mặc đinh là 0 (chưa khởi hành)
-ALTER TABLE CHUYENBAY ADD CONSTRAINT DF_CHUYENBAY_DaKhoiHanh DEFAULT 0 FOR DaKhoiHanh
-GO
 
 -- RÀNG BUỘC BẢNG SÂN BAY
 ------ VietTat Unique
@@ -746,7 +707,7 @@ INSERT INTO THAMSO VALUES
 	('ThoiGianDungToiThieu',10),
 	('ThoiGianDungToiDa',20),
 	('ThoiGianDatVeChamNhat',1),
-	('ThoiGianHuyDatVe',1)  GO
+	('ThoiGianHuyDatVe',1)
 
 -- Nhập Sân bay
 INSERT INTO SANBAY (TenSanBay, VietTat, TinhThanh, TrangThai) VALUES
@@ -771,42 +732,42 @@ INSERT INTO SANBAY (TenSanBay, VietTat, TinhThanh, TrangThai) VALUES
 	(N'Cần Thơ', 'VCA', N'Cần Thơ', 1),
 	(N'Rạch Giá', 'VKG', N'Kiên Giang', 1),
 	(N'Phú Quốc', 'PQC', N'Kiên Giang', 1),
-	(N'Vân Đồn', 'VDO', N'Quảng Ninh', 1)  GO
+	(N'Vân Đồn', 'VDO', N'Quảng Ninh', 1)
 
-INSERT INTO HANGVE (TenHangVe, HeSo, TrangThai) VALUES (N'Phổ thông',1.0,1) GO
-INSERT INTO HANGVE (TenHangVe, HeSo, TrangThai) VALUES (N'Thương gia',1.2,1) GO
-INSERT INTO HANGVE (TenHangVe, HeSo, TrangThai) VALUES (N'Hạng nhất',1.4,1) GO
+INSERT INTO HANGVE (TenHangVe, HeSo, TrangThai) VALUES (N'Phổ thông',1.0,1)
+INSERT INTO HANGVE (TenHangVe, HeSo, TrangThai) VALUES (N'Thương gia',1.2,1)
+INSERT INTO HANGVE (TenHangVe, HeSo, TrangThai) VALUES (N'Hạng nhất',1.4,1)
 
 ---- Nhập Chức năng
-INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('PHQ', 'Phân quyền', 'PhanQuyen') GO
-INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('BCDT', 'Báo cáo doanh thu', 'BaoCaoDoanhThu') GO
-INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('TRC', 'Tra cứu chuyến bay', 'Tracuu') GO
-INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('QLCB', 'Quản lý chuyến bay', 'QuanLyChuyenBay') GO
-INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('NLCB', 'Nhận lịch chuyến bay', 'NhanLich') GO
-INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('CD', 'Cài đặt', 'Cài đặt') GO
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('PHQ', 'Phân quyền', 'PhanQuyen')
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('BCDT', 'Báo cáo doanh thu', 'BaoCaoDoanhThu')
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('TRC', 'Tra cứu chuyến bay', 'Tracuu')
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('QLCB', 'Quản lý chuyến bay', 'QuanLyChuyenBay')
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('NLCB', 'Nhận lịch chuyến bay', 'NhanLich')
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('CD', 'Cài đặt', 'Cài đặt')
 
 -- Nhập nhóm người dùng
-INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('ADM', N'Admin') GO
-INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('NV', N'Nhân viên') GO
-INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('CDN', N'Chủ doanh nghiệp') GO
+INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('ADM', N'Admin')
+INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('NV', N'Nhân viên') 
+INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('CDN', N'Chủ doanh nghiệp') 
 
 -- Nhập Phân quyền
-INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('ADM', 'PHQ') GO
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('ADM', 'PHQ') 
 
-INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('CDN', 'BCDT') GO
-INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('CDN', 'CD') GO
-INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('CDN', 'TRC') GO
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('CDN', 'BCDT') 
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('CDN', 'CD') 
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('CDN', 'TRC') 
 
-INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('NV', 'TRC') GO
-INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('NV', 'QLCB') GO
-INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('NV', 'NLCB') GO
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('NV', 'TRC') 
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('NV', 'QLCB') 
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('NV', 'NLCB') 
 
 -- Nhập người dùng
-INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('admin','admin','ADM') GO
+INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('admin','admin','ADM') 
 
-INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('nv1','nv1','NV') GO
-INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('nv2','nv2','NV') GO
-INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('nv3','nv3','NV') GO
+INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('nv1','nv1','NV') 
+INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('nv2','nv2','NV') 
+INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('nv3','nv3','NV') 
 
 INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('cdn','cdn','CDN')
 GO
