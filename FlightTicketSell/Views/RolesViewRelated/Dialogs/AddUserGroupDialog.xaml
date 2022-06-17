@@ -53,7 +53,7 @@
             <!-- Tên nhóm người dùng -->
             <TextBox  Grid.Row="1" 
                       Grid.Column="3" 
-                      materialDesign:HintAssist.Hint="Tên người dùng" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
+                      materialDesign:HintAssist.Hint="Tên nhóm người dùng" Style="{StaticResource CustomTextbox}" VerticalAlignment="Center" 
                       Text="{Binding UserGroupName}"
                       materialDesign:HintAssist.HelperText="Ví dụ: Nhân viên cấp cao" />
 

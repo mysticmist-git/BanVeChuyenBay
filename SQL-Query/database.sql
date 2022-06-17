@@ -4,6 +4,8 @@ GO
 USE BANVECHUYENBAY
 GO
 
+-- ======================================================================================================================================= CREATE TABLES
+
 -- Bảng Chuyến bay
 CREATE TABLE CHUYENBAY
 (
@@ -160,8 +162,8 @@ GO
 CREATE TABLE CHUCNANG
 (
 	MaChucNang VARCHAR(32) PRIMARY KEY,
-	TenChucNang NVARCHAR(256),
-	TenManHinhDuocLoad VARCHAR(256)
+	TenChucNang NVARCHAR(256) NOT NULL,
+	TenManHinhDuocLoad VARCHAR(256) NOT NULL
 )
 GO
 
@@ -169,7 +171,7 @@ GO
 CREATE TABLE NHOMNGUOIDUNG
 (
 	MaNhom VARCHAR(32) PRIMARY KEY,
-	TenNhom NVARCHAR(256)
+	TenNhom NVARCHAR(256) NOT NULL
 )
 GO
 
@@ -185,8 +187,8 @@ GO
 CREATE TABLE NGUOIDUNG
 (
 	TenDangNhap VARCHAR(256) PRIMARY KEY,
-	MatKhau VARCHAR(1024),
-	MaNhom VARCHAR(32)
+	MatKhau VARCHAR(1024) NOT NULL,
+	MaNhom VARCHAR(32) NOT NULL
 )
 GO
 
@@ -694,3 +696,122 @@ ALTER TABLE PHANQUYEN ADD CONSTRAINT PK_PHANQUYEN PRIMARY KEY (MaNhom, MaChucNan
 
 --========================================= RÀNG BUỘC BẢNG PHÂN QUYỀN =========================================
 ALTER TABLE NGUOIDUNG ADD CONSTRAINT FK_NGUOIDUNG_MaNhom FOREIGN KEY (MaNhom) REFERENCES NHOMNGUOIDUNG(MaNhom)
+
+
+-- ======================================================================================================================================= INSERT
+
+-- Nhập Tham số
+INSERT INTO THAMSO VALUES
+	('ThoiGianBayToiThieu',30),
+	('SoSanBayTrungGianToiDa',2),
+	('ThoiGianDungToiThieu',10),
+	('ThoiGianDungToiDa',20),
+	('ThoiGianDatVeChamNhat',1),
+	('ThoiGianHuyDatVe',1)  GO
+
+-- Nhập Sân bay
+INSERT INTO SANBAY (TenSanBay, VietTat, TinhThanh, TrangThai) VALUES
+	(N'Nội Bài', 'HAN', N'Hà Nội', 1),
+	(N'Cát Bi', 'HPH', N'Hải Phòng', 1),
+	(N'Điện Biên Phủ', 'DIN', N'Điện Biên', 1),
+	(N'Thọ Xuân', 'THD', N'Thanh Hóa', 1),
+	(N'Vinh', N'VII', N'Nghệ An', 1),
+	(N'Đồng Hới', 'VDH', N' Quảng Bình', 1),
+	(N'Phú Bài', 'HUI', N'Thừa Thiên - Huế', 1),
+	(N'Đà Nẵng', 'DAD', N'Đà Nẵng', 1),
+	(N'Chu Lai', 'VCL', N'Quảng Nam', 1),
+	(N'Phù Cát', 'UIH', N'Bình Định', 1),
+	(N'Tuy Hòa', 'TBB', N'Phú Yên', 1),
+	(N'Cam Ranh', 'CXR', N'Khánh Hòa', 1),
+	(N'Buôn Ma Thuột', 'BMV', N'Đắk Lắk', 1),
+	(N'Liên Khương', 'DLI', N'Lâm Đồng', 1),
+	(N'Pleiku', 'PXU', N'Gia Lai', 1),
+	(N'Tân Sơn Nhất', 'SGN', N'TP HCM', 1),
+	(N'Cà Mau', 'CAH', N'Cà Mau', 1),
+	(N'Côn Đảo', 'VCS', N'Bà Rịa-Vũng Tàu', 1),
+	(N'Cần Thơ', 'VCA', N'Cần Thơ', 1),
+	(N'Rạch Giá', 'VKG', N'Kiên Giang', 1),
+	(N'Phú Quốc', 'PQC', N'Kiên Giang', 1),
+	(N'Vân Đồn', 'VDO', N'Quảng Ninh', 1)  GO
+
+INSERT INTO HANGVE (TenHangVe, HeSo, TrangThai) VALUES (N'Phổ thông',1.0,1) GO
+INSERT INTO HANGVE (TenHangVe, HeSo, TrangThai) VALUES (N'Thương gia',1.2,1) GO
+INSERT INTO HANGVE (TenHangVe, HeSo, TrangThai) VALUES (N'Hạng nhất',1.4,1) GO
+
+---- Nhập Chức năng
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('PHQ', 'Phân quyền', 'PhanQuyen') GO
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('BCDT', 'Báo cáo doanh thu', 'BaoCaoDoanhThu') GO
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('TRC', 'Tra cứu chuyến bay', 'Tracuu') GO
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('QLCB', 'Quản lý chuyến bay', 'QuanLyChuyenBay') GO
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('NLCB', 'Nhận lịch chuyến bay', 'NhanLich') GO
+INSERT INTO CHUCNANG (MaChucNang, TenChucNang, TenManHinhDuocLoad) VALUES ('CD', 'Cài đặt', 'Cài đặt') GO
+
+-- Nhập nhóm người dùng
+INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('ADM', N'Admin') GO
+INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('NV', N'Nhân viên') GO
+INSERT INTO NHOMNGUOIDUNG (MaNhom, TenNhom) VALUES ('CDN', N'Chủ doanh nghiệp') GO
+
+-- Nhập Phân quyền
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('ADM', 'PHQ') GO
+
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('CDN', 'BCDT') GO
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('CDN', 'CD') GO
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('CDN', 'TRC') GO
+
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('NV', 'TRC') GO
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('NV', 'QLCB') GO
+INSERT INTO PHANQUYEN (MaNhom, MaChucNang) VALUES ('NV', 'NLCB') GO
+
+-- Nhập người dùng
+INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('admin','admin','ADM') GO
+
+INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('nv1','nv1','NV') GO
+INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('nv2','nv2','NV') GO
+INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('nv3','nv3','NV') GO
+
+INSERT INTO NGUOIDUNG (TenDangNhap, MatKhau, MaNhom) VALUES ('cdn','cdn','CDN')
+GO
+-- ======================================================================================================================================= PROCEDURES
+
+CREATE PROC [dbo].[GetFlightData] 
+AS
+BEGIN
+	SELECT 
+		cb.MaChuyenBay,
+		sb1.MaSanBay AS [MaSanBayDi],
+		sb2.MaSanBay AS [MaSanBayDen],
+		sb1.TenSanBay AS [SanBayDi],
+		sb2.TenSanBay AS [SanBayDen],
+		sb1.VietTat AS [SanBayDiVietTat],
+		sb2.VietTat AS [SanBayDenVietTat],
+		cb.NgayGio,
+		COUNT(DISTINCT sbtg.MaSanBayTG) AS [SoDiemDung],
+		COUNT(DISTINCT cthv.MaCTHV) AS [SoHangVe],
+		cb.GiaVe,
+		SUM(DISTINCT cthv.SoGhe) - 
+		(
+			SELECT ISNULL(COUNT(MaVe), 0)
+			FROM VE
+			WHERE VE.MaChuyenBay=cb.MaChuyenBay
+		) - 
+		(
+			SELECT ISNULL(SUM(SoVeDat), 0)
+			FROM DATCHO
+			WHERE DATCHO.MaChuyenBay=cb.MaChuyenBay
+		) 
+		AS [GheTrong],
+		(SELECT SUM(SoVeDat) FROM DATCHO 
+		WHERE DATCHO.MaChuyenBay=cb.MaChuyenBay)
+		AS [SoGheDat],
+		cb.TrangThai
+	FROM 
+		CHUYENBAY cb LEFT JOIN
+		DUONGBAY db ON (cb.MaDuongBay=db.MaDuongBay) LEFT JOIN
+		SANBAY sb1 ON (db.MaSanBayDi=sb1.MaSanBay) LEFT JOIN
+		SANBAY sb2 ON (db.MaSanBayDen=sb2.MaSanBay) LEFT JOIN
+		SANBAYTG sbtg ON (db.MaDuongBay=sbtg.MaDuongBay) LEFT JOIN
+		CHITIETHANGVE cthv ON (cb.MaChuyenBay=cthv.MaChuyenBay)	
+	GROUP BY cb.MaChuyenBay, sb1.MaSanBay, sb2.MaSanBay, sb1.TenSanBay, sb2.TenSanBay, sb1.VietTat, sb2.VietTat, NgayGio, cb.GiaVe, cb.TrangThai
+
+END
+GO

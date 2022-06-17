@@ -61,7 +61,7 @@
                 <usercontrols:NavigationBar x:Name="CustomNavigationBar" Grid.Row="0" />
             </Border>
 
-            <ContentControl Grid.Row="1" Style="{StaticResource NavigationContentStyle}"  />
+            <ContentControl Grid.Row="1" Style="{StaticResource NavigationContentStyle}" />
 
             <Border Grid.Row="2" Padding="0 0 0 0" Background="{StaticResource BlueBrush}">
                 <Grid>
